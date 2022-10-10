@@ -57,7 +57,7 @@
                     </div>
                     <div class="stat">
                         <h3>3820+</h3>
-                        <p>Collaboration projects</p>
+                        <p>Created projects</p>
                     </div>
                 </div>
             </div>

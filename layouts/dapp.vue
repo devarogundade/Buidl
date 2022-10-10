@@ -1,5 +1,10 @@
 <template>
-<div class="landing">
+<div class="app">
+    <!-- <div class="bg"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
+    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-bottomright.svg" alt=""></div> -->
+
+    <div class="bg"><img src="https://idle.finance/assets/img/Ellipse1.ee547e.png" alt=""></div>
+    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
     <DappHeader />
     <section>
         <div class="app-width">
@@ -57,5 +62,32 @@ export default {
     height: 100vh;
     position: sticky;
     top: 0;
+}
+
+.bg {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 600px;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+.bg img {
+    width: 100%;
+}
+
+.bg2 {
+    position: fixed;
+    right: -100px;
+    bottom: -200px;
+    width: 600px;
+    opacity: 0.3;
+    rotate: 90deg;
+    z-index: -1;
+}
+
+.bg2 img {
+    width: 100%;
 }
 </style>

@@ -33,6 +33,8 @@ contract Models {
         address[] members;
         uint[] contracts;
         uint[] tasks;
+        address[] grants;
+        uint256 grantTarget;
         bool isPublic;
         uint createdAt;
     }

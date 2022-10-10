@@ -92,6 +92,7 @@ section {
     left: 0;
     top: 0;
     align-items: center;
+    backdrop-filter: blur(20px);
 }
 
 .app-width {
