@@ -26,9 +26,14 @@ export default {
                 href: "https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
             }
         ],
-        script: [
-            { src: "https://kit.fontawesome.com/19ee52fe0f.js", crossorigin: "anonymous" },
-            { src: 'https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js', defer: true }
+        script: [{
+                src: "https://kit.fontawesome.com/19ee52fe0f.js",
+                crossorigin: "anonymous"
+            },
+            {
+                src: 'https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js',
+                defer: true
+            }
         ]
     },
 

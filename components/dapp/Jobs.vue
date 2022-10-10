@@ -1,23 +1,23 @@
 <template>
 <div class="container">
-    <div class="projects" v-if="projects.length > 0">
-        <div class="project" v-for="project in projects" :key="project.id"></div>
+    <div class="jobs" v-if="jobs.length > 0">
+        <div class="job" v-for="job in jobs" :key="job.id"></div>
     </div>
     <div class="explain">
-        <h3>What's a project?</h3>
+        <h3>No jobs found!</h3>
         <p>
-            <b>Buidl project</b> provides you an environment with the handy tools you need to work
-            together with other professionals as a team. <br> <br> You are in full control of your project and data.
+            Here is where you will receive your job invites or jobs to have applied for. <br> <br>
+            Your jobs applications is only private to you and the job creator.
         </p>
         <div class="action">
-            Click on the <i class="fa-solid fa-plus"></i> button to create your first project.
+            Click on the <i class="fa-solid fa-magnifying-glass"></i> button to create your first job.
         </div>
     </div>
 
     <div class="fab-btn">
-        <router-link to="/app/projects/create">
+        <router-link to="/explore/jobs">
             <div class="fab">
-                <i class="fa-solid fa-plus"></i>
+                <i class="fa-solid fa-magnifying-glass"></i>
             </div>
         </router-link>
     </div>
@@ -28,7 +28,7 @@
 export default {
     data() {
         return {
-            projects: []
+            jobs: []
         }
     }
 }
@@ -42,13 +42,13 @@ export default {
     position: relative;
 }
 
-.projects {
+.jobs {
     display: flex;
     flex-wrap: wrap;
     gap: 40px;
 }
 
-.project {
+.job {
     width: 420px;
     height: 280px;
     border-radius: 20px;

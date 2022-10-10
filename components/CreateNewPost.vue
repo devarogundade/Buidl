@@ -10,20 +10,26 @@
             <p>Posts are immutable from the network.</p>
         </div>
 
-        <div class="post" v-on:click="$nuxt.$emit('create-new-post-for', 'feeds')">
-            <i class="fa-solid fa-newspaper"></i>
-            <p>Feeds</p>
-        </div>
+        <router-link to="/app/create-post/feed">
+            <div class="post" v-on:click="$nuxt.$emit('create-new-post-for', 'feeds')">
+                <i class="fa-solid fa-newspaper"></i>
+                <p>Feeds</p>
+            </div>
+        </router-link>
 
-       <div class="post" v-on:click="$nuxt.$emit('create-new-post-for', 'jobs')">
-            <i class="fa-solid fa-briefcase"></i>
-            <p>Jobs</p>
-        </div>
+        <router-link to="/app/create-post/job">
+            <div class="post" v-on:click="$nuxt.$emit('create-new-post-for', 'jobs')">
+                <i class="fa-solid fa-briefcase"></i>
+                <p>Jobs</p>
+            </div>
+        </router-link>
 
-        <div class="post" v-on:click="$nuxt.$emit('create-new-post-for', 'projects')">
-            <i class="fa-solid fa-hammer"></i>
-            <p>Projects</p>
-        </div>
+        <router-link to="/app/projects">
+            <div class="post" v-on:click="$nuxt.$emit('create-new-post-for', 'projects')">
+                <i class="fa-solid fa-hammer"></i>
+                <p>Share a project</p>
+            </div>
+        </router-link>
     </div>
 </div>
 </template>

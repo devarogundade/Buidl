@@ -165,6 +165,7 @@ section {
 .enter {
     background: transparent;
     border: #ffffff 2px solid;
+    backdrop-filter: blur(20px);
 }
 
 .app:hover {
