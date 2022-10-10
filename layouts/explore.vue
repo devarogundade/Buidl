@@ -17,6 +17,7 @@ export default {
         }
     },
     mounted() {
+        this.$auth.checkAuth()
         $nuxt.$on('request-connect-wallet', () => {
             this.wcState = 'show'
         })

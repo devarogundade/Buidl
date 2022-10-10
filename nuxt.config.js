@@ -42,9 +42,9 @@ export default {
         dirs: [
             '~/components',
             '~/components/landing',
-            '~/components/portal',
-            '~/components/dashboard',
+            '~/components/dapp',
             '~/components/explore',
+            '~/components/collectibles',
         ]
     },
     buildModules: [],

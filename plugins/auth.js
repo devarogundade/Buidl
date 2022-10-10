@@ -6,6 +6,33 @@ export default ({ app }, inject) => {
     inject('auth', Vue.observable({
         provider: null,
         accounts: [],
+        lastProviderName: '',
+
+        checkAuth: function() {
+            this.lastProviderName = this.getLastProviderName()
+            if (this.lastProviderName != '') {
+                this.connectWallet(this.lastProviderName)
+            }
+        },
+
+        getLastProviderName: function() {
+            if (typeof(Storage) !== "undefined") {
+                return localStorage.getItem('last-provider-name') ? localStorage.getItem('last-provider-name') : ''
+            }
+            return ''
+        },
+
+        saveLastProviderName: function(name) {
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem('last-provider-name', name)
+            }
+        },
+
+        deleteLastProviderName: function() {
+            if (typeof(Storage) !== "undefined") {
+                localStorage.removeItem('last-provider-name')
+            }
+        },
 
         requestWalletConnection: function() {
             $nuxt.$emit('request-connect-wallet')
@@ -79,9 +106,11 @@ export default ({ app }, inject) => {
                 this.setUpAccountListeners(ethereum)
 
                 this.accounts = await ethereum.enable();
+
+                this.saveLastProviderName('metamask')
                 return this.accounts[0]
             } catch (error) {
-                $nuxt.$emit('error', error)
+                $nuxt.$emit('error', error.message)
                 return null
             }
         },
@@ -101,6 +130,8 @@ export default ({ app }, inject) => {
                 this.setUpAccountListeners(this.provider)
 
                 this.accounts = await this.provider.enable();
+
+                this.saveLastProviderName('coinbase')
                 return this.accounts[0]
             } catch (error) {
                 console.log(error);
@@ -149,6 +180,8 @@ export default ({ app }, inject) => {
                 this.setUpAccountListeners(this.provider)
 
                 this.accounts = await this.provider.enable();
+
+                this.saveLastProviderName('walletconnect')
                 return this.accounts[0]
             } catch (error) {
                 console.log(error);
@@ -162,6 +195,7 @@ export default ({ app }, inject) => {
                 $nuxt.$emit('accounts-changed', this.accounts)
                 if (accounts.length == 0) {
                     $nuxt.$emit('disconnected')
+                    this.deleteLastProviderName()
                 }
             });
 

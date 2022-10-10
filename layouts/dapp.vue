@@ -4,7 +4,9 @@
     <section>
         <div class="app-width">
             <div class="grid">
-                <DappNav />
+                <div class="nav">
+                    <DappNav />
+                </div>
                 <Nuxt />
             </div>
         </div>
@@ -24,6 +26,7 @@ export default {
         }
     },
     mounted() {
+        this.$auth.checkAuth()
         $nuxt.$on('request-connect-wallet', () => {
             this.wcState = 'show'
         })
@@ -36,7 +39,7 @@ export default {
         $nuxt.$on('discard-new-post', () => {
             this.cpState = 'hide'
         })
-         $nuxt.$on('create-new-post-for', (data) => {
+        $nuxt.$on('create-new-post-for', (data) => {
             this.cpState = 'hide'
         })
     }
@@ -47,5 +50,12 @@ export default {
 .grid {
     display: grid;
     grid-template-columns: 300px auto;
+    gap: 50px;
+}
+
+.nav {
+    height: 100vh;
+    position: sticky;
+    top: 0;
 }
 </style>

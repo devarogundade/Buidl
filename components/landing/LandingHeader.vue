@@ -14,14 +14,14 @@
                 <p class="tab" v-on:click="showBuild = !showBuild">
                     Build <i class="fa-solid fa-angle-down"></i>
                 </p>
-                <router-link to="/find-talents">
+                <router-link to="/explore/talents">
                     <p class="tab">Find Talents</p>
                 </router-link>
-                <a href="#tokenomics">
-                    <p class="tab">Tokenomics</p>
+                <a href="#bdl-token">
+                    <p class="tab">BDL Token</p>
                 </a>
-                <a href="#blog">
-                    <p class="tab">Blog</p>
+                <a href="#faqs">
+                    <p class="tab">FAQs</p>
                 </a>
             </div>
 
@@ -34,29 +34,47 @@
                 </div>
             </div>
 
-            <div class="app" v-if="address == null" v-on:click="$auth.requestWalletConnection()">
-                Connect Wallet
-            </div>
-            <div class="app" v-else v-on:click="toggleProfile()">
-                <i class="fa-solid fa-wallet"></i>
-                {{
+            <div class="action">
+                <router-link to="/app">
+                    <div class="app enter" v-if="address != null">
+                        Enter App
+                    </div>
+                </router-link>
+
+                <div class="app" v-if="address == null" v-on:click="$auth.requestWalletConnection()">
+                    Connect Wallet
+                </div>
+                <div class="app" v-else v-on:click="toggleProfile()">
+                    <i class="fa-solid fa-wallet"></i>
+                    {{
             address.substring(0, 4) +
             "..." +
             address.substring(address.length - 4, address.length)
           }}
+                </div>
             </div>
 
             <div class="profile" v-if="showProfile">
-                <div class="item">
-                    My Profile <i class="fa-solid fa-user-tie"></i>
-                </div>
-                <div class="item">Projects <i class="fa-solid fa-hammer"></i></div>
-                <div class="item">Jobs <i class="fa-solid fa-briefcase"></i></div>
-                <div class="item">Post to Feeds <i class="fa-solid fa-plus"></i></div>
-                <div class="item">Notifications <i class="fa-solid fa-bell"></i></div>
-                <div class="item">
-                    Account settings <i class="fa-solid fa-gear"></i>
-                </div>
+                <router-link to="/app/profile">
+                    <div class="item">My Profile <i class="fa-solid fa-user-tie"></i></div>
+                </router-link>
+                <router-link to="/app/jobs">
+                    <div class="item">Jobs <i class="fa-solid fa-briefcase"></i></div>
+                </router-link>
+                <router-link to="/app/projects">
+                    <div class="item">Projects <i class="fa-solid fa-hammer"></i></div>
+                </router-link>
+                <a v-on:click="$nuxt.$emit('create-new-post')">
+                    <div class="item">Create new post <i class="fa-solid fa-plus"></i></div>
+                </a>
+                <router-link to="/app/notifications">
+                    <div class="item">Notifications <i class="fa-solid fa-bell"></i></div>
+                </router-link>
+                <router-link to="/app/settings">
+                    <div class="item">
+                        Account settings <i class="fa-solid fa-gear"></i>
+                    </div>
+                </router-link>
             </div>
         </div>
     </div>
@@ -108,7 +126,7 @@ section {
 .header {
     width: 100%;
     display: grid;
-    grid-template-columns: 150px auto 200px;
+    grid-template-columns: 150px auto 380px;
     column-gap: 40px;
     height: 100%;
     align-items: center;
@@ -119,6 +137,13 @@ section {
 }
 
 .logo img {
+    height: 100%;
+}
+
+.action {
+    display: grid;
+    grid-template-columns: auto 200px;
+    column-gap: 20px;
     height: 100%;
 }
 
@@ -135,6 +160,11 @@ section {
     font-size: 20px;
     column-gap: 10px;
     font-weight: 600;
+}
+
+.enter {
+    background: transparent;
+    border: #ffffff 2px solid;
 }
 
 .app:hover {
@@ -169,6 +199,7 @@ section {
     left: 380px;
     overflow: hidden;
     z-index: 10;
+    box-shadow: 6px 6px 0 #0176fb2a;
 }
 
 .build .item {
@@ -210,7 +241,7 @@ section {
     box-shadow: 6px 6px 0 #0176fb2a;
 }
 
-.profile .item {
+.profile a .item {
     padding: 0 30px;
     background: #2c2d3a;
     font-size: 16px;
@@ -223,21 +254,21 @@ section {
     color: #ffffff;
 }
 
-.profile .item:hover {
+.profile a .item:hover {
     background: #0177fb;
 }
 
-.profile .item {
+.profile a .item {
     padding-top: 20px;
     padding-bottom: 20px;
 }
 
-.profile .item:first-child {
+.profile a:first-child .item {
     padding-top: 40px;
     padding-bottom: 25px;
 }
 
-.profile .item:last-child {
+.profile a:last-child .item {
     padding-top: 25px;
     padding-bottom: 40px;
 }

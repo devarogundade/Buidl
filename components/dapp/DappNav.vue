@@ -2,34 +2,46 @@
 <div class="nav">
 
     <div class="items">
-        <div :class="tab == 1 ? 'item active' : 'item'" v-on:click="$nuxt.$emit('dapp-tab', 1)">
-            <i class="fa-solid fa-house"></i>
-            <p>Overview</p>
-        </div>
-        <div :class="tab == 2 ? 'item active' : 'item'" v-on:click="$nuxt.$emit('dapp-tab', 2)">
-            <i class="fa-solid fa-user-tie"></i>
-            <p>My Profile</p>
-        </div>
-        <div :class="tab == 3 ? 'item active' : 'item'" v-on:click="$nuxt.$emit('dapp-tab', 3)">
-            <i class="fa-solid fa-briefcase"></i>
-            <p>Jobs</p>
-        </div>
-        <div :class="tab == 4 ? 'item active' : 'item'" v-on:click="$nuxt.$emit('dapp-tab', 4)">
-            <i class="fa-solid fa-hammer"></i>
-            <p>Projects</p>
-        </div>
-        <div :class="tab == 5 ? 'item active' : 'item'" v-on:click="$nuxt.$emit('create-new-post')">
+        <router-link to="/app">
+            <div :class="$route.name == 'app' ? 'item active' : 'item'">
+                <i class="fa-solid fa-house"></i>
+                <p>Overview</p>
+            </div>
+        </router-link>
+        <router-link to="/app/profile">
+            <div :class="($route.name == 'app-profile' || $route.name == 'app-profile-edit') ? 'item active' : 'item'">
+                <i class="fa-solid fa-user-tie"></i>
+                <p>My Profile</p>
+            </div>
+        </router-link>
+        <router-link to="/app/jobs">
+            <div :class="$route.name == 'app-jobs'  ? 'item active' : 'item'">
+                <i class="fa-solid fa-briefcase"></i>
+                <p>Jobs</p>
+            </div>
+        </router-link>
+        <router-link to="/app/projects">
+            <div :class="($route.name == 'app-projects' || $route.name == 'app-projects-create')  ? 'item active' : 'item'">
+                <i class="fa-solid fa-hammer"></i>
+                <p>Projects</p>
+            </div>
+        </router-link>
+        <div :class="$route.name == 'app-create-post' ? 'item active' : 'item'" v-on:click="$nuxt.$emit('create-new-post')">
             <i class="fa-solid fa-plus"></i>
             <p>New post</p>
         </div>
-        <div :class="tab == 6 ? 'item active' : 'item'" v-on:click="$nuxt.$emit('dapp-tab', 6)">
-            <i class="fa-solid fa-bell"></i>
-            <p>Notifications</p>
-        </div>
-        <div :class="tab == 7 ? 'item active' : 'item'" v-on:click="$nuxt.$emit('dapp-tab', 7)">
-            <i class="fa-solid fa-gear"></i>
-            <p>Account settings</p>
-        </div>
+        <router-link to="/app/notifications">
+            <div :class="$route.name == 'app-notifications' ? 'item active' : 'item'">
+                <i class="fa-solid fa-bell"></i>
+                <p>Notifications</p>
+            </div>
+        </router-link>
+        <router-link to="/app/settings">
+            <div :class="$route.name == 'app-settings' ? 'item active' : 'item'">
+                <i class="fa-solid fa-gear"></i>
+                <p>Account settings</p>
+            </div>
+        </router-link>
     </div>
 </div>
 </template>

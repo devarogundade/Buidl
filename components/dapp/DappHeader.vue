@@ -2,9 +2,11 @@
 <section>
     <div class="app-width">
         <div class="header">
-            <div class="logo">
-                <img src="/images/logo.png" alt="logo" />
-            </div>
+            <router-link to="/app">
+                <div class="logo">
+                    <img src="/images/logo.png" alt="logo" />
+                </div>
+            </router-link>
 
             <div class="nav">
                 <div class="tabs">
