@@ -1,5 +1,6 @@
 <template>
-<div class="projects">
+<div class="project-settings">
+    <ProjectSettings />
 </div>
 </template>
 

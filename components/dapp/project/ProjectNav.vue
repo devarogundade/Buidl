@@ -28,8 +28,8 @@
         </router-link>
         <router-link :to="`/app/projects/${$route.params.project}/goals`">
             <div :class="$route.name == 'app-projects-project-goals' ? 'item active' : 'item'">
-                <i class="fa-solid fa-bullseye"></i>
-                <p>Goals</p>
+                <i class="fa-solid fa-road"></i>
+                <p>Roadmap</p>
             </div>
         </router-link>
         <router-link :to="`/app/projects/${$route.params.project}/settings`">

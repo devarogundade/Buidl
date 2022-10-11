@@ -1,5 +1,6 @@
 <template>
-<div class="projects">
+<div class="goals">
+  <Goals />
 </div>
 </template>
 
