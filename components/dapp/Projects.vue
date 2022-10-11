@@ -1,9 +1,17 @@
 <template>
 <div class="container">
     <div class="projects" v-if="projects.length > 0">
-        <div class="project" v-for="project in projects" :key="project.id"></div>
+        <router-link :to="`/app/projects/${project.id}`" v-for="project in projects" :key="project.id">
+            <div class="project scaleable">
+                <div class="detail">
+                    <img :src="project.image" alt="">
+                    <h3>{{ project.name }}</h3>
+                    <p>{{ project.description }}</p>
+                </div>
+            </div>
+        </router-link>
     </div>
-    <div class="explain">
+    <div class="explain" v-else>
         <h3>What's a project?</h3>
         <p>
             <b>Buidl project</b> provides you an environment with the handy tools you need to work
@@ -28,7 +36,13 @@
 export default {
     data() {
         return {
-            projects: []
+            projects: [{
+                id: 1,
+                name: 'Hackathon',
+                description: 'My first hackathon project.',
+                image: 'https://media.istockphoto.com/photos/modern-office-black-businesswoman-sitting-at-her-desk-working-on-a-picture-id1365824279?b=1&k=20&m=1365824279&s=170667a&w=0&h=3_YJ2lSlaQhoEgoroJ5E8PzwHFnyEKWZBHc_ZtTb1QY=',
+                tags: ''
+            }]
         }
     }
 }
@@ -50,7 +64,6 @@ export default {
 
 .project {
     width: 420px;
-    height: 280px;
     border-radius: 20px;
     background: #23242F;
 }
@@ -121,5 +134,31 @@ export default {
     border-radius: 50%;
     background: #FFFFFF;
     color: #0177fb;
+}
+
+.detail {
+    padding: 30px;
+    padding-top: 100px;
+    color: #FFFFFF;
+    user-select: none;
+}
+
+.detail img {
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.detail h3 {
+    font-size: 35px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.detail p {
+    font-size: 16px;
+    margin-top: 10px;
+    opacity: 0.8;
 }
 </style>

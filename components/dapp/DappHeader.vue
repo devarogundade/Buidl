@@ -10,17 +10,8 @@
 
             <div class="nav">
                 <div class="tabs">
-                    <p :class="tab == 1 ? 'active tab' : 'tab'" v-on:click="$nuxt.$emit('explore-tab', 1)">Dapp</p>
+                    <p :class="tab == 1 ? 'active tab' : 'tab'" v-on:click="$nuxt.$emit('explore-tab', 1)">Desk</p>
                     <p :class="tab == 2 ? 'active tab' : 'tab'" v-on:click="$nuxt.$emit('explore-tab', 2)">Collectibles</p>
-                </div>
-            </div>
-
-            <div class="build" v-if="showBuild">
-                <div class="item">
-                    Hire Professionals <i class="fa-solid fa-user-tie"></i>
-                </div>
-                <div class="item">
-                    Create Project <i class="fa-solid fa-hammer"></i>
                 </div>
             </div>
 
@@ -39,7 +30,7 @@
             <div class="profile" v-if="showProfile">
                 <router-link to="/">
                     <div class="item">
-                        Home <i class="fa-solid fa-right-from-bracket"></i>
+                        Leave Workspace <i class="fa-solid fa-right-from-bracket"></i>
                     </div>
                 </router-link>
                 <router-link to="/explore">

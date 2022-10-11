@@ -209,43 +209,6 @@ export default {
     color: #FFFFFF;
 }
 
-.signed {
-    display: grid;
-    grid-template-columns: auto 120px;
-    align-items: center;
-    width: 100%;
-    margin-top: 30px;
-    background: #3D392A;
-    border-radius: 8px;
-    padding: 10px 20px;
-    column-gap: 20px;
-}
-
-.signed p {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.02em;
-    color: #FFFFFF;
-}
-
-.signed .continue {
-    height: 100%;
-    height: 30px;
-    background: #E3BF36;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    user-select: none;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 22px;
-    letter-spacing: 0.02em;
-    color: #3D392A;
-}
-
 /* @media screen and (max-width: 700px) {
     .text h3 {
         font-size: 24px;

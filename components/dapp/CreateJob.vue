@@ -58,20 +58,7 @@
 
             <div class="edit">
                 <p class="label">About job</p>
-                <editor api-key="spv74bpcewqudcw2pw0vx3bnw4k5cib6cyzo3uj5h3agmybo" :init="{
-         height: 500,
-         menubar: false,
-          toolbar_mode: 'sliding',
-          contextmenu: 'link image table',
-          skin:  'oxide-dark',
-          content_css: 'dark',
-         editimage_cors_hosts: ['picsum.photos'],
-         plugins: [
-           'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons'
-         ],
-         toolbar:
-           'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl'
-       }" />
+                <HtmlEditor />
             </div>
 
             <div class="sign_up" v-if="!signing" v-on:click="register()">Pay 100 $BDL</div>
@@ -82,12 +69,7 @@
 </template>
 
 <script>
-import Editor from '@tinymce/tinymce-vue'
-
 export default {
-    components: {
-        'editor': Editor
-    },
     data() {
         return {
             // email
@@ -246,7 +228,7 @@ export default {
 }
 
 option {
-  color: #3D392A; 
+  color: #3D392A;
 }
 
 .form .filled {

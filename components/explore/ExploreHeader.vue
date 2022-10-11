@@ -37,7 +37,7 @@
             <div class="action">
                 <router-link to="/app">
                     <div class="app enter" v-if="address != null">
-                        Enter App
+                        Enter Workspace
                     </div>
                 </router-link>
 
@@ -126,7 +126,7 @@ section {
 .header {
     width: 100%;
     display: grid;
-    grid-template-columns: 380px auto 380px;
+    grid-template-columns: 380px auto 450px;
     column-gap: 40px;
     height: 100%;
     align-items: center;

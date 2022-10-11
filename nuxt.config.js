@@ -48,8 +48,12 @@ export default {
             '~/components',
             '~/components/landing',
             '~/components/dapp',
+            '~/components/dapp/project',
+            '~/components/dapp/token',
+            '~/components/dapp/tools',
             '~/components/explore',
             '~/components/collectibles',
+            '~/components/dialogs'
         ]
     },
     buildModules: [],
