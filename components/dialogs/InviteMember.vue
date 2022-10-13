@@ -9,11 +9,11 @@
         <div class="form">
             <div class="edit">
                 <p class="label">Enter username</p>
-                <input type="text" placeholder="@username" v-model="title">
+                <input type="text" placeholder="@username" v-model="username">
             </div>
         </div>
 
-        <div class="sign_up" v-if="!creating" v-on:click="$nuxt.$emit('sm')">Send</div>
+        <div class="sign_up" v-if="!inviting" v-on:click="$nuxt.$emit('sm')">Send</div>
         <div class="sign_up" v-else>Please wait..</div>
     </div>
 </div>
@@ -22,6 +22,12 @@
 <script>
 export default {
     props: ['state'],
+    data() {
+        return {
+            username: '',
+            inviting: false
+        }
+    },
     mounted() {
         $nuxt.$on('create-new-post-for', (data) => {
 
@@ -36,7 +42,7 @@ export default {
     top: 0;
     left: 0;
     background: #0176fb28;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(20px);
     height: 100%;
     width: 100%;
     z-index: 50;

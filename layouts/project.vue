@@ -20,6 +20,7 @@
     <WalletConnect :state="wcState" />
     <CreateNewTask :state="tkState" />
     <InviteMember :state="imState" />
+    <DrawBoard :state="dbState" />
 </div>
 </template>
 
@@ -29,7 +30,8 @@ export default {
         return {
             wcState: 'hide',
             tkState: 'hide',
-            imState: 'hide'
+            imState: 'hide',
+            dbState: 'hide',
         }
     },
     mounted() {
@@ -51,6 +53,12 @@ export default {
         })
         $nuxt.$on('discard-invite-member', () => {
             this.imState = 'hide'
+        })
+        $nuxt.$on('draw-board', (username) => {
+            this.dbState = 'show'
+        })
+        $nuxt.$on('discard-draw-board', () => {
+            this.dbState = 'hide'
         })
     }
 }

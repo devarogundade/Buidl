@@ -1,6 +1,5 @@
 <template>
 <section>
-    <!-- https://idle.finance/assets/img/bgCircles-desktop1.813090.svg -->
     <div class="bg"><img src="https://idle.finance/assets/img/Ellipse1.ee547e.png" alt=""></div>
     <div class="bg2"><img src="https://idle.finance/assets/img/Ellipse2.6ad222.png" alt=""></div>
     <div class="app-width">

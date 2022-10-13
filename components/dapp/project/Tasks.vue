@@ -61,24 +61,24 @@ export default {
     data() {
         return {
             tasks: [
-              // {
-              //       id: 1,
-              //       title: 'Write the code',
-              //       reward: 250,
-              //       date: null,
-              //       due: null,
-              //       status: 'no-member',
-              //       member: null
-              //   },
-              //   {
-              //       id: 2,
-              //       title: 'Sing the song',
-              //       reward: 100,
-              //       date: null,
-              //       due: null,
-              //       status: 'no-member',
-              //       member: null
-              //   }
+              {
+                    id: 1,
+                    title: 'Write the code',
+                    reward: 250,
+                    date: null,
+                    due: null,
+                    status: 'no-member',
+                    member: null
+                },
+                {
+                    id: 2,
+                    title: 'Sing the song',
+                    reward: 100,
+                    date: null,
+                    due: null,
+                    status: 'no-member',
+                    member: null
+                }
             ],
             members: [{
                     id: 1,

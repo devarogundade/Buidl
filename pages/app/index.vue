@@ -1,6 +1,6 @@
 <template>
-<div class="dapp">
-  <Dapp />
+<div class="overview">
+  <Overview />
 </div>
 </template>
 

@@ -5,6 +5,7 @@ export default {
 
     env: {
         INFURA_KRY: process.env.INFURA_KRY,
+        MORALIS_KEY: process.env.MORALIS_KEY
     },
 
 
@@ -41,7 +42,13 @@ export default {
         '@/static/common.css'
     ],
 
-    plugins: ['@/plugins/contracts.js', '@/plugins/auth.js'],
+    plugins: [
+        '@/plugins/contracts.js',
+        '@/plugins/moralis-apis/ipfs.js',
+        '@/plugins/moralis-apis/nft.js',
+        '@/plugins/moralis-apis/auth.js',
+        '@/plugins/moralis-apis/token.js',
+    ],
 
     components: {
         dirs: [
@@ -63,7 +70,7 @@ export default {
     ],
 
     axios: {
-        baseURL: '/',
+        baseURL: 'https://deep-index.moralis.io/api/v2/', // moralis base url
     },
 
     build: {}

@@ -35,7 +35,7 @@
             </div>
 
             <div class="action">
-                <router-link to="/app">
+                <router-link :to="user == null ? '/app/set-profile' : '/app'">
                     <div class="app enter" v-if="address != null">
                         Enter Workspace
                     </div>
@@ -83,6 +83,7 @@
 
 <script>
 export default {
+    props: ['user'],
     data() {
         return {
             showBuild: false,

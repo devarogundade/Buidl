@@ -116,7 +116,7 @@
     height: 25px;
     right: -17px;
     background-color: white;
-    border: 4px solid #FF9F55;
+    border: 4px solid #FF6370;
     top: 15px;
     border-radius: 50%;
     z-index: 1;

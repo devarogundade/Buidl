@@ -1,6 +1,6 @@
 <template>
 <div class="landing">
-    <LandingHeader />
+    <LandingHeader :user="user" />
     <Nuxt />
     <LandingFooter />
     <WalletConnect :state="wcState" />
@@ -11,7 +11,9 @@
 export default {
     data() {
         return {
-            wcState: 'hide'
+            wcState: 'hide',
+            user: {},
+            address: null
         }
     },
     mounted() {
@@ -22,6 +24,16 @@ export default {
         $nuxt.$on('release-connect-wallet', () => {
             this.wcState = 'hide'
         })
+        $nuxt.$on('connected', (data) => {
+            this.address = data.account
+            this.getUser();
+        })
+    },
+    methods: {
+        async getUser() {
+            const data = await this.$ipfs.getData("users", this.address)
+            this.user = data
+        }
     }
 }
 </script>

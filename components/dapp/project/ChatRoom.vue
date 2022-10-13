@@ -66,7 +66,7 @@
                 <h3>Tools</h3>
             </div>
             <div class="categories">
-                <div class="category scaleable">
+                <div class="category scaleable" v-on:click=" $nuxt.$emit('draw-board')">
                     <i class="fa-solid fa-compass-drafting"></i>
                     <h3>Draw</h3>
                 </div>

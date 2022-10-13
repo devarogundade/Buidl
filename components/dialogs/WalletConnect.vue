@@ -49,7 +49,7 @@ export default {
     top: 0;
     left: 0;
     background: #0176fb28;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(20px);
     height: 100%;
     width: 100%;
     z-index: 50;

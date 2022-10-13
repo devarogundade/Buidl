@@ -2,6 +2,7 @@
 <div class="index">
     <Hero />
     <Features />
+    <NFT />
 </div>
 </template>
 

@@ -14,6 +14,14 @@
 </section>
 </template>
 
+<script>
+export default {
+    async mounted() {
+
+    }
+}
+</script>
+
 <style scoped>
 .app-width {
     width: 1200px;
