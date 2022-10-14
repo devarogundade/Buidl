@@ -2,12 +2,14 @@
 <div class="container">
     <div class="ntfs">
         <div class="tabs">
-            <h3>Wallet</h3>
-            <h3 class="active">My NFTs</h3>
-            <h3>Created</h3>
+            <h3 :class="tab == 1 ? 'active' : ''" v-on:click="tab = 1">Wallet</h3>
+            <h3 :class="tab == 2 ? 'active' : ''" v-on:click="tab = 2">Owned NFTs</h3>
+            <h3 :class="tab == 3 ? 'active' : ''" v-on:click="tab = 3">My NFT</h3>
         </div>
 
-        <div class="items">
+        <div class="items" v-if="tab == 1"></div>
+
+        <div class="items" v-if="tab == 2">
             <div class="item" v-for="index in 4" :key="index">
                 <div class="image">
                     <img :src="`/images/nft${index}.jpg`" alt="">
@@ -30,9 +32,28 @@
                 </div>
             </div>
         </div>
+
+        <div class="create" v-if="tab == 3">
+            <div class="box">
+                <div class="no">
+                    <p>You have to stake a minimum of 1000 BDL Tokens to create your network NFT</p>
+                    <div class="action">Stake now</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            tab: 1
+        }
+    }
+}
+</script>
 
 <style scoped>
 .container {
@@ -49,6 +70,7 @@
     font-size: 40px;
     color: #FFFFFF;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .tabs .active {
@@ -101,21 +123,21 @@
 }
 
 .creator {
-  color: #FFFFFF;
+    color: #FFFFFF;
 }
 
 .creator .price {
-  font-size: 14px;
-  margin-top: 4px;
-  color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    margin-top: 4px;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .creator span {
-  font-size: 12px;
-  padding: 2px 6px;
-  border-radius: 6px;
-  color: #003f2c;
-  background: #53F3C3;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    color: #003f2c;
+    background: #53F3C3;
 }
 
 .action {
@@ -124,7 +146,7 @@
 }
 
 .item .stat {
-  text-align: right;
+    text-align: right;
 }
 
 .stake {

@@ -29,6 +29,14 @@
                         </div>
                         <div>
                             <p> <i class="fa-solid fa-dollar-sign"></i> <span>tip</span></p>
+                            <div class="tip">
+                                <div class="grid">
+                                    <p>1 BDL</p>
+                                    <p>4 BDL</p>
+                                    <p>10 BDL</p>
+                                </div>
+                                <div class="send">Send</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -181,5 +189,58 @@
     background: #1d225f;
     border: 1px #fff solid;
     font-size: 20px;
+}
+
+.options>div:last-child {
+    position: relative;
+}
+
+.options>div:last-child:hover .tip {
+    bottom: 0;
+}
+
+.tip {
+    background: #23242F;
+    position: absolute;
+    bottom: -200px;
+    right: 0;
+    width: 240px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.tip .grid {
+    display: grid;
+    height: 35px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.tip .grid p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    border: 1px #4F5069 solid;
+    border-radius: 6px;
+}
+
+.tip .send {
+    width: 100%;
+    height: 40px;
+    background: #0177fb;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-family: 'regular';
+    font-weight: 600;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
 }
 </style>
