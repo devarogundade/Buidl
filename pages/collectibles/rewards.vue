@@ -1,6 +1,6 @@
 <template>
 <div class="overview">
-  <CollectiblesNFT />
+  <Rewards />
 </div>
 </template>
 

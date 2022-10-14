@@ -1,7 +1,7 @@
 <template>
 <section>
     <div class="bg"><img src="https://idle.finance/assets/img/Ellipse1.ee547e.png" alt=""></div>
-    <div class="bg2"><img src="https://idle.finance/assets/img/Ellipse2.6ad222.png" alt=""></div>
+    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
     <div class="app-width">
         <div class="features">
             <div class="feature">
@@ -35,11 +35,11 @@
             <div class="feature">
                 <div class="text">
                     <h3>
-                        Built for growth
+                        Support and Earn
                     </h3>
                     <p>
-                        Get hired as a freelancer, grow your trust on work experience, expertise with
-                        the Buidl Trust tokens, start building your network.
+                       Buy NTFs created by other professionals to support their growth
+                       and earn from it.
                     </p>
                 </div>
                 <div class="image">
@@ -53,7 +53,7 @@
 
 <style scoped>
 section {
-    padding-top: 160px;
+    padding-top: 200px;
     position: relative;
     overflow: hidden;
 }
@@ -63,7 +63,7 @@ section {
     left: 0;
     top: 0;
     width: 600px;
-    opacity: 0.5;
+    opacity: 0.2;
 }
 
 .bg img {
@@ -75,7 +75,7 @@ section {
     right: -100px;
     bottom: -50px;
     width: 1000px;
-    opacity: 0.5;
+    opacity: 0.2;
     rotate: 90deg;
 }
 

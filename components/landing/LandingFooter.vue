@@ -10,7 +10,7 @@
                 <a href="/bdl-token">Moralis x Google Hackathon</a>
             </div>
             <div class="socials">
-                <a href="https://twitter.com/devarogundade" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+                <!-- <a href="https://twitter.com/devarogundade" target="_blank"><i class="fa-brands fa-twitter"></i></a> -->
                 <a href="https://github.com/devarogundade/Buidl" target="_blank"><i class="fa-brands fa-github"></i></a>
             </div>
         </div>

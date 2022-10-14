@@ -39,7 +39,7 @@
         <router-link to="/app/settings">
             <div :class="$route.name == 'app-settings' ? 'item active' : 'item'">
                 <i class="fa-solid fa-gear"></i>
-                <p>Account settings</p>
+                <p>Settings</p>
             </div>
         </router-link>
     </div>

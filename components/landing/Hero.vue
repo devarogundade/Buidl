@@ -4,7 +4,7 @@
         <div class="hero">
             <div class="grid">
                 <div class="text">
-                    <h3>Discover Talents. <br> Collaborate. <br> Get Jobs. </h3>
+                    <h3>Grow your Network. <br> Support to Earn. <br> Collaborate. </h3>
                     <p>Leveraging on the power of blockchain technology to build a truthy and robust ecosystem for professionals.</p>
                     <router-link to="/explore">
                         <div class="feeds">Feeds <i class="fa-solid fa-arrow-right"></i></div>

@@ -62,10 +62,42 @@
         </div>
         <div class="others">
             <div class="skills">
-
+                <div class="title">
+                    <h3>Skills</h3>
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+                <div class="list">
+                    <div class="item">JavaScript</div>
+                    <div class="item">Kotlin</div>
+                    <div class="item">React</div>
+                    <div class="item">Angular</div>
+                    <div class="item">NodeJs</div>
+                    <div class="item">PHP</div>
+                </div>
+                <p class="see-more">See all <i class="fa-solid fa-chevron-down"></i></p>
             </div>
             <div class="positions">
-
+                <div class="title">
+                    <h3>Experience</h3>
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+                <div class="list">
+                    <div class="item">
+                        <div>
+                            <p>Ex: Product Manager</p>
+                            <p>Facebook</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="item">
+                        <div>
+                            <p>Ex: Product Manager</p>
+                            <p>Facebook</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                </div>
+                <p class="see-more">See all <i class="fa-solid fa-chevron-down"></i></p>
             </div>
         </div>
     </div>
@@ -333,25 +365,78 @@ option {
 }
 
 .others {
-  position: sticky;
-  top: 120px;
-  height: fit-content;
+    position: sticky;
+    top: 120px;
+    height: fit-content;
 }
 
 .skills {
     width: 300px;
     border-radius: 10px;
-    height: 400px;
     background: #23242F;
     overflow: hidden;
 }
 
+.skills .title,
+.positions .title {
+    padding: 20px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+}
+
+.skills .item {
+    height: 55px;
+    padding: 15px 20px;
+    color: #b8c0e6;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px #3B3C4E solid;
+}
+
+.skills .item:first-child {
+    border-top: 1px #3B3C4E solid;
+}
+
+.skills .see-more,
+.positions .see-more {
+    padding: 20px;
+    text-align: center;
+    color: #3451f3;
+    font-size: 16px;
+    font-weight: 600;
+}
+
 .positions {
-  margin-top: 40px;
+    margin-top: 40px;
     width: 300px;
     border-radius: 10px;
-    height: 400px;
     background: #23242F;
     overflow: hidden;
+}
+
+.positions .item {
+    height: 65px;
+    padding: 15px 20px;
+    color: #b8c0e6;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    border-bottom: 1px #3B3C4E solid;
+}
+
+.positions .item:first-child {
+    border-top: 1px #3B3C4E solid;
+}
+
+.positions>div p:last-child {
+    font-size: 14px;
+    color: #616eb9;
+    font-weight: 600;
 }
 </style>

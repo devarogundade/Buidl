@@ -10,8 +10,8 @@
 
             <div class="nav">
                 <div class="tabs">
-                    <p :class="tab == 1 ? 'active tab' : 'tab'" v-on:click="$nuxt.$emit('explore-tab', 1)">Desk</p>
-                    <p :class="tab == 2 ? 'active tab' : 'tab'" v-on:click="$nuxt.$emit('explore-tab', 2)">Collectibles</p>
+                    <router-link to="/app"><p :class="$route.name.startsWith('app') ? 'active tab' : 'tab'">Desk</p></router-link>
+                    <router-link to="/collectibles"><p :class="$route.name.startsWith('collectibles') ? 'active tab' : 'tab'">Collectibles</p></router-link>
                 </div>
             </div>
 

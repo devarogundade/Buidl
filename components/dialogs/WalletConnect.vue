@@ -22,7 +22,7 @@
         </div>
 
         <div class="wallet" v-on:click="$auth.connectWallet('coinbase')">
-            <img src="/images/bnb.png" alt="">
+            <img src="/images/coinbase.jpg" alt="">
             <p>Coinbase</p>
         </div>
     </div>
