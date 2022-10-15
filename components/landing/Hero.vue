@@ -58,7 +58,7 @@
                         <p>Trusted to the community</p>
                     </div>
                     <div class="stat">
-                        <h3>3820+</h3>
+                        <h3>32.8k+</h3>
                         <p>Active students</p>
                     </div>
                 </div>

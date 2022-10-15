@@ -36,7 +36,7 @@
                         Get an on-chain certificate.
                     </h3>
                     <p>
-                        An on-chain certificate guarantees your true ownership of your certificate. <br> <br> Certificates are form of
+                        An on-chain certificate guarantees the true ownership of your certificate. <br> <br> Certificates are in form of
                         NFTs that are not tradeable. <br> <br> Learn more about <a href="">ERC4973 <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                     </p>
                 </div>
