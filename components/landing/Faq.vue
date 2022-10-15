@@ -26,18 +26,18 @@ export default {
         return {
             show: -1,
             faqs: [{
-                    question: 'When can I buy Lucky Cats tokens?',
-                    answer: 'You will be able to buy Lucky Cats tokens on the 27th of September 2022 at Public fair Launch.'
+                    question: 'What is BDL Token?',
+                    answer: 'BDL Token is the platform currency required for purchasing courses, staking and reward bounties.'
                 },
                 {
-                    question: 'Where can I buy Lucky Cats token?',
-                    answer: 'You can buy Lucky Cats on Gempad on the 27th of September 2022 during Fair launch.'
+                    question: 'What if I don\'t like a course?',
+                    answer: 'Payment for courses are charged based on your progress and date of purchased. So if you stopped at 20% of the course before you cancelling 80% of the price will\'be refunded to you. Or you may not be able to reject the course after 2 weeks.'
                 }, {
-                    question: 'What is the contract address?',
-                    answer: 'Contract address is 0x683bbaa70fd8e2cf62617e48b100a7609ee48946.'
+                    question: 'In what format are certificates?',
+                    answer: 'Certificates are in form of ERC4973 a non tradeable and fungible token. This gives students true ownership of their certificate.'
                 }, {
-                    question: 'What slippage should I use?',
-                    answer: 'We recommend going with 5% slippage, the slippage tax deduction will feed our jackpot pools and our liquidity.'
+                    question: 'What is required to become an Instructor?',
+                    answer: 'Instructors are required to stake 1000 $BDL tokens for a duration of 1year.'
                 }
             ]
         }

@@ -3,12 +3,12 @@
     <div class="app-width">
         <div class="nft">
             <div class="image">
-                <img src="/images/nft-sample.png" alt="">
+                <img src="/images/instructor.png" alt="">
             </div>
             <div class="text">
-                <h3>Purchase Talents NFT to Unlocked Premium Perks and Invest on their Growth.</h3>
+                <h3>Get your courses to reach over 3000 students around the world.</h3>
                 <router-link to="/collectibles">
-                    <div class="action">NFTs Gallery</div>
+                    <div class="action">Become an Instructor</div>
                 </router-link>
             </div>
         </div>
@@ -57,7 +57,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 220px;
+    width: 250px;
     font-family: 'regular';
     font-weight: 600;
     color: black;

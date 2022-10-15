@@ -2,8 +2,8 @@
 <div class="container">
     <div class="login">
         <div class="text">
-            <h3>Create new project</h3>
-            <p>Enter your project details.</p>
+            <h3>Create a new course</h3>
+            <p>Transaction fee is required to create a new course.</p>
         </div>
 
         <div class="signed" v-if="user">
@@ -129,13 +129,11 @@ export default {
 
 .text h3 {
     font-size: 34px;
-    text-transform: capitalize;
-    font-family: 'Poppins', sans-serif;
     color: #FFFFFF;
+    font-weight: 600;
 }
 
 .text p {
-    font-weight: 600;
     font-size: 18px;
     text-align: center;
     color: #ffffffce;

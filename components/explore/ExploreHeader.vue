@@ -11,33 +11,18 @@
             <div class="nav">
                 <div class="tabs">
                     <router-link to="/explore">
-                        <p :class="$route.name == 'explore' ? 'active tab' : 'tab'">Feeds</p>
+                        <p :class="($route.name == 'explore' || $route.name == 'explore-courses-course') ? 'active tab' : 'tab'">Courses</p>
                     </router-link>
-                    <router-link to="/explore/talents">
-                        <p :class="$route.name == 'explore-talents' ? 'active tab' : 'tab'">Talents</p>
+                    <router-link to="/explore/instructors">
+                        <p :class="$route.name == 'explore-instructors' ? 'active tab' : 'tab'">Instructors</p>
                     </router-link>
-                    <router-link to="/explore/jobs">
-                        <p :class="$route.name == 'explore-jobs' ? 'active tab' : 'tab'">Jobs</p>
-                    </router-link>
-                    <router-link to="/explore/projects">
-                        <p :class="$route.name == 'explore-projects' ? 'active tab' : 'tab'">Projects</p>
-                    </router-link>
-                </div>
-            </div>
-
-            <div class="build" v-if="showBuild">
-                <div class="item">
-                    Hire Professionals <i class="fa-solid fa-user-tie"></i>
-                </div>
-                <div class="item">
-                    Create Project <i class="fa-solid fa-hammer"></i>
                 </div>
             </div>
 
             <div class="action">
                 <router-link to="/app">
                     <div class="app enter" v-if="address != null">
-                        Enter Workspace
+                        Enter App
                     </div>
                 </router-link>
 
@@ -85,7 +70,6 @@
 export default {
     data() {
         return {
-            showBuild: false,
             showProfile: false,
             address: null,
             tab: 1
@@ -117,6 +101,7 @@ section {
     left: 0;
     top: 0;
     align-items: center;
+    backdrop-filter: blur(20px);
 }
 
 .app-width {
@@ -126,7 +111,7 @@ section {
 .header {
     width: 100%;
     display: grid;
-    grid-template-columns: 380px auto 450px;
+    grid-template-columns: 380px auto 400px;
     column-gap: 40px;
     height: 100%;
     align-items: center;

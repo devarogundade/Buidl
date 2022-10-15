@@ -11,24 +11,24 @@
         <router-link to="/app/profile">
             <div :class="($route.name == 'app-profile' || $route.name == 'app-profile-edit') ? 'item active' : 'item'">
                 <i class="fa-solid fa-user-tie"></i>
-                <p>My Profile</p>
-            </div>
-        </router-link>
-        <router-link to="/app/jobs">
-            <div :class="$route.name == 'app-jobs'  ? 'item active' : 'item'">
-                <i class="fa-solid fa-briefcase"></i>
-                <p>Jobs</p>
+                <p>Students</p>
             </div>
         </router-link>
         <router-link to="/app/projects">
             <div :class="($route.name == 'app-projects' || $route.name == 'app-projects-create')  ? 'item active' : 'item'">
                 <i class="fa-solid fa-hammer"></i>
-                <p>Projects</p>
+                <p>Courses</p>
+            </div>
+        </router-link>
+        <router-link to="/app/jobs">
+            <div :class="$route.name == 'app-jobs'  ? 'item active' : 'item'">
+                <i class="fa-solid fa-briefcase"></i>
+                <p>Revenue</p>
             </div>
         </router-link>
         <div :class="($route.name == 'app-create-post-feed' || $route.name == 'app-create-post-job') ? 'item active' : 'item'" v-on:click="$nuxt.$emit('create-new-post')">
             <i class="fa-solid fa-plus"></i>
-            <p>New post</p>
+            <p>Broadcast</p>
         </div>
         <router-link to="/app/notifications">
             <div :class="$route.name == 'app-notifications' ? 'item active' : 'item'">

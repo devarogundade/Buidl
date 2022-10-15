@@ -1,6 +1,7 @@
 <template>
 <div class="index">
     <Hero />
+    <TrendingCourses />
     <Features />
     <Faq />
     <NFT />

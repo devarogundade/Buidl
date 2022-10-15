@@ -1,6 +1,6 @@
 <template>
   <div class="explore">
-    <Feeds />
+    <Courses />
   </div>
 </template>
 

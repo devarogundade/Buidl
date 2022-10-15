@@ -1,13 +1,15 @@
 <template>
 <section>
+    <div class="bg"><img src="https://idle.finance/assets/img/Ellipse1.ee547e.png" alt=""></div>
+    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
     <div class="app-width">
         <div class="hero">
             <div class="grid">
                 <div class="text">
-                    <h3>Grow your Network. <br> Support to Earn. <br> Collaborate. </h3>
-                    <p>Leveraging on the power of blockchain technology to build a truthy and robust ecosystem for professionals.</p>
+                    <h3>Learn without limits. <br> <span>Buidl</span> a career.</h3>
+                    <p>Building a Borderless, Permissionless and Decentralized Community of Instructors and Students.</p>
                     <router-link to="/explore">
-                        <div class="feeds">Feeds <i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="feeds">Courses <i class="fa-solid fa-arrow-right"></i></div>
                     </router-link>
                 </div>
                 <div class="image">
@@ -48,8 +50,8 @@
                 </div>
                 <div class="stats">
                     <div class="stat">
-                        <h3>32k+</h3>
-                        <p>Professionals</p>
+                        <h3>2.2k+</h3>
+                        <p>Verified Instructors</p>
                     </div>
                     <div class="stat">
                         <h3>1,937,392 $BDL</h3>
@@ -57,7 +59,7 @@
                     </div>
                     <div class="stat">
                         <h3>3820+</h3>
-                        <p>Created projects</p>
+                        <p>Active students</p>
                     </div>
                 </div>
             </div>
@@ -91,6 +93,31 @@ section {
     overflow: hidden;
 }
 
+.bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 500px;
+    opacity: 0.15;
+}
+
+.bg img {
+    width: 100%;
+}
+
+.bg2 {
+    position: absolute;
+    right: 100px;
+    bottom: -150px;
+    width: 1000px;
+    opacity: 0.15;
+    rotate: 90deg;
+}
+
+.bg2 img {
+    width: 100%;
+}
+
 .swiper {
     width: 350px;
     height: 500px;
@@ -112,9 +139,9 @@ section {
 
 section {
     min-height: 100vh;
-    background-image: url('/images/hero-bg.png');
     background-repeat: no-repeat;
     background-size: cover;
+    background-image: #001731;
 }
 
 .hero {
@@ -143,6 +170,12 @@ section {
     line-height: 60px;
     font-family: 'Poppins', sans-serif;
     color: #fff;
+}
+
+.text h3 span {
+  background: -webkit-linear-gradient(#e3ffe1, rgb(23, 236, 23));
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .text p {

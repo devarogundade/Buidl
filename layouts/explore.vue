@@ -43,10 +43,10 @@
 <style>
 .bg {
     position: fixed;
-    left: 0;
-    top: 0;
+    left: -150px;
+    top: -150px;
     width: 600px;
-    opacity: 0.5;
+    opacity: 0.2;
     z-index: -1;
 }
 

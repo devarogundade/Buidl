@@ -12,10 +12,10 @@
                     <p class="tab">Explore</p>
                 </router-link>
                 <p class="tab" v-on:click="showBuild = !showBuild">
-                    Build <i class="fa-solid fa-angle-down"></i>
+                    Teach <i class="fa-solid fa-angle-down"></i>
                 </p>
                 <router-link to="/explore/talents">
-                    <p class="tab">Find Talents</p>
+                    <p class="tab">Instructors</p>
                 </router-link>
                 <a href="#bdl-token">
                     <p class="tab">BDL Token</p>
@@ -27,7 +27,7 @@
 
             <div class="build" v-if="showBuild">
                 <div class="item">
-                    Hire Professionals <i class="fa-solid fa-user-tie"></i>
+                    Become an Instructor <i class="fa-solid fa-user-tie"></i>
                 </div>
                 <div class="item">
                     Create Project <i class="fa-solid fa-hammer"></i>
@@ -37,7 +37,7 @@
             <div class="action">
                 <router-link :to="user == null ? '/app/set-profile' : '/app'">
                     <div class="app enter" v-if="address != null">
-                        Enter Workspace
+                        Enter App
                     </div>
                 </router-link>
 
@@ -127,7 +127,7 @@ section {
 .header {
     width: 100%;
     display: grid;
-    grid-template-columns: 150px auto 450px;
+    grid-template-columns: 150px auto 400px;
     column-gap: 40px;
     height: 100%;
     align-items: center;

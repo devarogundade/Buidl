@@ -1,49 +1,47 @@
 <template>
 <section>
-    <div class="bg"><img src="https://idle.finance/assets/img/Ellipse1.ee547e.png" alt=""></div>
-    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
     <div class="app-width">
         <div class="features">
             <div class="feature">
                 <div class="text">
                     <h3>
-                        Built for growth
+                        Incentives for learning.
                     </h3>
                     <p>
-                        Get hired as a freelancer, grow your trust on work experience, expertise with
-                        the Buidl Trust tokens, start building your network.
+                        Get a tradeable NFT on course completion. NFTs can be traded to cryptocurrency or
+                        use for a coupon for your next course.
                     </p>
                 </div>
                 <div class="image">
-                    <img src="https://www.talentprotocol.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.966f73d0.png&w=1080&q=75" alt="">
+                    <img src="/images/incentives.png" alt="">
                 </div>
             </div>
             <div class="feature">
                 <div class="image">
-                    <img src="https://www.talentprotocol.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnotifications.64dc1155.png&w=1080&q=75" alt="">
+                    <img src="/images/inter_payment.png" alt="">
                 </div>
                 <div class="text">
                     <h3>
-                        Work together!
+                        Payment is not a barrier.
                     </h3>
                     <p>
-                        Collaborate with other professionals that share similar goals with you
-                        or build your team for your next hackethon project.
+                        Eliminate the limitation of banks and international
+                        payments using the Buidl cryptocurrency  ($BDL Token) instead.
                     </p>
                 </div>
             </div>
             <div class="feature">
                 <div class="text">
                     <h3>
-                        Support and Earn
+                        Get an on-chain certificate.
                     </h3>
                     <p>
-                       Buy NTFs created by other professionals to support their growth
-                       and earn from it.
+                        An on-chain certificate guarantees your true ownership of your certificate. <br> <br> Certificates are form of
+                        NFTs that are not tradeable. <br> <br> Learn more about <a href="">ERC4973 <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                     </p>
                 </div>
                 <div class="image">
-                    <img src="https://www.talentprotocol.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.966f73d0.png&w=1080&q=75" alt="">
+                    <img src="/images/certificate.png" alt="">
                 </div>
             </div>
         </div>
@@ -53,36 +51,14 @@
 
 <style scoped>
 section {
-    padding-top: 200px;
+    padding: 160px 0;
     position: relative;
+    background-image: url('https://idle.finance/assets/img/bgCircles-desktop1.813090.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
     overflow: hidden;
 }
-
-.bg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 600px;
-    opacity: 0.2;
-}
-
-.bg img {
-    width: 100%;
-}
-
-.bg2 {
-    position: absolute;
-    right: -100px;
-    bottom: -50px;
-    width: 1000px;
-    opacity: 0.2;
-    rotate: 90deg;
-}
-
-.bg2 img {
-    width: 100%;
-}
-
 
 .features {
     display: flex;
@@ -124,5 +100,10 @@ section {
     margin-top: 30px;
     font-weight: 600;
     opacity: 0.8;
+}
+
+.text a {
+    color: #50a2ff;
+    text-decoration: underline;
 }
 </style>
