@@ -13,16 +13,66 @@
                     </div>
                     <h3 class="title">The Complete JavaScript Course 2022: From Zero to Expert!</h3>
                     <p class="subtitle">The modern JavaScript course for everyone! Master JavaScript with projects, challenges and theory. Many courses in one!</p>
+                    <div class="stat">
+                        <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; <router-link to="">(128 ratings)</router-link>
+                        </p>
+                        <p>•</p>
+                        <p class="n_students">2,435 students</p>
+                    </div>
+                    <p class="instructor"> <img src="/images/nft2.jpg" alt=""> Dr. Angela Yu</p>
+                    <div class="specs">
+                        <p class="last_update"><i class="fa-solid fa-calendar-days"></i> 12th, Jun 2020</p>
+                        <p class="languages"><i class="fa-solid fa-globe"></i> English and French</p>
+                    </div>
                 </div>
             </div>
 
             <div class="body">
                 <div class="grid">
-                    <div class="detail"></div>
+                    <div class="content">
+                        <h3 class="title">Course content</h3>
+                        <div class="desc">21 sections &nbsp; • &nbsp; 6 Tests &nbsp; • &nbsp; 6 hours length</div>
+
+                        <div class="accordions">
+                            <div class="accordion" v-for="index in 6" :key="index">
+                                <div class="front" v-on:click="openAccordion(index)">
+                                    <div>
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                        <p>Welcome, Introduction</p>
+                                    </div>
+                                    <p>1 test • 4min</p>
+                                </div>
+                                <div class="back" v-if="selectedSection == index">
+                                    <video src=""></video>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="buy">
                         <div class="preview">
                             <img src="https://www.simplilearn.com/ice9/webinar_thum_image/JavaScript_Tutorial.jpg" />
                             <i class="fa-solid fa-play"></i>
+                        </div>
+                        <div class="tag">Preview</div>
+                        <div class="coupon">
+                            <p>Apply Coupon</p>
+
+                            <div class="selector">
+                                <div class="nft_row">
+                                    <img src="/images/nft1.jpg" alt="">
+                                    <div class="name">
+                                        <p>Kosi NFT #093</p>
+                                        <p>-20% off</p>
+                                    </div>
+                                </div>
+                                <div class="options"></div>
+                            </div>
+
+                            <div class="action">
+                                <div class="pay">Buy Course</div>
+                                <i class="fa-solid fa-heart-circle-plus"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -32,6 +82,25 @@
 </section>
 </template>
 
+<script>
+export default {
+    data() {
+        return {
+            selectedSection: 1
+        }
+    },
+    methods: {
+        openAccordion(index) {
+            if (this.selectedSection == index) {
+                this.selectedSection = -1
+            } else {
+                this.selectedSection = index
+            }
+        }
+    }
+}
+</script>
+
 <style scoped>
 .course {
     padding-top: 100px;
@@ -39,7 +108,6 @@
 }
 
 .head {
-    height: 400px;
     width: 100%;
     background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
     padding: 40px;
@@ -67,7 +135,7 @@
     font-size: 12px;
 }
 
-.title {
+.wrapper .title {
     color: #FFFFFF;
     margin-top: 20px;
     font-size: 40px;
@@ -90,13 +158,15 @@
     position: relative;
 }
 
-.detail {
-    width: 1000px;
-    height: 150vh;
+.content {
+    width: 1200px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .buy {
-    height: 60vh;
     width: 400px;
     background: #2C2D3A;
     position: absolute;
@@ -132,5 +202,212 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.stat {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 16px;
+    color: #a0a0a0;
+}
+
+.ratings a {
+    color: #0177fb;
+    text-decoration: underline;
+}
+
+.ratings i {
+    color: rgb(255, 187, 0);
+}
+
+.instructor {
+    font-size: 16px;
+    margin-top: 20px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.instructor img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+
+.specs {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #fff;
+    opacity: 0.6;
+}
+
+.specs i {
+    margin-right: 4px;
+}
+
+.content .title {
+    font-size: 26px;
+    color: #fff;
+    width: 1000px;
+    max-width: 100%;
+}
+
+.content .desc {
+    display: flex;
+    align-items: center;
+    color: #a0a0a0;
+    margin-top: 10px;
+    font-size: 16px;
+    width: 1000px;
+    max-width: 100%;
+}
+
+.accordions {
+    width: 1000px;
+    max-width: 100%;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.accordion {
+    background: #2C2D3A;
+    overflow: hidden;
+    border-radius: 10px;
+    user-select: none;
+}
+
+.accordion .front {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding: 0 20px;
+    background: #242531;
+    cursor: pointer;
+}
+
+.front div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #FFFFFF;
+    font-size: 18px;
+}
+
+.front>p {
+    background: #0177fb;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #FFFFFF;
+}
+
+.back {
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.back video {
+    width: 400px;
+    height: 400px;
+}
+
+.buy .tag {
+    margin: 20px;
+    width: fit-content;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: #09203f;
+    color: #0177fb;
+    font-size: 14px;
+}
+
+.coupon {
+    padding: 0 20px;
+}
+
+.nft_row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nft_row img {
+    width: 30px;
+    height: 40px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.nft_row .name p:first-child {
+    font-size: 16px;
+    color: #a0a0a0;
+}
+
+.nft_row .name p:last-child {
+    background: #FF6370;
+    padding: 2px 6px;
+    border-radius: 6px;
+    color: #380005;
+    margin-top: 4px;
+    width: fit-content;
+    font-size: 12px;
+}
+
+.coupon>p {
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.selector {
+    padding: 10px;
+    border-radius: 6px;
+    background: #242531;
+}
+
+.action {
+    display: grid;
+    grid-template-columns: auto 50px;
+    column-gap: 10px;
+    height: 40px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    user-select: none;
+}
+
+.action .pay {
+    background: #0177fb;
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.action i {
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px rgb(255, 209, 5) solid;
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff;
 }
 </style>

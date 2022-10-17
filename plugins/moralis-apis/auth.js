@@ -8,10 +8,10 @@ export default ({ app }, inject) => {
         accounts: [],
         lastProviderName: '',
 
-        checkAuth: function() {
+        checkAuth: async function() {
             this.lastProviderName = this.getLastProviderName()
             if (this.lastProviderName != '') {
-                this.connectWallet(this.lastProviderName)
+                await this.connectWallet(this.lastProviderName)
             }
         },
 

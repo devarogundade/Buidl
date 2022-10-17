@@ -16,8 +16,7 @@ export default {
             address: null
         }
     },
-    mounted() {
-        this.$auth.checkAuth()
+    async mounted() {
         $nuxt.$on('request-connect-wallet', () => {
             this.wcState = 'show'
         })
@@ -27,12 +26,22 @@ export default {
         $nuxt.$on('connected', (data) => {
             this.address = data.account
             this.getUser();
+            this.initContracts()
         })
+
+        await this.$auth.checkAuth()
+        this.initContracts()
     },
     methods: {
         async getUser() {
             const data = await this.$ipfs.getData("users", this.address)
             this.user = data
+        },
+        initContracts() {
+            if (this.$auth.provider != null) {
+                console.log(this.$auth.provider);
+                this.$contracts.init(this.$auth.provider)
+            }
         }
     }
 }

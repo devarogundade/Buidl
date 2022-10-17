@@ -1,65 +1,38 @@
-// import Vue from "vue"
-// import contract from 'truffle-contract'
-// import threeHRJson from "../../build/ThreeHr.json"
-// import companyJson from "../../build/Company.json"
-// import thrTokenJson from "../../build/THRToken.json"
-// import tokenJson from "../../build/Token.json"
+import Vue from "vue"
+import contract from 'truffle-contract'
+import BuidlContract from "/contracts/Buidl.json"
 
-// const Contracts = {
-//     isInit: false,
-//     thrHRContract: null,
-//     companyContract: null,
-//     thrTokenContract: null,
-//     tokenContract: null,
+const Contracts = {
+    isInit: false,
+    buidlContract: null,
 
-//     init: async function() {
-//         const thrHRContract = contract(threeHRJson)
-//         const companyContract = contract(companyJson)
-//         const thrTokenContract = contract(thrTokenJson)
-//         const tokenContract = contract(tokenJson)
+    init: async function(provider) {
+        console.log('json', buidlContract);
 
-//         thrHRContract.setProvider(window.ethereum)
-//         companyContract.setProvider(window.ethereum)
-//         thrTokenContract.setProvider(window.ethereum)
-//         tokenContract.setProvider(window.ethereum)
+        const buidlContract = contract(BuidlContract)
 
-//         try {
-//             await thrHRContract.deployed().then(instance => {
-//                 Contracts.thrHRContract = instance
-//             })
+        buidlContract.setProvider(provider)
 
-//             await companyContract.deployed().then(instance => {
-//                 Contracts.companyContract = instance
-//             })
+        try {
+            await buidlContract.deployed().then(instance => {
+                Contracts.buidlContract = instance
+            })
 
-//             await thrTokenContract.deployed().then(instance => {
-//                 Contracts.thrTokenContract = instance
-//             })
+            this.isInit = true
+        } catch (error) {
+            this.isInit = false
+            console.log(error);
+        }
+    }
+}
 
-//             await tokenContract.deployed().then(instance => {
-//                 Contracts.tokenContract = instance
-//             })
+export default ({ app }, inject) => {
+    inject('contracts', Vue.observable({
+        buidlContract: Contracts.buidlContract,
 
-//             this.isInit = true
-//         } catch (error) {
-
-//         }
-//     }
-// }
-
-// export default ({ app }, inject) => {
-//     inject('contracts', Vue.observable({
-//         thrHRContract: Contracts.thrHRContract,
-//         companyContract: Contracts.companyContract,
-//         thrTokenContract: Contracts.thrTokenContract,
-//         tokenContract: Contracts.tokenContract,
-
-//         init: async function() {
-//             await Contracts.init();
-//             this.thrHRContract = Contracts.thrHRContract
-//             this.companyContract = Contracts.companyContract
-//             this.thrTokenContract = Contracts.thrTokenContract
-//             this.tokenContract = Contracts.tokenContract
-//         }
-//     }))
-// }
+        init: async function(provider) {
+            await Contracts.init(provider)
+            this.buidlContract = Contracts.buidlContract
+        }
+    }))
+}
