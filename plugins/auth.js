@@ -99,9 +99,10 @@ export default ({ app }, inject) => {
 
         connectToMetaMask: async function() {
             try {
-                this.provider = await ethereum.request({
+                await ethereum.request({
                     method: 'eth_requestAccounts'
                 });
+                this.provider = ethereum
 
                 this.setUpAccountListeners(ethereum)
 

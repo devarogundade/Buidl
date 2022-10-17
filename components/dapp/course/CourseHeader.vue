@@ -10,8 +10,8 @@
 
             <div class="nav">
                 <div class="tabs">
-                    <router-link to="/app/projects">
-                        <p class="tab"><i class="fa-solid fa-arrow-left"></i> Projects</p>
+                    <router-link to="/app/courses">
+                        <p class="tab"><i class="fa-solid fa-arrow-left"></i> Courses</p>
                     </router-link>
                     <p class="active tab">Hackation</p>
                 </div>

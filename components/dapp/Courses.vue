@@ -1,7 +1,7 @@
 <template>
 <div class="container">
     <div class="projects" v-if="projects.length > 0">
-        <router-link :to="`/app/projects/${project.id}`" v-for="project in projects" :key="project.id">
+        <router-link :to="`/app/courses/${project.id}`" v-for="project in projects" :key="project.id">
             <div class="project scaleable">
                 <div class="detail">
                     <img :src="project.image" alt="">

@@ -1,51 +1,109 @@
 <template>
-<div class="explore">
-    <div class="bg"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
-    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-bottomright.svg" alt=""></div>
-    <ExploreHeader />
-    <Nuxt />
-    <LandingFooter />
+<div class="app">
+    <!-- <div class="bg"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
+    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-bottomright.svg" alt=""></div> -->
+
+    <div class="bg"><img src="https://idle.finance/assets/img/Ellipse1.ee547e.png" alt=""></div>
+    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
+    <CourseHeader />
+    <section>
+        <div class="app-width">
+            <div class="grid">
+                <div class="nav">
+                    <CourseNav />
+                </div>
+                <Nuxt />
+            </div>
+        </div>
+    </section>
+    <DappFooter />
     <WalletConnect :state="wcState" />
-    <CreateNewPost :state="cpState" />
+    <CreateNewTask :state="tkState" />
+    <InviteMember :state="imState" />
+    <DrawBoard :state="dbState" />
 </div>
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                wcState: 'hide',
-                cpState: 'hide',
-            }
-        },
-        mounted() {
-            this.$auth.checkAuth()
-            $nuxt.$on('request-connect-wallet', () => {
-                this.wcState = 'show'
-            })
-            $nuxt.$on('release-connect-wallet', () => {
-                this.wcState = 'hide'
-            })
-            $nuxt.$on('create-new-post', () => {
-                this.cpState = 'show'
-            })
-            $nuxt.$on('discard-new-post', () => {
-                this.cpState = 'hide'
-            })
-            $nuxt.$on('create-new-post-for', (data) => {
-                this.cpState = 'hide'
-            })
+export default {
+    data() {
+        return {
+            wcState: 'hide',
+            tkState: 'hide',
+            imState: 'hide',
+            dbState: 'hide',
+            loading: true,
         }
+    },
+    async mounted() {
+        $nuxt.$on('request-connect-wallet', () => {
+            this.wcState = 'show'
+        })
+        $nuxt.$on('release-connect-wallet', () => {
+            this.wcState = 'hide'
+        })
+        $nuxt.$on('create-new-task', () => {
+            this.tkState = 'show'
+        })
+        $nuxt.$on('discard-new-task', () => {
+            this.tkState = 'hide'
+        })
+        $nuxt.$on('invite-member', (username) => {
+            this.imState = 'show'
+        })
+        $nuxt.$on('discard-invite-member', () => {
+            this.imState = 'hide'
+        })
+        $nuxt.$on('draw-board', (username) => {
+            this.dbState = 'show'
+        })
+        $nuxt.$on('discard-draw-board', () => {
+            this.dbState = 'hide'
+        })
+
+        $nuxt.$on('connected', (data) => {
+            this.$contracts.init(this.$auth.provider, this.$auth.accounts)
+        })
+
+        $nuxt.$on('user-status', (status) => {
+            if (status == 'loading') {
+                this.loading = true
+            }
+
+            if (status == 'available') {
+                this.loading = false
+            }
+
+            if (status == 'not-available') {
+                this.$router.push('/register')
+            }
+        })
+
+        await this.$auth.checkAuth()
+        this.$contracts.init(this.$auth.provider, this.$auth.accounts)
     }
+}
 </script>
 
-<style>
+<style scoped>
+.grid {
+    display: grid;
+    grid-template-columns: 300px auto;
+    gap: 50px;
+}
+
+.nav {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
 .bg {
     position: fixed;
-    left: -150px;
-    top: -150px;
+    left: 0;
+    top: 0;
     width: 600px;
-    opacity: 0.2;
+    opacity: 0.3;
     z-index: -1;
 }
 
@@ -56,9 +114,9 @@
 .bg2 {
     position: fixed;
     right: -100px;
-    bottom: 0;
+    bottom: -200px;
     width: 600px;
-    opacity: 0.5;
+    opacity: 0.3;
     rotate: 90deg;
     z-index: -1;
 }

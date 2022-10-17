@@ -1,41 +1,53 @@
 <template>
-<div class="nav">
+<div class="nav" v-if="user">
 
     <div class="items">
-        <router-link to="/app">
+        <router-link to="/app" v-if="user.type == 'instructor'">
             <div :class="$route.name == 'app' ? 'item active' : 'item'">
                 <i class="fa-solid fa-house"></i>
                 <p>Overview</p>
             </div>
         </router-link>
-        <router-link to="/app/profile">
+        <router-link to="/app" v-if="user.type == 'student'">
+            <div :class="$route.name == 'app' ? 'item active' : 'item'">
+                <i class="fa-solid fa-house"></i>
+                <p>Overview</p>
+            </div>
+        </router-link>
+
+        <router-link to="/app/profile" v-if="user.type == 'instructor'">
             <div :class="($route.name == 'app-profile' || $route.name == 'app-profile-edit') ? 'item active' : 'item'">
                 <i class="fa-solid fa-user-tie"></i>
                 <p>Students</p>
             </div>
         </router-link>
-        <router-link to="/app/projects">
-            <div :class="($route.name == 'app-projects' || $route.name == 'app-projects-create')  ? 'item active' : 'item'">
+
+        <router-link to="/app/courses">
+            <div :class="($route.name == 'app-courses' || $route.name == 'app-courses-create')  ? 'item active' : 'item'">
                 <i class="fa-solid fa-hammer"></i>
                 <p>Courses</p>
             </div>
         </router-link>
-        <router-link to="/app/jobs">
+
+        <router-link to="/app/jobs" v-if="user.type == 'instructor'">
             <div :class="$route.name == 'app-jobs'  ? 'item active' : 'item'">
                 <i class="fa-solid fa-briefcase"></i>
                 <p>Revenue</p>
             </div>
         </router-link>
-        <div :class="($route.name == 'app-create-post-feed' || $route.name == 'app-create-post-job') ? 'item active' : 'item'" v-on:click="$nuxt.$emit('create-new-post')">
+
+        <div v-if="user.type == 'instructor'" :class="($route.name == 'app-create-post-feed' || $route.name == 'app-create-post-job') ? 'item active' : 'item'" v-on:click="$nuxt.$emit('create-new-post')">
             <i class="fa-solid fa-plus"></i>
             <p>Broadcast</p>
         </div>
+
         <router-link to="/app/notifications">
             <div :class="$route.name == 'app-notifications' ? 'item active' : 'item'">
                 <i class="fa-solid fa-bell"></i>
                 <p>Notifications</p>
             </div>
         </router-link>
+
         <router-link to="/app/settings">
             <div :class="$route.name == 'app-settings' ? 'item active' : 'item'">
                 <i class="fa-solid fa-gear"></i>
@@ -50,7 +62,8 @@
 export default {
     data() {
         return {
-            tab: 1
+            tab: 1,
+            user: this.$contracts.user
         }
     },
     mounted() {

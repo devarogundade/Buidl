@@ -1,11 +1,11 @@
 <template>
-<div class="create-project">
-  <CreateProject />
+<div class="members">
+    <Members />
 </div>
 </template>
 
 <script>
 export default {
-    layout: 'dapp'
+    layout: 'course'
 }
 </script>

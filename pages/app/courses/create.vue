@@ -1,6 +1,6 @@
 <template>
-<div class="jobs">
-  <Jobs />
+<div class="create-project">
+  <CreateCourse />
 </div>
 </template>
 

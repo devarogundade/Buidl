@@ -1,39 +1,36 @@
 <template>
-<div class="nav">
-
+<div class="nav" v-if="user">
     <div class="items">
-        <router-link :to="`/app/projects/${$route.params.project}`">
-            <div :class="$route.name == 'app-projects-project' ? 'item active' : 'item'">
+        <router-link :to="`/app/courses/${$route.params.course}`">
+            <div :class="$route.name == 'app-courses-course' ? 'item active' : 'item'">
                 <i class="fa-solid fa-chart-pie"></i>
                 <p>Overview</p>
             </div>
         </router-link>
-        <router-link :to="`/app/projects/${$route.params.project}/chat`">
-            <div :class="$route.name == 'app-projects-project-chat' ? 'item active' : 'item'">
+
+        <router-link :to="`/app/courses/${$route.params.course}/chat`">
+            <div :class="$route.name == 'app-courses-course-chat' ? 'item active' : 'item'">
                 <i class="fa-solid fa-comments"></i>
                 <p>Chat</p>
             </div>
         </router-link>
-        <router-link :to="`/app/projects/${$route.params.project}/tasks`">
-            <div :class="$route.name == 'app-projects-project-tasks' ? 'item active' : 'item'">
-                <i class="fa-solid fa-list-check"></i>
-                <p>Tasks</p>
-            </div>
-        </router-link>
-        <router-link :to="`/app/projects/${$route.params.project}/members`">
-            <div :class="$route.name == 'app-projects-project-members'  ? 'item active' : 'item'">
+
+        <router-link :to="`/app/courses/${$route.params.course}/members`">
+            <div :class="$route.name == 'app-courses-course-members'  ? 'item active' : 'item'">
                 <i class="fa-solid fa-user-group"></i>
                 <p>Members</p>
             </div>
         </router-link>
-        <router-link :to="`/app/projects/${$route.params.project}/goals`">
-            <div :class="$route.name == 'app-projects-project-goals' ? 'item active' : 'item'">
+
+        <router-link :to="`/app/courses/${$route.params.course}/goals`">
+            <div :class="$route.name == 'app-courses-course-goals' ? 'item active' : 'item'">
                 <i class="fa-solid fa-road"></i>
                 <p>Roadmap</p>
             </div>
         </router-link>
-        <router-link :to="`/app/projects/${$route.params.project}/settings`">
-            <div :class="$route.name == 'app-projects-project-settings' ? 'item active' : 'item'">
+
+        <router-link :to="`/app/courses/${$route.params.course}/settings`">
+            <div :class="$route.name == 'app-courses-course-settings' ? 'item active' : 'item'">
                 <i class="fa-solid fa-gear"></i>
                 <p>Settings</p>
             </div>
@@ -46,12 +43,16 @@
 export default {
     data() {
         return {
-            tab: 1
+            tab: 1,
+            user: this.$contracts.user
         }
     },
     mounted() {
         $nuxt.$on('dapp-tab', (tab) => {
             this.tab = tab
+        })
+        $nuxt.$on('user', (user) => {
+            this.user = user
         })
     }
 }

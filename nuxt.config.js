@@ -43,10 +43,10 @@ export default {
     ],
 
     plugins: [
+        '@/plugins/auth.js',
         '@/plugins/contracts.js',
         '@/plugins/moralis-apis/ipfs.js',
         '@/plugins/moralis-apis/nft.js',
-        '@/plugins/moralis-apis/auth.js',
         '@/plugins/moralis-apis/token.js',
     ],
 
@@ -55,7 +55,7 @@ export default {
             '~/components',
             '~/components/landing',
             '~/components/dapp',
-            '~/components/dapp/project',
+            '~/components/dapp/course',
             '~/components/dapp/token',
             '~/components/dapp/tools',
             '~/components/explore',

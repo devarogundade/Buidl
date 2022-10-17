@@ -12,32 +12,53 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                wcState: 'hide',
-                cpState: 'hide',
-            }
-        },
-        mounted() {
-            this.$auth.checkAuth()
-            $nuxt.$on('request-connect-wallet', () => {
-                this.wcState = 'show'
-            })
-            $nuxt.$on('release-connect-wallet', () => {
-                this.wcState = 'hide'
-            })
-            $nuxt.$on('create-new-post', () => {
-                this.cpState = 'show'
-            })
-            $nuxt.$on('discard-new-post', () => {
-                this.cpState = 'hide'
-            })
-            $nuxt.$on('create-new-post-for', (data) => {
-                this.cpState = 'hide'
-            })
+export default {
+    data() {
+        return {
+            wcState: 'hide',
+            cpState: 'hide',
+            loading: true,
         }
+    },
+    async mounted() {
+        $nuxt.$on('request-connect-wallet', () => {
+            this.wcState = 'show'
+        })
+        $nuxt.$on('release-connect-wallet', () => {
+            this.wcState = 'hide'
+        })
+        $nuxt.$on('create-new-post', () => {
+            this.cpState = 'show'
+        })
+        $nuxt.$on('discard-new-post', () => {
+            this.cpState = 'hide'
+        })
+        $nuxt.$on('create-new-post-for', (data) => {
+            this.cpState = 'hide'
+        })
+
+        $nuxt.$on('connected', (data) => {
+            this.$contracts.init(this.$auth.provider, this.$auth.accounts)
+        })
+
+        $nuxt.$on('user-status', (status) => {
+            if (status == 'loading') {
+                this.loading = true
+            }
+
+            if (status == 'available') {
+                this.loading = false
+            }
+
+            if (status == 'not-available') {
+                this.$router.push('/register')
+            }
+        })
+
+        await this.$auth.checkAuth()
+        this.$contracts.init(this.$auth.provider, this.$auth.accounts)
     }
+}
 </script>
 
 <style>

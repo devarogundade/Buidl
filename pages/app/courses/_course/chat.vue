@@ -6,6 +6,6 @@
 
 <script>
 export default {
-    layout: 'project'
+    layout: 'course'
 }
 </script>

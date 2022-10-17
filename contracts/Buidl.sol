@@ -7,7 +7,6 @@ import "./BdlNft.sol";
 import "./BdlCertificate.sol";
 
 contract Buidl {
-
     // state variables
     address deployer;
 
@@ -16,6 +15,7 @@ contract Buidl {
     BdlCertificate bdlCertificate;
 
     uint256 contractInstructorID = 1;
+    uint256 contractStudentID = 1;
     uint256 contractCourseID = 1;
 
     // minimum to stake for a duration of 1year
@@ -24,14 +24,19 @@ contract Buidl {
     mapping(address => Instructor) public instructors;
     mapping(address => Student) public students;
     mapping(uint => Course) public courses;
+    mapping(address => StudentCourse[]) public studentCourses;
 
     // contructor
-    constructor(address _bdlToken, address _bdlNft, address _bdlCertificate) {
+    constructor(
+        address _bdlToken,
+        address _bdlNft,
+        address _bdlCertificate
+    ) {
         deployer = msg.sender;
         bdlToken = BdlToken(_bdlToken);
         bdlNft = BdlNft(_bdlNft);
         bdlCertificate = BdlCertificate(_bdlCertificate);
-    }   
+    }
 
     // structs
     struct Instructor {
@@ -55,7 +60,7 @@ contract Buidl {
         uint256 price; // price in bdl token
         string level; // begginer, intermediate...
         string ipfsHash; // course metadata
-        bool isPublished; 
+        bool isPublished;
         uint sections; // number of course sections
         uint category;
         uint createdAt;
@@ -70,7 +75,7 @@ contract Buidl {
         string ipfsPhoto;
         string country;
         uint createdAt;
-        mapping(uint => StudentCourse) courses;
+        uint[] courses;
     }
 
     struct StudentCourse {
@@ -78,7 +83,7 @@ contract Buidl {
         uint courseId;
         bool isActive; // paid or rejected
         uint unlocked; // initially equals to price of course
-        // then sequentially unlocked to the instructor 
+        // then sequentially unlocked to the instructor
         uint sectionsViewed;
         uint purchasedAt;
     }
@@ -100,11 +105,19 @@ contract Buidl {
 
         // create new freah course
         courses[contractCourseID] = Course(
-            contractCourseID, msg.sender, course.students,
-            0, level, ipfsHash, false, 0, courseCategory, block.timestamp,
+            contractCourseID,
+            msg.sender,
+            course.students,
+            0,
+            level,
+            ipfsHash,
+            false,
+            0,
+            courseCategory,
+            block.timestamp,
             block.timestamp
         );
-        
+
         // assign course ownership to intructor
         instructors[msg.sender].courses.push(contractCourseID);
 
@@ -119,21 +132,53 @@ contract Buidl {
         uint gender
     ) public notAnyone {
         // stake instruction fee
-        bdlToken.transferFrom(msg.sender, address(this), instructorRegistrationFee);
+        bdlToken.transferFrom(
+            msg.sender,
+            address(this),
+            instructorRegistrationFee
+        );
 
         Instructor memory instructor = instructors[msg.sender];
 
         instructors[msg.sender] = Instructor(
             contractInstructorID,
-            firstName, lastName, location, gender,
-            false, instructor.ipfsPhoto, instructor.twitter,
-            instructor.linkedin, instructor.courses, block.timestamp
+            firstName,
+            lastName,
+            location,
+            gender,
+            false,
+            instructor.ipfsPhoto,
+            instructor.twitter,
+            instructor.linkedin,
+            instructor.courses,
+            block.timestamp
         );
 
         contractInstructorID++;
     }
 
     // ========= Students ========== //
+
+    function createStudentAccount(
+        string memory name,
+        string memory email,
+        string memory gender
+    ) public notAnyone {
+        Student memory student = students[msg.sender];
+
+        students[msg.sender] = Student(
+            contractStudentID,
+            name,
+            email,
+            gender,
+            student.ipfsPhoto,
+            student.country,
+            block.timestamp,
+            student.courses
+        );
+
+        contractStudentID++;
+    }
 
     function purchaseCourse(uint courseId) public onlyStudent {
         Course storage course = courses[courseId];
@@ -142,28 +187,42 @@ contract Buidl {
         bdlToken.transferFrom(msg.sender, address(this), course.price);
 
         // create course for student
-        students[msg.sender].courses[courseId] = StudentCourse(
-            courseId, courseId, true, course.price, 0, block.timestamp
+        studentCourses[msg.sender].push(
+            StudentCourse(
+                courseId,
+                courseId,
+                true,
+                course.price,
+                0,
+                block.timestamp
+            )
         );
-
 
         emit CoursePurchased(course.instructor, msg.sender, courseId);
     }
 
     function rejectCourse(uint courseId) public onlyStudent {
-        StudentCourse memory studentCourse = students[msg.sender].courses[courseId];
+        StudentCourse memory studentCourse = studentCourses[msg.sender][courseId];
+
         Course memory course = courses[courseId];
 
         // check is course is not over 2 weeks
-        require(studentCourse.purchasedAt > 2, "You can\'t reject a course over 2 weeks.");
+        require(
+            studentCourse.purchasedAt > 2,
+            "You can't reject a course over 2 weeks."
+        );
 
-        uint refundableSections = (studentCourse.sectionsViewed - course.sections);
-        require(refundableSections > 0, "None of the course sections is refundable");
+        uint refundableSections = (studentCourse.sectionsViewed -
+            course.sections);
+        require(
+            refundableSections > 0,
+            "None of the course sections is refundable"
+        );
 
         uint256 refundableAmount = (refundableSections * course.price);
 
         // terminate student course
-        delete students[msg.sender].courses[courseId];
+        delete studentCourses[msg.sender][courseId];
 
         // refund the student
         bdlToken.transferFrom(address(this), msg.sender, refundableAmount);
@@ -171,16 +230,24 @@ contract Buidl {
         emit CourseRejected(msg.sender, courseId, studentCourse.sectionsViewed);
     }
 
-    function onNextCourseSection(uint courseId) public onlyStudent returns(string memory) {
+    function onNextCourseSection(uint courseId)
+        public
+        onlyStudent
+        returns (string memory)
+    {
         Course storage course = courses[courseId];
-        StudentCourse storage studentCourse = students[msg.sender].courses[courseId];
+        StudentCourse storage studentCourse = studentCourses[msg.sender][courseId];
 
         // students moved to another section of the course
         // unlock part payment to the instructor (conditionally)
         uint pricePerSection = (course.price / course.sections);
         if (studentCourse.unlocked >= pricePerSection) {
             studentCourse.unlocked -= pricePerSection;
-            bdlToken.transferFrom(address(this), course.instructor, pricePerSection);
+            bdlToken.transferFrom(
+                address(this),
+                course.instructor,
+                pricePerSection
+            );
         }
 
         // checks if students has completed the course
@@ -222,7 +289,7 @@ contract Buidl {
 
     function mintNftForStudent(uint courseId, address student) private {
         Course memory course = courses[courseId];
-        
+
         bdlNft.mint(student, "");
     }
 
@@ -242,10 +309,12 @@ contract Buidl {
     }
 
     modifier notAnyone() {
-        require((students[msg.sender].id == 0 && instructors[msg.sender].id == 0), "Unauthorized");
+        require(
+            (students[msg.sender].id == 0 && instructors[msg.sender].id == 0),
+            "Unauthorized"
+        );
         _;
     }
-
 
     // ========== events ========== //
     event CourseCompletion(address student, uint courseId);

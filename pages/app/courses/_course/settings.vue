@@ -1,11 +1,11 @@
 <template>
 <div class="project-settings">
-    <ProjectSettings />
+    <CourseSettings />
 </div>
 </template>
 
 <script>
 export default {
-    layout: 'project'
+    layout: 'course'
 }
 </script>

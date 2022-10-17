@@ -1,8 +1,6 @@
 <template>
-<div class="app">
-    <!-- <div class="bg"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
-    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-bottomright.svg" alt=""></div> -->
-
+<Progress v-if="loading" />
+<div class="app" v-else>
     <div class="bg"><img src="https://idle.finance/assets/img/Ellipse1.ee547e.png" alt=""></div>
     <div class="bg2"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
     <DappHeader />
@@ -28,10 +26,10 @@ export default {
         return {
             wcState: 'hide',
             cpState: 'hide',
+            loading: true,
         }
     },
-    mounted() {
-        this.$auth.checkAuth()
+    async mounted() {
         $nuxt.$on('request-connect-wallet', () => {
             this.wcState = 'show'
         })
@@ -47,6 +45,29 @@ export default {
         $nuxt.$on('create-new-post-for', (data) => {
             this.cpState = 'hide'
         })
+
+        $nuxt.$on('connected', (data) => {
+            this.$contracts.init(this.$auth.provider, this.$auth.accounts)
+        })
+
+        $nuxt.$on('user-status', (status) => {
+
+            console.log(status);
+            if (status == 'loading') {
+                this.loading = true
+            }
+
+            if (status == 'available') {
+                this.loading = false
+            }
+
+            if (status == 'not-available') {
+                this.$router.push('/register')
+            }
+        })
+
+        await this.$auth.checkAuth()
+        this.$contracts.init(this.$auth.provider, this.$auth.accounts)
     }
 }
 </script>

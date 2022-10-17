@@ -1,11 +1,11 @@
 <template>
-<div class="goals">
-  <Goals />
+<div class="projects">
+  <Courses />
 </div>
 </template>
 
 <script>
 export default {
-    layout: 'project'
+    layout: 'dapp'
 }
 </script>
