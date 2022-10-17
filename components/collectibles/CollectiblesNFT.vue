@@ -3,8 +3,8 @@
     <div class="ntfs">
         <div class="tabs">
             <h3 :class="tab == 1 ? 'active' : ''" v-on:click="tab = 1">Wallet</h3>
-            <h3 :class="tab == 2 ? 'active' : ''" v-on:click="tab = 2">Owned NFTs</h3>
-            <h3 :class="tab == 3 ? 'active' : ''" v-on:click="tab = 3">My NFT</h3>
+            <h3 :class="tab == 2 ? 'active' : ''" v-on:click="tab = 2">Certificates</h3>
+            <h3 :class="tab == 3 ? 'active' : ''" v-on:click="tab = 3">My NFTs</h3>
         </div>
 
         <div class="items" v-if="tab == 1"></div>
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="action">
-                    <div class="stake">Sell</div>
+                    <div class="stake">Download</div>
                 </div>
             </div>
         </div>

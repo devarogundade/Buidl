@@ -51,8 +51,6 @@ export default {
         })
 
         $nuxt.$on('user-status', (status) => {
-
-            console.log(status);
             if (status == 'loading') {
                 this.loading = true
             }

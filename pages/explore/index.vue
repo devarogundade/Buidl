@@ -1,6 +1,6 @@
 <template>
   <div class="explore">
-    <Courses />
+    <ExploreCourses />
   </div>
 </template>
 

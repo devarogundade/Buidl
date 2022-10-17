@@ -70,6 +70,9 @@ export default {
         $nuxt.$on('dapp-tab', (tab) => {
             this.tab = tab
         })
+        $nuxt.$on('user', (user) => {
+            this.user = user
+        })
     }
 }
 </script>

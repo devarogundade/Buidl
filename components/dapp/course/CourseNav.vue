@@ -1,35 +1,40 @@
 <template>
 <div class="nav" v-if="user">
     <div class="items">
-        <router-link :to="`/app/courses/${$route.params.course}`">
+        <router-link v-if="user.type == 'instructor'" :to="`/app/courses/${$route.params.course}`">
             <div :class="$route.name == 'app-courses-course' ? 'item active' : 'item'">
                 <i class="fa-solid fa-chart-pie"></i>
                 <p>Overview</p>
             </div>
         </router-link>
+         <router-link v-if="user.type == 'student'" :to="`/app/courses/${$route.params.course}`">
+            <div :class="$route.name == 'app-courses-course' ? 'item active' : 'item'">
+                <i class="fa-solid fa-chart-pie"></i>
+                <p>Study</p>
+            </div>
+        </router-link>
 
-        <router-link :to="`/app/courses/${$route.params.course}/chat`">
+        <router-link v-if="user.type == 'instructor'" :to="`/app/courses/${$route.params.course}/chat`">
             <div :class="$route.name == 'app-courses-course-chat' ? 'item active' : 'item'">
                 <i class="fa-solid fa-comments"></i>
-                <p>Chat</p>
+                <p>Students</p>
+            </div>
+        </router-link>
+        <router-link v-if="user.type == 'student'"  :to="`/app/courses/${$route.params.course}/chat`">
+            <div :class="$route.name == 'app-courses-course-chat' ? 'item active' : 'item'">
+                <i class="fa-solid fa-comments"></i>
+                <p>Chat Instructor</p>
             </div>
         </router-link>
 
-        <router-link :to="`/app/courses/${$route.params.course}/members`">
-            <div :class="$route.name == 'app-courses-course-members'  ? 'item active' : 'item'">
-                <i class="fa-solid fa-user-group"></i>
-                <p>Members</p>
-            </div>
-        </router-link>
-
-        <router-link :to="`/app/courses/${$route.params.course}/goals`">
+        <router-link  v-if="user.type == 'student'" :to="`/app/courses/${$route.params.course}/goals`">
             <div :class="$route.name == 'app-courses-course-goals' ? 'item active' : 'item'">
                 <i class="fa-solid fa-road"></i>
-                <p>Roadmap</p>
+                <p>Timeline</p>
             </div>
         </router-link>
 
-        <router-link :to="`/app/courses/${$route.params.course}/settings`">
+        <router-link  v-if="user.type == 'instructor'" :to="`/app/courses/${$route.params.course}/settings`">
             <div :class="$route.name == 'app-courses-course-settings' ? 'item active' : 'item'">
                 <i class="fa-solid fa-gear"></i>
                 <p>Settings</p>

@@ -50,7 +50,7 @@ export default {
         return {
             showBuild: false,
             showProfile: false,
-            address: null,
+            address: this.$auth.accounts[0],
             tab: 1
         };
     },

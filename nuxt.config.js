@@ -10,7 +10,7 @@ export default {
 
 
     head: {
-        title: 'Buidl - SocialFi of Instructors and Students',
+        title: 'Buidl - SocialFi for Learning',
         htmlAttrs: {
             lang: 'en'
         },

@@ -7,7 +7,7 @@
             <div class="grid">
                 <div class="text">
                     <h3>Learn without limits. <br> <span>Buidl</span> a career.</h3>
-                    <p>Building a Borderless, Permissionless and Decentralized Community of Instructors and Students.</p>
+                    <p>Building a Borderless, Permissionless and Decentralized SocialFi for Instructors and Students.</p>
                     <router-link to="/explore">
                         <div class="feeds">Courses <i class="fa-solid fa-arrow-right"></i></div>
                     </router-link>

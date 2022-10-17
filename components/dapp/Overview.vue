@@ -207,7 +207,11 @@
 <script src= 'https://cdn.blockpass.org/widget/scripts/release/3.0.2/blockpass-kyc-connect.prod.js'></script>
 <script>
 export default {
-
+    data() {
+        return {
+            saving: false
+        }
+    }
 }
 </script>
 
