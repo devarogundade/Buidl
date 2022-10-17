@@ -19,7 +19,12 @@
             <div class="body">
                 <div class="grid">
                     <div class="detail"></div>
-                    <div class="buy"></div>
+                    <div class="buy">
+                        <div class="preview">
+                            <img src="https://www.simplilearn.com/ice9/webinar_thum_image/JavaScript_Tutorial.jpg" />
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -98,5 +103,34 @@
     right: 40px;
     top: -400px;
     border-radius: 10px;
+    overflow: hidden;
+}
+
+.preview {
+    width: 100%;
+    height: 220px;
+    position: relative;
+}
+
+.preview i {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    background: #000000bd;
+    color: #FFFFFF;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+.preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 </style>
