@@ -137,11 +137,11 @@ export default {
 
                 let index = 0
                 while (!this.bought) {
-                    const course = await this.$contracts.buidlContract.studentCourses(address, index)
-                    if (course.id.toNumber() == 0) {
+                    const studentCourse = await this.$contracts.buidlContract.studentCourses(address, index)
+                    if (studentCourse.courseId.toNumber() == 0) {
                         break
                     }
-                    if (course.id.toNumber() == this.courseId) {
+                    if (studentCourse.courseId.toNumber() == this.courseId) {
                         this.bought = true
                     }
 
