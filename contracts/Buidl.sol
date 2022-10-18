@@ -87,7 +87,6 @@ contract Buidl {
     }
 
     struct StudentCourse {
-        uint id;
         uint courseId;
         bool isActive; // paid or rejected
         uint unlocked; // initially equals to price of course
@@ -237,12 +236,12 @@ contract Buidl {
         Course storage course = courses[courseId];
 
         // lock the student funds to smart contract
+        bdlToken.increaseAllowance(msg.sender, address(this), course.price)
         bdlToken.transferFrom(msg.sender, address(this), course.price);
 
         // create course for student
         studentCourses[msg.sender].push(
             StudentCourse(
-                courseId,
                 courseId,
                 true,
                 course.price,

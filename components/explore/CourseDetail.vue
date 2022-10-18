@@ -54,7 +54,9 @@
                             <img src="https://www.simplilearn.com/ice9/webinar_thum_image/JavaScript_Tutorial.jpg" />
                             <i class="fa-solid fa-play"></i>
                         </div>
-                        <div class="tag">Preview</div>
+                        <div class="tag" v-if="!bought">Preview</div>
+                        <div class="tag" v-else><i class="fa-solid fa-certificate"></i> Bought</div>
+
                         <div class="coupon">
                             <p>Apply Coupon</p>
 
@@ -70,8 +72,8 @@
                             </div>
 
                             <div class="action">
-                                <div class="pay" v-if="!bought">Buy Course</div>
-                                <div class="pay" v-else>View Course</div>
+                                <div class="pay" v-if="!bought" v-on:click="buyCourse()">Buy Course</div>
+                                <router-link v-else :to="`/app/courses/${$route.params.course}`"><div class="pay">View Course</div></router-link>
                                 <i class="fa-solid fa-heart-circle-plus"></i>
                             </div>
                         </div>
@@ -112,16 +114,25 @@ export default {
         async init() {
             if (this.user && this.user.type == 'student') {
                 const address = this.$auth.accounts[0]
-                const studentCoursesLength = await this.$contracts.buidlContract.getStudentCoursesLength(address)
-                for (let index = 0; index < studentCoursesLength.toNumber(); index++) {
-                    const courseId = await this.$contracts.buidlContract.getStudentCourseIdAtIndex(address, index)
 
-                    if (courseId == this.courseId) {
-                        this.bought = true
+                let index = 0
+                while (!this.bought) {
+                    const course = await this.$contracts.buidlContract.studentCourses(address, index)
+                    if (course.id.toNumber() == 0) {
                         break
                     }
+                    if (course.id.toNumber() == this.courseId) {
+                        this.bought = true
+                    }
+
+                    index++
                 }
             }
+        },
+        async buyCourse() {
+            this.$contracts.buidlContract.purchaseCourse(1, {
+                from: this.$auth.accounts[0]
+            })
         }
     }
 }
@@ -354,6 +365,10 @@ export default {
     width: fit-content;
     padding: 3px 8px;
     border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    line-height: 14px;
     background: #09203f;
     color: #0177fb;
     font-size: 14px;
