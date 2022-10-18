@@ -3,36 +3,46 @@
     <div class="login">
         <div class="text">
             <h3>Create a new course</h3>
-            <p>Transaction fee is required to create a new course.</p>
-        </div>
-
-        <div class="signed" v-if="user">
-            <p>You have signed in as {{ user.name }}</p>
-            <router-link to="/">
-                <div class="continue">Continue</div>
-            </router-link>
+            <p>Enter course details below.</p>
         </div>
 
         <div class="form">
             <div class="edit">
-                <p class="label">Project name *</p>
-                <input :class="getInputClassForName()" type="text" v-model="name" placeholder="Hackathon 1" maxlength="45">
+                <p class="label">Course Title *</p>
+                <input :class="getInputClassForName()" type="text" v-model="name" placeholder="Cooking Masterclass" maxlength="45">
                 <p v-if="errorName" class="error-text">{{ errorName }}</p>
             </div>
 
             <div class="edit">
-                <p class="label">Project description *</p>
-                <input :class="getInputClassForDescription()" v-model="description" type="text" placeholder="My first hackathon">
+                <p class="label">Course Description *</p>
+                <input :class="getInputClassForDescription()" v-model="description" type="text" placeholder="Learn how to cook your first meal">
                 <p class="error-text" v-if="errorDescription">{{ errorDescription }}</p>
             </div>
 
             <div class="edit">
+                <p class="label">Category *</p>
+                <select v-on:change="onCategoryChanged($event)">
+                    <option selected disabled hidden>Choose category</option>
+                    <option v-for="(category, index) in categories" :key="index" :value="category.id">{{ category.name }}</option>
+                </select>
+                <p v-if="errorCategory" class="error-text">{{ errorCategory }}</p>
+            </div>
+
+            <div class="edit">
+                <p class="label">Level *</p>
+                <select v-on:change="onLevelChanged($event)">
+                    <option selected disabled hidden>Choose level</option>
+                    <option v-for="(level, index) in levels" :key="index" :value="(index + 1)">{{ level }}</option>
+                </select>
+            </div>
+
+            <div class="edit">
                 <p class="label">Tags</p>
-                <input :class="getInputClassForTags()" type="text" v-model="tags" placeholder="Challenge, Innovation" maxlength="45">
+                <input :class="getInputClassForTags()" type="text" v-model="tags" placeholder="Cooking, Food" maxlength="45">
                 <p v-if="errorTags" class="error-text">{{ errorTags }}</p>
             </div>
 
-            <div class="sign_up" v-if="!signing" v-on:click="register()">Create project</div>
+            <div class="sign_up" v-if="!creating" v-on:click="createCourse()">Create course</div>
             <div class="sign_up" v-else>Please wait..</div>
         </div>
     </div>
@@ -53,20 +63,94 @@ export default {
             tags: '',
             errorTags: null,
             // signing
-            signing: false
+            creating: false,
+
+            errorCategory: null,
+
+            categories: [],
+            selectedCategory: 0,
+
+            levels: [
+                'Beginner',
+                'Intermediate',
+                'Advanced'
+            ],
+
+            selectedLevel: 0
         }
     },
-    methods: {
-        register() {
+    async mounted() {
+        const categoriesLength = await this.$contracts.buidlContract.contractCategoryID();
 
+        for (let index = 1; index <= categoriesLength; index++) {
+            const category = await this.$contracts.buidlContract.categories(index);
+            if (category.name != '') {
+                this.categories.push(category)
+            }
+        }
+
+    },
+    methods: {
+        onCategoryChanged(event) {
+            this.selectedCategory = event.target.value
+        },
+        onLevelChanged(event) {
+            this.selectedLevel = event.target.value
+        },
+        async createCourse() {
+            if (this.creating) return
+            this.creating = false
+
+            if (this.selectedCategory == 0) {
+                this.errorCategory = 'Select a category'
+            } else {
+                this.errorCategory = null
+            }
+
+            if (this.errorName != null ||
+                this.errorDescription != null ||
+                this.errorTags != null
+            ) {
+                return
+            }
+
+            if (this.name == '' ||
+                this.description == '' ||
+                this.tags == ''
+            ) {
+                return
+            }
+
+            this.creating = true
+
+            const course = {
+                name: this.name,
+                description: this.description,
+                level: this.selectedLevel,
+                category: this.selectedCategory,
+                tags: this.tags,
+                sections: []
+            }
+
+            try {
+                const ipfsHash = await this.$ipfs.uploadSingleData('courses', 1, course)
+
+                const trx = await this.$contracts.buidlContract.createCourse(
+                    ipfsHash, {
+                        from: this.$auth.accounts[0]
+                    }
+                )
+
+                this.$router.push('/app/courses')
+            } catch (error) {}
         },
         getInputClassForName() {
             if (this.name == '') {
                 this.errorName = null
                 return ''
             }
-            if (this.name.length < 4) {
-                this.errorName = 'Name is too short'
+            if (this.name.length < 5) {
+                this.errorName = 'Title is too short'
                 return 'error filled'
             } else {
                 this.errorName = null
@@ -91,21 +175,14 @@ export default {
                 this.errorTags = null
                 return ''
             }
-            if (this.tags.length < 2) {
+            if (this.tags.length < 4) {
                 this.errorTags = 'Tags is too short'
                 return 'error filled'
             } else {
                 this.errorTags = null
                 return 'filled'
             }
-        },
-        // validateEmail(email) {
-        //     return String(email)
-        //         .toLowerCase()
-        //         .match(
-        //             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        //         )
-        // }
+        }
     }
 }
 </script>
@@ -158,7 +235,8 @@ export default {
     margin-bottom: 10px;
 }
 
-.form input {
+.form input,
+select {
     height: 50px;
     border: 2px solid #b8c0e6;
     border-radius: 8px;
@@ -205,6 +283,10 @@ export default {
     font-weight: 500;
     font-size: 20px;
     color: #FFFFFF;
+}
+
+option {
+    color: #000;
 }
 
 /* @media screen and (max-width: 700px) {

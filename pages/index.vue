@@ -4,7 +4,8 @@
     <TrendingCourses />
     <Features />
     <Faq />
-    <NFT />
+    <BecomeInstructor />
+    <BuidlRoadmap />
 </div>
 </template>
 

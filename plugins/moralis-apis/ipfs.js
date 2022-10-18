@@ -19,7 +19,7 @@ const analytics = getAnalytics(firebaseApp);
 export default ({ app, $axios }, inject) => {
     inject('ipfs', Vue.observable({
         db: getFirestore(firebaseApp),
-        uploadSingleData: async function(path, identifier, object) {
+        uploadSingleData: async function(path, identifier, object, firebase = false) {
             const options = {
                 method: 'POST',
                 url: '/ipfs/uploadFolder',
@@ -32,10 +32,16 @@ export default ({ app, $axios }, inject) => {
             }
 
             const response = await $axios.request(options)
+
             if (response.status == 200) {
                 const data = response.data[0].path
-                const result = await this.setData(path, identifier, object)
-                return result ? data : null
+
+                if (firebase) {
+                    const result = await this.setData(path, identifier, object)
+                    return result ? data : null
+                }
+
+                return data
             } else {
                 return null
             }

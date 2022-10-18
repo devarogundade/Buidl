@@ -29,6 +29,11 @@ contract BdlToken is ERC20 {
         emit Charged(from, amount);
     }
 
+    function increaseAllowance(address owner, address spender, uint256 amount) public virtual returns (bool) {
+        _approve(owner, spender, allowance(owner, spender) + amount);
+        return true;
+    }
+
     event Minted(address, uint256);
     event Charged(address, uint256);
 

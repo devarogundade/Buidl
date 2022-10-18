@@ -15,35 +15,15 @@
                 <div class="image">
                     <div class="swiper mySwiper">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img src="https://media.istockphoto.com/photos/modern-office-black-businesswoman-sitting-at-her-desk-working-on-a-picture-id1365824279?b=1&k=20&m=1365824279&s=170667a&w=0&h=3_YJ2lSlaQhoEgoroJ5E8PzwHFnyEKWZBHc_ZtTb1QY=" alt="">
+                            <div class="swiper-slide" v-for="index in 10" :key="index">
+                                <img :src="`/images/students/${index}.jpg`">
                                 <div class="profile">
-
+                                    <div>
+                                        <h3>John Doe</h3>
+                                        <i class="fa-brands fa-twitter"></i>
+                                    </div>
+                                    <p>Lorem ipsum dolor sit, amet consec tetur adip isicing elit. Repre hende, commodi eius corrupti.</p>
                                 </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://media.gq.com/photos/5582d76209f0bee56440264f/master/w_1600%2Cc_limit/entertainment-2014-10-9-rising-female-artists-06-jhene-aiko.jpg" alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://media.istockphoto.com/photos/modern-office-black-businesswoman-sitting-at-her-desk-working-on-a-picture-id1365824279?b=1&k=20&m=1365824279&s=170667a&w=0&h=3_YJ2lSlaQhoEgoroJ5E8PzwHFnyEKWZBHc_ZtTb1QY=" alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://i.pinimg.com/736x/37/8a/30/378a308e0d89db685588c03f332d4a43.jpg" alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://media.istockphoto.com/photos/modern-office-black-businesswoman-sitting-at-her-desk-working-on-a-picture-id1365824279?b=1&k=20&m=1365824279&s=170667a&w=0&h=3_YJ2lSlaQhoEgoroJ5E8PzwHFnyEKWZBHc_ZtTb1QY=" alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://media.istockphoto.com/photos/modern-office-black-businesswoman-sitting-at-her-desk-working-on-a-picture-id1365824279?b=1&k=20&m=1365824279&s=170667a&w=0&h=3_YJ2lSlaQhoEgoroJ5E8PzwHFnyEKWZBHc_ZtTb1QY=" alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://media.istockphoto.com/photos/modern-office-black-businesswoman-sitting-at-her-desk-working-on-a-picture-id1365824279?b=1&k=20&m=1365824279&s=170667a&w=0&h=3_YJ2lSlaQhoEgoroJ5E8PzwHFnyEKWZBHc_ZtTb1QY=" alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://media.istockphoto.com/photos/modern-office-black-businesswoman-sitting-at-her-desk-working-on-a-picture-id1365824279?b=1&k=20&m=1365824279&s=170667a&w=0&h=3_YJ2lSlaQhoEgoroJ5E8PzwHFnyEKWZBHc_ZtTb1QY=" alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://media.istockphoto.com/photos/modern-office-black-businesswoman-sitting-at-her-desk-working-on-a-picture-id1365824279?b=1&k=20&m=1365824279&s=170667a&w=0&h=3_YJ2lSlaQhoEgoroJ5E8PzwHFnyEKWZBHc_ZtTb1QY=" alt="">
                             </div>
                         </div>
                     </div>
@@ -120,7 +100,6 @@ section {
 
 .swiper {
     width: 350px;
-    height: 500px;
 }
 
 .swiper-slide {
@@ -173,9 +152,9 @@ section {
 }
 
 .text h3 span {
-  background: -webkit-linear-gradient(#e3ffe1, rgb(23, 236, 23));
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+    background: -webkit-linear-gradient(#e3ffe1, rgb(23, 236, 23));
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .text p {
@@ -218,5 +197,30 @@ section {
     color: #fff;
     font-weight: 600;
     opacity: 0.8;
+}
+
+.profile>div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.profile i {
+  color: #0177fb;
+  font-size: 20px;
+}
+
+.profile h3 {
+  font-size: 18px;
+  color: #FFFFFF;
+}
+
+.profile p {
+  opacity: 0.8;
+  font-size: 14px;
+  color: #FFFFFF;
+  line-height: 22px;
 }
 </style>

@@ -13,13 +13,14 @@
             </div>
 
             <div class="signed" v-if="user && user.type">
-                <p>Welcome back, {{ user.name }}</p>
+                <p v-if="user.type == 'student'">Welcome back, {{ user.name }}</p>
+                <p v-if="user.type == 'instructor'">Welcome back, {{ user.firstName }}</p>
                 <router-link to="/app">
                     <div class="continue">Continue</div>
                 </router-link>
             </div>
 
-            <div class="form">
+            <div class="form" v-if="tab == 1">
                 <div class="edit">
                     <p class="label">Enter Full Name</p>
                     <input :class="getInputClassForName()" v-model="name" type="text" placeholder="John Doe">
@@ -32,7 +33,43 @@
                     <p v-if="errorEmail" class="error-text">{{ errorEmail }}</p>
                 </div>
 
-                <div class="sign_up" v-if="!registering" v-on:click="register()">Register</div>
+                <div class="sign_up" v-if="!registering" v-on:click="registerAsStudent()">Register</div>
+                <div class="sign_up" v-else>Please wait..</div>
+            </div>
+
+            <div class="form" v-if="tab == 2">
+                <div class="requirement">
+                    <div>
+                        <i class="fa-solid fa-star-of-life"></i>
+                        <p> You create an Instructor Account, you need to stake 2000 $BDL Token for a period of 1 year.</p>
+                    </div>
+                </div>
+
+                <div class="edit">
+                    <p class="label">Enter First Name</p>
+                    <input :class="getInputClassForFirstName()" v-model="firstName" type="text" placeholder="John">
+                    <p class="error-text" v-if="errorFirstName">{{ errorFirstName }}</p>
+                </div>
+
+                <div class="edit">
+                    <p class="label">Enter Last Name</p>
+                    <input :class="getInputClassForLastName()" v-model="lastName" type="text" placeholder="Doe">
+                    <p class="error-text" v-if="errorLastName">{{ errorLastName }}</p>
+                </div>
+
+                <div class="edit">
+                    <p class="label">Email Address</p>
+                    <input :class="getInputClassForEmail()" type="email" v-model="email" placeholder="Johndoe@mail.com" maxlength="45">
+                    <p v-if="errorEmail" class="error-text">{{ errorEmail }}</p>
+                </div>
+
+                <div class="edit">
+                    <p class="label">Your Country</p>
+                    <input :class="getInputClassForCountry()" v-model="country" type="text" placeholder="United States">
+                    <p class="error-text" v-if="errorCountry">{{ errorCountry }}</p>
+                </div>
+
+                <div class="sign_up" v-if="!registering" v-on:click="registerAsInstructor()">Register</div>
                 <div class="sign_up" v-else>Please wait..</div>
             </div>
         </div>
@@ -46,13 +83,19 @@ export default {
         return {
             user: this.$contracts.user,
             tab: 1,
-            // email
+
             name: '',
-            errorName: null,
-            // email
             email: '',
+            firstName: '',
+            lastName: '',
+            country: '',
+
+            errorName: null,
             errorEmail: null,
-            // registering
+            errorFirstName: null,
+            errorLastName: null,
+            errorCountry: null,
+
             registering: false
         }
     },
@@ -62,7 +105,7 @@ export default {
         })
     },
     methods: {
-        async register() {
+        async registerAsStudent() {
             if (this.registering) return
             this.registering = false
 
@@ -83,7 +126,38 @@ export default {
                         from: this.$auth.accounts[0]
                     }
                 )
-                this.$rouster.push('/app')
+                this.$router.push('/app')
+            } catch (error) {}
+        },
+        async registerAsInstructor() {
+            if (this.registering) return
+            this.registering = false
+
+            if (this.errorFirstName != null ||
+                this.errorLastName != null ||
+                this.errorEmail != null ||
+                this.errorCountry != null
+            ) {
+                return
+            }
+
+            if (this.firstName == '' ||
+                this.lastName == '' ||
+                this.email == '' ||
+                this.country == ''
+            ) {
+                return
+            }
+
+            this.registering = true
+
+            try {
+                const trx = await this.$contracts.buidlContract.createInstructorAccount(
+                    this.firstName, this.lastName, this.country, 0 /* gender */ , {
+                        from: this.$auth.accounts[0]
+                    }
+                )
+                this.$router.push('/app')
             } catch (error) {}
         },
         getInputClassForName() {
@@ -96,6 +170,45 @@ export default {
                 return 'error filled'
             } else {
                 this.errorName = null
+                return 'filled'
+            }
+        },
+        getInputClassForFirstName() {
+            if (this.firstName == '') {
+                this.errorFirstName = null
+                return ''
+            }
+            if (this.firstName.length < 2) {
+                this.errorFirstName = 'Invalid first name'
+                return 'error filled'
+            } else {
+                this.errorFirstName = null
+                return 'filled'
+            }
+        },
+        getInputClassForLastName() {
+            if (this.lastName == '') {
+                this.errorLastName = null
+                return ''
+            }
+            if (this.lastName.length < 2) {
+                this.errorLastName = 'Invalid last name'
+                return 'error filled'
+            } else {
+                this.errorLastName = null
+                return 'filled'
+            }
+        },
+        getInputClassForCountry() {
+            if (this.country == '') {
+                this.errorCountry = null
+                return ''
+            }
+            if (this.country.length < 3) {
+                this.errorCountry = 'Invalid country name'
+                return 'error filled'
+            } else {
+                this.errorCountry = null
                 return 'filled'
             }
         },
@@ -296,6 +409,29 @@ section {
     line-height: 22px;
     letter-spacing: 0.02em;
     color: #0177fb;
+}
+
+.requirement {
+    background: #c7b54f38;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.requirement>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.requirement i {
+    color: #fbb801;
+}
+
+.requirement p {
+    color: white;
+    font-size: 16px;
+    line-height: 24px;
 }
 
 @media screen and (max-width: 700px) {

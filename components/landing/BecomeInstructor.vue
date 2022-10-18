@@ -1,13 +1,13 @@
 <template>
 <section>
     <div class="app-width">
-        <div class="nft">
+        <div class="become">
             <div class="image">
                 <img src="/images/instructor.png" alt="">
             </div>
             <div class="text">
                 <h3>Get your courses to reach over 3000 students around the world.</h3>
-                <router-link to="/collectibles">
+                <router-link to="/register">
                     <div class="action">Become an Instructor</div>
                 </router-link>
             </div>
@@ -23,7 +23,7 @@ section {
     background: #00306e;
 }
 
-.nft {
+.become {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -31,25 +31,25 @@ section {
     gap: 100px;
 }
 
-.nft .image {
+.become .image {
     width: 320px;
 }
 
-.nft .image img {
+.become .image img {
     width: 100%;
 }
 
-.nft .text {
+.become .text {
     width: 600px;
 }
 
-.nft .text h3 {
+.become .text h3 {
     color: #FFFFFF;
     font-size: 36px;
     margin-bottom: 40px;
 }
 
-.nft .action {
+.become .action {
     background: #FFFFFF;
     font-size: 20px;
     height: 50px;
@@ -57,7 +57,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 250px;
+    width: 270px;
     font-family: 'regular';
     font-weight: 600;
     color: black;

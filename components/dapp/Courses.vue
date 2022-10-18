@@ -1,29 +1,29 @@
 <template>
 <div class="container">
-    <div class="projects" v-if="projects.length > 0">
-        <router-link :to="`/app/courses/${project.id}`" v-for="project in projects" :key="project.id">
-            <div class="project scaleable">
+    <div class="courses" v-if="courses.length > 0">
+        <router-link :to="`/app/courses/${course.course.id.toNumber()}`" v-for="(course, index) in courses" :key="index">
+            <div class="course scaleable">
                 <div class="detail">
-                    <img :src="project.image" alt="">
-                    <h3>{{ project.name }}</h3>
-                    <p>{{ project.description }}</p>
+                    <img :src="course.image" alt="">
+                    <h3>{{ course.name }}</h3>
+                    <p>{{ course.description }}</p>
                 </div>
             </div>
         </router-link>
     </div>
     <div class="explain" v-else>
-        <h3>What's a project?</h3>
+        <h3>What's a course?</h3>
         <p>
-            <b>Buidl project</b> provides you an environment with the handy tools you need to work
-            together with other professionals as a team. <br> <br> You are in full control of your project and data.
+            <b>Buidl Course</b> provides you an environment with the handy tools you need to teach
+            and publish your lectures to students. <br> <br> You are in full control of your course and data.
         </p>
         <div class="action">
-            Click on the <i class="fa-solid fa-plus"></i> button to create your first project.
+            Click on the <i class="fa-solid fa-plus"></i> button to create your first course.
         </div>
     </div>
 
     <div class="fab-btn">
-        <router-link to="/app/projects/create">
+        <router-link to="/app/courses/create">
             <div class="fab">
                 <i class="fa-solid fa-plus"></i>
             </div>
@@ -36,13 +36,22 @@
 export default {
     data() {
         return {
-            projects: [{
-                id: 1,
-                name: 'Hackathon',
-                description: 'My first hackathon project.',
-                image: 'https://media.istockphoto.com/photos/modern-office-black-businesswoman-sitting-at-her-desk-working-on-a-picture-id1365824279?b=1&k=20&m=1365824279&s=170667a&w=0&h=3_YJ2lSlaQhoEgoroJ5E8PzwHFnyEKWZBHc_ZtTb1QY=',
-                tags: ''
-            }]
+            courses: []
+        }
+    },
+    async mounted() {
+        const instructorCoursesLength = await this.$contracts.buidlContract.getInstructorCoursesLength()
+        for (let index = 0; index < instructorCoursesLength.toNumber(); index++) {
+            const courseId = await this.$contracts.buidlContract.getInstructorCourseIdAtIndex(index)
+            const course = await this.$contracts.buidlContract.courses(courseId)
+
+            if (course.instructor.toLowerCase() == this.$auth.accounts[0].toLowerCase()) {
+                this.$axios.get(course.ipfsHash).then((response) => {
+                    const courseMetadata = response.data
+                    courseMetadata.course = course
+                    this.courses.push(courseMetadata)
+                }).catch((error) => {})
+            }
         }
     }
 }
@@ -56,13 +65,13 @@ export default {
     position: relative;
 }
 
-.projects {
+.courses {
     display: flex;
     flex-wrap: wrap;
     gap: 40px;
 }
 
-.project {
+.course {
     width: 420px;
     border-radius: 20px;
     background: #23242F;

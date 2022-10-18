@@ -14,13 +14,15 @@ contract Buidl {
     BdlNft bdlNft;
     BdlCertificate bdlCertificate;
 
-    uint256 contractInstructorID = 1;
-    uint256 contractStudentID = 1;
-    uint256 contractCourseID = 1;
+    uint256 public contractInstructorID = 1;
+    uint256 public contractStudentID = 1;
+    uint256 public contractCourseID = 1;
+    uint256 public contractCategoryID = 1;
 
     // minimum to stake for a duration of 1year
-    uint256 instructorRegistrationFee = 10000;
+    uint256 instructorRegistrationFee = 2000 * 10**18;
 
+    mapping(uint => Category) public categories;
     mapping(address => Instructor) public instructors;
     mapping(address => Student) public students;
     mapping(uint => Course) public courses;
@@ -36,9 +38,17 @@ contract Buidl {
         bdlToken = BdlToken(_bdlToken);
         bdlNft = BdlNft(_bdlNft);
         bdlCertificate = BdlCertificate(_bdlCertificate);
+
+        addTestCategories();
     }
 
     // structs
+    struct Category {
+        uint id;
+        string name;
+        string image;
+    }
+
     struct Instructor {
         uint id;
         string firstName;
@@ -58,11 +68,9 @@ contract Buidl {
         address instructor;
         address[] students; // students offering the course
         uint256 price; // price in bdl token
-        string level; // begginer, intermediate...
         string ipfsHash; // course metadata
         bool isPublished;
         uint sections; // number of course sections
-        uint category;
         uint createdAt;
         uint updatedAt;
     }
@@ -71,7 +79,7 @@ contract Buidl {
         uint id;
         string name;
         string emailAddress;
-        string gender;
+        uint gender;
         string ipfsPhoto;
         string country;
         uint createdAt;
@@ -90,17 +98,26 @@ contract Buidl {
 
     // ========= Administation ========= //
 
-    function setInstructorRegistrationFee(uint256 amount) public {
+    function setInstructorRegistrationFee(uint256 amount) public onlyOwner {
         instructorRegistrationFee = amount;
+    }
+
+    function addCategory(string memory name, string memory image)
+        public
+        onlyOwner
+    {
+        categories[contractCategoryID] = Category(
+            contractCategoryID,
+            name,
+            image
+        );
+
+        contractCategoryID++;
     }
 
     // ========= Instructors =========== //
 
-    function createCourse(
-        string memory ipfsHash,
-        string memory level,
-        uint courseCategory
-    ) public onlyInstructor {
+    function createCourse(string memory ipfsHash) public onlyInstructor {
         Course memory course = courses[contractCourseID];
 
         // create new freah course
@@ -109,11 +126,9 @@ contract Buidl {
             msg.sender,
             course.students,
             0,
-            level,
             ipfsHash,
             false,
             0,
-            courseCategory,
             block.timestamp,
             block.timestamp
         );
@@ -125,6 +140,24 @@ contract Buidl {
         contractCourseID++;
     }
 
+    function getInstructorCoursesLength()
+        public
+        view
+        onlyInstructor
+        returns (uint)
+    {
+        return instructors[msg.sender].courses.length;
+    }
+
+    function getInstructorCourseIdAtIndex(uint index)
+        public
+        view
+        onlyInstructor
+        returns (uint)
+    {
+        return instructors[msg.sender].courses[index];
+    }
+
     function createInstructorAccount(
         string memory firstName,
         string memory lastName,
@@ -132,6 +165,12 @@ contract Buidl {
         uint gender
     ) public notAnyone {
         // stake instruction fee
+        bdlToken.increaseAllowance(
+            msg.sender,
+            address(this),
+            instructorRegistrationFee
+        );
+
         bdlToken.transferFrom(
             msg.sender,
             address(this),
@@ -162,7 +201,7 @@ contract Buidl {
     function createStudentAccount(
         string memory name,
         string memory email,
-        string memory gender
+        uint gender
     ) public notAnyone {
         Student memory student = students[msg.sender];
 
@@ -202,7 +241,9 @@ contract Buidl {
     }
 
     function rejectCourse(uint courseId) public onlyStudent {
-        StudentCourse memory studentCourse = studentCourses[msg.sender][courseId];
+        StudentCourse memory studentCourse = studentCourses[msg.sender][
+            courseId
+        ];
 
         Course memory course = courses[courseId];
 
@@ -230,13 +271,15 @@ contract Buidl {
         emit CourseRejected(msg.sender, courseId, studentCourse.sectionsViewed);
     }
 
-    function onNextCourseSection(uint courseId)
+    function onNextCourseSection(uint courseId, string memory uri)
         public
         onlyStudent
         returns (string memory)
     {
         Course storage course = courses[courseId];
-        StudentCourse storage studentCourse = studentCourses[msg.sender][courseId];
+        StudentCourse storage studentCourse = studentCourses[msg.sender][
+            courseId
+        ];
 
         // students moved to another section of the course
         // unlock part payment to the instructor (conditionally)
@@ -254,7 +297,7 @@ contract Buidl {
         uint progress = (studentCourse.sectionsViewed / course.sections);
 
         if (progress >= 1) {
-            onCompletedCourse(msg.sender, courseId);
+            onCompletedCourse(msg.sender, courseId, uri);
             return "course_completed";
         } else {
             studentCourse.sectionsViewed++;
@@ -262,14 +305,21 @@ contract Buidl {
         }
     }
 
-    function onCompletedCourse(address student, uint courseId) private {
-        generateCerticate(courseId, student);
+    function onCompletedCourse(
+        address student,
+        uint courseId,
+        string memory uri
+    ) private {
+        generateCerticate(courseId, student, uri);
         mintNftForStudent(courseId, student);
     }
 
-    function generateCerticate(uint courseId, address student) private {
+    function generateCerticate(
+        uint courseId,
+        address student,
+        string memory uri
+    ) private {
         Course memory course = courses[courseId];
-        string memory uri = course.level;
         // {
         //     "name":"Android Certificate",
         //     "description":"Mastering Koitlin",
@@ -321,4 +371,21 @@ contract Buidl {
     event CertificateIssued(address student, uint courseId);
     event CoursePurchased(address intructor, address student, uint courseId);
     event CourseRejected(address student, uint courseId, uint sectionsViewed);
+
+    // ========== test =========== //
+    function addTestCategories() private {
+        addCategory(
+            "Web Development",
+            "/images/categories/web-development.webp"
+        );
+        addCategory("Cooking", "/images/categories/cooking.webp");
+        addCategory("UI/UX Designing", "/images/categories/ui-ux.webp");
+        addCategory("3D Animation", "/images/categories/animation.webp");
+        addCategory("Illustration", "/images/categories/illustration.webp");
+        addCategory("Data Science", "/images/categories/data-science.webp");
+        addCategory("Speaking", "/images/categories/speaking.webp");
+        addCategory("Music", "/images/categories/music.webp");
+        addCategory("Photography", "/images/categories/photography.webp");
+        addCategory("Marketing", "/images/categories/marketing.webp");
+    }
 }

@@ -39,7 +39,7 @@ const Contracts = {
 
             // then check if user is an instructor
             const instructorAccount = await Contracts.buidlContract.instructors(accounts[0]);
-            if (instructorAccount.emailAddress != '') {
+            if (instructorAccount.firstName != '') {
                 Contracts.user = instructorAccount
                 Contracts.user.type = 'instructor'
 
