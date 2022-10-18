@@ -11,9 +11,9 @@ contract BdlToken is ERC20 {
 
     mapping(address => uint256) public mints;
 
-    constructor() ERC20("Buidl Token 2", "BDL") {
+    constructor() ERC20("Buidl Token", "BDL") {
         deployer = msg.sender;
-        _mint(msg.sender, 1000000000 * 10 ** decimals());
+        _mint(msg.sender, 10000000000 * 10 ** decimals()); // ten billion
     }
 
     function mint(address _address) public {

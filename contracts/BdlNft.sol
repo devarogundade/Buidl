@@ -9,7 +9,7 @@ contract BdlNft is ERC721 {
     address deployer;
     uint256 tokenID = 1;
 
-    constructor() ERC721("Buidl NFT 2", "BNFT") {
+    constructor() ERC721("Buidl NFT", "BNFT") {
         deployer = msg.sender;
     }
 
@@ -28,5 +28,5 @@ contract BdlNft is ERC721 {
         require(msg.sender == deployer, "Unauthorized");
         _;
     }
-  
+
 }

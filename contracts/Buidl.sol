@@ -140,22 +140,20 @@ contract Buidl {
         contractCourseID++;
     }
 
-    function getInstructorCoursesLength()
+    function getInstructorCoursesLength(address instructor)
         public
         view
-        onlyInstructor
         returns (uint)
     {
-        return instructors[msg.sender].courses.length;
+        return instructors[instructor].courses.length;
     }
 
-    function getInstructorCourseIdAtIndex(uint index)
+    function getInstructorCourseIdAtIndex(address instructor, uint index)
         public
         view
-        onlyInstructor
         returns (uint)
     {
-        return instructors[msg.sender].courses[index];
+        return instructors[instructor].courses[index];
     }
 
     function createInstructorAccount(
@@ -217,6 +215,22 @@ contract Buidl {
         );
 
         contractStudentID++;
+    }
+
+    function getStudentCoursesLength(address student)
+        public
+        view
+        returns (uint)
+    {
+        return students[student].courses.length;
+    }
+
+    function getStudentourseIdAtIndex(address student, uint index)
+        public
+        view
+        returns (uint)
+    {
+        return students[student].courses[index];
     }
 
     function purchaseCourse(uint courseId) public onlyStudent {

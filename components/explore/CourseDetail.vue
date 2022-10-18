@@ -70,7 +70,8 @@
                             </div>
 
                             <div class="action">
-                                <div class="pay">Buy Course</div>
+                                <div class="pay" v-if="!bought">Buy Course</div>
+                                <div class="pay" v-else>View Course</div>
                                 <i class="fa-solid fa-heart-circle-plus"></i>
                             </div>
                         </div>
@@ -86,8 +87,19 @@
 export default {
     data() {
         return {
-            selectedSection: 1
+            selectedSection: 1,
+            user: this.$contracts.user,
+            courseId: this.$route.params.course,
+            bought: false
         }
+    },
+    mounted() {
+        $nuxt.$on('user', (user) => {
+            this.user = user
+            this.init()
+        })
+
+        this.init()
     },
     methods: {
         openAccordion(index) {
@@ -95,6 +107,20 @@ export default {
                 this.selectedSection = -1
             } else {
                 this.selectedSection = index
+            }
+        },
+        async init() {
+            if (this.user && this.user.type == 'student') {
+                const address = this.$auth.accounts[0]
+                const studentCoursesLength = await this.$contracts.buidlContract.getStudentCoursesLength(address)
+                for (let index = 0; index < studentCoursesLength.toNumber(); index++) {
+                    const courseId = await this.$contracts.buidlContract.getStudentCourseIdAtIndex(address, index)
+
+                    if (courseId == this.courseId) {
+                        this.bought = true
+                        break
+                    }
+                }
             }
         }
     }

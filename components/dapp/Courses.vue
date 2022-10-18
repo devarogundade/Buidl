@@ -40,9 +40,10 @@ export default {
         }
     },
     async mounted() {
-        const instructorCoursesLength = await this.$contracts.buidlContract.getInstructorCoursesLength()
+        const address = this.$auth.accounts[0]
+        const instructorCoursesLength = await this.$contracts.buidlContract.getInstructorCoursesLength(address)
         for (let index = 0; index < instructorCoursesLength.toNumber(); index++) {
-            const courseId = await this.$contracts.buidlContract.getInstructorCourseIdAtIndex(index)
+            const courseId = await this.$contracts.buidlContract.getInstructorCourseIdAtIndex(address, index)
             const course = await this.$contracts.buidlContract.courses(courseId)
 
             if (course.instructor.toLowerCase() == this.$auth.accounts[0].toLowerCase()) {
