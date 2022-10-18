@@ -43,6 +43,7 @@ export default {
     ],
 
     plugins: [
+        '@/plugins/utils.js',
         '@/plugins/auth.js',
         '@/plugins/contracts.js',
         '@/plugins/moralis-apis/ipfs.js',

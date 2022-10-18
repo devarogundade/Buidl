@@ -1,83 +1,85 @@
 <template>
-<section>
+<Progress v-if="course == null" />
+<section v-else>
     <div class="app-width">
         <div class="course">
             <div class="head">
                 <div class="wrapper">
-                    <div class="tree">
-                        <router-link to="/">
-                            <p>Web Development</p>
+                    <div class="tree" v-if="category != null">
+                        <router-link to="/explore">
+                            <p>Explore</p>
                         </router-link>
                         <i class="fa-solid fa-chevron-right"></i>
-                        <p>JavaScript</p>
+                        <p>{{ category.name }}</p>
                     </div>
-                    <h3 class="title">The Complete JavaScript Course 2022: From Zero to Expert!</h3>
-                    <p class="subtitle">The modern JavaScript course for everyone! Master JavaScript with projects, challenges and theory. Many courses in one!</p>
+                    <h3 class="title">{{ course.name }}</h3>
+                    <p class="subtitle">{{ course.description }}</p>
                     <div class="stat">
                         <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; <router-link to="">(128 ratings)</router-link>
                         </p>
                         <p>•</p>
                         <p class="n_students">2,435 students</p>
                     </div>
-                    <p class="instructor"> <img src="/images/nft2.jpg" alt=""> Dr. Angela Yu</p>
+                    <p class="instructor" v-if="instructor"> <img src="/images/nft2.jpg" alt=""> {{ instructor.lastName + ' ' + instructor.firstName }} </p>
                     <div class="specs">
-                        <p class="last_update"><i class="fa-solid fa-calendar-days"></i> 12th, Jun 2020</p>
-                        <p class="languages"><i class="fa-solid fa-globe"></i> English and French</p>
+                        <p class="last_update"><i class="fa-solid fa-calendar-days"></i> {{ $utils.formatToDate(course.updatedAt) }}</p>
+                        <p class="languages"><i class="fa-solid fa-globe"></i> English</p>
+                    </div>
+                </div>
+
+                <div class="buy">
+                    <div class="preview">
+                        <img src="https://www.simplilearn.com/ice9/webinar_thum_image/JavaScript_Tutorial.jpg" />
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <div class="tag" v-if="!bought">Preview</div>
+                    <div class="tag" v-else><i class="fa-solid fa-certificate"></i> Bought</div>
+
+                    <div class="coupon">
+                        <p>Apply Coupon</p>
+
+                        <div class="selector">
+                            <div class="nft_row">
+                                <img src="/images/nft1.jpg" alt="">
+                                <div class="name">
+                                    <p>Kosi NFT #093</p>
+                                    <p>-20% off</p>
+                                </div>
+                            </div>
+                            <div class="options"></div>
+                        </div>
+
+                        <div class="action">
+                            <div class="pay" v-if="!bought" v-on:click="buyCourse()">Buy Course</div>
+                            <router-link v-else :to="`/app/courses/${$route.params.course}`">
+                                <div class="pay">View Course</div>
+                            </router-link>
+                            <i class="fa-solid fa-heart-circle-plus"></i>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="body">
-                <div class="grid">
-                    <div class="content">
-                        <h3 class="title">Course content</h3>
-                        <div class="desc">21 sections &nbsp; • &nbsp; 6 Tests &nbsp; • &nbsp; 6 hours length</div>
+                <div class="content">
+                    <h3 class="title">Course content</h3>
+                    <div class="desc">21 sections &nbsp; • &nbsp; 6 Tests &nbsp; • &nbsp; 6 hours length</div>
 
-                        <div class="accordions">
-                            <div class="accordion" v-for="index in 6" :key="index">
-                                <div class="front" v-on:click="openAccordion(index)">
-                                    <div>
-                                        <i class="fa-solid fa-chevron-down"></i>
-                                        <p>Welcome, Introduction</p>
-                                    </div>
-                                    <p>1 test • 4min</p>
+                    <div class="accordions">
+                        <div class="accordion" v-for="index in 6" :key="index">
+                            <div class="front" v-on:click="openAccordion(index)">
+                                <div>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                    <p>Welcome, Introduction</p>
                                 </div>
-                                <div class="back" v-if="selectedSection == index">
-                                    <video src=""></video>
-                                </div>
+                                <p>1 test • 4min</p>
                             </div>
-                        </div>
-
-                    </div>
-                    <div class="buy">
-                        <div class="preview">
-                            <img src="https://www.simplilearn.com/ice9/webinar_thum_image/JavaScript_Tutorial.jpg" />
-                            <i class="fa-solid fa-play"></i>
-                        </div>
-                        <div class="tag" v-if="!bought">Preview</div>
-                        <div class="tag" v-else><i class="fa-solid fa-certificate"></i> Bought</div>
-
-                        <div class="coupon">
-                            <p>Apply Coupon</p>
-
-                            <div class="selector">
-                                <div class="nft_row">
-                                    <img src="/images/nft1.jpg" alt="">
-                                    <div class="name">
-                                        <p>Kosi NFT #093</p>
-                                        <p>-20% off</p>
-                                    </div>
-                                </div>
-                                <div class="options"></div>
-                            </div>
-
-                            <div class="action">
-                                <div class="pay" v-if="!bought" v-on:click="buyCourse()">Buy Course</div>
-                                <router-link v-else :to="`/app/courses/${$route.params.course}`"><div class="pay">View Course</div></router-link>
-                                <i class="fa-solid fa-heart-circle-plus"></i>
+                            <div class="back" v-if="selectedSection == index">
+                                <video src=""></video>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -92,6 +94,10 @@ export default {
             selectedSection: 1,
             user: this.$contracts.user,
             courseId: this.$route.params.course,
+            course: null,
+            category: null,
+            instructor: null,
+            notFound: false,
             bought: false
         }
     },
@@ -111,7 +117,21 @@ export default {
                 this.selectedSection = index
             }
         },
+        async getCourse() {
+            const course = await this.$contracts.buidlContract.courses(this.courseId);
+
+            if (course.id.toNumber() != 0) {
+                this.course = course
+
+                this.instructor = await this.$contracts.buidlContract.instructors(course.instructor)
+                this.category = await this.$contracts.buidlContract.categories(course.categoryId)
+            } else {
+                this.notFound = true
+            }
+        },
         async init() {
+            this.getCourse()
+
             if (this.user && this.user.type == 'student') {
                 const address = this.$auth.accounts[0]
 
@@ -130,12 +150,12 @@ export default {
             }
         },
         async buyCourse() {
-            this.$contracts.buidlContract.purchaseCourse(1, {
+            this.$contracts.buidlContract.purchaseCourse(this.courseId, {
                 from: this.$auth.accounts[0]
             })
         }
     }
-}
+};
 </script>
 
 <style scoped>
@@ -148,6 +168,7 @@ export default {
     width: 100%;
     background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
     padding: 40px;
+    position: relative;
 }
 
 .wrapper {
@@ -187,12 +208,8 @@ export default {
     max-width: 100%;
 }
 
-.grid {
+.body {
     margin-top: 40px;
-    display: flex;
-    justify-content: space-between;
-    gap: 40px;
-    position: relative;
 }
 
 .content {
@@ -208,7 +225,7 @@ export default {
     background: #2C2D3A;
     position: absolute;
     right: 40px;
-    top: -400px;
+    top: 40px;
     border-radius: 10px;
     overflow: hidden;
 }

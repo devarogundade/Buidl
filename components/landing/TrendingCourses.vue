@@ -8,22 +8,22 @@
         <div class="trending">
             <div class="swiper trendSwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide" v-for="index in 12" :key="index">
+                    <div class="swiper-slide" v-for="course in getValidCourses()" :key="course.id.toNumber()">
                         <div class="image">
                             <img src="https://cdn.tgdd.vn/hoi-dap/1321801/javascript-la-gi-co-vai-tro-gi-cach-bat-javascript-tren.001.jpg" alt="">
                         </div>
                         <div class="detail">
-                            <h3 class="course_title">The Complete 2022 Web Development Bootcamp</h3>
-                            <p class="instructor"> <img src="/images/nft2.jpg" alt=""> Dr. Angela Yu</p>
+                            <h3 class="course_title">{{ course.name }}</h3>
+                            <p class="instructor" v-if="course.instructorData"> <img src="/images/nft2.jpg" alt=""> {{ course.instructorData.lastName + ' ' + course.instructorData.firstName }} </p>
                             <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; • &nbsp; 235 students</p>
-                            <p class="price">1,294 $BDL</p>
+                            <p class="price">{{ course.price.toNumber() }} $BDL</p>
                         </div>
 
                         <div class="description">
                             <div class="detail">
-                                <p class="price">1,294 $BDL</p>
-                                <h3 class="course_title">The Complete 2022 Web Development Bootcamp</h3>
-                                <p class="instructor"> <img src="/images/nft2.jpg" alt=""> Dr. Angela Yu</p>
+                                <p class="price">{{ course.price.toNumber() }} $BDL</p>
+                                <h3 class="course_title">{{ course.name }}</h3>
+                                <p class="instructor" v-if="course.instructorData"> <img src="/images/nft2.jpg" alt=""> {{ course.instructorData.lastName + ' ' + course.instructorData.firstName }} </p>
                                 <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; • &nbsp; 235 students</p>
                                 <p class="sections">Sections</p>
                                 <ul>
@@ -33,7 +33,9 @@
                                     <p class="more_sections">+2 sections</p>
                                 </ul>
                                 <div class="action">
-                                    <div class="buy">View Course</div>
+                                    <router-link :to="`/explore/courses/${course.id.toNumber()}`">
+                                        <div class="buy">View Course</div>
+                                    </router-link>
                                     <i class="fa-solid fa-heart-circle-plus"></i>
                                 </div>
                             </div>
@@ -49,7 +51,17 @@
 
 <script>
 export default {
+    data() {
+        return {
+            courses: [],
+        }
+    },
     mounted() {
+        $nuxt.$on('contracts-ready', (buidlContract) => {
+            this.getCourses(buidlContract)
+        })
+    },
+    updated() {
         new Swiper(".trendSwiper", {
             slidesPerView: 4,
             spaceBetween: 30,
@@ -58,6 +70,51 @@ export default {
                 clickable: true,
             },
         });
+    },
+    methods: {
+        async getCourses(buidlContract) {
+            let index = 1;
+            let ended = false;
+
+            while (!ended) {
+                const course = await buidlContract.courses(index);
+
+                const existing = this.courses.filter(_course =>
+                    _course.id.toNumber() == course.id.toNumber()
+                )
+
+                if (existing.length == 0) {
+                    if (course.id.toNumber() != 0) {
+                        this.instructorData = null
+                        this.courses.push(course)
+                    } else {
+                        ended = true
+                    }
+                }
+
+                index++
+            }
+
+            this.getInstructors(buidlContract)
+        },
+        getValidCourses() {
+            return this.courses.filter(course => course.id.toNumber() != 0)
+        },
+        async getInstructors(buidlContract) {
+            for (let index = 0; index < this.courses.length; index++) {
+                if (index > 20) break
+
+                const instructor = await buidlContract.instructors(this.courses[index].instructor);
+                if (instructor.id.toNumber() != 0) {
+                    this.courses[index].instructorData = instructor
+
+                    // force re rendering bug
+                    let name = this.courses[index].name
+                    this.courses[index].name = 'forcing'
+                    this.courses[index].name = name
+                }
+            }
+        }
     }
 }
 </script>
@@ -66,8 +123,6 @@ export default {
 section {
     padding-bottom: 50px;
 }
-
-.trending {}
 
 .title {
     display: flex;
@@ -222,24 +277,24 @@ ul li {
 }
 
 .action .buy {
-  background: #0177fb;
-  height: 100%;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 16px;
+    background: #0177fb;
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
 }
 
 .swiper-slide .action i {
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px rgb(255, 209, 5) solid;
-  font-size: 20px;
-  color: #fff;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px rgb(255, 209, 5) solid;
+    font-size: 20px;
+    color: #fff;
 }
 </style>

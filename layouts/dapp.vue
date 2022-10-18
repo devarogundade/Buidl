@@ -60,7 +60,7 @@ export default {
             }
 
             if (status == 'not-available') {
-                this.$router.push('/register')
+                 this.$router.push('/register')
             }
         })
 

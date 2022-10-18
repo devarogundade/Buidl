@@ -14,7 +14,7 @@
                 <p class="tab" v-on:click="showBuild = !showBuild">
                     Teach <i class="fa-solid fa-angle-down"></i>
                 </p>
-                <router-link to="/explore/talents">
+                <router-link to="/explore/instructors">
                     <p class="tab">Instructors</p>
                 </router-link>
                 <a href="#bdl-token">
@@ -30,7 +30,7 @@
                     Become an Instructor <i class="fa-solid fa-user-tie"></i>
                 </div>
                 <div class="item">
-                    Create Project <i class="fa-solid fa-hammer"></i>
+                    Instructor's Guide <i class="fa-solid fa-hammer"></i>
                 </div>
             </div>
 

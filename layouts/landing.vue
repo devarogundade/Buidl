@@ -37,10 +37,6 @@ export default {
             if (status == 'available') {
                 this.loading = false
             }
-
-            if (status == 'not-available') {
-                this.$router.push('/register')
-            }
         })
 
         await this.$auth.checkAuth()

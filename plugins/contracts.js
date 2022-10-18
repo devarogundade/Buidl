@@ -9,7 +9,16 @@ const Contracts = {
 
     init: async function(provider) {
         const buidlContract = contract(buidlJson)
-        buidlContract.setProvider(provider)
+
+        if (!provider) {
+            if (typeof ethereum === 'undefined') {
+                $nuxt.$emit('request-connect-wallet')
+            } else {
+                buidlContract.setProvider(ethereum)
+            }
+        } else {
+            buidlContract.setProvider(provider)
+        }
 
         try {
             await buidlContract.deployed().then(instance => {
@@ -17,6 +26,7 @@ const Contracts = {
             })
 
             this.isInit = true
+            $nuxt.$emit('contracts-ready', Contracts.buidlContract)
         } catch (error) {
             this.isInit = false
         }

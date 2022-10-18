@@ -1,7 +1,7 @@
 <template>
 <div class="container">
-    <div class="courses" v-if="courses.length > 0">
-        <router-link :to="`/app/courses/${course.course.id.toNumber()}`" v-for="(course, index) in courses" :key="index">
+    <div class="courses" v-show="courses.length > 0">
+        <router-link :to="`/app/courses/${course.id.toNumber()}`" v-for="(course, index) in courses" :key="index">
             <div class="course scaleable">
                 <div class="detail">
                     <img :src="course.image" alt="">
@@ -11,7 +11,7 @@
             </div>
         </router-link>
     </div>
-    <div class="explain" v-else>
+    <div class="explain" v-show="courses.length == 0">
         <h3>What's a course?</h3>
         <p>
             <b>Buidl Course</b> provides you an environment with the handy tools you need to teach
@@ -36,22 +36,45 @@
 export default {
     data() {
         return {
+            user: this.$contracts.user,
             courses: []
         }
     },
-    async mounted() {
-        const address = this.$auth.accounts[0]
-        const instructorCoursesLength = await this.$contracts.buidlContract.getInstructorCoursesLength(address)
-        for (let index = 0; index < instructorCoursesLength.toNumber(); index++) {
-            const courseId = await this.$contracts.buidlContract.getInstructorCourseIdAtIndex(address, index)
-            const course = await this.$contracts.buidlContract.courses(courseId)
+    mounted() {
+        $nuxt.$on('user', (user) => {
+            this.user = user
+            // this.init()
+        })
 
-            if (course.instructor.toLowerCase() == this.$auth.accounts[0].toLowerCase()) {
-                this.$axios.get(course.ipfsHash).then((response) => {
-                    const courseMetadata = response.data
-                    courseMetadata.course = course
-                    this.courses.push(courseMetadata)
-                }).catch((error) => {})
+        this.init()
+    },
+    methods: {
+        async init() {
+            if (this.user && this.user.type == 'student') {
+                const address = this.$auth.accounts[0]
+
+                let index = 0
+                while (true) {
+                    const studentCourse = await this.$contracts.buidlContract.studentCourses(address, index)
+
+                    if (studentCourse.courseId.toNumber() == 0) {
+                        // end of result
+                        break
+                    }
+
+                    const existing = this.courses.filter(course =>
+                        studentCourse.courseId.toNumber() == course.id.toNumber()
+                    )
+
+                    if (existing.length == 0) {
+                        const course = await this.$contracts.buidlContract.courses(studentCourse.courseId.toNumber())
+                        if (course.id.toNumber() != 0) {
+                            this.courses.push(course)
+                        }
+                    }
+
+                    index++
+                }
             }
         }
     }

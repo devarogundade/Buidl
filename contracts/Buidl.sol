@@ -65,12 +65,16 @@ contract Buidl {
 
     struct Course {
         uint id;
+        string name;
+        string description;
+        uint categoryId;
+        string ipfsPhoto;
         address instructor;
-        address[] students; // students offering the course
-        uint256 price; // price in bdl token
-        string ipfsHash; // course metadata
+        address[] students;
+        uint[] ratings;
+        uint256 price;
+        string metadata; // course metadata
         bool isPublished;
-        uint sections; // number of course sections
         uint createdAt;
         uint updatedAt;
     }
@@ -116,18 +120,22 @@ contract Buidl {
 
     // ========= Instructors =========== //
 
-    function createCourse(string memory ipfsHash) public onlyInstructor {
+    function createCourse(string memory name, string memory description, uint categoryId) public onlyInstructor {
         Course memory course = courses[contractCourseID];
 
         // create new freah course
         courses[contractCourseID] = Course(
             contractCourseID,
+            name,
+            description,
+            categoryId,
+            course.ipfsPhoto,
             msg.sender,
             course.students,
+            course.ratings,
             0,
-            ipfsHash,
+            course.metadata,
             false,
-            0,
             block.timestamp,
             block.timestamp
         );
@@ -235,8 +243,10 @@ contract Buidl {
     function purchaseCourse(uint courseId) public onlyStudent {
         Course storage course = courses[courseId];
 
+        require(course.id != 0, "Course doesn't exists");
+
         // lock the student funds to smart contract
-        bdlToken.increaseAllowance(msg.sender, address(this), course.price)
+        bdlToken.increaseAllowance(msg.sender, address(this), course.price);
         bdlToken.transferFrom(msg.sender, address(this), course.price);
 
         // create course for student
@@ -253,12 +263,14 @@ contract Buidl {
         emit CoursePurchased(course.instructor, msg.sender, courseId);
     }
 
-    function rejectCourse(uint courseId) public onlyStudent {
+    function rejectCourse(uint courseId, uint sections) public onlyStudent {
         StudentCourse memory studentCourse = studentCourses[msg.sender][
             courseId
         ];
 
         Course memory course = courses[courseId];
+
+        require(course.id != 0, "Course doesn't exists");
 
         // check is course is not over 2 weeks
         require(
@@ -266,8 +278,8 @@ contract Buidl {
             "You can't reject a course over 2 weeks."
         );
 
-        uint refundableSections = (studentCourse.sectionsViewed -
-            course.sections);
+        uint refundableSections = (studentCourse.sectionsViewed - sections);
+
         require(
             refundableSections > 0,
             "None of the course sections is refundable"
@@ -284,19 +296,23 @@ contract Buidl {
         emit CourseRejected(msg.sender, courseId, studentCourse.sectionsViewed);
     }
 
-    function onNextCourseSection(uint courseId, string memory uri)
+    function onNextCourseSection(uint courseId, uint sections, string memory uri)
         public
         onlyStudent
         returns (string memory)
     {
         Course storage course = courses[courseId];
+
+        require(course.id != 0, "Course doesn't exists");
+
         StudentCourse storage studentCourse = studentCourses[msg.sender][
             courseId
         ];
 
         // students moved to another section of the course
         // unlock part payment to the instructor (conditionally)
-        uint pricePerSection = (course.price / course.sections);
+        uint pricePerSection = (course.price / sections);
+
         if (studentCourse.unlocked >= pricePerSection) {
             studentCourse.unlocked -= pricePerSection;
             bdlToken.transferFrom(
@@ -307,7 +323,7 @@ contract Buidl {
         }
 
         // checks if students has completed the course
-        uint progress = (studentCourse.sectionsViewed / course.sections);
+        uint progress = (studentCourse.sectionsViewed / sections);
 
         if (progress >= 1) {
             onCompletedCourse(msg.sender, courseId, uri);
@@ -333,6 +349,8 @@ contract Buidl {
         string memory uri
     ) private {
         Course memory course = courses[courseId];
+
+        require(course.id != 0, "Course doesn't exists");
         // {
         //     "name":"Android Certificate",
         //     "description":"Mastering Koitlin",
@@ -352,6 +370,8 @@ contract Buidl {
 
     function mintNftForStudent(uint courseId, address student) private {
         Course memory course = courses[courseId];
+
+        require(course.id != 0, "Course doesn't exists");
 
         bdlNft.mint(student, "");
     }

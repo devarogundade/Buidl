@@ -16,8 +16,7 @@ export default {
     data() {
         return {
             wcState: 'hide',
-            cpState: 'hide',
-            loading: true,
+            cpState: 'hide'
         }
     },
     async mounted() {
@@ -39,20 +38,6 @@ export default {
 
         $nuxt.$on('connected', (data) => {
             this.$contracts.init(this.$auth.provider, this.$auth.accounts)
-        })
-
-        $nuxt.$on('user-status', (status) => {
-            if (status == 'loading') {
-                this.loading = true
-            }
-
-            if (status == 'available') {
-                this.loading = false
-            }
-
-            if (status == 'not-available') {
-                this.$router.push('/register')
-            }
         })
 
         await this.$auth.checkAuth()

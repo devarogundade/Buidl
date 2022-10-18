@@ -79,18 +79,25 @@ export default {
             selectedLevel: 0
         }
     },
-    async mounted() {
-        const categoriesLength = await this.$contracts.buidlContract.contractCategoryID();
-
-        for (let index = 1; index <= categoriesLength; index++) {
-            const category = await this.$contracts.buidlContract.categories(index);
-            if (category.name != '') {
-                this.categories.push(category)
-            }
-        }
-
+    mounted() {
+        this.getCategories()
     },
     methods: {
+        async getCategories() {
+            let index = 1;
+            let ended = false;
+            while (!ended) {
+                const category = await this.$contracts.buidlContract.categories(index);
+
+                if (category.name != '') {
+                    this.categories.push(category)
+                } else {
+                    ended = true
+                }
+
+                index++
+            }
+        },
         onCategoryChanged(event) {
             this.selectedCategory = event.target.value
         },
@@ -133,13 +140,13 @@ export default {
             }
 
             try {
-                const ipfsHash = await this.$ipfs.uploadSingleData('courses', 1, course)
-
                 const trx = await this.$contracts.buidlContract.createCourse(
-                    ipfsHash, {
+                    this.name, this.description, this.selectedCategory, {
                         from: this.$auth.accounts[0]
                     }
                 )
+
+                console.log(trx);
 
                 this.$router.push('/app/courses')
             } catch (error) {}
