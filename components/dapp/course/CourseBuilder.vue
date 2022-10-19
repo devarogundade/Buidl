@@ -13,13 +13,16 @@
                 <div class="video">
                     <video v-if="sections[selectedIndex].src != ''" :src="sections[selectedIndex].video"></video>
                     <i v-if="sections[selectedIndex].src != ''" class="fa-solid fa-play"></i>
-                    <input accept="video/*" v-on:change="chooseFile($event)" v-else type="file">
+                    <input v-on:change="chooseFile($event)" v-else type="file">
                 </div>
             </div>
 
             <div class="text">
                 <HtmlEditor height="400" />
             </div>
+
+            <div class="save" v-if="!saving" v-on:click="saveChanges()">Save changes</div>
+            <div class="save" v-else>Saving..</div>
         </div>
     </div>
     <div class="grid">
@@ -49,6 +52,7 @@ export default {
             category: null,
             fetching: true,
             sections: [],
+            saving: false
         }
     },
     watch: {
@@ -73,6 +77,34 @@ export default {
         chooseFile(event) {
             const file = event.target.files[0]
             this.sections[this.selectedIndex].file = file
+        },
+        async saveChanges() {
+            if (this.saving) return
+
+            this.saving = true
+            const file = this.sections[this.selectedIndex].file
+            let src = this.sections[this.selectedIndex].src
+
+            if (file == null && src == '') {
+                return
+            }
+
+            if (file != null) {
+                const data = await this.$ipfs.toBase64(file)
+                console.log(data);
+                src = await this.$ipfs.upload(`courses/${this.courseId}/${this.selectedIndex}`, data)
+                console.log(src);
+            }
+
+            if (src == null) return
+
+            await this.$contracts.buidlContract.addSectionToCourse(
+                this.courseId, this.sections[this.selectedIndex].title, src, {
+                    from: this.$auth.accounts[0]
+                }
+            )
+
+            this.saving = false
         },
         async getCourse() {
             const course = await this.$contracts.buidlContract.courses(this.courseId);
@@ -230,5 +262,21 @@ input {
     border-radius: 16px;
     cursor: pointer;
     user-select: none;
+}
+
+.save {
+    height: 60px;
+    background: linear-gradient(90deg, #4b87f6 -43.68%, #3451f3 72.76%);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    cursor: pointer;
+    margin-top: 60px;
+    font-weight: 500;
+    font-size: 20px;
+    color: #FFFFFF;
 }
 </style>
