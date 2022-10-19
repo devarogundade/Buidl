@@ -9,7 +9,7 @@
         <div class="form">
             <div class="edit">
                 <p class="label">Course Title *</p>
-                <input :class="getInputClassForName()" type="text" v-model="name" placeholder="Cooking Masterclass" maxlength="45">
+                <input :class="getInputClassForName()" type="text" v-model="name" placeholder="Cooking Masterclass" maxlength="80">
                 <p v-if="errorName" class="error-text">{{ errorName }}</p>
             </div>
 
