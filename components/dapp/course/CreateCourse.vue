@@ -99,7 +99,7 @@ export default {
                     index++
                 }
             } catch (error) {
-              ended = true
+                ended = true
             }
         },
         onCategoryChanged(event) {
