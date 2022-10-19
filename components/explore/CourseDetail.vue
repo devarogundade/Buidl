@@ -29,7 +29,7 @@
 
                 <div class="buy">
                     <div class="preview">
-                        <img src="https://www.simplilearn.com/ice9/webinar_thum_image/JavaScript_Tutorial.jpg" />
+                        <video src="/videos/sample.mp4" />
                         <i class="fa-solid fa-play"></i>
                     </div>
                     <div class="tag" v-if="!bought">Preview</div>

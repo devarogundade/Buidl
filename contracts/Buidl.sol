@@ -5,6 +5,7 @@ pragma solidity >=0.7.0 <0.9.0;
 import "./BdlToken.sol";
 import "./BdlNft.sol";
 import "./BdlCertificate.sol";
+import "./Models.sol";
 
 contract Buidl {
     // state variables
@@ -22,11 +23,12 @@ contract Buidl {
     // minimum to stake for a duration of 1year
     uint256 instructorRegistrationFee = 2000 * 10**18;
 
-    mapping(uint => Category) public categories;
-    mapping(address => Instructor) public instructors;
-    mapping(address => Student) public students;
-    mapping(uint => Course) public courses;
-    mapping(address => StudentCourse[]) public studentCourses;
+    mapping(uint => Models.Category) public categories;
+    mapping(address => Models.Instructor) public instructors;
+    mapping(address => Models.Student) public students;
+    mapping(uint => Models.Course) public courses;
+    mapping(address => Models.StudentCourse[]) public studentCourses;
+    mapping(uint => Models.CourseSection[]) public courseSections;
 
     // contructor
     constructor(
@@ -42,63 +44,6 @@ contract Buidl {
         addTestCategories();
     }
 
-    // structs
-    struct Category {
-        uint id;
-        string name;
-        string image;
-    }
-
-    struct Instructor {
-        uint id;
-        string firstName;
-        string lastName;
-        string location;
-        uint gender;
-        bool isVerified;
-        string ipfsPhoto;
-        string twitter;
-        string linkedin;
-        uint[] courses;
-        uint createdAt;
-    }
-
-    struct Course {
-        uint id;
-        string name;
-        string description;
-        uint categoryId;
-        string ipfsPhoto;
-        address instructor;
-        address[] students;
-        uint[] ratings;
-        uint256 price;
-        string metadata; // course metadata
-        bool isPublished;
-        uint createdAt;
-        uint updatedAt;
-    }
-
-    struct Student {
-        uint id;
-        string name;
-        string emailAddress;
-        uint gender;
-        string ipfsPhoto;
-        string country;
-        uint createdAt;
-        uint[] courses;
-    }
-
-    struct StudentCourse {
-        uint courseId;
-        bool isActive; // paid or rejected
-        uint unlocked; // initially equals to price of course
-        // then sequentially unlocked to the instructor
-        uint sectionsViewed;
-        uint purchasedAt;
-    }
-
     // ========= Administation ========= //
 
     function setInstructorRegistrationFee(uint256 amount) public onlyOwner {
@@ -109,7 +54,7 @@ contract Buidl {
         public
         onlyOwner
     {
-        categories[contractCategoryID] = Category(
+        categories[contractCategoryID] = Models.Category(
             contractCategoryID,
             name,
             image
@@ -120,11 +65,15 @@ contract Buidl {
 
     // ========= Instructors =========== //
 
-    function createCourse(string memory name, string memory description, uint categoryId) public onlyInstructor {
-        Course memory course = courses[contractCourseID];
+    function createCourse(
+        string memory name,
+        string memory description,
+        uint categoryId
+    ) public onlyInstructor {
+        Models.Course memory course = courses[contractCourseID];
 
         // create new freah course
-        courses[contractCourseID] = Course(
+        courses[contractCourseID] = Models.Course(
             contractCourseID,
             name,
             description,
@@ -145,6 +94,59 @@ contract Buidl {
 
         // increment id
         contractCourseID++;
+    }
+
+    function addSectionToCourse(
+        uint courseId,
+        string memory title,
+        string memory src
+    ) public onlyInstructor {
+        Models.Course memory course = courses[courseId];
+
+        require(course.id != 0, "!exists");
+        require(course.instructor == msg.sender, "!authorized");
+
+        courseSections[courseId].push(
+            Models.CourseSection(courseSections[courseId].length + 1, title, src)
+        );
+    }
+
+    function updateCourseSection(
+        uint courseId,
+        uint sectionIndex,
+        string memory title,
+        string memory src
+    ) public onlyInstructor {
+        Models.Course memory course = courses[courseId];
+
+        require(course.id != 0, "!exists");
+        require(course.instructor == msg.sender, "!authorized");
+        require(
+            courseSections[courseId][sectionIndex].id != 0,
+            "!exists"
+        );
+
+        courseSections[courseId][sectionIndex] = Models.CourseSection(
+            sectionIndex,
+            title,
+            src
+        );
+    }
+
+    function deleteCourseSection(uint courseId, uint sectionIndex)
+        public
+        onlyInstructor
+    {
+        Models.Course memory course = courses[courseId];
+
+        require(course.id != 0, "!exists");
+        require(course.instructor == msg.sender, "!authorized");
+        require(
+            courseSections[courseId][sectionIndex].id != 0,
+            "!exists"
+        );
+
+        delete courseSections[courseId][sectionIndex];
     }
 
     function getInstructorCoursesLength(address instructor)
@@ -182,9 +184,9 @@ contract Buidl {
             instructorRegistrationFee
         );
 
-        Instructor memory instructor = instructors[msg.sender];
+        Models.Instructor memory instructor = instructors[msg.sender];
 
-        instructors[msg.sender] = Instructor(
+        instructors[msg.sender] = Models.Instructor(
             contractInstructorID,
             firstName,
             lastName,
@@ -208,9 +210,9 @@ contract Buidl {
         string memory email,
         uint gender
     ) public notAnyone {
-        Student memory student = students[msg.sender];
+        Models.Student memory student = students[msg.sender];
 
-        students[msg.sender] = Student(
+        students[msg.sender] = Models.Student(
             contractStudentID,
             name,
             email,
@@ -224,26 +226,10 @@ contract Buidl {
         contractStudentID++;
     }
 
-    function getStudentCoursesLength(address student)
-        public
-        view
-        returns (uint)
-    {
-        return students[student].courses.length;
-    }
-
-    function getStudentourseIdAtIndex(address student, uint index)
-        public
-        view
-        returns (uint)
-    {
-        return students[student].courses[index];
-    }
-
     function purchaseCourse(uint courseId) public onlyStudent {
-        Course storage course = courses[courseId];
+        Models.Course storage course = courses[courseId];
 
-        require(course.id != 0, "Course doesn't exists");
+        require(course.id != 0, "!exists");
 
         // lock the student funds to smart contract
         bdlToken.increaseAllowance(msg.sender, address(this), course.price);
@@ -251,38 +237,32 @@ contract Buidl {
 
         // create course for student
         studentCourses[msg.sender].push(
-            StudentCourse(
-                courseId,
-                true,
-                course.price,
-                0,
-                block.timestamp
-            )
+            Models.StudentCourse(courseId, true, course.price, 0, block.timestamp)
         );
 
         emit CoursePurchased(course.instructor, msg.sender, courseId);
     }
 
     function rejectCourse(uint courseId, uint sections) public onlyStudent {
-        StudentCourse memory studentCourse = studentCourses[msg.sender][
+        Models.StudentCourse memory studentCourse = studentCourses[msg.sender][
             courseId
         ];
 
-        Course memory course = courses[courseId];
+        Models.Course memory course = courses[courseId];
 
-        require(course.id != 0, "Course doesn't exists");
+        require(course.id != 0, "!exists");
 
         // check is course is not over 2 weeks
         require(
             studentCourse.purchasedAt > 2,
-            "You can't reject a course over 2 weeks."
+            ">2weeks."
         );
 
         uint refundableSections = (studentCourse.sectionsViewed - sections);
 
         require(
             refundableSections > 0,
-            "None of the course sections is refundable"
+            "!refunable"
         );
 
         uint256 refundableAmount = (refundableSections * course.price);
@@ -296,16 +276,16 @@ contract Buidl {
         emit CourseRejected(msg.sender, courseId, studentCourse.sectionsViewed);
     }
 
-    function onNextCourseSection(uint courseId, uint sections, string memory uri)
-        public
-        onlyStudent
-        returns (string memory)
-    {
-        Course storage course = courses[courseId];
+    function onNextCourseSection(
+        uint courseId,
+        uint sections,
+        string memory uri
+    ) public onlyStudent returns (string memory) {
+        Models.Course storage course = courses[courseId];
 
-        require(course.id != 0, "Course doesn't exists");
+        require(course.id != 0, "!exists");
 
-        StudentCourse storage studentCourse = studentCourses[msg.sender][
+        Models.StudentCourse storage studentCourse = studentCourses[msg.sender][
             courseId
         ];
 
@@ -339,8 +319,9 @@ contract Buidl {
         uint courseId,
         string memory uri
     ) private {
+        require(courses[courseId].id != 0, "!exists");
         generateCerticate(courseId, student, uri);
-        mintNftForStudent(courseId, student);
+        mintNftForStudent(student);
     }
 
     function generateCerticate(
@@ -348,53 +329,33 @@ contract Buidl {
         address student,
         string memory uri
     ) private {
-        Course memory course = courses[courseId];
-
-        require(course.id != 0, "Course doesn't exists");
-        // {
-        //     "name":"Android Certificate",
-        //     "description":"Mastering Koitlin",
-        //     "image":"https://buidl.com/pic/xxxx.jpg",
-        //     "external_url":"https://originalsite.io/2",
-        //     "attributes":[
-        //          {
-        //              "trait_type":"Rarity Class",
-        //              "value":"Normal"
-        //          },
-        //     ]
-        // }
         bdlCertificate.issue(student, uri);
-
         emit CertificateIssued(student, courseId);
     }
 
-    function mintNftForStudent(uint courseId, address student) private {
-        Course memory course = courses[courseId];
-
-        require(course.id != 0, "Course doesn't exists");
-
+    function mintNftForStudent(address student) private {
         bdlNft.mint(student, "");
     }
 
     modifier onlyInstructor() {
-        require(instructors[msg.sender].id != 0, "Unauthorized");
+        require(instructors[msg.sender].id != 0, "!authorized");
         _;
     }
 
     modifier onlyStudent() {
-        require(students[msg.sender].id != 0, "Unauthorized");
+        require(students[msg.sender].id != 0, "!authorized");
         _;
     }
 
     modifier onlyOwner() {
-        require(msg.sender == deployer, "Unauthorized");
+        require(msg.sender == deployer, "!authorized");
         _;
     }
 
     modifier notAnyone() {
         require(
             (students[msg.sender].id == 0 && instructors[msg.sender].id == 0),
-            "Unauthorized"
+            "!authorized"
         );
         _;
     }

@@ -45,6 +45,8 @@ module.exports = {
         }
     },
 
+    plugins: ["truffle-contract-size"],
+
     // db: {
     //   enabled: false,
     //   host: "127.0.0.1",

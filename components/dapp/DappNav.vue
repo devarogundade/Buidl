@@ -29,8 +29,8 @@
             </div>
         </router-link>
 
-        <router-link to="/app/jobs" v-if="user.type == 'instructor'">
-            <div :class="$route.name == 'app-jobs'  ? 'item active' : 'item'">
+        <router-link to="/app/revenue" v-if="user.type == 'instructor'">
+            <div :class="$route.name == 'app-revenue'  ? 'item active' : 'item'">
                 <i class="fa-solid fa-briefcase"></i>
                 <p>Revenue</p>
             </div>

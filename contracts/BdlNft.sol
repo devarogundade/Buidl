@@ -14,7 +14,6 @@ contract BdlNft is ERC721 {
     }
 
     function mint(address beneficiary, bytes memory data) public onlyOwner {
-
         _safeMint(
             beneficiary,
             tokenID,

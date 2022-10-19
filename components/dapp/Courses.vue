@@ -1,6 +1,8 @@
 <template>
 <div class="container">
-    <div class="courses" v-show="courses.length > 0">
+    <InProgress v-if="fetching" />
+
+    <div class="courses" v-show="(courses.length > 0) && !fetching && user" v-if="user.type == 'student'">
         <router-link :to="`/app/courses/${course.id.toNumber()}`" v-for="(course, index) in courses" :key="index">
             <div class="course scaleable">
                 <div class="detail">
@@ -11,7 +13,19 @@
             </div>
         </router-link>
     </div>
-    <div class="explain" v-show="courses.length == 0">
+    <div class="courses" v-show="(courses.length > 0) && !fetching && user" v-if="user.type == 'instructor'">
+        <router-link :to="`/app/course-builder/${course.id.toNumber()}`" v-for="(course, index) in courses" :key="index">
+            <div class="course scaleable">
+                <div class="detail">
+                    <img :src="course.image" alt="">
+                    <h3>{{ course.name }}</h3>
+                    <p>{{ course.description }}</p>
+                </div>
+            </div>
+        </router-link>
+    </div>
+
+    <div class="explain" v-show="(courses.length == 0) && !fetching">
         <h3>What's a course?</h3>
         <p>
             <b>Buidl Course</b> provides you an environment with the handy tools you need to teach
@@ -37,7 +51,8 @@ export default {
     data() {
         return {
             user: this.$contracts.user,
-            courses: []
+            courses: [],
+            fetching: true,
         }
     },
     mounted() {
@@ -50,15 +65,16 @@ export default {
     },
     methods: {
         async init() {
-            if (this.user && this.user.type == 'student') {
-                const address = this.$auth.accounts[0]
+            const address = this.$auth.accounts[0]
 
+            if (this.user && this.user.type == 'student') {
                 let index = 0
                 while (true) {
                     const studentCourse = await this.$contracts.buidlContract.studentCourses(address, index)
 
                     if (studentCourse.courseId.toNumber() == 0) {
                         // end of result
+                        this.fetching = false
                         break
                     }
 
@@ -72,6 +88,36 @@ export default {
                             this.courses.push(course)
                         }
                     }
+
+                    this.fetching = false
+
+                    index++
+                }
+            }
+
+            if (this.user && this.user.type == 'instructor') {
+                let index = 0
+                while (true) {
+                    const courseId = await this.$contracts.buidlContract.getInstructorCourseIdAtIndex(address, index)
+
+                    if (courseId.toNumber() == 0) {
+                        // end of result
+                        this.fetching = false
+                        break
+                    }
+
+                    const existing = this.courses.filter(course =>
+                        courseId.toNumber() == course.id.toNumber()
+                    )
+
+                    if (existing.length == 0) {
+                        const course = await this.$contracts.buidlContract.courses(courseId.toNumber())
+                        if (course.id.toNumber() != 0) {
+                            this.courses.push(course)
+                        }
+                    }
+
+                    this.fetching = false
 
                     index++
                 }
@@ -97,8 +143,11 @@ export default {
 
 .course {
     width: 420px;
+    height: 320px;
+    justify-content: center;
     border-radius: 20px;
     background: #23242F;
+    position: relative;
 }
 
 .fab-btn {
@@ -138,6 +187,7 @@ export default {
     border-radius: 24px;
     color: #FFFFFF;
     padding: 30px;
+    position: absolute;
 }
 
 .explain h3 {
@@ -174,17 +224,21 @@ export default {
     padding-top: 100px;
     color: #FFFFFF;
     user-select: none;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 }
 
 .detail img {
-    width: 60px;
-    height: 60px;
-    border-radius: 20px;
+    width: 120px;
+    height: 100px;
+    border-radius: 12px;
     object-fit: cover;
 }
 
 .detail h3 {
-    font-size: 35px;
+    font-size: 24px;
     font-weight: 600;
     margin-top: 10px;
 }
