@@ -64,14 +64,13 @@ export default {
             '~/components/dialogs'
         ]
     },
-    buildModules: [],
 
     modules: [
         '@nuxtjs/axios',
     ],
 
     axios: {
-        baseURL: 'https://deep-index.moralis.io/api/v2/', // moralis base url
+        baseURL: 'https://deep-index.moralis.io/api/v2/', // moralis api base url
     },
 
     build: {}

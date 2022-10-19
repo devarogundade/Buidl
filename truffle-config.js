@@ -3,50 +3,27 @@ const HDWalletProvider = require('@truffle/hdwallet-provider');
 module.exports = {
     networks: {
         development: {
-            host: "127.0.0.1", // Localhost (default: none)
-            port: 7545, // Standard Ethereum port (default: none)
-            network_id: "*", // Any network (default: none)
+            host: "127.0.0.1", // Ganache
+            port: 7545,
+            network_id: "*",
         },
         testnet: {
-            provider: () => new HDWalletProvider(process.env.MNEMONIC, `https://data-seed-prebsc-1-s2.binance.org:8545`),
-            network_id: 97, // Goerli's id
-            confirmations: 2, // # of confirmations to wait between deployments. (default: 0)
-            timeoutBlocks: 2000, // # of blocks before a deployment times out  (minimum/default: 50)
-            skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
-            networkCheckTimeout: 1000000
+            provider: () => new HDWalletProvider("forget pull traffic comfort guard urban fold mutual bleak swim little foil", `https://data-seed-prebsc-1-s2.binance.org:8545`),
+            network_id: 97, // Smart chain testnet id
+            confirmations: 2,
+            timeoutBlocks: 9999,
+            skipDryRun: true,
+            networkCheckTimeout: 9999999
         },
     },
 
-    // Set default mocha options here, use special reporters, etc.
-    mocha: {
-        // timeout: 100000
-    },
+    mocha: {},
 
-    // Configure your compilers
     compilers: {
         solc: {
-            version: "0.8.17", // Fetch exact version from solc-bin (default: truffle's version)
-            // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
-            // settings: {          // See the solidity docs for advice about optimization and evmVersion
-            //  optimizer: {
-            //    enabled: false,
-            //    runs: 200
-            //  },
-            //  evmVersion: "byzantium"
-            // }
+            version: "0.8.17"
         }
     },
 
     plugins: ["truffle-contract-size"],
-
-    // db: {
-    //   enabled: false,
-    //   host: "127.0.0.1",
-    //   adapter: {
-    //     name: "sqlite",
-    //     settings: {
-    //       directory: ".db"
-    //     }
-    //   }
-    // }
 };

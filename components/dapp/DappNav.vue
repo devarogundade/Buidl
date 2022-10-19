@@ -15,13 +15,6 @@
             </div>
         </router-link>
 
-        <router-link to="/app/profile" v-if="user.type == 'instructor'">
-            <div :class="($route.name == 'app-profile' || $route.name == 'app-profile-edit') ? 'item active' : 'item'">
-                <i class="fa-solid fa-user-tie"></i>
-                <p>Students</p>
-            </div>
-        </router-link>
-
         <router-link to="/app/courses">
             <div :class="($route.name == 'app-courses' || $route.name == 'app-courses-create')  ? 'item active' : 'item'">
                 <i class="fa-solid fa-hammer"></i>
@@ -48,10 +41,10 @@
             </div>
         </router-link>
 
-        <router-link to="/app/settings">
-            <div :class="$route.name == 'app-settings' ? 'item active' : 'item'">
+        <router-link to="/app/profile">
+            <div :class="$route.name == 'app-profile' ? 'item active' : 'item'">
                 <i class="fa-solid fa-gear"></i>
-                <p>Settings</p>
+                <p>My Profile</p>
             </div>
         </router-link>
     </div>

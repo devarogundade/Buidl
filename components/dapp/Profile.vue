@@ -366,7 +366,7 @@ option {
 
 .others {
     position: sticky;
-    top: 120px;
+    top: 100px;
     height: fit-content;
 }
 

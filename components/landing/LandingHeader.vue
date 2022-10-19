@@ -35,7 +35,7 @@
             </div>
 
             <div class="action">
-                <router-link :to="user == null ? '/app/set-profile' : '/app'">
+                <router-link :to="'/app'">
                     <div class="app enter" v-if="address != null">
                         Enter App
                     </div>
