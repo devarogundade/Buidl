@@ -4,7 +4,7 @@ export default {
     target: 'static',
 
     env: {
-        INFURA_KRY: process.env.INFURA_KRY,
+        MNEMONIC: process.env.MNEMONIC,
         MORALIS_KEY: process.env.MORALIS_KEY
     },
 

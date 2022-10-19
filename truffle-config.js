@@ -1,11 +1,3 @@
-/**
- * MNEMONIC = <Your 12 phrase mnemonic>
- * PROJECT_ID = <Your Infura project id>
- */
-
-// require('dotenv').config();
-// const { MNEMONIC, PROJECT_ID } = process.env;
-
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 
 module.exports = {
@@ -16,7 +8,7 @@ module.exports = {
             network_id: "*", // Any network (default: none)
         },
         testnet: {
-            provider: () => new HDWalletProvider("sunset employ there pole pride approve liar note put narrow lucky chicken", `https://data-seed-prebsc-1-s2.binance.org:8545`),
+            provider: () => new HDWalletProvider(process.env.MNEMONIC, `https://data-seed-prebsc-1-s2.binance.org:8545`),
             network_id: 97, // Goerli's id
             confirmations: 2, // # of confirmations to wait between deployments. (default: 0)
             timeoutBlocks: 2000, // # of blocks before a deployment times out  (minimum/default: 50)
