@@ -1,15 +1,17 @@
 import Vue from "vue"
 import CryptoJS from "crypto-js"
+import Base64 from 'crypto-js/enc-base64';
 
 
 export default ({ app }, inject) => {
     inject('encryption', Vue.observable({
-        encryptText: function(data, key) {
-            return CryptoJS.AES.encrypt(data, key).toString()
+        encrypt: function(data, key) {
+            const wordArray = CryptoJS.enc.Utf8.parse(data)
+            return CryptoJS.enc.Base64.stringify(wordArray)
         },
-        decryptText: function(data, key) {
-            const bytes = CryptoJS.AES.decrypt(data, key)
-            return bytes.toString(CryptoJS.enc.Utf8)
-        }
+        decrypt: function(base64, key) {
+            const parsedWordArray = CryptoJS.enc.Base64.parse(base64)
+            return parsedWordArray.toString(CryptoJS.enc.Utf8)
+        },
     }))
 }
