@@ -80,7 +80,8 @@ export default {
             let index = 1;
             let ended = false;
 
-            while (!ended) {
+            try {
+              while (!ended) {
                 const category = await this.$contracts.buidlContract.categories(index);
 
                 if (category.name != '') {
@@ -91,12 +92,16 @@ export default {
 
                 index++
             }
+            } catch (error) {
+              ended = true
+            }
         },
         async getCourses() {
             let index = 1;
             let ended = false;
 
-            while (!ended) {
+            try {
+              while (!ended) {
                 const course = await this.$contracts.buidlContract.courses(index);
 
                 if (course.id.toNumber() != 0) {
@@ -106,6 +111,9 @@ export default {
                 }
 
                 index++
+            }
+            } catch (error) {
+              ended = true
             }
 
             this.getInstructors()

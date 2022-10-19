@@ -86,16 +86,20 @@ export default {
         async getCategories() {
             let index = 1;
             let ended = false;
-            while (!ended) {
-                const category = await this.$contracts.buidlContract.categories(index);
+            try {
+                while (!ended) {
+                    const category = await this.$contracts.buidlContract.categories(index);
 
-                if (category.name != '') {
-                    this.categories.push(category)
-                } else {
-                    ended = true
+                    if (category.name != '') {
+                        this.categories.push(category)
+                    } else {
+                        ended = true
+                    }
+
+                    index++
                 }
-
-                index++
+            } catch (error) {
+              ended = true
             }
         },
         onCategoryChanged(event) {

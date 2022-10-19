@@ -69,57 +69,65 @@ export default {
 
             if (this.user && this.user.type == 'student') {
                 let index = 0
-                while (true) {
-                    const studentCourse = await this.$contracts.buidlContract.studentCourses(address, index)
+                try {
+                    while (true) {
+                        const studentCourse = await this.$contracts.buidlContract.studentCourses(address, index)
 
-                    if (studentCourse.courseId.toNumber() == 0) {
-                        // end of result
-                        this.fetching = false
-                        break
-                    }
-
-                    const existing = this.courses.filter(course =>
-                        studentCourse.courseId.toNumber() == course.id.toNumber()
-                    )
-
-                    if (existing.length == 0) {
-                        const course = await this.$contracts.buidlContract.courses(studentCourse.courseId.toNumber())
-                        if (course.id.toNumber() != 0) {
-                            this.courses.push(course)
+                        if (studentCourse.courseId.toNumber() == 0) {
+                            // end of result
+                            this.fetching = false
+                            break
                         }
+
+                        const existing = this.courses.filter(course =>
+                            studentCourse.courseId.toNumber() == course.id.toNumber()
+                        )
+
+                        if (existing.length == 0) {
+                            const course = await this.$contracts.buidlContract.courses(studentCourse.courseId.toNumber())
+                            if (course.id.toNumber() != 0) {
+                                this.courses.push(course)
+                            }
+                        }
+
+                        this.fetching = false
+
+                        index++
                     }
-
+                } catch (error) {
                     this.fetching = false
-
-                    index++
                 }
             }
 
             if (this.user && this.user.type == 'instructor') {
                 let index = 0
-                while (true) {
-                    const courseId = await this.$contracts.buidlContract.getInstructorCourseIdAtIndex(address, index)
+                try {
+                    while (true) {
+                        const courseId = await this.$contracts.buidlContract.getInstructorCourseIdAtIndex(address, index)
 
-                    if (courseId.toNumber() == 0) {
-                        // end of result
-                        this.fetching = false
-                        break
-                    }
-
-                    const existing = this.courses.filter(course =>
-                        courseId.toNumber() == course.id.toNumber()
-                    )
-
-                    if (existing.length == 0) {
-                        const course = await this.$contracts.buidlContract.courses(courseId.toNumber())
-                        if (course.id.toNumber() != 0) {
-                            this.courses.push(course)
+                        if (courseId.toNumber() == 0) {
+                            // end of result
+                            this.fetching = false
+                            break
                         }
+
+                        const existing = this.courses.filter(course =>
+                            courseId.toNumber() == course.id.toNumber()
+                        )
+
+                        if (existing.length == 0) {
+                            const course = await this.$contracts.buidlContract.courses(courseId.toNumber())
+                            if (course.id.toNumber() != 0) {
+                                this.courses.push(course)
+                            }
+                        }
+
+                        this.fetching = false
+
+                        index++
                     }
-
+                } catch (error) {
                     this.fetching = false
-
-                    index++
                 }
             }
         }

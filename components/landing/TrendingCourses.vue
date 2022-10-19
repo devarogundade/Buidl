@@ -76,23 +76,27 @@ export default {
             let index = 1;
             let ended = false;
 
-            while (!ended) {
-                const course = await buidlContract.courses(index);
+            try {
+                while (!ended) {
+                    const course = await buidlContract.courses(index);
 
-                const existing = this.courses.filter(_course =>
-                    _course.id.toNumber() == course.id.toNumber()
-                )
+                    const existing = this.courses.filter(_course =>
+                        _course.id.toNumber() == course.id.toNumber()
+                    )
 
-                if (existing.length == 0) {
-                    if (course.id.toNumber() != 0) {
-                        this.instructorData = null
-                        this.courses.push(course)
-                    } else {
-                        ended = true
+                    if (existing.length == 0) {
+                        if (course.id.toNumber() != 0) {
+                            this.instructorData = null
+                            this.courses.push(course)
+                        } else {
+                            ended = true
+                        }
                     }
-                }
 
-                index++
+                    index++
+                }
+            } catch (error) {
+                ended = true
             }
 
             this.getInstructors(buidlContract)

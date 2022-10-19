@@ -63,14 +63,14 @@
             <div class="body">
                 <div class="content">
                     <h3 class="title">Course content</h3>
-                    <div class="desc">21 sections &nbsp; • &nbsp; 6 Tests &nbsp; • &nbsp; 6 hours length</div>
+                    <div class="desc">{{ sections.length }} sections &nbsp; • &nbsp; {{ sections.length }} Tests &nbsp; • &nbsp; 6 hours length</div>
 
                     <div class="accordions">
-                        <div class="accordion" v-for="index in 6" :key="index">
+                        <div class="accordion" v-for="(section, index) in sections" :key="index">
                             <div class="front" v-on:click="openAccordion(index)">
                                 <div>
                                     <i class="fa-solid fa-chevron-down"></i>
-                                    <p>Welcome, Introduction</p>
+                                    <p>{{ section.title }}</p>
                                 </div>
                                 <p>1 test • 4min</p>
                             </div>
@@ -91,10 +91,11 @@
 export default {
     data() {
         return {
-            selectedSection: 1,
+            selectedSection: 0,
             user: this.$contracts.user,
             courseId: this.$route.params.course,
             course: null,
+            sections: [],
             category: null,
             instructor: null,
             notFound: false,
@@ -131,23 +132,49 @@ export default {
         },
         async init() {
             this.getCourse()
+            this.getCourseSections()
 
             if (this.user && this.user.type == 'student') {
                 const address = this.$auth.accounts[0]
 
                 let index = 0
-                while (!this.bought) {
-                    const studentCourse = await this.$contracts.buidlContract.studentCourses(address, index)
-                    if (studentCourse.courseId.toNumber() == 0) {
+
+                try {
+                    while (!this.bought) {
+                        const studentCourse = await this.$contracts.buidlContract.studentCourses(address, index)
+                        if (studentCourse.courseId.toNumber() == 0) {
+                            break
+                        }
+                        if (studentCourse.courseId.toNumber() == this.courseId) {
+                            this.bought = true
+                        }
+
+                        index++
+                    }
+                } catch (error) {}
+            }
+        },
+        async getCourseSections() {
+            let index = 0
+            try {
+                while (index < 5) {
+                    const section = await this.$contracts.buidlContract.courseSections(this.courseId, index);
+
+                    if (section.id.toNumber() == 0) {
                         break
                     }
-                    if (studentCourse.courseId.toNumber() == this.courseId) {
-                        this.bought = true
+
+                    const existing = this.sections.filter(_section =>
+                        section.id.toNumber() == _section.id.toNumber()
+                    )
+
+                    if (existing.length == 0) {
+                        this.sections.push(section)
                     }
 
                     index++
                 }
-            }
+            } catch (error) {}
         },
         async buyCourse() {
             this.$contracts.buidlContract.purchaseCourse(this.courseId, {
@@ -252,7 +279,7 @@ export default {
     border-radius: 50%;
 }
 
-.preview img {
+.preview video {
     width: 100%;
     height: 100%;
     object-fit: cover;

@@ -91,15 +91,15 @@ export default {
 
             if (file != null) {
                 const data = await this.$ipfs.toBase64(file)
-                console.log(data);
                 src = await this.$ipfs.upload(`courses/${this.courseId}/${this.selectedIndex}`, data)
-                console.log(src);
             }
 
             if (src == null) return
 
+            const encryptedSrc = this.$encryption.encrypt(src, "key")
+
             await this.$contracts.buidlContract.addSectionToCourse(
-                this.courseId, this.sections[this.selectedIndex].title, src, {
+                this.courseId, this.sections[this.selectedIndex].title, encryptedSrc, {
                     from: this.$auth.accounts[0]
                 }
             )
