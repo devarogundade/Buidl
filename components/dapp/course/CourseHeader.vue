@@ -32,7 +32,7 @@
             <div class="profile" v-if="showProfile">
                 <router-link to="/">
                     <div class="item">
-                        Leave Workspace <i class="fa-solid fa-right-from-bracket"></i>
+                        Leave App <i class="fa-solid fa-right-from-bracket"></i>
                     </div>
                 </router-link>
                 <router-link to="/explore">

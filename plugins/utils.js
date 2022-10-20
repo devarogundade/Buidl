@@ -1,16 +1,23 @@
 import Vue from "vue"
 
-export default ({ app }, inject) => {
+export default ({}, inject) => {
     inject('utils', Vue.observable({
         formatToDate: function(timestamp) {
-            var wMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            const monthsInWord = [
+                'January', 'February',
+                'March', 'April',
+                'May', 'June',
+                'July', 'August',
+                'September', 'October',
+                'November', 'December'
+            ]
+            const date = new Date(timestamp)
 
-            var date = new Date()
-            var day = parseInt(date.getUTCDate());
-            var month = parseInt(date.getUTCMonth());
-            var year = date.getUTCFullYear()
+            const day = parseInt(date.getUTCDate())
+            const month = parseInt(date.getUTCMonth())
+            const year = date.getUTCFullYear()
 
-            return day + ' ' + wMonths[month] + ', ' + year
+            return `${day} ${monthsInWord[month]} ${year}`
         }
     }))
 }

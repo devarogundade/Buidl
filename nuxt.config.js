@@ -5,9 +5,9 @@ export default {
 
     env: {
         MNEMONIC: process.env.MNEMONIC,
-        MORALIS_KEY: process.env.MORALIS_KEY
+        MORALIS_KEY: process.env.MORALIS_KEY,
+        TINY_KEY: process.env.TINY_KEY
     },
-
 
     head: {
         title: 'Buidl - SocialFi for Learning',
@@ -45,6 +45,7 @@ export default {
     plugins: [
         '@/plugins/utils.js',
         '@/plugins/auth.js',
+        '@/plugins/chat.js',
         '@/plugins/contracts.js',
         '@/plugins/moralis-apis/ipfs.js',
         '@/plugins/moralis-apis/nft.js',
@@ -72,7 +73,5 @@ export default {
 
     axios: {
         baseURL: 'https://deep-index.moralis.io/api/v2/', // moralis api base url
-    },
-
-    build: {}
+    }
 }

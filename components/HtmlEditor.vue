@@ -1,5 +1,5 @@
 <template>
-<editor api-key="spv74bpcewqudcw2pw0vx3bnw4k5cib6cyzo3uj5h3agmybo" v-model="content" :init="{
+<editor :api-key="apiKey" v-model="content" :init="{
          height: height ? height : 400,
          menubar: false,
           toolbar_mode: 'sliding',
@@ -29,7 +29,8 @@ export default {
     },
     data() {
         return {
-            content: ''
+            content: '',
+            apiKey: process.env.TINY_KEY
         }
     },
     components: {

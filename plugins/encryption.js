@@ -3,7 +3,7 @@ import CryptoJS from "crypto-js"
 import Base64 from 'crypto-js/enc-base64';
 
 
-export default ({ app }, inject) => {
+export default ({}, inject) => {
     inject('encryption', Vue.observable({
         encrypt: function(data, key) {
             const wordArray = CryptoJS.enc.Utf8.parse(data)

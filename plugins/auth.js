@@ -135,7 +135,6 @@ export default ({ app }, inject) => {
                 this.saveLastProviderName('coinbase')
                 return this.accounts[0]
             } catch (error) {
-                console.log(error);
                 $nuxt.$emit('error', error)
             }
         },
@@ -185,14 +184,13 @@ export default ({ app }, inject) => {
                 this.saveLastProviderName('walletconnect')
                 return this.accounts[0]
             } catch (error) {
-                console.log(error);
                 $nuxt.$emit('error', error)
             }
         },
 
         setUpAccountListeners: function(provider) {
             provider.on("accountsChanged", (accounts) => {
-                this.accounts = accounts[0]
+                this.accounts = accounts
                 $nuxt.$emit('accounts-changed', this.accounts)
                 if (accounts.length == 0) {
                     $nuxt.$emit('disconnected')
@@ -201,7 +199,7 @@ export default ({ app }, inject) => {
             });
 
             provider.on("chainChanged", (chainId) => {
-                $nuxt.$emit('chain-changed')
+                $nuxt.$emit('chain-changed', chainId)
             });
         }
     }))

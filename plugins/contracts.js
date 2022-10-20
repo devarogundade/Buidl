@@ -58,6 +58,7 @@ const Contracts = {
                 return
             }
 
+            // user is neither a student nor instructor
             $nuxt.$emit('user-status', 'not-available')
         }
     }

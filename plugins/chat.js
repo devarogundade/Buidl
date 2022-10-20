@@ -16,53 +16,29 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebaseApp);
 
-export default ({ app, $axios }, inject) => {
-    inject('ipfs', Vue.observable({
+export default ({}, inject) => {
+    inject('chat', Vue.observable({
+        path: 'messages',
         db: getFirestore(firebaseApp),
-        uploadSingleData: async function(path, identifier, object, firebase = false) {
-            const options = {
-                method: 'POST',
-                url: '/ipfs/uploadFolder',
-                headers: {
-                    'accept': 'application/json',
-                    'content-type': 'application/json',
-                    'X-API-Key': `${process.env.MORALIS_KEY}`
-                },
-                data: [{ path: `path/${identifier}`, content: btoa(JSON.stringify(object)) }]
-            }
-
-            const response = await $axios.request(options)
-
-            if (response.status == 200) {
-                const data = response.data[0].path
-
-                if (firebase) {
-                    const result = await this.setData(path, identifier, object)
-                    return result ? data : null
-                }
-
-                return data
-            } else {
-                return null
-            }
-        },
-        setData: async function(path, identifier, object) {
+        writeMessage: async function(document, message) {
             try {
-                await setDoc(doc(this.db, path, identifier), object);
-                return true;
+                await setDoc(doc(this.db, this.path, document), message)
+                return true
             } catch (error) {
-                return false;
+                return false
             }
         },
-        getAllData: async function(path, from = 0, perPage = 20) {
-            const querySnapshot = await getDocs(collection(this.db, path));
+        getAllMessages: async function() {
+            // TODO: do some where query filtering
+            const querySnapshot = await getDocs(collection(this.db, this.path))
+
             querySnapshot.forEach((doc) => {
-                console.log(`${doc.id} => ${doc.data()}`);
-            });
+                console.log(`${doc.id} => ${doc.data()}`)
+            })
         },
-        getData: async function(path, identifier) {
-            const docRef = doc(this.db, path, identifier);
-            const docSnap = await getDoc(docRef);
+        getMessage: async function(document) {
+            const docRef = doc(this.db, this.path, document)
+            const docSnap = await getDoc(docRef)
 
             if (docSnap.exists()) {
                 return docSnap.data()
