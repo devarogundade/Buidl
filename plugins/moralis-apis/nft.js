@@ -1,17 +1,20 @@
 import Vue from "vue";
 
-export default ({ app }, inject) => {
+export default ({ $axios }, inject) => {
     inject('nft', Vue.observable({
-        chain: 'bsc testnet',
-
         getUserNfts: async function(address) {
-            const data = await $axios.get(`/${address}/nft?chain=${this.chain}&format=decimal`)
-            console.log(data);
-        },
+            const options = {
+                method: 'GET',
+                url: `${address}/nft`,
+                params: { chain: 'bsc%20testnet', format: 'decimal' },
+                headers: {
+                    'accept': 'application/json',
+                    'X-API-Key': `${process.env.MORALIS_KEY}`
+                }
+            }
 
-        getBuidlNFTs: async function(contractAddress) {
-            const data = await $axios.get(`/nft/${contractAddress}?chain=${this.chain}&format=decimal`)
-            console.log(data);
+            const response = await $axios.request(options)
+            return response.data
         }
     }))
 }

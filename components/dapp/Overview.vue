@@ -195,7 +195,7 @@
                         </div>
                     </div>
                 </div>
-                <router-link to="">
+                <router-link to="/app/courses">
                     <p class="all-trades">All courses <i class="fa-solid fa-arrow-right"></i></p>
                 </router-link>
             </div>
