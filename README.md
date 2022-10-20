@@ -1,4 +1,4 @@
-# Buidl - SocialFi for Professionals
+# Buidl - SocialFi for Intructors and Students
 ## _A Moralis X Google Cloud Hackathon Project_
 
 Leveraging on the power of blockchain technology to build a safe and robust ecosystem for professionals.
@@ -14,8 +14,8 @@ Leveraging on the power of blockchain technology to build a safe and robust ecos
 - IPFS 
 - Solidity (Smary contract)
 - Nuxtjs (Frontend)
-- Websockets
-- PHP (Backend)
+- Google Cloud Firebase
+- Truffle
 - MultiChain
 
 Markdown is a lightweight markup language based on the formatting conventions
@@ -36,7 +36,7 @@ watch the results in the right.
 
 ## Demo
 
-See mode at [Buidl.netflify.app](https://nodejs.org/) (better on wide sreen).
+See mode at [Buidl.netflify.app](https://buidl.netflify.app/) (better on wide sreen).
 
 To see demo locally, clone the repo.
 
