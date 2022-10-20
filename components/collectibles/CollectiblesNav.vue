@@ -22,7 +22,7 @@
         <router-link to="/collectibles/stake">
             <div :class="$route.name == 'collectibles-stake' ? 'item active' : 'item'">
                 <i class="fa-solid fa-circle-dollar-to-slot"></i>
-                <p>Stake</p>
+                <p>Marketplace</p>
             </div>
         </router-link>
     </div>

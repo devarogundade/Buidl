@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract BdlToken is ERC20 {
 
     address deployer;
-    uint256 public mintAllocation = 200 * 10 ** decimals();
+    uint256 public mintAllocation = 5000 * 10 ** decimals();
 
     mapping(address => uint256) public mints;
 
@@ -16,11 +16,12 @@ contract BdlToken is ERC20 {
         _mint(msg.sender, 10000000000 * 10 ** decimals()); // ten billion
     }
 
+    // faucet
     function mint(address _address) public {
-        require((mints[_address] < mintAllocation), "You can't mint more tokens");
+        require((mints[_address] < mintAllocation), ">allocation");
         _transfer(deployer, _address, mintAllocation);
         mints[_address] = mintAllocation;
-        emit Minted(_address, mintAllocation);
+        emit Faucet(_address, mintAllocation);
     }
 
     // deducts token from user for a particular service
@@ -34,7 +35,7 @@ contract BdlToken is ERC20 {
         return true;
     }
 
-    event Minted(address, uint256);
+    event Faucet(address, uint256);
     event Charged(address, uint256);
 
 }

@@ -1,14 +1,7 @@
 <template>
 <div class="nav" v-if="user">
-
     <div class="items">
         <router-link to="/app" v-if="user.type == 'instructor'">
-            <div :class="$route.name == 'app' ? 'item active' : 'item'">
-                <i class="fa-solid fa-house"></i>
-                <p>Overview</p>
-            </div>
-        </router-link>
-        <router-link to="/app" v-if="user.type == 'student'">
             <div :class="$route.name == 'app' ? 'item active' : 'item'">
                 <i class="fa-solid fa-house"></i>
                 <p>Overview</p>

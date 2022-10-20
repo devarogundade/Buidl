@@ -37,9 +37,14 @@
     </div>
 
     <div class="fab-btn">
-        <router-link to="/app/courses/create">
+        <router-link to="/app/courses/create" v-if="user.type == 'instructor'">
             <div class="fab">
                 <i class="fa-solid fa-plus"></i>
+            </div>
+        </router-link>
+         <router-link to="/app/courses/create" v-if="user.type == 'student'">
+            <div class="fab">
+                <i class="fa-solid fa-search"></i>
             </div>
         </router-link>
     </div>

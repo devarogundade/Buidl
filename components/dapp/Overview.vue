@@ -3,7 +3,7 @@
     <div class="overview">
         <div class="verify">
             <p><i class="fa-solid fa-circle-exclamation"></i> Kyc Verification to be visible on the platform</p>
-            <p class="scaleable">Verify me</p>
+            <p class="scaleable" v-on:click="mint()">Verify me</p>
         </div>
         <div class="tab">
             <div class="analytics">
@@ -209,7 +209,21 @@
 export default {
     data() {
         return {
-            saving: false
+            saving: false,
+            user: this.$contracts.user
+        }
+    },
+
+    mounted() {
+        $nuxt.$on('user', (user) => {
+            this.user = user
+        })
+    },
+    methods: {
+        mint() {
+            this.$contracts.buidlContract.mint({
+                from: this.$auth.accounts[0]
+            })
         }
     }
 }

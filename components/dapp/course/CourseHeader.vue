@@ -13,7 +13,7 @@
                     <router-link to="/app/courses">
                         <p class="tab"><i class="fa-solid fa-arrow-left"></i> Courses</p>
                     </router-link>
-                    <p class="active tab">{{ course ? course.name : '...'  }}</p>
+                    <p class="active tab">{{ course ? getCourseName(course) : '...'  }}</p>
                 </div>
             </div>
 
@@ -56,6 +56,7 @@ export default {
             tab: 1,
             courseId: this.$route.params.course,
             notFound: false,
+            course: null
         };
     },
     mounted() {
@@ -68,23 +69,24 @@ export default {
         $nuxt.$on('explore-tab', (tab) => {
             this.tab = tab
         })
-
-        this.getCourse()
+        $nuxt.$on(`course${this.courseId}`, (course) => {
+            this.course = course
+        })
     },
     methods: {
         toggleProfile() {
             this.showBuild = false;
             this.showProfile = !this.showProfile;
         },
-        async getCourse() {
-            const course = await this.$contracts.buidlContract.courses(this.courseId);
-
-            if (course.id.toNumber() != 0) {
-                this.course = course
-            } else {
-                this.notFound = true
+        getCourseName(course) {
+            if (course.name.length > 20) {
+                return (course.name.substring(0, 10) +
+                    "..." +
+                    course.name.substring(course.name.length - 10, course.name.length))
             }
-        },
+
+            return course.name
+        }
     },
 };
 </script>

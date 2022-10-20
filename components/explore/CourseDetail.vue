@@ -35,7 +35,7 @@
                     <div class="tag" v-if="!bought">Preview</div>
                     <div class="tag" v-else><i class="fa-solid fa-certificate"></i> Bought</div>
 
-                    <div class="coupon">
+                    <div class="coupon" v-if="!bought">
                         <p>Apply Coupon</p>
 
                         <div class="selector">
@@ -48,14 +48,21 @@
                             </div>
                             <div class="options"></div>
                         </div>
+                    </div>
 
-                        <div class="action">
-                            <div class="pay" v-if="!bought" v-on:click="buyCourse()">Buy Course</div>
-                            <router-link v-else :to="`/app/courses/${$route.params.course}`">
-                                <div class="pay">View Course</div>
-                            </router-link>
-                            <i class="fa-solid fa-heart-circle-plus"></i>
-                        </div>
+                    <div class="action" v-if="course.instructor.toLowerCase() == $auth.accounts[0].toLowerCase()">
+                        <router-link :to="`/app/course-builder/${$route.params.course}`">
+                            <div class="pay">Edit Course</div>
+                        </router-link>
+                        <i class="fa-solid fa-heart-circle-plus"></i>
+                    </div>
+
+                    <div class="action" v-else>
+                        <div class="pay" v-if="!bought" v-on:click="buyCourse()">Buy Course</div>
+                        <router-link v-else :to="`/app/courses/${$route.params.course}`">
+                            <div class="pay">Study Course</div>
+                        </router-link>
+                        <i class="fa-solid fa-heart-circle-plus"></i>
                     </div>
                 </div>
             </div>
@@ -157,7 +164,7 @@ export default {
         async getCourseSections() {
             let index = 0
             try {
-                while (index < 5) {
+                while (true) {
                     const section = await this.$contracts.buidlContract.courseSections(this.courseId, index);
 
                     if (section.id.toNumber() == 0) {
@@ -467,9 +474,10 @@ export default {
     grid-template-columns: auto 50px;
     column-gap: 10px;
     height: 40px;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin-top: 20px;
+    margin-bottom: 60px;
     user-select: none;
+    padding: 20px;
 }
 
 .action .pay {

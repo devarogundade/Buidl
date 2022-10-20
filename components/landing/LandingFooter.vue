@@ -6,12 +6,11 @@
                 <img src="/images/logo.png" alt="">
             </div>
             <div class="links">
-                <router-link to="/bdl-token">BDL Token</router-link>
-                <a href="/bdl-token">Moralis x Google Hackathon</a>
+                <a href="#bdl-token">BDL Token</a>
+                <a href="https://moralis.io/google-hackathon/" target="_blank">Moralis x Google Hackathon</a>
             </div>
             <div class="socials">
-                <!-- <a href="https://twitter.com/devarogundade" target="_blank"><i class="fa-brands fa-twitter"></i></a> -->
-                <a href="https://github.com/devarogundade/Buidl" target="_blank"><i class="fa-brands fa-github"></i></a>
+                <a href="https://github.com/devarogundade/buidl" target="_blank"><i class="fa-brands fa-github"></i></a>
             </div>
         </div>
     </div>
@@ -21,7 +20,8 @@
 <style scoped>
 section {
     padding: 40px 0;
-    background: rgb(0, 11, 61);
+    border-top: 2px solid rgb(0, 18, 97);
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .footer {

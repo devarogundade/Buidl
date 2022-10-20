@@ -1,11 +1,11 @@
 <template>
-<div class="projects">
-  <CourseStudy />
+<div class="mint">
+    <Mint />
 </div>
 </template>
 
 <script>
 export default {
-    layout: 'course'
+    layout: 'landing'
 }
 </script>

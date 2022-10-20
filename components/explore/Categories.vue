@@ -1,0 +1,91 @@
+<template>
+<section>
+    <div class="app-width">
+        <div class="categories">
+            <div class="category" v-for="(category, index) in categories" :key="index">
+                <img :src="category.image" alt="">
+                <div class="text">
+                    <p>{{ category.name }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            categories: []
+        }
+    },
+    mounted() {
+        this.getCategories()
+    },
+    methods: {
+        async getCategories() {
+            let index = 1;
+            let ended = false;
+
+            try {
+                while (!ended) {
+                    const category = await this.$contracts.buidlContract.categories(index);
+
+                    if (category.name != '') {
+                        this.categories.push(category)
+                    } else {
+                        ended = true
+                    }
+
+                    index++
+                }
+            } catch (error) {
+                ended = true
+            }
+        },
+    }
+}
+</script>
+
+<style scoped>
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    padding-bottom: 100px;
+}
+
+.category {
+    width: 400px;
+    height: 320px;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.category img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.5));
+    padding: 20px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.text p {
+    color: #FFFFFF;
+    font-size: 24px;
+    font-weight: 600;
+}
+</style>

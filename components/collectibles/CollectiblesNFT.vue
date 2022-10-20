@@ -33,11 +33,26 @@
             </div>
         </div>
 
-        <div class="create" v-if="tab == 3">
-            <div class="box">
-                <div class="no">
-                    <p>You have to stake a minimum of 1000 BDL Tokens to create your network NFT</p>
-                    <div class="action">Stake now</div>
+        <div class="items" v-if="tab == 3">
+            <div class="item" v-for="index in 4" :key="index">
+                <div class="image">
+                    <img :src="`/images/nft${index}.jpg`" alt="">
+                </div>
+                <div class="creator">
+                    <div class="profile">
+                        <img src="/images/nft1.jpg" alt="">
+                        <div class="name">
+                            <p>Laura</p>
+                            <p>0.32 BDL</p>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <p>MarketCap</p>
+                        <p class="price">$3,490 <span>+0.5%</span></p>
+                    </div>
+                </div>
+                <div class="action">
+                    <div class="stake">Sell</div>
                 </div>
             </div>
         </div>

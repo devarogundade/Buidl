@@ -13,8 +13,8 @@
                     <router-link to="/explore">
                         <p :class="($route.name == 'explore' || $route.name == 'explore-courses-course') ? 'active tab' : 'tab'">Courses</p>
                     </router-link>
-                    <router-link to="/explore/instructors">
-                        <p :class="$route.name == 'explore-instructors' ? 'active tab' : 'tab'">Instructors</p>
+                    <router-link to="/explore/categories">
+                        <p :class="$route.name == 'explore-categories' ? 'active tab' : 'tab'">Categories</p>
                     </router-link>
                 </div>
             </div>

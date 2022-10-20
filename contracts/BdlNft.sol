@@ -13,19 +13,14 @@ contract BdlNft is ERC721 {
         deployer = msg.sender;
     }
 
-    function mint(address beneficiary, bytes memory data) public onlyOwner {
+    function mint(address beneficiary) public {
         _safeMint(
             beneficiary,
-            tokenID,
-            data
+            tokenID
         );
 
         tokenID++;
     }
 
-    modifier onlyOwner() {
-        require(msg.sender == deployer, "Unauthorized");
-        _;
-    }
 
 }

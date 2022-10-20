@@ -3,7 +3,9 @@
     <div class="app-width">
         <div class="title">
             <h3>Trending Courses</h3>
-            <div class="action">Explore all courses <i class="fa-solid fa-arrow-right-long"></i></div>
+            <router-link to="/explore">
+                <div class="action">Explore all courses <i class="fa-solid fa-arrow-right-long"></i></div>
+            </router-link>
         </div>
         <div class="trending">
             <div class="swiper trendSwiper">

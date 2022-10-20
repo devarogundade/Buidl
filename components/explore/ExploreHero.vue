@@ -1,13 +1,28 @@
 <template>
 <section>
     <div class="app-width">
-        <div class="hero">
-            <div class="text">
-                <h3>Build your audience.</h3>
-                <p>Engage, share thoughts, ideas, news, articles to the community.</p>
+        <div class="grid">
+            <div class="hero">
+                <div class="text">
+                    <h3>Build your audience.</h3>
+                    <p>
+                        Engage, share thoughts, ideas, news, articles to the community.
+                    </p>
+                </div>
+                <div class="action scaleable" v-on:click="$nuxt.$emit('create-new-post')">
+                    <i class="fa-solid fa-plus"></i> Create new post
+                </div>
             </div>
-            <div class="action scaleable" v-on:click="$nuxt.$emit('create-new-post')">
-                <i class="fa-solid fa-plus"></i> Create new post
+            <div class="hero">
+                <div class="text">
+                    <h3>Build your audience.</h3>
+                    <p>
+                        Engage, share thoughts, ideas, news, articles to the community.
+                    </p>
+                </div>
+                <div class="action scaleable" v-on:click="$nuxt.$emit('create-new-post')">
+                    <i class="fa-solid fa-plus"></i> Create new post
+                </div>
             </div>
         </div>
     </div>
@@ -16,18 +31,22 @@
 
 <script>
 export default {
-    async mounted() {
-
-    }
-}
+    async mounted() {},
+};
 </script>
 
 <style scoped>
 .app-width {
-    width: 1200px;
     padding-top: 160px;
     padding-bottom: 100px;
     position: relative;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 40px;
 }
 
 .hero {
@@ -40,6 +59,10 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+}
+
+.hero:nth-child(2) {
+    background: rgb(200, 34, 111);
 }
 
 .text {

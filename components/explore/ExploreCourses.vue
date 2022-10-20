@@ -4,7 +4,10 @@
         <div class="container">
             <div class="category" v-for="(category, index) in categories" :key="index">
                 <div class="title">
-                    <h3>{{ category.name }}</h3>
+                    <div>
+                        <img :src="category.image" alt="">
+                        <h3>{{ category.name }}</h3>
+                    </div>
                     <div class="action">View all <i class="fa-solid fa-arrow-right-long"></i></div>
                 </div>
                 <div class="trending">
@@ -81,19 +84,19 @@ export default {
             let ended = false;
 
             try {
-              while (!ended) {
-                const category = await this.$contracts.buidlContract.categories(index);
+                while (!ended) {
+                    const category = await this.$contracts.buidlContract.categories(index);
 
-                if (category.name != '') {
-                    this.categories.push(category)
-                } else {
-                    ended = true
+                    if (category.name != '') {
+                        this.categories.push(category)
+                    } else {
+                        ended = true
+                    }
+
+                    index++
                 }
-
-                index++
-            }
             } catch (error) {
-              ended = true
+                ended = true
             }
         },
         async getCourses() {
@@ -101,19 +104,19 @@ export default {
             let ended = false;
 
             try {
-              while (!ended) {
-                const course = await this.$contracts.buidlContract.courses(index);
+                while (!ended) {
+                    const course = await this.$contracts.buidlContract.courses(index);
 
-                if (course.id.toNumber() != 0) {
-                    this.courses.push(course)
-                } else {
-                    ended = true
+                    if (course.id.toNumber() != 0) {
+                        this.courses.push(course)
+                    } else {
+                        ended = true
+                    }
+
+                    index++
                 }
-
-                index++
-            }
             } catch (error) {
-              ended = true
+                ended = true
             }
 
             this.getInstructors()
@@ -150,7 +153,20 @@ export default {
     color: #fff;
 }
 
-.title div {
+.title div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.title img {
+  width: 50px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.title div:last-child {
     background: #0177fb;
     padding: 2px 16px;
     border-radius: 6px;

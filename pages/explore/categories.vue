@@ -1,6 +1,6 @@
 <template>
-  <div class="talents">
-    <Instructors />
+  <div class="categories">
+    <Categories />
   </div>
 </template>
 

@@ -5,6 +5,7 @@
     <Features />
     <Faq />
     <BecomeInstructor />
+    <BdlToken />
     <BuidlRoadmap />
 </div>
 </template>

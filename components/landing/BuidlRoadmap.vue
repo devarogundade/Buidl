@@ -2,7 +2,7 @@
 <section>
     <div class="app-width">
         <div class="roadmap">
-            <h3>Roadmap</h3>
+            <h3>Our Roadmap</h3>
 
             <div class="maps">
                 <div class="map">
@@ -25,7 +25,7 @@
                     <p>Initial production release, and marketing, launch the BDL token and NFT.</p>
                 </div>
 
-                 <div class="map">
+                <div class="map">
                     <p>Phase 5</p>
                     <p>List token on major exchanges.</p>
                 </div>
@@ -47,8 +47,14 @@ section h3 {
     margin-bottom: 60px;
 }
 
+.app-width {
+    display: flex;
+    justify-content: center;
+}
+
 .maps {
-    width: 100%;
+    width: 1200px;
+    max-width: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: 60px;
@@ -56,7 +62,7 @@ section h3 {
 }
 
 .map {
-    width: 480px;
+    width: 450px;
     max-width: 100%;
     padding: 30px;
     background: #2c2d3a;

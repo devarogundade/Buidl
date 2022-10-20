@@ -1,7 +1,7 @@
 <template>
 <InProgress v-if="fetching" />
 <div class="builder" v-else>
-    <div class="screen">
+    <div class="screen" v-if="sections.length > 0">
         <div class="course">
             <div class="edit">
                 <p class="label">Section Title *</p>
@@ -11,14 +11,14 @@
             <div class="edit">
                 <p class="label">Choose Video *</p>
                 <div class="video">
-                    <video v-if="sections[selectedIndex].src != ''" :src="sections[selectedIndex].video"></video>
+                    <video v-if="sections[selectedIndex].src != ''" :src="sections[selectedIndex].src"></video>
                     <i v-if="sections[selectedIndex].src != ''" class="fa-solid fa-play"></i>
-                    <input v-on:change="chooseFile($event)" v-else type="file">
+                    <input v-on:change="chooseFile($event)" type="file">
                 </div>
             </div>
 
             <div class="text">
-                <HtmlEditor height="400" />
+                <HtmlEditor :value="sections[selectedIndex].content" v-on:content="sections[selectedIndex].content = $event" height="400" />
             </div>
 
             <div class="save" v-if="!saving" v-on:click="saveChanges()">Save changes</div>
@@ -61,16 +61,16 @@ export default {
         }
     },
     mounted() {
-        if (this.sections.length == 0) {
-            this.addSection()
-        }
         this.getCourse()
+        this.getCourseSections()
     },
     methods: {
         addSection() {
             this.sections.push({
+                id: 0,
                 title: '',
                 src: '',
+                content: '',
                 file: null
             })
         },
@@ -98,11 +98,16 @@ export default {
 
             const encryptedSrc = this.$encryption.encrypt(src, "key")
 
-            await this.$contracts.buidlContract.addSectionToCourse(
-                this.courseId, this.sections[this.selectedIndex].title, encryptedSrc, {
-                    from: this.$auth.accounts[0]
-                }
-            )
+            try {
+                const trx = await this.$contracts.buidlContract.addSectionToCourse(
+                    this.courseId, this.sections[this.selectedIndex].title, encryptedSrc,
+                    this.sections[this.selectedIndex].content, this.sections[this.selectedIndex].id, {
+                        from: this.$auth.accounts[0]
+                    }
+                )
+            } catch (error) {
+
+            }
 
             this.saving = false
         },
@@ -112,13 +117,48 @@ export default {
             if (course.id.toNumber() != 0) {
                 this.course = course
 
-                this.instructor = await this.$contracts.buidlContract.instructors(course.instructor)
-                this.category = await this.$contracts.buidlContract.categories(course.categoryId)
+                $nuxt.$emit(`course${this.courseId}`, course);
+
+                // this.instructor = await this.$contracts.buidlContract.instructors(course.instructor)
+                // this.category = await this.$contracts.buidlContract.categories(course.categoryId)
             } else {
                 this.notFound = true
             }
 
             this.fetching = false
+        },
+        async getCourseSections() {
+            let index = 0
+            try {
+                while (true) {
+                    console.log('index', index);
+                    const section = await this.$contracts.buidlContract.courseSections(this.courseId, index);
+
+                    if (section.id.toNumber() == 0) {
+                        break
+                    }
+
+                    const existing = this.sections.filter(_section =>
+                        section.id.toNumber() == _section.id
+                    )
+
+                    if (existing.length == 0) {
+                        this.sections.push({
+                            id: section.id.toNumber(),
+                            title: section.title,
+                            src: section.src,
+                            content: section.content,
+                            file: null
+                        })
+                    }
+
+                    index++
+                }
+            } catch (error) {}
+
+            if (this.sections.length == 0) {
+                this.addSection()
+            }
         },
     }
 }
@@ -167,6 +207,7 @@ export default {
     width: 100%;
     height: 320px;
     object-fit: cover;
+    background: #0176fb21;
 }
 
 .video i {

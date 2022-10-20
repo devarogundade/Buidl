@@ -63,6 +63,16 @@ contract Buidl {
         contractCategoryID++;
     }
 
+    // test
+    function mint() public {
+        bdlNft.mint(msg.sender);
+    }
+
+    // ========== Testing ========== //
+    function faucetMint() public {
+        bdlToken.mint(msg.sender);
+    }
+
     // ========= Instructors =========== //
 
     function createCourse(
@@ -99,38 +109,32 @@ contract Buidl {
     function addSectionToCourse(
         uint courseId,
         string memory title,
-        string memory src
+        string memory src,
+        string memory content,
+        uint updateFor
     ) public onlyInstructor {
         Models.Course memory course = courses[courseId];
 
         require(course.id != 0, "!exists");
         require(course.instructor == msg.sender, "!authorized");
 
-        courseSections[courseId].push(
-            Models.CourseSection(courseSections[courseId].length + 1, title, src)
-        );
-    }
-
-    function updateCourseSection(
-        uint courseId,
-        uint sectionIndex,
-        string memory title,
-        string memory src
-    ) public onlyInstructor {
-        Models.Course memory course = courses[courseId];
-
-        require(course.id != 0, "!exists");
-        require(course.instructor == msg.sender, "!authorized");
-        require(
-            courseSections[courseId][sectionIndex].id != 0,
-            "!exists"
-        );
-
-        courseSections[courseId][sectionIndex] = Models.CourseSection(
-            sectionIndex,
-            title,
-            src
-        );
+        if (updateFor == 0) {
+            courseSections[courseId].push(
+                Models.CourseSection(
+                    courseSections[courseId].length + 1,
+                    title,
+                    src,
+                    content
+                )
+            );
+        } else {
+            courseSections[courseId][updateFor] = Models.CourseSection(
+                updateFor,
+                title,
+                src,
+                content
+            );
+        }
     }
 
     function deleteCourseSection(uint courseId, uint sectionIndex)
@@ -141,10 +145,7 @@ contract Buidl {
 
         require(course.id != 0, "!exists");
         require(course.instructor == msg.sender, "!authorized");
-        require(
-            courseSections[courseId][sectionIndex].id != 0,
-            "!exists"
-        );
+        require(courseSections[courseId][sectionIndex].id != 0, "!exists");
 
         delete courseSections[courseId][sectionIndex];
     }
@@ -237,7 +238,13 @@ contract Buidl {
 
         // create course for student
         studentCourses[msg.sender].push(
-            Models.StudentCourse(courseId, true, course.price, 0, block.timestamp)
+            Models.StudentCourse(
+                courseId,
+                true,
+                course.price,
+                0,
+                block.timestamp
+            )
         );
 
         emit CoursePurchased(course.instructor, msg.sender, courseId);
@@ -253,17 +260,11 @@ contract Buidl {
         require(course.id != 0, "!exists");
 
         // check is course is not over 2 weeks
-        require(
-            studentCourse.purchasedAt > 2,
-            ">2weeks."
-        );
+        require(studentCourse.purchasedAt > 2, ">2weeks.");
 
         uint refundableSections = (studentCourse.sectionsViewed - sections);
 
-        require(
-            refundableSections > 0,
-            "!refunable"
-        );
+        require(refundableSections > 0, "!refunable");
 
         uint256 refundableAmount = (refundableSections * course.price);
 
@@ -276,43 +277,43 @@ contract Buidl {
         emit CourseRejected(msg.sender, courseId, studentCourse.sectionsViewed);
     }
 
-    function onNextCourseSection(
-        uint courseId,
-        uint sections,
-        string memory uri
-    ) public onlyStudent returns (string memory) {
-        Models.Course storage course = courses[courseId];
+    // function onNextCourseSection(
+    //     uint courseId,
+    //     uint sections,
+    //     string memory uri
+    // ) public onlyStudent returns (string memory) {
+    //     Models.Course storage course = courses[courseId];
 
-        require(course.id != 0, "!exists");
+    //     require(course.id != 0, "!exists");
 
-        Models.StudentCourse storage studentCourse = studentCourses[msg.sender][
-            courseId
-        ];
+    //     Models.StudentCourse storage studentCourse = studentCourses[msg.sender][
+    //         courseId
+    //     ];
 
-        // students moved to another section of the course
-        // unlock part payment to the instructor (conditionally)
-        uint pricePerSection = (course.price / sections);
+    //     // students moved to another section of the course
+    //     // unlock part payment to the instructor (conditionally)
+    //     uint pricePerSection = (course.price / sections);
 
-        if (studentCourse.unlocked >= pricePerSection) {
-            studentCourse.unlocked -= pricePerSection;
-            bdlToken.transferFrom(
-                address(this),
-                course.instructor,
-                pricePerSection
-            );
-        }
+    //     if (studentCourse.unlocked >= pricePerSection) {
+    //         studentCourse.unlocked -= pricePerSection;
+    //         bdlToken.transferFrom(
+    //             address(this),
+    //             course.instructor,
+    //             pricePerSection
+    //         );
+    //     }
 
-        // checks if students has completed the course
-        uint progress = (studentCourse.sectionsViewed / sections);
+    //     // checks if students has completed the course
+    //     uint progress = (studentCourse.sectionsViewed / sections);
 
-        if (progress >= 1) {
-            onCompletedCourse(msg.sender, courseId, uri);
-            return "course_completed";
-        } else {
-            studentCourse.sectionsViewed++;
-            return "course_next_section";
-        }
-    }
+    //     if (progress >= 1) {
+    //         onCompletedCourse(msg.sender, courseId, uri);
+    //         return "course_completed";
+    //     } else {
+    //         studentCourse.sectionsViewed++;
+    //         return "course_next_section";
+    //     }
+    // }
 
     function onCompletedCourse(
         address student,
@@ -321,7 +322,7 @@ contract Buidl {
     ) private {
         require(courses[courseId].id != 0, "!exists");
         generateCerticate(courseId, student, uri);
-        mintNftForStudent(student);
+        bdlNft.mint(student);
     }
 
     function generateCerticate(
@@ -331,10 +332,6 @@ contract Buidl {
     ) private {
         bdlCertificate.issue(student, uri);
         emit CertificateIssued(student, courseId);
-    }
-
-    function mintNftForStudent(address student) private {
-        bdlNft.mint(student, "");
     }
 
     modifier onlyInstructor() {

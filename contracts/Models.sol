@@ -63,5 +63,6 @@ contract Models {
         uint id;
         string title;
         string src; // ipfs source
+        string content;
     }
 }

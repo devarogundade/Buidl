@@ -1,5 +1,5 @@
 <template>
-<editor api-key="spv74bpcewqudcw2pw0vx3bnw4k5cib6cyzo3uj5h3agmybo" :init="{
+<editor api-key="spv74bpcewqudcw2pw0vx3bnw4k5cib6cyzo3uj5h3agmybo" v-model="content" :init="{
          height: height ? height : 400,
          menubar: false,
           toolbar_mode: 'sliding',
@@ -18,7 +18,20 @@
 <script>
 import Editor from '@tinymce/tinymce-vue'
 export default {
-    props: ['height'],
+    props: ['height', 'value'],
+    watch: {
+        content: function (_content) {
+            this.$emit('content', _content)
+        },
+        value: function (_value) {
+            this.content = _value
+        }
+    },
+    data() {
+        return {
+            content: ''
+        }
+    },
     components: {
         'editor': Editor
     },

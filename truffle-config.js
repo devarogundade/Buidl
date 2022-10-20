@@ -11,9 +11,9 @@ module.exports = {
             provider: () => new HDWalletProvider("forget pull traffic comfort guard urban fold mutual bleak swim little foil", `https://data-seed-prebsc-1-s2.binance.org:8545`),
             network_id: 97, // Smart chain testnet id
             confirmations: 2,
-            timeoutBlocks: 9999,
+            timeoutBlocks: 99999,
             skipDryRun: true,
-            networkCheckTimeout: 9999999
+            networkCheckTimeout: 99999999
         },
     },
 

@@ -14,8 +14,8 @@
                 <p class="tab" v-on:click="showBuild = !showBuild">
                     Teach <i class="fa-solid fa-angle-down"></i>
                 </p>
-                <router-link to="/explore/instructors">
-                    <p class="tab">Instructors</p>
+                <router-link to="/explore/categories">
+                    <p class="tab">Categories</p>
                 </router-link>
                 <a href="#bdl-token">
                     <p class="tab">BDL Token</p>

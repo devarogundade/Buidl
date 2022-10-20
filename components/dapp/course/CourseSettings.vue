@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-    <div class="settings">
+    <div class="settings" v-if="course">
         <div class="cover">
             <div class="image">
                 <img src="/favicon.ico" alt="">
@@ -10,25 +10,31 @@
         <div class="form">
             <div class="edit">
                 <p class="label">Project name *</p>
-                <input :class="getInputClassForName()" type="text" v-model="name" placeholder="Music producer" maxlength="45">
+                <input :class="getInputClassForName()" type="text" v-model="course.name" placeholder="Music producer" maxlength="45">
                 <p v-if="errorName" class="error-text">{{ errorName }}</p>
             </div>
 
             <div class="edit">
                 <p class="label">Project description *</p>
-                <input :class="getInputClassForDescription()" v-model="description" type="text" placeholder="Compose a love song for an emotional movie">
+                <input :class="getInputClassForDescription()" v-model="course.description" type="text" placeholder="Compose a love song for an emotional movie">
                 <p class="error-text" v-if="errorDescription">{{ errorDescription }}</p>
             </div>
 
             <div class="edit">
-                <p class="label">Tags</p>
-                <input :class="getInputClassForTags()" type="text" v-model="tags" placeholder="Challenge, Innovation" maxlength="45">
-                <p v-if="errorTags" class="error-text">{{ errorTags }}</p>
+                <p class="label">Category *</p>
+                <select v-on:change="onCategoryChanged($event)">
+                    <option disabled hidden>Choose category</option>
+                    <option v-for="(category, index) in categories" :key="index" :selected="category.id == index" :value="category.id">{{ category.name }}</option>
+                </select>
+                <p v-if="errorCategory" class="error-text">{{ errorCategory }}</p>
             </div>
 
             <div class="edit">
-                <p class="label">About project</p>
-                <HtmlEditor />
+                <p class="label">Level *</p>
+                <select v-on:change="onLevelChanged($event)">
+                    <option selected disabled hidden>Choose level</option>
+                    <option v-for="(level, index) in levels" :key="index" :value="(index + 1)">{{ level }}</option>
+                </select>
             </div>
 
             <div class="edit">
@@ -36,26 +42,14 @@
                 <div class="switch-con">
                     <p>Public this project</p>
                     <label class="switch">
-                        <input type="checkbox" checked>
+                        <input type="checkbox" v-model="course.isPublished">
                         <span class="slider round"></span>
                     </label>
                 </div>
                 <p v-if="errorTags" class="error-text">{{ errorTags }}</p>
             </div>
 
-            <div class="edit">
-                <p class="label">Support</p>
-                <div class="switch-con">
-                    <p>Community contribution ($BDL)</p>
-                    <label class="switch">
-                        <input type="checkbox" checked>
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-                <p v-if="errorTags" class="error-text">{{ errorTags }}</p>
-            </div>
-
-            <div class="sign_up" v-if="!signing" v-on:click="register()">Save changes</div>
+            <div class="sign_up" v-if="!saving" v-on:click="saveChanges()">Save changes</div>
             <div class="sign_up" v-else>Please wait..</div>
         </div>
     </div>
@@ -75,13 +69,64 @@ export default {
             // tags
             tags: '',
             errorTags: null,
-            // signing
-            signing: false
+            // saving
+            saving: false,
+
+            course: null,
+            fetching: true,
+            notFound: false,
+            courseId: this.$route.params.course,
+            categories: []
         }
     },
+    mounted() {
+        this.getCourse()
+        this.getCategories()
+    },
     methods: {
-        register() {
+        saveChanges() {
 
+        },
+        async getCourse() {
+            const course = await this.$contracts.buidlContract.courses(this.courseId);
+
+            if (course.id.toNumber() != 0) {
+                this.course = course
+
+                $nuxt.$emit(`course${this.courseId}`, course);
+
+                // this.instructor = await this.$contracts.buidlContract.instructors(course.instructor)
+                // this.category = await this.$contracts.buidlContract.categories(course.categoryId)
+            } else {
+                this.notFound = true
+            }
+
+            this.fetching = false
+        },
+        async getCategories() {
+            let index = 1;
+            let ended = false;
+            try {
+                while (!ended) {
+                    const category = await this.$contracts.buidlContract.categories(index);
+
+                    if (category.name != '') {
+                        this.categories.push(category)
+                    } else {
+                        ended = true
+                    }
+
+                    index++
+                }
+            } catch (error) {
+                ended = true
+            }
+        },
+        onCategoryChanged(event) {
+            this.selectedCategory = event.target.value
+        },
+        onLevelChanged(event) {
+            this.selectedLevel = event.target.value
         },
         getInputClassForName() {
             if (this.name == '') {
@@ -122,13 +167,6 @@ export default {
                 return 'filled'
             }
         },
-        // validateEmail(email) {
-        //     return String(email)
-        //         .toLowerCase()
-        //         .match(
-        //             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        //         )
-        // }
     }
 }
 </script>
