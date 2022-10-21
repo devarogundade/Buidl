@@ -15,10 +15,10 @@ contract Buidl {
     BdlNft bdlNft;
     BdlCertificate bdlCertificate;
 
-    uint256 public contractInstructorID = 1;
-    uint256 public contractStudentID = 1;
-    uint256 public contractCourseID = 1;
-    uint256 public contractCategoryID = 1;
+    uint256 contractInstructorID = 1;
+    uint256 contractStudentID = 1;
+    uint256 contractCourseID = 1;
+    uint256 contractCategoryID = 1;
 
     // minimum to stake for a duration of 1year
     uint256 instructorRegistrationFee = 2000 * 10**18;
@@ -277,55 +277,16 @@ contract Buidl {
         emit CourseRejected(msg.sender, courseId, studentCourse.sectionsViewed);
     }
 
-    // function onNextCourseSection(
-    //     uint courseId,
-    //     uint sections,
-    //     string memory uri
-    // ) public onlyStudent returns (string memory) {
-    //     Models.Course storage course = courses[courseId];
-
-    //     require(course.id != 0, "!exists");
-
-    //     Models.StudentCourse storage studentCourse = studentCourses[msg.sender][
-    //         courseId
-    //     ];
-
-    //     // students moved to another section of the course
-    //     // unlock part payment to the instructor (conditionally)
-    //     uint pricePerSection = (course.price / sections);
-
-    //     if (studentCourse.unlocked >= pricePerSection) {
-    //         studentCourse.unlocked -= pricePerSection;
-    //         bdlToken.transferFrom(
-    //             address(this),
-    //             course.instructor,
-    //             pricePerSection
-    //         );
-    //     }
-
-    //     // checks if students has completed the course
-    //     uint progress = (studentCourse.sectionsViewed / sections);
-
-    //     if (progress >= 1) {
-    //         onCompletedCourse(msg.sender, courseId, uri);
-    //         return "course_completed";
-    //     } else {
-    //         studentCourse.sectionsViewed++;
-    //         return "course_next_section";
-    //     }
-    // }
-
     function onCompletedCourse(
         uint courseId,
         string memory uri
     ) public onlyStudent {
         require(courses[courseId].id != 0, "!exists");
-        generateCerticate(courseId, msg.sender, uri);
+        generateCerticate(msg.sender, uri);
         // bdlNft.mint(msg.sender);
     }
 
     function generateCerticate(
-        uint courseId,
         address student,
         string memory uri
     ) private {
