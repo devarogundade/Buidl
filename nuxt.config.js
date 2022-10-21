@@ -6,7 +6,8 @@ export default {
     env: {
         MNEMONIC: process.env.MNEMONIC,
         MORALIS_KEY: process.env.MORALIS_KEY,
-        TINY_KEY: process.env.TINY_KEY
+        TINY_KEY: process.env.TINY_KEY,
+        COVALENT_KEY: process.env.COVALENT_KEY
     },
 
     head: {
@@ -17,8 +18,9 @@ export default {
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: '' },
-            { name: 'format-detection', content: 'telephone=no' }
+            { hid: 'description', name: 'description', content: 'Building a Borderless, Permissionless and Decentralized Social-Fi for Instructors and Learners.' },
+            { name: 'format-detection', content: 'telephone=no' },
+            { name: 'theme-color', content: '#001731' }
         ],
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
