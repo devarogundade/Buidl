@@ -77,13 +77,18 @@ export default {
             this.swiper.slideNext();
         },
         async onComplete() {
-            if (!this.user || this.user.type != "student") {
+            if (this.user != null && this.user.type == "student") {
+                console.log('here');
                 const document = await Certificate.generateDocument(this.user.name);
+
+                console.log(document);
 
                 const documentUrl = await this.$ipfs.upload(
                     `certificates/${this.$auth.accounts[0]}/${this.courseId}`,
                     document
                 );
+
+                console.log(documentUrl);
 
                 if (documentUrl == null) {
                     $nuxt.$emit("error", "Failed to mint course certificate");
@@ -91,15 +96,19 @@ export default {
                 }
 
                 const certificateJson = {
-                    name: `${course.name} certificate`,
-                    description: `This certificate is issued by Buidl to ${user.name} on ${Date()}`,
+                    name: `${this.course.name} certificate`,
+                    description: `This certificate is issued by Buidl to ${this.user.name} on ${Date()}`,
                     image: documentUrl,
                 };
+
+                console.log(certificateJson);
 
                 const certificateMetadataUrl = await this.$ipfs.upload(
                     `certificates/${this.$auth.accounts[0]}/${this.courseId}.json`,
                     certificateJson
                 );
+
+                console.log(certificateMetadataUrl);
 
                 if (certificateMetadataUrl == null) {
                     $nuxt.$emit("error", "Failed to mint course certificate");
@@ -113,6 +122,8 @@ export default {
                             from: this.$auth.accounts[0],
                         }
                     );
+
+                    console.log(trx);
                 } catch (error) {
                     console.log(error);
                 }

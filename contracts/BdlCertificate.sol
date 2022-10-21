@@ -17,13 +17,13 @@ contract BdlCertificate is ERC4973 {
         _burn(certificateId);
     }
 
-    function issue(address student, string calldata uri) external onlyOwner {
+    function issue(address student, string calldata uri) external {
         _mint(student, certificatesCount, uri);
         certificatesCount += 1;
     }
 
     modifier onlyOwner() {
-        require(msg.sender == deployer, "Not the owner");
+        require(msg.sender == deployer, "!authorized");
         _;
     }
 }
