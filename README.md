@@ -1,4 +1,4 @@
-# Buidl - SocialFi for Intructors and Students
+# Buidl - SocialFi for Instructors and Learners
 ## _A Moralis X Google Cloud Hackathon Project_
 
 Building a Borderless, Permissionless and Decentralized Social-Fi for Instructors and Students.
