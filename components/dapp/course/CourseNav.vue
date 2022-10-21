@@ -7,7 +7,7 @@
                 <p>Edit Course</p>
             </div>
         </router-link>
-         <router-link v-if="user.type == 'student'" :to="`/app/courses/${$route.params.course}`">
+         <router-link v-if="user.type == 'learner'" :to="`/app/courses/${$route.params.course}`">
             <div :class="$route.name == 'app-courses-course' ? 'item active' : 'item'">
                 <i class="fa-solid fa-chart-pie"></i>
                 <p>Study</p>
@@ -20,14 +20,14 @@
                 <p>Students</p>
             </div>
         </router-link>
-        <router-link v-if="user.type == 'student'"  :to="`/app/courses/${$route.params.course}/chat`">
+        <router-link v-if="user.type == 'learner'"  :to="`/app/courses/${$route.params.course}/chat`">
             <div :class="$route.name == 'app-courses-course-chat' ? 'item active' : 'item'">
                 <i class="fa-solid fa-comments"></i>
                 <p>Chat Instructor</p>
             </div>
         </router-link>
 
-        <router-link  v-if="user.type == 'student'" :to="`/app/courses/${$route.params.course}/goals`">
+        <router-link  v-if="user.type == 'learner'" :to="`/app/courses/${$route.params.course}/goals`">
             <div :class="$route.name == 'app-courses-course-goals' ? 'item active' : 'item'">
                 <i class="fa-solid fa-road"></i>
                 <p>Timeline</p>

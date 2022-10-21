@@ -5,7 +5,6 @@ pragma solidity >=0.7.0 <0.9.0;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 contract BdlNft is ERC721 {
-
     address deployer;
     uint256 tokenID = 1;
 
@@ -14,13 +13,8 @@ contract BdlNft is ERC721 {
     }
 
     function mint(address beneficiary) public {
-        _safeMint(
-            beneficiary,
-            tokenID
-        );
+        _safeMint(beneficiary, tokenID);
 
         tokenID++;
     }
-
-
 }

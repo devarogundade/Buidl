@@ -40,7 +40,7 @@ const Contracts = {
             const studentAccount = await Contracts.buidlContract.students(accounts[0]);
             if (studentAccount.emailAddress != '') {
                 Contracts.user = studentAccount
-                Contracts.user.type = 'student'
+                Contracts.user.type = 'learner'
 
                 $nuxt.$emit('user', Contracts.user)
                 $nuxt.$emit('user-status', 'available')

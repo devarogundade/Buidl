@@ -330,7 +330,6 @@ contract Buidl {
         string memory uri
     ) private {
         bdlCertificate.issue(student, uri);
-        emit CertificateIssued(student, courseId);
     }
 
     modifier onlyInstructor() {
@@ -358,7 +357,6 @@ contract Buidl {
 
     // ========== events ========== //
     event CourseCompletion(address student, uint courseId);
-    event CertificateIssued(address student, uint courseId);
     event CoursePurchased(address intructor, address student, uint courseId);
     event CourseRejected(address student, uint courseId, uint sectionsViewed);
 

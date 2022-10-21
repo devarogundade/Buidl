@@ -2,7 +2,7 @@
 <div class="container">
     <InProgress v-if="fetching" />
 
-    <div class="courses" v-show="(courses.length > 0) && !fetching && user" v-if="user.type == 'student'">
+    <div class="courses" v-show="(courses.length > 0) && !fetching && user" v-if="user.type == 'learner'">
         <router-link :to="`/app/courses/${course.id.toNumber()}`" v-for="(course, index) in courses" :key="index">
             <div class="course scaleable">
                 <div class="detail">
@@ -42,7 +42,7 @@
                 <i class="fa-solid fa-plus"></i>
             </div>
         </router-link>
-         <router-link to="/app/courses/create" v-if="user.type == 'student'">
+         <router-link to="/app/courses/create" v-if="user.type == 'learner'">
             <div class="fab">
                 <i class="fa-solid fa-search"></i>
             </div>
@@ -72,7 +72,7 @@ export default {
         async init() {
             const address = this.$auth.accounts[0]
 
-            if (this.user && this.user.type == 'student') {
+            if (this.user && this.user.type == 'learner') {
                 let index = 0
                 try {
                     while (true) {

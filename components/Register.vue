@@ -8,12 +8,12 @@
             </div>
 
             <div class="tabs">
-                <p :class="tab == 1 ? 'tab tab_active' : 'tab'" v-on:click="tab = 1">Student</p>
+                <p :class="tab == 1 ? 'tab tab_active' : 'tab'" v-on:click="tab = 1">Learners</p>
                 <p :class="tab == 2 ? 'tab tab_active' : 'tab'" v-on:click="tab = 2">Instructor</p>
             </div>
 
             <div class="signed" v-if="user && user.type">
-                <p v-if="user.type == 'student'">Welcome back, {{ user.name }}</p>
+                <p v-if="user.type == 'learner'">Welcome back, {{ user.name }}</p>
                 <p v-if="user.type == 'instructor'">Welcome back, {{ user.firstName }}</p>
                 <router-link to="/app">
                     <div class="continue">Continue</div>

@@ -77,7 +77,7 @@ export default {
             this.swiper.slideNext();
         },
         async onComplete() {
-            if (this.user != null && this.user.type == "student") {
+            if (this.user != null && this.user.type == 'learner') {
                 console.log('here');
                 const document = await Certificate.generateDocument(this.user.name);
 

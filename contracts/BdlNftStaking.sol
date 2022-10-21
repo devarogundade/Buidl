@@ -10,11 +10,10 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract BdlNftStaking is ERC721Holder, ReentrancyGuard, Ownable, Pausable {
-
     // state variable
     BdlToken bdlToken;
     BdlNft bdlNft;
-    
+
     uint256 public periodFinish = 0;
     uint256 public rewardRate = 0;
     uint256 public rewardsDuration;
@@ -39,7 +38,6 @@ contract BdlNftStaking is ERC721Holder, ReentrancyGuard, Ownable, Pausable {
         rewardsDuration = _rewardsDuration;
     }
 
-    
     // views
     function lastTimeRewardApplicable() public view returns (uint256) {
         return block.timestamp < periodFinish ? block.timestamp : periodFinish;
@@ -51,25 +49,31 @@ contract BdlNftStaking is ERC721Holder, ReentrancyGuard, Ownable, Pausable {
         }
         return
             rewardPerTokenStored +
-                (((lastTimeRewardApplicable() - lastUpdateTime) * rewardRate * 1e18) / totalSupply);
+            (((lastTimeRewardApplicable() - lastUpdateTime) *
+                rewardRate *
+                1e18) / totalSupply);
     }
 
     function earned(address account) public view returns (uint256) {
         return
             ((balances[account] *
                 (rewardPerToken() - userRewardPerTokenPaid[account])) / 1e18) +
-                    rewards[account];
+            rewards[account];
     }
 
     function getRewardForDuration() external view returns (uint256) {
         return rewardRate * rewardsDuration;
     }
 
-    
     // mutative functions
     /// @notice Stakes user's NFTs
     /// @param tokenIds The tokenIds of the NFTs which will be staked
-    function stake(uint256[] memory tokenIds) external nonReentrant whenNotPaused updateReward(msg.sender) {
+    function stake(uint256[] memory tokenIds)
+        external
+        nonReentrant
+        whenNotPaused
+        updateReward(msg.sender)
+    {
         require(tokenIds.length != 0, "Staking: No tokenIds provided");
 
         uint256 amount;
@@ -87,7 +91,11 @@ contract BdlNftStaking is ERC721Holder, ReentrancyGuard, Ownable, Pausable {
 
     /// @notice Withdraws staked user's NFTs
     /// @param tokenIds The tokenIds of the NFTs which will be withdrawn
-    function withdraw(uint256[] memory tokenIds) public nonReentrant updateReward(msg.sender) {
+    function withdraw(uint256[] memory tokenIds)
+        public
+        nonReentrant
+        updateReward(msg.sender)
+    {
         require(tokenIds.length != 0, "Staking: No tokenIds provided");
 
         uint256 amount;
@@ -133,11 +141,14 @@ contract BdlNftStaking is ERC721Holder, ReentrancyGuard, Ownable, Pausable {
         balances[msg.sender] -= _amount;
     }
 
-    
     // retricted functions
     /// @notice Calculates and sets the reward rate
     /// @param reward The amount of the reward which will be distributed during the entire period
-    function notifyRewardAmount(uint256 reward) external onlyOwner updateReward(address(0)) {
+    function notifyRewardAmount(uint256 reward)
+        external
+        onlyOwner
+        updateReward(address(0))
+    {
         if (block.timestamp >= periodFinish) {
             rewardRate = reward / rewardsDuration;
         } else {
@@ -151,7 +162,10 @@ contract BdlNftStaking is ERC721Holder, ReentrancyGuard, Ownable, Pausable {
         // very high values of rewardRate in the earned and rewardsPerToken functions;
         // Reward + leftover must be less than 2^256 / 10^18 to avoid overflow.
         uint balance = bdlToken.balanceOf(address(this));
-        require(rewardRate <= balance / rewardsDuration, "Staking: Provided reward too high");
+        require(
+            rewardRate <= balance / rewardsDuration,
+            "Staking: Provided reward too high"
+        );
 
         lastUpdateTime = block.timestamp;
         periodFinish = block.timestamp + rewardsDuration;
@@ -175,7 +189,6 @@ contract BdlNftStaking is ERC721Holder, ReentrancyGuard, Ownable, Pausable {
         _unpause();
     }
 
-    
     // modifiers
     modifier updateReward(address account) {
         rewardPerTokenStored = rewardPerToken();
@@ -186,7 +199,6 @@ contract BdlNftStaking is ERC721Holder, ReentrancyGuard, Ownable, Pausable {
         }
         _;
     }
-
 
     // events
     event RewardAdded(uint256 reward);

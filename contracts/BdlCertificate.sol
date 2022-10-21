@@ -12,14 +12,15 @@ contract BdlCertificate is ERC4973 {
         deployer = msg.sender;
     }
 
-    function burn(uint256 certificateId) external override {
-        require(ownerOf(certificateId) == msg.sender || msg.sender == deployer, "You can't revoke this certificate");
+    function burn(address student, uint256 certificateId) external override onlyOwner {
         _burn(certificateId);
+        emit Revoke(student, certificateId);
     }
 
     function issue(address student, string calldata uri) external {
         _mint(student, certificatesCount, uri);
         certificatesCount += 1;
+        emit Attest(student, courseId);
     }
 
     modifier onlyOwner() {

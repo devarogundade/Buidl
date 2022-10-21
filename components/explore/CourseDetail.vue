@@ -141,7 +141,7 @@ export default {
             this.getCourse()
             this.getCourseSections()
 
-            if (this.user && this.user.type == 'student') {
+            if (this.user && this.user.type == 'learner') {
                 const address = this.$auth.accounts[0]
 
                 let index = 0
