@@ -77,18 +77,13 @@ export default {
             this.swiper.slideNext();
         },
         async onComplete() {
-            if (this.user != null && this.user.type == 'learner') {
-                console.log('here');
+            if (this.user != null && this.user.type == "learner") {
                 const document = await Certificate.generateDocument(this.user.name);
-
-                console.log(document);
 
                 const documentUrl = await this.$ipfs.upload(
                     `certificates/${this.$auth.accounts[0]}/${this.courseId}`,
                     document
                 );
-
-                console.log(documentUrl);
 
                 if (documentUrl == null) {
                     $nuxt.$emit("error", "Failed to mint course certificate");
@@ -96,29 +91,52 @@ export default {
                 }
 
                 const certificateJson = {
-                    name: `${this.course.name} certificate`,
-                    description: `This certificate is issued by Buidl to ${this.user.name} on ${Date()}`,
-                    image: documentUrl,
+                    "name": `${this.course.name} certificate`,
+                    "description": `This certificate is issued by Buidl to ${this.user.name} on ${Date()}`,
+                    "image": documentUrl,
+                    "external_url": `https://buidl.netlify.app/certificate?owner=${this.$auth.accounts[0]}&course=${this.courseId}`,
                 };
-
-                console.log(certificateJson);
 
                 const certificateMetadataUrl = await this.$ipfs.upload(
                     `certificates/${this.$auth.accounts[0]}/${this.courseId}.json`,
                     certificateJson
                 );
 
-                console.log(certificateMetadataUrl);
-
                 if (certificateMetadataUrl == null) {
+                    $nuxt.$emit("error", "Failed to mint course certificate")
+                    return;
+                }
+
+                const nftIndex = Math.floor(Math.random() * 4) + 1
+                const nftWeight = Math.floor(Math.random() * 10) + 1
+
+                const nftJson = {
+                    "name": `Mr. Nice Monkey`,
+                    "description": `This nice monkey will give you some discounts on your next buidl course purchase.`,
+                    "image": `https://buidl-testing.netlify.app/images/nft${nftIndex}.jpg`,
+                    "external_url": 'https://buidl.netlify.app/',
+                    "attributes": [{
+                        "display_type": "boost_percentage",
+                        "trait_type": "Weight",
+                        "value": nftWeight
+                    }]
+                };
+
+                const nftMetadataUrl = await this.$ipfs.upload(
+                    `nfts/${this.$auth.accounts[0]}/${this.courseId}.json`,
+                    nftJson
+                )
+
+                if (nftMetadataUrl == null) {
                     $nuxt.$emit("error", "Failed to mint course certificate");
                     return;
                 }
 
+                // const ipfsCID = `ipfs://${nftMetadataUrl.split(/\//)[4]}`
+
                 try {
                     const trx = await this.$contracts.buidlContract.onCompletedCourse(
-                        this.courseId,
-                        certificateMetadataUrl, {
+                        this.courseId, certificateMetadataUrl, nftMetadataUrl, {
                             from: this.$auth.accounts[0],
                         }
                     );

@@ -22,7 +22,7 @@
                 </div>
                 <div class="text">
                     <h3>
-                        Payment is not a barrier.
+                        Seamless payments and refunds.
                     </h3>
                     <p>
                         Eliminate the limitation of banks and international

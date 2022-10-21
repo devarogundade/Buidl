@@ -3,20 +3,22 @@
     <div class="ntfs">
         <div class="tabs">
             <h3 :class="tab == 1 ? 'active' : ''" v-on:click="tab = 1">Wallet</h3>
-            <h3 :class="tab == 2 ? 'active' : ''" v-on:click="tab = 2">Certificates</h3>
+            <h3 :class="tab == 2 ? 'active' : ''" v-on:click="tab = 2">
+                Certificates
+            </h3>
             <h3 :class="tab == 3 ? 'active' : ''" v-on:click="tab = 3">My NFTs</h3>
         </div>
 
-        <div class="items" v-if="tab == 1"></div>
+        <div class="items" v-show="tab == 1"></div>
 
-        <div class="items" v-if="tab == 2">
-                        <div class="item" v-for="index in 4" :key="index">
+        <div class="items" v-show="tab == 2">
+            <div class="item" v-for="index in 4" :key="index">
                 <div class="image">
-                    <img :src="`/images/nft${index}.jpg`" alt="">
+                    <img :src="`/images/nft${index}.jpg`" alt="" />
                 </div>
                 <div class="creator">
                     <div class="profile">
-                        <img src="/images/nft1.jpg" alt="">
+                        <img src="/images/nft1.jpg" alt="" />
                         <div class="name">
                             <p>Laura</p>
                             <p>0.32 BDL</p>
@@ -28,32 +30,34 @@
                     </div>
                 </div>
                 <div class="action">
-                    <div class="stake">Download</div>
+                    <div class="stake">Save <i class="fa-solid fa-download"></i></div>
                 </div>
             </div>
         </div>
 
-        <div class="items" v-if="tab == 3">
-          <div class="item" v-for="(nft, index) in nfts" :key="index">
+        <div class="items" v-show="tab == 3">
+            <div class="item" v-for="(nft, index) in nfts" :key="index">
                 <div class="image">
-                    <img :src="`/images/nft${index}.jpg`" alt="">
+                    <img :src="toJson(nft.metadata).image" alt="" />
                 </div>
                 <div class="creator">
                     <div class="profile">
-                        <img src="/images/nft1.jpg" alt="">
+                        <img src="/favicon.ico" alt="" />
                         <div class="name">
-                            <p>{{ nft.name }}</p>
+                            <p>{{ toJson(nft.metadata).name }}</p>
                             <p>ID: {{ nft.token_id }}</p>
                         </div>
                     </div>
                     <div class="stat">
                         <p>{{ nft.symbol }}</p>
-                        <p class="price">$6.4 <span>+0.5%</span></p>
+                        <p class="price">Weight <span>{{ toJson(nft.metadata).attributes[0].value }}%</span></p>
                     </div>
                 </div>
-                <div class="action">
-                    <div class="stake">Sell</div>
-                </div>
+                <a target="_blank" :href="`https://testnets.opensea.io/assets/bsc-testnet/${nft.token_address}/${nft.token_id}`">
+                    <div class="action">
+                        <div class="stake">Opensea <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -66,24 +70,40 @@ export default {
         return {
             tab: 1,
             nfts: [],
-        }
+        };
     },
     mounted() {
-        this.getNfts()
+        this.getNfts();
     },
     methods: {
-        getNfts: async function() {
-            const nfts = await this.$nft.getUserNfts(this.$auth.accounts[0])
-            this.nfts = nfts.result
-            console.log(nfts.result);
-        }
-    }
-}
+        getNfts: async function () {
+            const nfts = await this.$nft.getUserNfts(this.$auth.accounts[0]);
+            this.nfts = nfts.result;
+        },
+        toJson: function (json) {
+            console.log(json);
+            if (json == null) {
+                return {
+                    name: "No name",
+                    description: "No description",
+                    image: "",
+                    attributes: [{
+                        display_type: "boost_percentage",
+                        trait_type: "Weight",
+                        value: 0,
+                    }, ],
+                };
+            }
+            return JSON.parse(json);
+        },
+    },
+};
 </script>
 
 <style scoped>
 .container {
     padding-top: 120px;
+    padding-bottom: 50px;
 }
 
 .tabs {
@@ -94,7 +114,7 @@ export default {
 
 .tabs h3 {
     font-size: 40px;
-    color: #FFFFFF;
+    color: #ffffff;
     font-weight: 600;
     cursor: pointer;
 }
@@ -107,18 +127,35 @@ export default {
 .items {
     display: flex;
     gap: 40px;
+    flex-wrap: wrap;
     align-items: center;
     padding-top: 40px;
+    overflow: hidden;
 }
 
 .items .item {
     width: 300px;
     background: #2c2d3a;
+    border-radius: 16px;
+}
+
+.item .name p:first-child {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item .name p:last-child {
+    font-size: 12px;
 }
 
 .items .image {
     height: 340px;
-    border: 2px #FFFFFF solid;
+    border: 2px #ffffff solid;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    overflow: hidden;
 }
 
 .items .image img {
@@ -141,20 +178,23 @@ export default {
 }
 
 .creator img {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 20px;
     object-fit: cover;
 }
 
 .creator {
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 .creator .price {
     font-size: 14px;
     margin-top: 4px;
     color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .creator span {
@@ -162,7 +202,7 @@ export default {
     padding: 2px 6px;
     border-radius: 6px;
     color: #003f2c;
-    background: #53F3C3;
+    background: #53f3c3;
 }
 
 .action {
@@ -174,14 +214,19 @@ export default {
     text-align: right;
 }
 
+.item .stat p:first-child {
+    font-size: 14px;
+}
+
 .stake {
     height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 16px;
-    font-weight: 600;
-    color: #FFFFFF;
+    color: #ffffff;
     background: #0177fb;
+    gap: 10px;
+    border-radius: 12px;
 }
 </style>

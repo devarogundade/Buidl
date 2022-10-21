@@ -52,10 +52,6 @@ contract Models {
 
     struct StudentCourse {
         uint courseId;
-        bool isActive; // paid or rejected
-        uint unlocked; // initially equals to price of course
-        // then sequentially unlocked to the instructor
-        uint sectionsViewed;
         uint purchasedAt;
     }
 

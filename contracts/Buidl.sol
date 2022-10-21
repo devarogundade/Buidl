@@ -11,17 +11,17 @@ contract Buidl {
     // state variables
     address deployer;
 
-    BdlToken bdlToken;
-    BdlNft bdlNft;
-    BdlCertificate bdlCertificate;
+    BdlToken private bdlToken;
+    BdlNft private bdlNft;
+    BdlCertificate private bdlCertificate;
 
-    uint256 contractInstructorID = 1;
-    uint256 contractStudentID = 1;
-    uint256 contractCourseID = 1;
-    uint256 contractCategoryID = 1;
+    uint256 private contractInstructorID = 1;
+    uint256 private contractStudentID = 1;
+    uint256 private contractCourseID = 1;
+    uint256 private contractCategoryID = 1;
 
     // minimum to stake for a duration of 1year
-    uint256 instructorRegistrationFee = 2000 * 10**18;
+    uint256 private instructorRegistrationFee = 2000 * 10**18;
 
     mapping(uint => Models.Category) public categories;
     mapping(address => Models.Instructor) public instructors;
@@ -61,16 +61,6 @@ contract Buidl {
         );
 
         contractCategoryID++;
-    }
-
-    // test
-    function mint(string memory uri) public {
-        bdlNft.mint(msg.sender, uri);
-    }
-
-    // ========== Testing ========== //
-    function faucetMint() public {
-        bdlToken.mint(msg.sender);
     }
 
     // ========= Instructors =========== //
@@ -240,9 +230,6 @@ contract Buidl {
         studentCourses[msg.sender].push(
             Models.StudentCourse(
                 courseId,
-                true,
-                course.price,
-                0,
                 block.timestamp
             )
         );
@@ -250,19 +237,16 @@ contract Buidl {
         emit CoursePurchased(course.instructor, msg.sender, courseId);
     }
 
-    function rejectCourse(uint courseId, uint sections) public onlyStudent {
-        Models.StudentCourse memory studentCourse = studentCourses[msg.sender][
-            courseId
-        ];
-
+    function rejectCourse(uint courseId, uint sections, uint sectionsViewed) public onlyStudent {
+        Models.StudentCourse memory studentCourse = studentCourses[msg.sender][courseId];
         Models.Course memory course = courses[courseId];
 
         require(course.id != 0, "!exists");
 
         // check is course is not over 2 weeks
-        require(studentCourse.purchasedAt > 2, ">2weeks.");
+        require(block.timestamp > (studentCourse.purchasedAt + 2), ">2weeks");
 
-        uint refundableSections = (studentCourse.sectionsViewed - sections);
+        uint refundableSections = (sectionsViewed - sections);
 
         require(refundableSections > 0, "!refunable");
 
@@ -274,25 +258,19 @@ contract Buidl {
         // refund the student
         bdlToken.transferFrom(address(this), msg.sender, refundableAmount);
 
-        emit CourseRejected(msg.sender, courseId, studentCourse.sectionsViewed);
+        emit CourseRefunded(msg.sender, courseId, sectionsViewed);
     }
 
     function onCompletedCourse(
         uint courseId,
-        string memory uri
+        string memory certificateUri,
+        string memory nftUri
     ) public onlyStudent {
         require(courses[courseId].id != 0, "!exists");
         // check if student has purchase the course
         // require(studentCourses[msg.sender][] != 0, "!exists");
-        generateCerticate(msg.sender, uri);
-        // bdlNft.mint(msg.sender);
-    }
-
-    function generateCerticate(
-        address student,
-        string memory uri
-    ) private {
-        bdlCertificate.issue(student, uri);
+        bdlCertificate.issue(msg.sender, certificateUri);
+        bdlNft.mint(msg.sender, nftUri);
     }
 
     modifier onlyInstructor() {
@@ -318,12 +296,18 @@ contract Buidl {
         _;
     }
 
-    // ========== events ========== //
+    // ========== Events ========== //
+
     event CourseCompletion(address student, uint courseId);
     event CoursePurchased(address intructor, address student, uint courseId);
-    event CourseRejected(address student, uint courseId, uint sectionsViewed);
+    event CourseRefunded(address student, uint courseId, uint sectionsViewed);
 
-    // ========== test =========== //
+    // ========== Development ========== //
+
+    function faucetMint() public {
+        bdlToken.mint(msg.sender);
+    }
+
     function addTestCategories() private {
         addCategory(
             "Web Development",
