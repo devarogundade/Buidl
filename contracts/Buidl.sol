@@ -64,8 +64,8 @@ contract Buidl {
     }
 
     // test
-    function mint() public {
-        bdlNft.mint(msg.sender);
+    function mint(string memory uri) public {
+        bdlNft.mint(msg.sender, uri);
     }
 
     // ========== Testing ========== //
