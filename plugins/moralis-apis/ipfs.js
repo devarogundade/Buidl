@@ -21,6 +21,25 @@ export default ({ $axios }, inject) => {
                 return null
             }
         },
+        uploadMuitlple: async function(array) {
+            try {
+                const options = {
+                    method: 'POST',
+                    url: '/ipfs/uploadFolder',
+                    headers: {
+                        'accept': 'application/json',
+                        'content-type': 'application/json',
+                        'X-API-Key': `${process.env.MORALIS_KEY}`
+                    },
+                    data: array
+                }
+
+                const response = await $axios.request(options)
+                return response.data
+            } catch (error) {
+                return null
+            }
+        },
         toBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader()

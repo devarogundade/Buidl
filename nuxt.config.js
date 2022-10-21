@@ -29,7 +29,8 @@ export default {
         ],
         script: [{
                 src: "https://kit.fontawesome.com/19ee52fe0f.js",
-                crossorigin: "anonymous"
+                crossorigin: "anonymous",
+                defer: true
             },
             {
                 src: 'https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js',

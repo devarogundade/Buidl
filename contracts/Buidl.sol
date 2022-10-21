@@ -316,13 +316,12 @@ contract Buidl {
     // }
 
     function onCompletedCourse(
-        address student,
         uint courseId,
         string memory uri
-    ) private {
+    ) public onlyStudent {
         require(courses[courseId].id != 0, "!exists");
-        generateCerticate(courseId, student, uri);
-        bdlNft.mint(student);
+        generateCerticate(courseId, msg.sender, uri);
+        // bdlNft.mint(msg.sender);
     }
 
     function generateCerticate(

@@ -22,92 +22,141 @@
         </div>
 
         <div class="pager">
-            <div class="prev scaleable" v-on:click="prev()"><i class="fa-solid fa-angle-left"></i> Previous Section</div>
-            <div class="next scaleable" v-if="swiper && swiper.isEnd" v-on:click="onComplete()">Check Result <i class="fa-solid fa-angle-right"></i></div>
-            <div class="next scaleable" v-else v-on:click="next()">Next Section <i class="fa-solid fa-angle-right"></i></div>
+            <div class="prev scaleable" v-on:click="prev()">
+                <i class="fa-solid fa-angle-left"></i> Previous Section
+            </div>
+            <div class="next scaleable" v-if="swiper && swiper.isEnd" v-on:click="onComplete()">
+                Check Result <i class="fa-solid fa-angle-right"></i>
+            </div>
+            <div class="next scaleable" v-else v-on:click="next()">
+                Next Section <i class="fa-solid fa-angle-right"></i>
+            </div>
         </div>
     </div>
 </div>
 </template>
 
 <script>
+import Certificate from "/plugins/certificate.js";
 export default {
     data() {
         return {
             courseId: this.$route.params.course,
             notFound: false,
-            instructor: null,
-            category: null,
+            course: null,
             fetching: true,
             sections: [],
-            swiper: null
-        }
+            swiper: null,
+            user: this.$contracts.user,
+        };
     },
     mounted() {
-        this.getCourse()
-        this.getCourseSections()
+        this.getCourse();
+        this.getCourseSections();
+
+        $nuxt.$on("user", (user) => {
+            this.user = user;
+        });
     },
     updated() {
         if (this.swiper == null) {
             new Swiper(".swiper-section", {
                 slidesPerView: 1,
                 spaceBetween: 30,
-            })
-            this.swiper = document.querySelector('.swiper-section').swiper
+            });
+            this.swiper = document.querySelector(".swiper-section").swiper;
         }
     },
     methods: {
         prev() {
-            if (this.swiper == null) return
-            this.swiper.slidePrev()
+            if (this.swiper == null) return;
+            this.swiper.slidePrev();
         },
         next() {
-            if (this.swiper == null) return
-            this.swiper.slideNext()
+            if (this.swiper == null) return;
+            this.swiper.slideNext();
         },
         async onComplete() {
+            if (!this.user || this.user.type != "student") {
+                const document = await Certificate.generateDocument(this.user.name);
 
+                const documentUrl = await this.$ipfs.upload(
+                    `certificates/${this.$auth.accounts[0]}/${this.courseId}`,
+                    document
+                );
+
+                if (documentUrl == null) {
+                    $nuxt.$emit("error", "Failed to mint course certificate");
+                    return;
+                }
+
+                const certificateJson = {
+                    name: `${course.name} certificate`,
+                    description: `This certificate is issued by Buidl to ${user.name} on ${Date()}`,
+                    image: documentUrl,
+                };
+
+                const certificateMetadataUrl = await this.$ipfs.upload(
+                    `certificates/${this.$auth.accounts[0]}/${this.courseId}.json`,
+                    certificateJson
+                );
+
+                if (certificateMetadataUrl == null) {
+                    $nuxt.$emit("error", "Failed to mint course certificate");
+                    return;
+                }
+
+                try {
+                    const trx = await this.$contracts.buidlContract.onCompletedCourse(
+                        this.courseId,
+                        certificateMetadataUrl, {
+                            from: this.$auth.accounts[0],
+                        }
+                    );
+                } catch (error) {
+                    console.log(error);
+                }
+            }
         },
         async getCourse() {
             const course = await this.$contracts.buidlContract.courses(this.courseId);
 
             if (course.id.toNumber() != 0) {
-                this.course = course
-
+                this.course = course;
                 $nuxt.$emit(`course${this.courseId}`, course);
-
-                this.instructor = await this.$contracts.buidlContract.instructors(course.instructor)
-                this.category = await this.$contracts.buidlContract.categories(course.categoryId)
             } else {
-                this.notFound = true
+                this.notFound = true;
             }
 
-            this.fetching = false
+            this.fetching = false;
         },
         async getCourseSections() {
-            let index = 0
+            let index = 0;
             try {
                 while (index < 5) {
-                    const section = await this.$contracts.buidlContract.courseSections(this.courseId, index);
+                    const section = await this.$contracts.buidlContract.courseSections(
+                        this.courseId,
+                        index
+                    );
 
                     if (section.id.toNumber() == 0) {
-                        break
+                        break;
                     }
 
-                    const existing = this.sections.filter(_section =>
-                        section.id.toNumber() == _section.id.toNumber()
-                    )
+                    const existing = this.sections.filter(
+                        (_section) => section.id.toNumber() == _section.id.toNumber()
+                    );
 
                     if (existing.length == 0) {
-                        this.sections.push(section)
+                        this.sections.push(section);
                     }
 
-                    index++
+                    index++;
                 }
             } catch (error) {}
         },
-    }
-}
+    },
+};
 </script>
 
 <style scoped>
@@ -160,15 +209,15 @@ export default {
     padding: 20px 30px;
     padding-bottom: 16px;
     font-size: 18px;
-    color: #FFF;
+    color: #fff;
     font-weight: 600;
-    background: #3B3C4E;
+    background: #3b3c4e;
 }
 
 .video {
     width: 100%;
     border-radius: 30px;
-    background: #2C2D3A;
+    background: #2c2d3a;
     overflow: hidden;
     position: relative;
 }
@@ -187,7 +236,7 @@ export default {
     justify-content: center;
     font-size: 30px;
     background: #000000bd;
-    color: #FFFFFF;
+    color: #ffffff;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -198,7 +247,7 @@ export default {
 .section .text {
     margin-top: 50px;
     font-size: 17px;
-    color: #FFF;
+    color: #fff;
     line-height: 22px;
     padding: 0 20px;
 }
@@ -218,7 +267,7 @@ export default {
     justify-content: center;
     font-size: 16px;
     color: #007aff;
-    background: #FFFFFF;
+    background: #ffffff;
     cursor: pointer;
     font-weight: 600;
     user-select: none;
