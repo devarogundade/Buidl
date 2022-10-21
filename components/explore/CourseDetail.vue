@@ -22,7 +22,7 @@
                     </div>
                     <p class="instructor" v-if="instructor"> <img src="/images/nft2.jpg" alt=""> {{ instructor.lastName + ' ' + instructor.firstName }} </p>
                     <div class="specs">
-                        <p class="last_update"><i class="fa-solid fa-calendar-days"></i> {{ $utils.formatToDate(course.updatedAt) }}</p>
+                        <p class="last_update"><i class="fa-solid fa-calendar-days"></i> {{ $utils.formatToDate(course.updatedAt.toNumber()) }}</p>
                         <p class="languages"><i class="fa-solid fa-globe"></i> English</p>
                     </div>
                 </div>
@@ -38,15 +38,49 @@
                     <div class="coupon" v-if="!bought">
                         <p>Apply Coupon</p>
 
-                        <div class="selector">
-                            <div class="nft_row">
-                                <img src="/images/nft1.jpg" alt="">
+                        <div class="options" v-show="showNfts">
+                            <div class="nft_row" v-on:click="removeCoupon()">
                                 <div class="name">
-                                    <p>Kosi NFT #093</p>
-                                    <p>-20% off</p>
+                                    <p>Remove coupon</p>
+                                    <p>0%</p>
                                 </div>
                             </div>
-                            <div class="options"></div>
+                            <div class="nft_row" v-for="(nft, index) in nfts" :key="index" v-on:click="applyCoupon(index)">
+                                <img :src="toJson(nft.metadata).image" alt="">
+                                <div class="name">
+                                    <p>{{ toJson(nft.metadata).name }}</p>
+                                    <p>{{ toJson(nft.metadata).attributes[0].value }}% off</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="selector" v-on:click="showNfts = !showNfts">
+                            <div class="nft_row" v-if="selectedNft == null">
+                                <div class="name">
+                                    <p>Click here to select a coupon</p>
+                                    <p>Buy coupon on Opensea</p>
+                                </div>
+                            </div>
+                            <div class="nft_row" v-else>
+                                <img :src="toJson(nfts[selectedNft].metadata).image" alt="">
+                                <div class="name">
+                                    <p>{{ toJson(nfts[selectedNft].metadata).name }}</p>
+                                    <p>{{ toJson(nfts[selectedNft].metadata).attributes[0].value }}% off</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pricing">
+                        <div>
+                            <p>Course price</p>
+                            <p>{{ course.price.toNumber() }} BDL</p>
+                        </div>
+
+                        <div>
+                            <p>Coupon discount</p>
+                            <p v-if="selectedNft != null">{{ calcDiscount(selectedNft) }} BDL</p>
+                            <p v-else>-0 BDL</p>
                         </div>
                     </div>
 
@@ -106,7 +140,10 @@ export default {
             category: null,
             instructor: null,
             notFound: false,
-            bought: false
+            bought: false,
+            nfts: [],
+            selectedNft: null,
+            showNfts: false
         }
     },
     mounted() {
@@ -116,6 +153,7 @@ export default {
         })
 
         this.init()
+        this.getNfts()
     },
     methods: {
         openAccordion(index) {
@@ -124,6 +162,38 @@ export default {
             } else {
                 this.selectedSection = index
             }
+        },
+        toJson: function (json) {
+            if (json == null) {
+                return {
+                    name: "No name",
+                    description: "No description",
+                    image: "",
+                    attributes: [{
+                        display_type: "boost_percentage",
+                        trait_type: "Weight",
+                        value: 0,
+                    }, ],
+                };
+            }
+            return JSON.parse(json);
+        },
+        calcDiscount(index) {
+            const weight = this.toJson(this.nfts[index].metadata).attributes[0].value
+            const perc = (weight / 100) * this.course.price.toNumber()
+            return this.course.price.toNumber() - perc
+        },
+        removeCoupon: function () {
+            this.selectedNft = null
+            this.showNfts = false
+        },
+        applyCoupon: function (index) {
+            this.selectedNft = index
+            this.showNfts = false
+        },
+        getNfts: async function () {
+            const nfts = await this.$nft.getUserNfts(this.$auth.accounts[0])
+            this.nfts = nfts.result
         },
         async getCourse() {
             const course = await this.$contracts.buidlContract.courses(this.courseId);
@@ -444,14 +514,14 @@ export default {
 
 .nft_row .name p:first-child {
     font-size: 16px;
-    color: #a0a0a0;
+    color: #e0e0e0;
 }
 
 .nft_row .name p:last-child {
-    background: #FF6370;
+    color: #003f2c;
+    background: #53f3c3;
     padding: 2px 6px;
     border-radius: 6px;
-    color: #380005;
     margin-top: 4px;
     width: fit-content;
     font-size: 12px;
@@ -467,6 +537,58 @@ export default {
     padding: 10px;
     border-radius: 6px;
     background: #242531;
+}
+
+.options {
+    position: fixed;
+    background: #ffffff;
+    z-index: 4;
+    width: 400px;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.options .nft_row {
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.options .nft_row img {
+    width: 50px;
+    height: 60px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.options .nft_row .name p:first-child {
+    font-size: 18px;
+    color: #242531;
+}
+
+.options .nft_row .name p:last-child {
+    color: #003f2c;
+    background: #53f3c3;
+    padding: 2px 6px;
+    border-radius: 6px;
+    margin-top: 4px;
+    width: fit-content;
+    font-size: 12px;
+}
+
+.options .nft_row:hover {
+    background: #5da3ff;
 }
 
 .action {

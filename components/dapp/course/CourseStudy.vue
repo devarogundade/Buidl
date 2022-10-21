@@ -48,11 +48,12 @@ export default {
             sections: [],
             swiper: null,
             user: this.$contracts.user,
+            nfts: []
         };
     },
     mounted() {
-        this.getCourse();
-        this.getCourseSections();
+        this.getCourse()
+        this.getCourseSections()
 
         $nuxt.$on("user", (user) => {
             this.user = user;
@@ -76,7 +77,7 @@ export default {
             if (this.swiper == null) return;
             this.swiper.slideNext();
         },
-        async onComplete() {
+        onComplete: async function () {
             if (this.user != null && this.user.type == "learner") {
                 const document = await Certificate.generateDocument(this.user.name);
 
