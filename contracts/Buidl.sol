@@ -282,6 +282,8 @@ contract Buidl {
         string memory uri
     ) public onlyStudent {
         require(courses[courseId].id != 0, "!exists");
+        // check if student has purchase the course
+        // require(studentCourses[msg.sender][] != 0, "!exists");
         generateCerticate(msg.sender, uri);
         // bdlNft.mint(msg.sender);
     }

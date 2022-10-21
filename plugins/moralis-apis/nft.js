@@ -5,16 +5,20 @@ export default ({ $axios }, inject) => {
         getUserNfts: async function(address) {
             const options = {
                 method: 'GET',
-                url: `${address}/nft`,
-                params: { chain: 'bsc%20testnet', format: 'decimal' },
+                url: `/${address}/nft`,
+                params: { chain: 'bsc testnet', format: 'decimal' },
                 headers: {
                     'accept': 'application/json',
                     'X-API-Key': `${process.env.MORALIS_KEY}`
                 }
             }
 
-            const response = await $axios.request(options)
-            return response.data
+            try {
+                const response = await $axios.request(options)
+                return response.data
+            } catch (error) {
+                return null
+            }
         }
     }))
 }

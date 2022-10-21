@@ -64,7 +64,17 @@
 export default {
     data() {
         return {
-            tab: 1
+            tab: 1,
+            nfts: [],
+        }
+    },
+    mounted() {
+        this.getNfts()
+    },
+    methods: {
+        getNfts: async function() {
+            const nfts = await this.$nft.getUserNfts(this.$auth.accounts[0])
+            console.log(nfts);
         }
     }
 }

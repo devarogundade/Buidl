@@ -5,8 +5,8 @@ export default ({ $axios }, inject) => {
         getNativeBalance: async function(address) {
             const options = {
                 method: 'GET',
-                url: `${address}/balance`,
-                params: { chain: 'bsc%20testnet' },
+                url: `/${address}/balance`,
+                params: { chain: 'bsc testnet' },
                 headers: {
                     'accept': 'application/json',
                     'X-API-Key': `${process.env.MORALIS_KEY}`
@@ -23,8 +23,8 @@ export default ({ $axios }, inject) => {
         getTokenBalances: async function(address) {
             const options = {
                 method: 'GET',
-                url: `${address}/erc20`,
-                params: { chain: 'bsc%20testnet' },
+                url: `/${address}/erc20`,
+                params: { chain: 'bsc testnet' },
                 headers: {
                     'accept': 'application/json',
                     'X-API-Key': `${process.env.MORALIS_KEY}`
