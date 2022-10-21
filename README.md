@@ -4,8 +4,9 @@
 Building a Borderless, Permissionless and Decentralized Social-Fi for Instructors and Learners.
 
 - Incentives for learning
-- International Payments and Refunds is not a barrier
+- Seamless payments and refunds using DEFI/Staking protocol
 - Get an on-chain certificate
+- IPFS ond On-chain encryption for premium contents
 
 ## Hackathon Track
   Binance Smart Chain => Social & Entertainment
