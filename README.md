@@ -49,9 +49,6 @@ http://localhost:3000/
 ```
 ## Plugins
 
-Dillinger is currently extended with the following plugins.
-Instructions on how to use them in your own application are linked below.
-
 | Plugin | Installation |
 | ------ | ------ |
 | Axios |  |
@@ -67,8 +64,7 @@ Instructions on how to use them in your own application are linked below.
 
 Want to contribute? Great!
 
-Dillinger uses Gulp + Webpack for fast developing.
-Make a change in your file and instantaneously see your updates!
+=================
 
 Open your favorite Terminal and run these commands.
 
