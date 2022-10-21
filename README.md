@@ -4,7 +4,7 @@
 Building a Borderless, Permissionless and Decentralized Social-Fi for Instructors and Students.
 
 - Incentives for learning
-- Payment is not a barrier
+- International Payments and Refunds is not a barrier
 - Get an on-chain certificate
 
 ## Tech Stacks
