@@ -7,6 +7,9 @@ Building a Borderless, Permissionless and Decentralized Social-Fi for Instructor
 - International Payments and Refunds is not a barrier
 - Get an on-chain certificate
 
+## Hackathon Track
+  Binance Smart Chain => Social & Entertainment
+
 ## Tech Stacks
 
 - Binance Smart Chain (Testnet)
