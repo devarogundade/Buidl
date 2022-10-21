@@ -1,11 +1,15 @@
 # Buidl - SocialFi for Instructors and Learners
 ## _A Moralis X Google Cloud Hackathon Project_
 
-Building a Borderless, Permissionless and Decentralized Social-Fi for Instructors and Students.
+Building a Borderless, Permissionless and Decentralized Social-Fi for Instructors and Learners.
 
 - Incentives for learning
-- International Payments and Refunds is not a barrier
+- Seamless payments and refunds using DEFI/Staking protocol
 - Get an on-chain certificate
+- IPFS ond On-chain encryption for premium contents
+
+## Hackathon Track
+  Binance Smart Chain => Social & Entertainment
 
 ## Tech Stacks
 
@@ -49,9 +53,6 @@ http://localhost:3000/
 ```
 ## Plugins
 
-Dillinger is currently extended with the following plugins.
-Instructions on how to use them in your own application are linked below.
-
 | Plugin | Installation |
 | ------ | ------ |
 | Axios |  |
@@ -67,13 +68,10 @@ Instructions on how to use them in your own application are linked below.
 
 Want to contribute? Great!
 
-Dillinger uses Gulp + Webpack for fast developing.
-Make a change in your file and instantaneously see your updates!
+=================
 
 Open your favorite Terminal and run these commands.
 
 ## License
 
 MIT
-
-**Free Software, Hell Yeah!**
