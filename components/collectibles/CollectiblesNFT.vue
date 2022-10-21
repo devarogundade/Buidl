@@ -10,7 +10,7 @@
         <div class="items" v-if="tab == 1"></div>
 
         <div class="items" v-if="tab == 2">
-            <div class="item" v-for="index in 4" :key="index">
+                        <div class="item" v-for="index in 4" :key="index">
                 <div class="image">
                     <img :src="`/images/nft${index}.jpg`" alt="">
                 </div>
@@ -34,7 +34,7 @@
         </div>
 
         <div class="items" v-if="tab == 3">
-            <div class="item" v-for="index in 4" :key="index">
+          <div class="item" v-for="(nft, index) in nfts" :key="index">
                 <div class="image">
                     <img :src="`/images/nft${index}.jpg`" alt="">
                 </div>
@@ -42,13 +42,13 @@
                     <div class="profile">
                         <img src="/images/nft1.jpg" alt="">
                         <div class="name">
-                            <p>Laura</p>
-                            <p>0.32 BDL</p>
+                            <p>{{ nft.name }}</p>
+                            <p>ID: {{ nft.token_id }}</p>
                         </div>
                     </div>
                     <div class="stat">
-                        <p>MarketCap</p>
-                        <p class="price">$3,490 <span>+0.5%</span></p>
+                        <p>{{ nft.symbol }}</p>
+                        <p class="price">$6.4 <span>+0.5%</span></p>
                     </div>
                 </div>
                 <div class="action">
@@ -74,7 +74,8 @@ export default {
     methods: {
         getNfts: async function() {
             const nfts = await this.$nft.getUserNfts(this.$auth.accounts[0])
-            console.log(nfts);
+            this.nfts = nfts.result
+            console.log(nfts.result);
         }
     }
 }
@@ -108,7 +109,6 @@ export default {
     gap: 40px;
     align-items: center;
     padding-top: 40px;
-    justify-content: space-between;
 }
 
 .items .item {
