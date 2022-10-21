@@ -75,5 +75,3 @@ Open your favorite Terminal and run these commands.
 ## License
 
 MIT
-
-**Free Software, Hell Yeah!**
