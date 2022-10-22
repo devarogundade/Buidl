@@ -12,7 +12,7 @@
                     <p class="tab">Explore</p>
                 </router-link>
                 <p class="tab" v-on:click="showBuild = !showBuild">
-                    Teach <i class="fa-solid fa-angle-down"></i>
+                    Creator <i class="fa-solid fa-angle-down"></i>
                 </p>
                 <router-link to="/explore/categories">
                     <p class="tab">Categories</p>
@@ -26,12 +26,16 @@
             </div>
 
             <div class="build" v-if="showBuild">
-                <div class="item">
-                    Become an Instructor <i class="fa-solid fa-user-tie"></i>
-                </div>
-                <div class="item">
-                    Instructor's Guide <i class="fa-solid fa-hammer"></i>
-                </div>
+                <a href="#creator">
+                    <div class="item">
+                        Become a Creator <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                </a>
+                <a href="">
+                    <div class="item">
+                        Creator's Guide <i class="fa-solid fa-hammer"></i>
+                    </div>
+                </a>
             </div>
 
             <div class="action">
@@ -221,12 +225,12 @@ section {
     background: #0177fb;
 }
 
-.build .item:first-child {
+.build a:first-child .item {
     padding-top: 40px;
     padding-bottom: 25px;
 }
 
-.build .item:last-child {
+.build a:last-child .item {
     padding-top: 25px;
     padding-bottom: 40px;
 }

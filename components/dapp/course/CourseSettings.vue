@@ -3,9 +3,10 @@
 <div class="container" v-else>
     <div class="settings">
         <div class="cover">
-            <div class="image">
-                <img src="/favicon.ico" alt="">
-            </div>
+            <img :src="course.ipfsPhoto" id="cover" alt="">
+            <i class="fa-solid fa-pen-to-square">
+                <input type="file" accept="image/*" v-on:change="onFileChange($event)">
+            </i>
         </div>
 
         <div class="form">
@@ -70,8 +71,14 @@ export default {
             errorDescription: null,
             errorPrice: null,
             errorCategory: null,
+            levels: [
+                'Beginner',
+                'Intermediate',
+                'Advanced'
+            ],
 
             saving: false,
+            file: null,
 
             course: null,
             fetching: true,
@@ -86,6 +93,12 @@ export default {
         this.getCategories()
     },
     methods: {
+        onFileChange: function (event) {
+            const file = event.target.files[0]
+            const url = URL.createObjectURL(file)
+            this.file = file
+            document.getElementById('cover').src = url
+        },
         saveChanges: async function () {
             if (this.saving) return
             this.saving = false
@@ -113,9 +126,20 @@ export default {
 
             this.saving = true
 
+            if (this.file != null) {
+                const base64 = await this.$ipfs.toBase64(this.file)
+                const url = await this.$ipfs.upload(`courses/${this.courseId}`, base64)
+
+                console.log(url);
+
+                if (url != null) {
+                    this.course.ipfsPhoto = url
+                }
+            }
+
             try {
                 const trx = await this.$contracts.buidlContract.updateCourse(
-                    this.course.name, this.course.description, this.selectedCategory, this.course.price,
+                    this.course.name, this.course.description, this.course.ipfsPhoto, this.selectedCategory, this.course.price,
                     this.course.id.toNumber(), this.course.isPublished, {
                         from: this.$auth.accounts[0]
                     }
@@ -123,7 +147,7 @@ export default {
 
                 $nuxt.$emit('trx', trx)
             } catch (error) {
-
+                console.log(error);
             }
 
             this.saving = false
@@ -135,7 +159,7 @@ export default {
                 this.course = course
 
                 $nuxt.$emit(`course${this.courseId}`, course);
-                this.selectedCategory == course.categoryId.toNumber()
+                this.selectedCategory = course.categoryId.toNumber()
             } else {
                 this.notFound = true
             }
@@ -222,19 +246,32 @@ export default {
 
 .cover {
     width: 100%;
-    background: #000;
-    height: 160px;
+    height: 300px;
     position: relative;
 }
 
-.cover .image {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
+.cover i {
     position: absolute;
-    bottom: -50px;
+    bottom: -30px;
     left: 30px;
+    width: 60px;
+    height: 60px;
+    background: #3451f3;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 20px;
     overflow: hidden;
+}
+
+.cover input {
+    position: absolute;
+    height: 100%;
+    cursor: pointer;
+    opacity: 0;
+    width: 100%;
 }
 
 .cover img {

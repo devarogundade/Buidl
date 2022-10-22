@@ -8,7 +8,7 @@
                         Incentives for learning.
                     </h3>
                     <p>
-                        Get a tradeable NFT on course completion. NFTs can be traded to cryptocurrency or
+                        Get a valuable NFT on course completion. BNFT can be traded for cryptocurrency or
                         use for a coupon for your next course.
                     </p>
                 </div>
@@ -25,8 +25,8 @@
                         Seamless payments and refunds.
                     </h3>
                     <p>
-                        Eliminate the limitation of banks and international
-                        payments using the Buidl cryptocurrency  ($BDL Token) instead.
+                        Buidl Token (BDL) helps us to eliminate issues with international
+                        payments, refunds, and third party fees.
                     </p>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                     </h3>
                     <p>
                         An on-chain certificate guarantees the true ownership of your certificate. <br> <br> Certificates are in form of
-                        NFTs that are not tradeable. <br> <br> Learn more about <a href="">ERC4973 <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        NFTs that are not transferrable. <br> <br> Learn more about <a target="_blank" href="https://eips.ethereum.org/EIPS/eip-4973">ERC4973 <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                     </p>
                 </div>
                 <div class="image">

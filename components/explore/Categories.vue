@@ -2,7 +2,7 @@
 <section>
     <div class="app-width">
         <div class="categories">
-            <div class="category" v-for="(category, index) in categories" :key="index">
+            <div class="category scaleable" v-for="(category, index) in categories" :key="index">
                 <img :src="category.image" alt="">
                 <div class="text">
                     <p>{{ category.name }}</p>
@@ -62,6 +62,7 @@ export default {
     height: 320px;
     border-radius: 20px;
     position: relative;
+    cursor: pointer;
     overflow: hidden;
 }
 

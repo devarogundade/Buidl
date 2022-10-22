@@ -15,7 +15,7 @@
                         <div class="swiper-wrapper">
                             <div class="swiper-slide" v-for="(course, index) in getCategoryCourses(category.id.toNumber())" :key="index">
                                 <div class="image">
-                                    <img src="https://cdn.tgdd.vn/hoi-dap/1321801/javascript-la-gi-co-vai-tro-gi-cach-bat-javascript-tren.001.jpg" alt="">
+                                    <img :src="course.ipfsPhoto" alt="">
                                 </div>
                                 <div class="detail">
                                     <h3 class="course_title">{{ course.name }}</h3>
@@ -107,7 +107,7 @@ export default {
                 while (!ended) {
                     const course = await this.$contracts.buidlContract.courses(index);
 
-                    if (course.id.toNumber() != 0) {
+                    if (course.id.toNumber() != 0 && course.isPublished) {
                         this.courses.push(course)
                     } else {
                         ended = true

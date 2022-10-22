@@ -2,8 +2,8 @@
 <div :class="`container ${state}`">
     <div class="box">
         <div class="title">
-            <p>Invite member</p>
-            <i v-on:click="$nuxt.$emit('discard-invite-member')" class="fa-solid fa-xmark"></i>
+            <p>Claim your @username</p>
+            <i v-on:click="$nuxt.$emit('discard-username')" class="fa-solid fa-xmark"></i>
         </div>
 
         <div class="form">
@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div class="sign_up" v-if="!inviting" v-on:click="$nuxt.$emit('sm')">Send</div>
+        <div class="sign_up" v-if="!inviting" v-on:click="$nuxt.$emit('sm')">Claim</div>
         <div class="sign_up" v-else>Please wait..</div>
     </div>
 </div>

@@ -4,24 +4,24 @@
         <div class="grid">
             <div class="hero">
                 <div class="text">
-                    <h3>Build your audience.</h3>
+                    <h3>Earn for learning.</h3>
                     <p>
-                        Engage, share thoughts, ideas, news, articles to the community.
+                        Get a valuable NFTs (and/or) use them for a coupon for your next course.
                     </p>
                 </div>
-                <div class="action scaleable" v-on:click="$nuxt.$emit('create-new-post')">
-                    <i class="fa-solid fa-plus"></i> Create new post
+                <div class="action scaleable">
+                    Learn more <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </div>
             </div>
             <div class="hero">
                 <div class="text">
-                    <h3>Build your audience.</h3>
+                    <h3>Become a Creator.</h3>
                     <p>
-                        Engage, share thoughts, ideas, news, articles to the community.
+                        Create free (and/or) premium contents to teach others your special skills.
                     </p>
                 </div>
-                <div class="action scaleable" v-on:click="$nuxt.$emit('create-new-post')">
-                    <i class="fa-solid fa-plus"></i> Create new post
+                <div class="action scaleable">
+                    Learn more <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </div>
             </div>
         </div>
@@ -57,6 +57,7 @@ export default {
     background-image: url("https://app.idle.finance/images/bg-noise.png");
     z-index: 1;
     display: flex;
+    gap: 20px;
     justify-content: space-between;
     align-items: flex-end;
 }
@@ -82,6 +83,7 @@ export default {
 .action {
     display: flex;
     gap: 10px;
+    width: 230px;
     align-items: center;
     font-size: 18px;
     font-weight: 600;

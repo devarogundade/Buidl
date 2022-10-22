@@ -33,7 +33,6 @@ contract Models {
         address[] students;
         uint[] ratings;
         uint256 price;
-        string metadata; // course metadata
         bool isPublished;
         uint createdAt;
         uint updatedAt;

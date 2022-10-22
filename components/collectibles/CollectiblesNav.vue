@@ -7,22 +7,10 @@
                 <p>Wallet</p>
             </div>
         </router-link>
-        <router-link to="/collectibles/rewards">
-            <div :class="$route.name == 'collectibles-rewards' ? 'item active' : 'item'">
-              <i class="fa-solid fa-coins"></i>
-                <p>Rewards</p>
-            </div>
-        </router-link>
         <router-link to="/collectibles/swap">
             <div :class="$route.name == 'collectibles-swap' ? 'item active' : 'item'">
                 <i class="fa-solid fa-arrows-rotate"></i>
                 <p>Trade</p>
-            </div>
-        </router-link>
-        <router-link to="/collectibles/stake">
-            <div :class="$route.name == 'collectibles-stake' ? 'item active' : 'item'">
-                <i class="fa-solid fa-circle-dollar-to-slot"></i>
-                <p>Marketplace</p>
             </div>
         </router-link>
     </div>

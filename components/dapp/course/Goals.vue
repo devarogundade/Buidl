@@ -40,11 +40,6 @@
             </div>
         </div>
     </div>
-    <div class="fab-btn" v-on:click="$nuxt.$emit('invite-member', 1)">
-        <div class="fab">
-            <i class="fa-solid fa-plus"></i>
-        </div>
-    </div>
 </div>
 </template>
 

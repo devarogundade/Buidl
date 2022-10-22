@@ -9,7 +9,18 @@
             <h3 :class="tab == 3 ? 'active' : ''" v-on:click="tab = 3">My NFTs</h3>
         </div>
 
-        <div class="items" v-show="tab == 1"></div>
+        <div class="items" v-show="tab == 1">
+            <div class="balances">
+                <div class="wallet">
+                    <img src="/images/bnb_coin.png" alt="">
+                    <p>13.32 <b>BNB</b></p>
+                </div>
+                <div class="wallet">
+                    <img src="/favicon.ico" alt="">
+                    <p>1,343.02 <b>BDL</b></p>
+                </div>
+            </div>
+        </div>
 
         <div class="items" v-show="tab == 2">
             <div class="item" v-for="index in 4" :key="index">
@@ -81,7 +92,6 @@ export default {
             this.nfts = nfts.result;
         },
         toJson: function (json) {
-            console.log(json);
             if (json == null) {
                 return {
                     name: "No name",
@@ -228,5 +238,36 @@ export default {
     background: #0177fb;
     gap: 10px;
     border-radius: 12px;
+}
+
+.balances {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+    gap: 40px;
+}
+
+.wallet {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background: #2c2d3a;
+    padding: 12px;
+    border-radius: 40px;
+    width: 100%;
+}
+
+.wallet p {
+    font-size: 60px;
+    color: #ffffff;
+}
+
+.wallet img {
+    width: 70px;
+    height: 70px;
+    border-radius: 40px;
+    object-fit: cover;
 }
 </style>

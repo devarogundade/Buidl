@@ -2,7 +2,7 @@
 <div class="container">
     <div class="revenue">
         <div class="title">
-            <h3>Revenue</h3>
+            <h3>My Revenue</h3>
             <div class="claim_all"><i class="fa-solid fa-rotate-right"></i> Refresh</div>
         </div>
         <div class="grid">
@@ -15,7 +15,7 @@
                     <div class="input">
                         <div class="token">
                             <div class="name">
-                                <img src="/images/nft1.jpg" alt="">
+                                <img src="/favicon.ico" alt="">
                                 <p>BDL</p>
                             </div>
                         </div>
@@ -35,7 +35,7 @@
                     <div class="input">
                         <div class="token">
                             <div class="name">
-                                <img src="/images/nft1.jpg" alt="">
+                                <img src="/favicon.ico" alt="">
                                 <p>BDL</p>
                             </div>
                         </div>

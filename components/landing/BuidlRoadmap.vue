@@ -22,12 +22,17 @@
 
                 <div class="map">
                     <p>Phase 4</p>
-                    <p>Initial production release, and marketing, launch the BDL token and NFT.</p>
+                    <p>2-3weeks early creators online bootcamp.</p>
                 </div>
 
                 <div class="map">
                     <p>Phase 5</p>
-                    <p>List token on major exchanges.</p>
+                    <p>Initial production release, and marketing, launch of BDL token and BDL NFT.</p>
+                </div>
+
+                <div class="map">
+                    <p>Phase 6</p>
+                    <p>List BDL token on major exchanges and airdrop to testnet community.</p>
                 </div>
             </div>
         </div>

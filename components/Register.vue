@@ -4,12 +4,12 @@
         <div class="register">
             <div class="text">
                 <h3>Register</h3>
-                <p>Choose your account type tab above (Student or an Instructor).</p>
+                <p>Choose your account type tab above (Learner or an Creator).</p>
             </div>
 
             <div class="tabs">
-                <p :class="tab == 1 ? 'tab tab_active' : 'tab'" v-on:click="tab = 1">Learners</p>
-                <p :class="tab == 2 ? 'tab tab_active' : 'tab'" v-on:click="tab = 2">Instructor</p>
+                <p :class="tab == 1 ? 'tab tab_active' : 'tab'" v-on:click="tab = 1">Learner</p>
+                <p :class="tab == 2 ? 'tab tab_active' : 'tab'" v-on:click="tab = 2">Creator</p>
             </div>
 
             <div class="signed" v-if="user && user.type">
@@ -41,7 +41,7 @@
                 <div class="requirement">
                     <div>
                         <i class="fa-solid fa-star-of-life"></i>
-                        <p> You create an Instructor Account, you need to stake 2000 $BDL Token for a period of 1 year.</p>
+                        <p>For creator's account, you'll need to stake 2000 BDL Token for a period of 1 year. <router-link to="/mint">Mint free BDL Token here</router-link></p>
                     </div>
                 </div>
 
@@ -427,6 +427,11 @@ section {
 .requirement i {
     color: #fbb801;
 }
+
+.requirement a {
+    text-decoration: underline;
+  color: #fbb801;
+  }
 
 .requirement p {
     color: white;

@@ -17,6 +17,7 @@
     <DappFooter />
     <WalletConnect :state="wcState" />
     <CreateNewPost :state="cpState" />
+    <Username :state="unState" />
 </div>
 </template>
 
@@ -26,6 +27,7 @@ export default {
         return {
             wcState: 'hide',
             cpState: 'hide',
+            unState: 'hide',
             loading: true,
         }
     },
@@ -44,6 +46,12 @@ export default {
         })
         $nuxt.$on('create-new-post-for', (data) => {
             this.cpState = 'hide'
+        })
+        $nuxt.$on('username', () => {
+            this.unState = 'show'
+        })
+        $nuxt.$on('discard-username', (data) => {
+            this.unState = 'hide'
         })
 
         $nuxt.$on('connected', (data) => {

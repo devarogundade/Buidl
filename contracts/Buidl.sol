@@ -83,7 +83,6 @@ contract Buidl {
             course.students,
             course.ratings,
             0,
-            course.metadata,
             false,
             block.timestamp,
             block.timestamp
@@ -99,6 +98,7 @@ contract Buidl {
     function updateCourse(
         string memory name,
         string memory description,
+        string memory ipfsPhoto,
         uint categoryId,
         uint price,
         uint courseId,
@@ -109,12 +109,11 @@ contract Buidl {
             name,
             description,
             categoryId,
-            courses[courseId].ipfsPhoto,
+            ipfsPhoto,
             msg.sender,
             courses[courseId].students,
             courses[courseId].ratings,
             price,
-            courses[courseId].metadata,
             publish,
             courses[courseId].createdAt,
             block.timestamp
@@ -217,6 +216,15 @@ contract Buidl {
         );
 
         contractInstructorID++;
+    }
+
+    function getUnclaimableRevenue() public returns(uint256) {
+      uint256 unclaimed = 0;
+
+      for (uint index = 0; index < studentCourses.length; index++) {
+          if (studentsCourse[])
+      }
+
     }
 
     // ========= Students ========== //

@@ -36,8 +36,8 @@ export default {
                     question: 'In what format are certificates?',
                     answer: 'Certificates are in form of ERC4973 a non tradeable and fungible token. This gives students true ownership of their certificate.'
                 }, {
-                    question: 'What is required to become an Instructor?',
-                    answer: 'Instructors are required to stake 2000 $BDL tokens for a duration of 1year.'
+                    question: 'What is required to become a creator?',
+                    answer: 'Creators are required to stake 2000 BDL tokens for a duration of 1year.'
                 }
             ]
         }

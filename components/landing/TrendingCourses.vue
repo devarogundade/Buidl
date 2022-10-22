@@ -12,7 +12,7 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide" v-for="course in getValidCourses()" :key="course.id.toNumber()">
                         <div class="image">
-                            <img src="https://cdn.tgdd.vn/hoi-dap/1321801/javascript-la-gi-co-vai-tro-gi-cach-bat-javascript-tren.001.jpg" alt="">
+                            <img :src="course.ipfsPhoto" alt="">
                         </div>
                         <div class="detail">
                             <h3 class="course_title">{{ course.name }}</h3>
@@ -87,7 +87,7 @@ export default {
                     )
 
                     if (existing.length == 0) {
-                        if (course.id.toNumber() != 0) {
+                        if (course.id.toNumber() != 0 && course.isPublished) {
                             this.instructorData = null
                             this.courses.push(course)
                         } else {

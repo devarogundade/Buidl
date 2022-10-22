@@ -6,10 +6,10 @@
         <div class="hero">
             <div class="grid">
                 <div class="text">
-                    <h3>Learn without limits. <br> <span>Buidl</span> a career.</h3>
-                    <p>Building a Borderless, Permissionless and Decentralized Social-Fi for Instructors and Learners.</p>
+                    <h3>Learn without limits. <br> <span>Create</span> contents.</h3>
+                    <p>Building a Borderless, Permissionless and Decentralized Social-Fi for Creators and Learners.</p>
                     <router-link to="/explore">
-                        <div class="feeds">Courses <i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="feeds">Explore <i class="fa-solid fa-arrow-right"></i></div>
                     </router-link>
                 </div>
                 <div class="image">
@@ -31,7 +31,7 @@
                 <div class="stats">
                     <div class="stat">
                         <h3>2.2k+</h3>
-                        <p>Verified Instructors</p>
+                        <p>Active creators</p>
                     </div>
                     <div class="stat">
                         <h3>1,937,392 $BDL</h3>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="stat">
                         <h3>32.8k+</h3>
-                        <p>Active students</p>
+                        <p>Active learners</p>
                     </div>
                 </div>
             </div>

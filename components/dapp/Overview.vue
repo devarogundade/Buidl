@@ -1,7 +1,7 @@
 <template>
 <div class="container">
     <div class="overview">
-        <div class="verify">
+        <div class="verify" v-on:click="$nuxt.$emit('username')">
             <p><i class="fa-solid fa-circle-exclamation"></i> Claim your unique @username</p>
             <p class="scaleable" v-on:click="claimUsername()">Claim now</p>
         </div>
@@ -204,7 +204,6 @@
 </div>
 </template>
 
-<script src= 'https://cdn.blockpass.org/widget/scripts/release/3.0.2/blockpass-kyc-connect.prod.js'></script>
 <script>
 export default {
     data() {

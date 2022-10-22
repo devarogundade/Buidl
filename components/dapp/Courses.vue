@@ -6,7 +6,7 @@
         <router-link :to="`/app/courses/${course.id.toNumber()}`" v-for="(course, index) in courses" :key="index">
             <div class="course scaleable">
                 <div class="detail">
-                    <img :src="course.image" alt="">
+                    <img :src="course.ipfsPhoto" alt="">
                     <h3>{{ course.name }}</h3>
                     <p>{{ course.description }}</p>
                 </div>
@@ -17,7 +17,7 @@
         <router-link :to="`/app/course-builder/${course.id.toNumber()}`" v-for="(course, index) in courses" :key="index">
             <div class="course scaleable">
                 <div class="detail">
-                    <img :src="course.image" alt="">
+                    <img :src="course.ipfsPhoto" alt="">
                     <h3>{{ course.name }}</h3>
                     <p>{{ course.description }}</p>
                 </div>

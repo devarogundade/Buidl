@@ -29,7 +29,7 @@
 
                 <div class="buy">
                     <div class="preview">
-                        <video src="/videos/sample.mp4" />
+                        <img :src="course.ipfsPhoto" />
                         <i class="fa-solid fa-play"></i>
                     </div>
                     <div class="tag" v-if="!bought">Preview</div>
@@ -281,6 +281,7 @@ export default {
 .course {
     padding-top: 100px;
     padding-bottom: 100px;
+    min-height: 100vh;
 }
 
 .head {
@@ -371,7 +372,7 @@ export default {
     border-radius: 50%;
 }
 
-.preview video {
+.preview img {
     width: 100%;
     height: 100%;
     object-fit: cover;

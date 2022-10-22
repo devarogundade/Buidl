@@ -1,14 +1,14 @@
 <template>
-<section>
+<section id="creator">
     <div class="app-width">
         <div class="become">
             <div class="image">
                 <img src="/images/instructor.png" alt="">
             </div>
             <div class="text">
-                <h3>Get your courses to reach over 3000 students around the world.</h3>
+                <h3>Get your courses to reach over 3000 learners around the world.</h3>
                 <router-link to="/register">
-                    <div class="action">Become an Instructor</div>
+                    <div class="action">Become a Creator</div>
                 </router-link>
             </div>
         </div>
