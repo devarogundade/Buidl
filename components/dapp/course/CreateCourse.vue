@@ -134,15 +134,6 @@ export default {
 
             this.creating = true
 
-            const course = {
-                name: this.name,
-                description: this.description,
-                level: this.selectedLevel,
-                category: this.selectedCategory,
-                tags: this.tags,
-                sections: []
-            }
-
             try {
                 const trx = await this.$contracts.buidlContract.createCourse(
                     this.name, this.description, this.selectedCategory, {

@@ -9,13 +9,13 @@
 
         <div class="form">
             <div class="edit">
-                <p class="label">Project name *</p>
+                <p class="label">Course name *</p>
                 <input :class="getInputClassForName()" type="text" v-model="course.name" placeholder="Music producer" maxlength="45">
                 <p v-if="errorName" class="error-text">{{ errorName }}</p>
             </div>
 
             <div class="edit">
-                <p class="label">Project description *</p>
+                <p class="label">Course description *</p>
                 <input :class="getInputClassForDescription()" v-model="course.description" type="text" placeholder="Compose a love song for an emotional movie">
                 <p class="error-text" v-if="errorDescription">{{ errorDescription }}</p>
             </div>
@@ -24,7 +24,7 @@
                 <p class="label">Category *</p>
                 <select v-on:change="onCategoryChanged($event)">
                     <option disabled hidden>Choose category</option>
-                    <option v-for="(category, index) in categories" :key="index" :selected="category.id == index" :value="category.id">{{ category.name }}</option>
+                    <option v-for="(category, index) in categories" :key="index" :selected="selectedCategory == category.id.toNumber()" :value="category.id.toNumber()">{{ category.name }}</option>
                 </select>
                 <p v-if="errorCategory" class="error-text">{{ errorCategory }}</p>
             </div>
@@ -38,15 +38,20 @@
             </div>
 
             <div class="edit">
-                <p class="label">Project visibility</p>
+                <p class="label">Course visibility</p>
                 <div class="switch-con">
-                    <p>Public this project</p>
+                    <p>Publish this course?</p>
                     <label class="switch">
                         <input type="checkbox" v-model="course.isPublished">
                         <span class="slider round"></span>
                     </label>
                 </div>
-                <p v-if="errorTags" class="error-text">{{ errorTags }}</p>
+            </div>
+
+            <div class="edit">
+                <p class="label">Course price in BDL*</p>
+                <input :class="getInputClassForPrice()" v-model="course.price" type="number" min="0" placeholder="0">
+                <p class="error-text" v-if="errorPrice">{{ errorPrice }}</p>
             </div>
 
             <div class="sign_up" v-if="!saving" v-on:click="saveChanges()">Save changes</div>
@@ -60,22 +65,18 @@
 export default {
     data() {
         return {
-            // email
-            name: '',
             errorName: null,
-            // password
-            description: '',
             errorDescription: null,
-            // tags
-            tags: '',
-            errorTags: null,
-            // saving
+            errorPrice: null,
+            errorCategory: null,
+
             saving: false,
 
             course: null,
             fetching: true,
             notFound: false,
             courseId: this.$route.params.course,
+            selectedCategory: 0,
             categories: []
         }
     },
@@ -84,8 +85,44 @@ export default {
         this.getCategories()
     },
     methods: {
-        saveChanges() {
+        saveChanges: async function () {
+            if (this.saving) return
+            this.saving = false
 
+            if (this.selectedCategory == 0) {
+                this.errorCategory = 'Select a category'
+            } else {
+                this.errorCategory = null
+            }
+
+            if (this.errorName != null ||
+                this.errorDescription != null ||
+                this.errorPrice != null
+            ) {
+                return
+            }
+
+            if (this.course.name == '' ||
+                this.course.description == '' ||
+                this.course.price == ''
+            ) {
+                return
+            }
+
+            this.saving = true
+
+            console.log(this.course);
+
+            try {
+                const trx = await this.$contracts.buidlContract.updateCourse(
+                    this.course.name, this.course.description, this.selectedCategory, this.course.price,
+                    this.course.id.toNumber(), this.course.isPublished, {
+                        from: this.$auth.accounts[0]
+                    }
+                )
+
+                console.log(trx);
+            } catch (error) {}
         },
         async getCourse() {
             const course = await this.$contracts.buidlContract.courses(this.courseId);
@@ -94,9 +131,7 @@ export default {
                 this.course = course
 
                 $nuxt.$emit(`course${this.courseId}`, course);
-
-                // this.instructor = await this.$contracts.buidlContract.instructors(course.instructor)
-                // this.category = await this.$contracts.buidlContract.categories(course.categoryId)
+                this.selectedCategory == course.categoryId.toNumber()
             } else {
                 this.notFound = true
             }
@@ -129,11 +164,11 @@ export default {
             this.selectedLevel = event.target.value
         },
         getInputClassForName() {
-            if (this.name == '') {
+            if (this.course.name == '') {
                 this.errorName = null
                 return ''
             }
-            if (this.name.length < 4) {
+            if (this.course.name.length < 4) {
                 this.errorName = 'Name is too short'
                 return 'error filled'
             } else {
@@ -142,11 +177,11 @@ export default {
             }
         },
         getInputClassForDescription() {
-            if (this.description == '') {
+            if (this.course.description == '') {
                 this.errorDescription = null
                 return ''
             }
-            if (this.description.length < 10) {
+            if (this.course.description.length < 10) {
                 this.errorDescription = 'Description is too short'
                 return 'error filled'
             } else {
@@ -154,16 +189,12 @@ export default {
                 return 'filled'
             }
         },
-        getInputClassForTags() {
-            if (this.tags == '') {
-                this.errorTags = null
+        getInputClassForPrice() {
+            if (this.course.price == '') {
+                this.errorPrice = 'Minimum of 0 BDL'
                 return ''
-            }
-            if (this.tags.length < 2) {
-                this.errorTags = 'Tags is too short'
-                return 'error filled'
             } else {
-                this.errorTags = null
+                this.errorPrice = null
                 return 'filled'
             }
         },

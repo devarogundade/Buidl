@@ -53,6 +53,7 @@ contract Models {
     struct StudentCourse {
         uint courseId;
         uint purchasedAt;
+        uint priceBought;
     }
 
     struct CourseSection {

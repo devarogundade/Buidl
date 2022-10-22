@@ -96,6 +96,31 @@ contract Buidl {
         contractCourseID++;
     }
 
+    function updateCourse(
+        string memory name,
+        string memory description,
+        uint categoryId,
+        uint price,
+        uint courseId,
+        bool publish
+    ) public onlyInstructor {
+        courses[courseId] = Models.Course(
+            courseId,
+            name,
+            description,
+            categoryId,
+            courses[courseId].ipfsPhoto,
+            msg.sender,
+            courses[courseId].students,
+            courses[courseId].ratings,
+            price,
+            courses[courseId].metadata,
+            publish,
+            courses[courseId].createdAt,
+            block.timestamp
+        );
+    }
+
     function addSectionToCourse(
         uint courseId,
         string memory title,
@@ -228,29 +253,29 @@ contract Buidl {
 
         // create course for student
         studentCourses[msg.sender].push(
-            Models.StudentCourse(
-                courseId,
-                block.timestamp
-            )
+            Models.StudentCourse(courseId, block.timestamp, course.price)
         );
 
         emit CoursePurchased(course.instructor, msg.sender, courseId);
     }
 
-    function rejectCourse(uint courseId, uint sections, uint sectionsViewed) public onlyStudent {
-        Models.StudentCourse memory studentCourse = studentCourses[msg.sender][courseId];
-        Models.Course memory course = courses[courseId];
-
-        require(course.id != 0, "!exists");
-
+    function rejectCourse(
+        uint courseId,
+        uint sections,
+        uint sectionsViewed
+    ) public onlyStudent {
         // check is course is not over 2 weeks
-        require(block.timestamp > (studentCourse.purchasedAt + 2), ">2weeks");
+        uint expireTime = studentCourses[msg.sender][courseId].purchasedAt +
+            (20160 * 60000);
+        uint priceBought = studentCourses[msg.sender][courseId].priceBought;
 
-        uint refundableSections = (sectionsViewed - sections);
+        require(block.timestamp < expireTime, ">2weeks");
 
-        require(refundableSections > 0, "!refunable");
+        uint refundableSections = (sections - sectionsViewed);
 
-        uint256 refundableAmount = (refundableSections * course.price);
+        require(refundableSections > 0, "!refundable");
+
+        uint256 refundableAmount = (refundableSections * priceBought);
 
         // terminate student course
         delete studentCourses[msg.sender][courseId];

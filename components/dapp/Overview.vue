@@ -2,8 +2,8 @@
 <div class="container">
     <div class="overview">
         <div class="verify">
-            <p><i class="fa-solid fa-circle-exclamation"></i> Kyc Verification to be visible on the platform</p>
-            <p class="scaleable" v-on:click="mint()">Verify me</p>
+            <p><i class="fa-solid fa-circle-exclamation"></i> Claim your unique @username</p>
+            <p class="scaleable" v-on:click="mint()">Claim now</p>
         </div>
         <div class="tab">
             <div class="analytics">

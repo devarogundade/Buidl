@@ -1,10 +1,10 @@
 <template>
-<Progress v-if="loading" />
-<div class="app" v-else>
+<div class="app">
     <div class="bg"><img src="https://idle.finance/assets/img/Ellipse1.ee547e.png" alt=""></div>
     <div class="bg2"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
     <DappHeader />
-    <section>
+    <Progress v-if="loading" />
+    <section v-else>
         <div class="app-width">
             <div class="grid">
                 <div class="nav">
@@ -60,7 +60,7 @@ export default {
             }
 
             if (status == 'not-available') {
-                 this.$router.push('/register')
+                this.$router.push('/register')
             }
         })
 
