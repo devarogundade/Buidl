@@ -58,7 +58,9 @@
                             <div class="nft_row" v-if="selectedNft == null">
                                 <div class="name">
                                     <p>Click here to select a coupon</p>
-                                    <a href="" target="_blank"><p>Buy coupon on Opensea</p></a>
+                                    <a href="" target="_blank">
+                                        <p>Buy coupon on Opensea</p>
+                                    </a>
                                 </div>
                             </div>
                             <div class="nft_row" v-else>
@@ -79,14 +81,13 @@
 
                         <div>
                             <p>Coupon discount</p>
-                            <p v-if="selectedNft != null">{{ calcDiscount(selectedNft) }} BDL</p>
+                            <p v-if="selectedNft != null">{{ calcDiscount(selectedNft).toFixed(2) }} BDL</p>
                             <p v-else>0 BDL</p>
                         </div>
 
-
                         <div>
                             <p>Total price</p>
-                            <p v-if="selectedNft != null">{{ course.price.toNumber() - calcDiscount(selectedNft) }} BDL</p>
+                            <p v-if="selectedNft != null">{{ (course.price.toNumber() - calcDiscount(selectedNft)).toFixed(2) }} BDL</p>
                             <p v-else>{{ course.price.toNumber() }} BDL</p>
                         </div>
                     </div>
@@ -187,8 +188,7 @@ export default {
         },
         calcDiscount(index) {
             const weight = this.toJson(this.nfts[index].metadata).attributes[0].value
-            const perc = (weight / 100) * this.course.price.toNumber()
-            return this.course.price.toNumber() - perc
+            return (weight / 100) * this.course.price.toNumber()
         },
         removeCoupon: function () {
             this.selectedNft = null
@@ -261,7 +261,15 @@ export default {
             } catch (error) {}
         },
         async buyCourse() {
-            this.$contracts.buidlContract.purchaseCourse(this.courseId, {
+            let nftID = 0
+            let discount = 0
+
+            if (this.selectedNft != null) {
+                nftID = this.nfts[this.selectedNft].token_id
+                discount = this.calcDiscount(this.selectedSection)
+            }
+
+            this.$contracts.buidlContract.purchaseCourse(this.courseId, nftID, discount, {
                 from: this.$auth.accounts[0]
             })
         }

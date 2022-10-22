@@ -242,18 +242,26 @@ contract Buidl {
         contractStudentID++;
     }
 
-    function purchaseCourse(uint courseId) public onlyStudent {
+    function purchaseCourse(uint courseId, uint nftId, uint discount) public onlyStudent {
         Models.Course storage course = courses[courseId];
 
         require(course.id != 0, "!exists");
+        uint price = course.price;
+
+        if (nftId != 0 && discount != 0) {
+            require(bdlNft.ownerOf(nftId) == msg.sender, "!owner");
+
+            bdlNft.burn(nftId);
+            price -= discount;
+        }
 
         // lock the student funds to smart contract
-        bdlToken.increaseAllowance(msg.sender, address(this), course.price);
-        bdlToken.transferFrom(msg.sender, address(this), course.price);
+        bdlToken.increaseAllowance(msg.sender, address(this), price);
+        bdlToken.transferFrom(msg.sender, address(this), price);
 
         // create course for student
         studentCourses[msg.sender].push(
-            Models.StudentCourse(courseId, block.timestamp, course.price)
+            Models.StudentCourse(courseId, block.timestamp, price)
         );
 
         emit CoursePurchased(course.instructor, msg.sender, courseId);

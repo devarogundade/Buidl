@@ -69,4 +69,8 @@ contract BdlNft is ERC721, Ownable {
 
         tokenID++;
     }
+
+    function burn(uint256 tokenId) external {
+      _burn(tokenId);
+    }
 }
