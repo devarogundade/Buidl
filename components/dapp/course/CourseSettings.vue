@@ -1,6 +1,7 @@
 <template>
-<div class="container">
-    <div class="settings" v-if="course">
+<Progress v-if="!course" />
+<div class="container" v-else>
+    <div class="settings">
         <div class="cover">
             <div class="image">
                 <img src="/favicon.ico" alt="">
@@ -24,7 +25,7 @@
                 <p class="label">Category *</p>
                 <select v-on:change="onCategoryChanged($event)">
                     <option disabled hidden>Choose category</option>
-                    <option v-for="(category, index) in categories" :key="index" :selected="selectedCategory == category.id.toNumber()" :value="category.id.toNumber()">{{ category.name }}</option>
+                    <option v-for="(category, index) in categories" :key="index" :selected="course.categoryId.toNumber() == category.id.toNumber()" :value="category.id.toNumber()">{{ category.name }}</option>
                 </select>
                 <p v-if="errorCategory" class="error-text">{{ errorCategory }}</p>
             </div>
@@ -91,6 +92,7 @@ export default {
 
             if (this.selectedCategory == 0) {
                 this.errorCategory = 'Select a category'
+                return
             } else {
                 this.errorCategory = null
             }
@@ -111,8 +113,6 @@ export default {
 
             this.saving = true
 
-            console.log(this.course);
-
             try {
                 const trx = await this.$contracts.buidlContract.updateCourse(
                     this.course.name, this.course.description, this.selectedCategory, this.course.price,
@@ -121,8 +121,12 @@ export default {
                     }
                 )
 
-                console.log(trx);
-            } catch (error) {}
+                $nuxt.$emit('trx', trx)
+            } catch (error) {
+
+            }
+
+            this.saving = false
         },
         async getCourse() {
             const course = await this.$contracts.buidlContract.courses(this.courseId);

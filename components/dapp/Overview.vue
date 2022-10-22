@@ -3,7 +3,7 @@
     <div class="overview">
         <div class="verify">
             <p><i class="fa-solid fa-circle-exclamation"></i> Claim your unique @username</p>
-            <p class="scaleable" v-on:click="mint()">Claim now</p>
+            <p class="scaleable" v-on:click="claimUsername()">Claim now</p>
         </div>
         <div class="tab">
             <div class="analytics">
@@ -220,10 +220,8 @@ export default {
         })
     },
     methods: {
-        mint() {
-            this.$contracts.buidlContract.mint({
-                from: this.$auth.accounts[0]
-            })
+        claimUsername: function() {
+
         }
     }
 }

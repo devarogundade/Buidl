@@ -32,30 +32,6 @@
                     <HtmlEditor :height="300" />
                 </div>
 
-                <div class="edit">
-                    <p class="label">Project visibility</p>
-                    <div class="switch-con">
-                        <p>Public this project</p>
-                        <label class="switch">
-                            <input type="checkbox" checked>
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <p v-if="errorTags" class="error-text">{{ errorTags }}</p>
-                </div>
-
-                <div class="edit">
-                    <p class="label">Support</p>
-                    <div class="switch-con">
-                        <p>Community contribution ($BDL)</p>
-                        <label class="switch">
-                            <input type="checkbox" checked>
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <p v-if="errorTags" class="error-text">{{ errorTags }}</p>
-                </div>
-
                 <div class="sign_up" v-if="!signing" v-on:click="register()">Save changes</div>
                 <div class="sign_up" v-else>Please wait..</div>
             </div>

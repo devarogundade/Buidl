@@ -58,7 +58,7 @@
                             <div class="nft_row" v-if="selectedNft == null">
                                 <div class="name">
                                     <p>Click here to select a coupon</p>
-                                    <p>Buy coupon on Opensea</p>
+                                    <a href="" target="_blank"><p>Buy coupon on Opensea</p></a>
                                 </div>
                             </div>
                             <div class="nft_row" v-else>
@@ -80,7 +80,14 @@
                         <div>
                             <p>Coupon discount</p>
                             <p v-if="selectedNft != null">{{ calcDiscount(selectedNft) }} BDL</p>
-                            <p v-else>-0 BDL</p>
+                            <p v-else>0 BDL</p>
+                        </div>
+
+
+                        <div>
+                            <p>Total price</p>
+                            <p v-if="selectedNft != null">{{ course.price.toNumber() - calcDiscount(selectedNft) }} BDL</p>
+                            <p v-else>{{ course.price.toNumber() }} BDL</p>
                         </div>
                     </div>
 
@@ -624,5 +631,28 @@ export default {
     font-size: 20px;
     cursor: pointer;
     color: #fff;
+}
+
+.pricing {
+    padding: 0 20px;
+    padding-top: 20px;
+}
+
+.pricing>div {
+    padding: 10px;
+    border-radius: 6px;
+    border: 3px solid #242531;
+    margin-bottom: 6px;
+}
+
+.pricing p:first-child {
+    font-size: 12px;
+    color: #a0a0a0;
+}
+
+.pricing p:last-child {
+    font-size: 16px;
+    font-weight: 600;
+    color: #e0e0e0;
 }
 </style>
