@@ -7,7 +7,7 @@
                 <p>Edit Course</p>
             </div>
         </router-link>
-         <router-link v-if="user.type == 'learner'" :to="`/app/courses/${$route.params.course}`">
+        <router-link v-if="user.type == 'learner'" :to="`/app/courses/${$route.params.course}`">
             <div :class="$route.name == 'app-courses-course' ? 'item active' : 'item'">
                 <i class="fa-solid fa-chart-pie"></i>
                 <p>Study</p>
@@ -20,21 +20,21 @@
                 <p>Students</p>
             </div>
         </router-link>
-        <router-link v-if="user.type == 'learner'"  :to="`/app/courses/${$route.params.course}/chat`">
+        <router-link v-if="user.type == 'learner'" :to="`/app/courses/${$route.params.course}/chat`">
             <div :class="$route.name == 'app-courses-course-chat' ? 'item active' : 'item'">
                 <i class="fa-solid fa-comments"></i>
                 <p>Chat Instructor</p>
             </div>
         </router-link>
 
-        <router-link  v-if="user.type == 'learner'" :to="`/app/courses/${$route.params.course}/goals`">
+        <router-link v-if="user.type == 'learner'" :to="`/app/courses/${$route.params.course}/goals`">
             <div :class="$route.name == 'app-courses-course-goals' ? 'item active' : 'item'">
                 <i class="fa-solid fa-road"></i>
                 <p>Timeline</p>
             </div>
         </router-link>
 
-        <router-link  v-if="user.type == 'creator'" :to="`/app/course-builder/${$route.params.course}/settings`">
+        <router-link v-if="user.type == 'creator'" :to="`/app/course-builder/${$route.params.course}/settings`">
             <div :class="$route.name == 'app-course-builder-course-settings' ? 'item active' : 'item'">
                 <i class="fa-solid fa-gear"></i>
                 <p>Settings</p>
@@ -96,5 +96,32 @@ export default {
 .active {
     background: rgb(201, 227, 255);
     color: #0177fb;
+}
+
+
+@media screen and (max-width: 800px) {
+    .nav {
+        height: fit-content;
+        width: 100%;
+        border: none;
+        margin-top: 0;
+    }
+
+    .items {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+        padding: 0;
+        padding-top: 80px;
+        gap: 0px;
+    }
+
+    .item {
+        font-size: 14px;
+        gap: 6px;
+        padding: 0 10px;
+        border-radius: 20px;
+        height: 40px;
+    }
 }
 </style>

@@ -157,16 +157,24 @@ export default {
     padding-bottom: 50px;
     min-height: 100vh;
     position: relative;
+    width: 100%;
 }
 
 .courses {
     display: flex;
     flex-wrap: wrap;
     gap: 40px;
+    width: 100%;
+}
+
+.courses a {
+    font-display: block;
+    max-width: 100%;
 }
 
 .course {
     width: 420px;
+    max-width: 100%;
     height: 320px;
     justify-content: center;
     border-radius: 20px;
@@ -271,5 +279,22 @@ export default {
     font-size: 16px;
     margin-top: 10px;
     opacity: 0.8;
+}
+
+@media screen and (max-width: 700px) {
+    .container {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .courses {
+        justify-content: center;
+    }
+
+    .fab {
+        width: 60px;
+        height: 60px;
+        font-size: 25px;
+    }
 }
 </style>

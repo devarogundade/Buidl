@@ -66,4 +66,17 @@ export default {
     background: rgb(201, 227, 255);
     color: #0177fb;
 }
+
+@media screen and (max-width: 800px) {
+    .nav {
+        position: fixed;
+        top: 0;
+        left: -400px;
+        backdrop-filter: blur(20px);
+    }
+
+    .active {
+        border-radius: 0;
+    }
+}
 </style>

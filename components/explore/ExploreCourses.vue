@@ -62,9 +62,19 @@ export default {
         return {
             categories: [],
             courses: [],
+            contract: this.$contracts.buidlContract
         }
     },
     mounted() {
+        $nuxt.$on('contracts-ready', (buidlContract) => {
+            if (this.contract == null) {
+                this.contract = buidlContract
+
+                this.getCategories()
+                this.getCourses()
+            }
+        })
+
         this.getCategories()
         this.getCourses()
     },
@@ -82,12 +92,14 @@ export default {
     },
     methods: {
         async getCategories() {
+            if (this.contract == null) return
+
             let index = 1;
             let ended = false;
 
             try {
                 while (!ended) {
-                    const category = await this.$contracts.buidlContract.categories(index);
+                    const category = await this.contract.categories(index);
 
                     if (category.name != '') {
                         this.categories.push(category)
@@ -102,12 +114,14 @@ export default {
             }
         },
         async getCourses() {
+            if (this.contract == null) return
+
             let index = 1;
             let ended = false;
 
             try {
                 while (!ended) {
-                    const course = await this.$contracts.buidlContract.courses(index);
+                    const course = await this.contract.courses(index);
 
                     if (course.id.toNumber() != 0 && course.isPublished) {
                         this.courses.push(course)
@@ -127,8 +141,10 @@ export default {
             return this.courses.filter(course => course.categoryId.toNumber() == id)
         },
         async getInstructors() {
+            if (this.contract == null) return
+
             for (let index = 0; index < this.courses.length; index++) {
-                const instructor = await this.$contracts.buidlContract.instructors(this.courses[index].instructor);
+                const instructor = await this.contract.instructors(this.courses[index].instructor);
                 if (instructor.id.toNumber() != 0) {
                     this.courses[index].instructorData = instructor
                 }

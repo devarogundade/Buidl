@@ -8,23 +8,36 @@
                 </div>
             </router-link>
 
-            <div class="nav">
+            <div class="nav" ref="menu">
                 <div class="tabs">
-                    <router-link to="/app"><p :class="$route.name.startsWith('app') ? 'active tab' : 'tab'">App</p></router-link>
-                    <router-link to="/collectibles"><p :class="$route.name.startsWith('collectibles') ? 'active tab' : 'tab'">Collectibles</p></router-link>
+                    <router-link to="/app">
+                        <p :class="$route.name.startsWith('app') ? 'active tab' : 'tab'">App</p>
+                    </router-link>
+                    <router-link to="/collectibles">
+                        <p :class="$route.name.startsWith('collectibles') ? 'active tab' : 'tab'">Collectibles</p>
+                    </router-link>
                 </div>
             </div>
 
-            <div class="app" v-if="address == null" v-on:click="$auth.requestWalletConnection()">
-                Connect Wallet
-            </div>
-            <div class="app" v-else v-on:click="toggleProfile()">
-                <i class="fa-solid fa-wallet"></i>
-                {{
-            address.substring(0, 4) +
-            "..." +
-            address.substring(address.length - 4, address.length)
-          }}
+            <div class="action">
+                <div class="app" v-if="address == null" v-on:click="$auth.requestWalletConnection()">
+                    Connect Wallet
+                </div>
+                <div class="app" v-else v-on:click="toggleProfile()">
+                    <i class="fa-solid fa-wallet"></i>
+                    {{
+                      address.substring(0, 4) +
+                      "..." +
+                      address.substring(address.length - 4, address.length)
+                    }}
+                </div>
+
+                <div ref="handburger" id="handburger" v-on:click="onDrawer()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
 
             <div class="profile" v-if="showProfile">
@@ -70,6 +83,10 @@ export default {
             this.showBuild = false;
             this.showProfile = !this.showProfile;
         },
+        onDrawer() {
+            this.$refs["handburger"].classList.toggle("open")
+            this.$refs["menu"].classList.toggle("open-menu")
+        }
     },
 };
 </script>
@@ -107,10 +124,19 @@ section {
     height: 100%;
 }
 
+
+.action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 20px;
+    height: 100%;
+}
+
 .app {
     background: #0177fb;
     color: #ffffff;
-    height: 100%;
+    height: 55px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -120,6 +146,39 @@ section {
     font-size: 20px;
     column-gap: 10px;
     font-weight: 600;
+    padding: 0 20px;
+    min-width: 200px;
+}
+
+.enter {
+    background: transparent;
+    border: #ffffff 2px solid;
+    backdrop-filter: blur(20px);
+    padding: 0 20px;
+    min-width: 160px;
+}
+
+.app:hover {
+    background: #ffffff;
+    color: #2c2d3a;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+}
+
+.tabs {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    width: 100%;
+    background: #ffffff2d;
+    border-radius: 30px;
+    width: fit-content;
+    padding: 6px 10px;
+    backdrop-filter: blur(20px);
 }
 
 .app:hover {
@@ -236,5 +295,159 @@ section {
 .profile a:last-child .item {
     padding-top: 25px;
     padding-bottom: 40px;
+}
+
+#handburger {
+    display: none;
+}
+
+@media screen and (max-width: 1400px) {
+    .header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .nav {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background: #0176fbe8;
+        z-index: 20;
+        padding: 60px 40px;
+        gap: 20px;
+    }
+
+    .tabs {
+        backdrop-filter: blur(0);
+        background: transparent;
+        flex-direction: column;
+    }
+
+    .active {
+        background: #FFFFFF;
+        color: #2c2d3a;
+    }
+
+    .open-menu {
+        left: 0 !important;
+    }
+
+    .tab {
+        height: 50px;
+    }
+
+    .build {
+        z-index: 30;
+        top: 180px;
+        left: unset;
+        right: 40px;
+    }
+
+    .action {
+        display: flex;
+        align-items: center;
+    }
+
+    #handburger {
+        width: 32px;
+        height: 25px;
+        position: relative;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transition: 0.5s ease-in-out;
+        -moz-transition: 0.5s ease-in-out;
+        -o-transition: 0.5s ease-in-out;
+        transition: 0.5s ease-in-out;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+    }
+
+    #handburger span {
+        display: block;
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background: #FFFFFF;
+        opacity: 1;
+        left: 0;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transition: 0.25s ease-in-out;
+        -moz-transition: 0.25s ease-in-out;
+        -o-transition: 0.25s ease-in-out;
+        transition: 0.25s ease-in-out;
+    }
+
+    #handburger span:nth-child(1) {
+        top: 0px;
+    }
+
+    #handburger span:nth-child(2),
+    #handburger span:nth-child(3) {
+        top: 10px;
+    }
+
+    #handburger span:nth-child(4) {
+        top: 20px;
+    }
+
+    #handburger.open span:nth-child(1) {
+        top: 10px;
+        width: 0%;
+        left: 50%;
+    }
+
+    #handburger.open span:nth-child(2) {
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    #handburger.open span:nth-child(3) {
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+    }
+
+    #handburger.open span:nth-child(4) {
+        top: 18px;
+        width: 0%;
+        left: 50%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    section {
+        height: 70px;
+    }
+
+    .header {
+        gap: 20px;
+    }
+
+    .logo {
+        height: 24px;
+    }
+
+    .app {
+        height: 45px;
+        font-size: 16px;
+        min-width: 160px;
+    }
+
+    .connected {
+        display: none;
+    }
 }
 </style>

@@ -10,7 +10,7 @@
                 <div class="nav">
                     <DappNav />
                 </div>
-                <Nuxt />
+                <Nuxt class="content" />
             </div>
         </div>
     </section>
@@ -89,6 +89,7 @@ export default {
     height: 100vh;
     position: sticky;
     top: 0;
+    z-index: 2;
 }
 
 .bg {
@@ -116,5 +117,29 @@ export default {
 
 .bg2 img {
     width: 100%;
+}
+
+.content {
+    width: 100%;
+}
+
+@media screen and (max-width: 1400px) {
+    .grid {
+        display: grid;
+        grid-template-columns: 200px auto;
+        gap: 40px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .grid {
+        display: flex;
+        gap: 30px;
+        flex-direction: column;
+    }
+
+    .nav {
+        height: fit-content;
+    }
 }
 </style>

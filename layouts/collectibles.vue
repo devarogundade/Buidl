@@ -12,7 +12,7 @@
                 <div class="nav">
                     <CollectiblesNav />
                 </div>
-                <Nuxt />
+                <Nuxt class="content" />
             </div>
         </div>
     </section>
@@ -62,7 +62,7 @@ export default {
             }
 
             if (status == 'not-available') {
-                 this.$router.push('/register')
+                this.$router.push('/register')
             }
         })
 
@@ -110,5 +110,36 @@ export default {
 
 .bg2 img {
     width: 100%;
+}
+
+.content {
+    width: 100%;
+}
+
+@media screen and (max-width: 1400px) {
+    .grid {
+        display: grid;
+        grid-template-columns: 200px auto;
+        gap: 40px;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .grid {
+        display: grid;
+        grid-template-columns: 200px auto;
+        gap: 40px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .nav {
+        z-index: 20;
+    }
+
+    .grid {
+        display: flex;
+        gap: 0;
+    }
 }
 </style>

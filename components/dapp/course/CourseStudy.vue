@@ -79,6 +79,7 @@ export default {
         },
         onComplete: async function () {
             if (this.user != null && this.user.type == "learner") {
+                // generate a certificate for learner with their name on it
                 const document = await Certificate.generateDocument(this.user.name);
 
                 const documentUrl = await this.$ipfs.upload(
@@ -98,6 +99,7 @@ export default {
                     "external_url": `https://buidl.netlify.app/certificate?owner=${this.$auth.accounts[0]}&course=${this.courseId}`,
                 };
 
+                // upload certificates nft metadata to ipfs
                 const certificateMetadataUrl = await this.$ipfs.upload(
                     `certificates/${this.$auth.accounts[0]}/${this.courseId}.json`,
                     certificateJson
@@ -108,8 +110,11 @@ export default {
                     return;
                 }
 
+                // randomly selects a nft picture
                 const nftIndex = Math.floor(Math.random() * 4) + 1
-                const nftWeight = Math.floor(Math.random() * 10) + 1
+
+                // generates nft weight (coupon value at random in respect to the course price)
+                const nftWeight = ((Math.floor(Math.random() * 10) + 1) / 100) * this.course.price
 
                 const nftJson = {
                     "name": `Mr. Nice Monkey`,
@@ -132,8 +137,6 @@ export default {
                     $nuxt.$emit("error", "Failed to mint course certificate");
                     return;
                 }
-
-                // const ipfsCID = `ipfs://${nftMetadataUrl.split(/\//)[4]}`
 
                 try {
                     const trx = await this.$contracts.buidlContract.onCompletedCourse(
@@ -196,11 +199,12 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .swiper-section {
-    width: 1000px;
-    max-width: 100%;
+    width: 100%;
+    max-width: 1000px;
     overflow: hidden;
 }
 
@@ -303,5 +307,12 @@ export default {
     user-select: none;
     padding: 0 20px;
     gap: 10px;
+}
+
+@media screen and (max-width: 800px) {
+    .study {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
 }
 </style>

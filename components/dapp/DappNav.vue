@@ -97,4 +97,37 @@ export default {
     background: rgb(201, 227, 255);
     color: #0177fb;
 }
+
+@media screen and (max-width: 1400px) {
+    .item {
+        padding: 0 20px;
+        gap: 10px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .nav {
+        height: fit-content;
+        width: 100%;
+        border: none;
+        margin-top: 0;
+    }
+
+    .items {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+        padding: 0;
+        padding-top: 80px;
+        gap: 0px;
+    }
+
+    .item {
+        font-size: 14px;
+        gap: 6px;
+        padding: 0 10px;
+        border-radius: 20px;
+        height: 40px;
+    }
+}
 </style>

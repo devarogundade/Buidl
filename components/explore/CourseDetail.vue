@@ -151,13 +151,23 @@ export default {
             bought: false,
             nfts: [],
             selectedNft: null,
-            showNfts: false
+            showNfts: false,
+            contract: this.$contracts.buidlContract
         }
     },
     mounted() {
         $nuxt.$on('user', (user) => {
-            this.user = user
-            this.init()
+            if (this.user == null) {
+                this.user = user
+            }
+        })
+
+        $nuxt.$on('contracts-ready', (buidlContract) => {
+            if (this.contract == null) {
+                this.contract = buidlContract
+
+                this.init()
+            }
         })
 
         this.init()
@@ -199,22 +209,25 @@ export default {
             this.showNfts = false
         },
         getNfts: async function () {
+            if (this.$auth.accounts == null) return
             const nfts = await this.$nft.getUserNfts(this.$auth.accounts[0])
             this.nfts = nfts.result
         },
         async getCourse() {
-            const course = await this.$contracts.buidlContract.courses(this.courseId);
+            const course = await this.contract.courses(this.courseId);
 
             if (course.id.toNumber() != 0) {
                 this.course = course
 
-                this.instructor = await this.$contracts.buidlContract.instructors(course.instructor)
-                this.category = await this.$contracts.buidlContract.categories(course.categoryId)
+                this.instructor = await this.contract.instructors(course.instructor)
+                this.category = await this.contract.categories(course.categoryId)
             } else {
                 this.notFound = true
             }
         },
         async init() {
+            if (this.contract == null) return
+
             this.getCourse()
             this.getCourseSections()
 
@@ -225,7 +238,7 @@ export default {
 
                 try {
                     while (!this.bought) {
-                        const studentCourse = await this.$contracts.buidlContract.studentCourses(address, index)
+                        const studentCourse = await this.contract.studentCourses(address, index)
                         if (studentCourse.courseId.toNumber() == 0) {
                             break
                         }
@@ -242,7 +255,7 @@ export default {
             let index = 0
             try {
                 while (true) {
-                    const section = await this.$contracts.buidlContract.courseSections(this.courseId, index);
+                    const section = await this.contract.courseSections(this.courseId, index);
 
                     if (section.id.toNumber() == 0) {
                         break
@@ -270,7 +283,7 @@ export default {
             }
 
             try {
-                const trx = await this.$contracts.buidlContract.purchaseCourse(this.courseId, nftID, discount, {
+                const trx = await this.contract.purchaseCourse(this.courseId, nftID, discount, {
                     from: this.$auth.accounts[0]
                 })
 

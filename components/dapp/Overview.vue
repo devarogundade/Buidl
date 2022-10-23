@@ -219,7 +219,7 @@ export default {
         })
     },
     methods: {
-        claimUsername: function() {
+        claimUsername: function () {
 
         }
     }
@@ -228,7 +228,7 @@ export default {
 
 <style scoped>
 .container {
-    width: 100%;
+    width: 100% !important;
     display: flex;
     justify-content: center;
     padding-top: 120px;
@@ -238,6 +238,7 @@ export default {
 .overview {
     display: flex;
     flex-wrap: wrap;
+    width: 100% !important;
     justify-content: center;
     gap: 40px;
 }
@@ -246,11 +247,12 @@ export default {
     border-radius: 10px;
     background: #23242F;
     overflow: hidden;
+    max-width: 100%;
 }
 
 .verify {
-    width: 940px;
-    max-width: 100%;
+    width: 100%;
+    max-width: 940px;
     border-radius: 10px;
     background: #23242F;
     overflow: hidden;
@@ -486,5 +488,35 @@ export default {
     color: #0177fb;
     font-weight: 600;
     text-decoration: underline;
+}
+
+@media screen and (max-width: 1300px) {
+    .overview {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .linkedin,
+    .supporters,
+    .analytics {
+        width: 100%;
+        max-width: 450px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .verify {
+        padding: 10px 20px;
+    }
+
+    .verify p:first-child {
+        font-size: 16px;
+    }
+
+    .verify p:last-child {
+        font-size: 16px;
+        width: 160px;
+        height: 40px;
+    }
 }
 </style>

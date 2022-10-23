@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-    <div class="ntfs">
+    <div class="nfts">
         <div class="tabs">
             <h3 :class="tab == 1 ? 'active' : ''" v-on:click="tab = 1">Wallet</h3>
             <h3 :class="tab == 2 ? 'active' : ''" v-on:click="tab = 2">
@@ -88,6 +88,7 @@ export default {
     },
     methods: {
         getNfts: async function () {
+            if (this.$auth.accounts == null) return
             const nfts = await this.$nft.getUserNfts(this.$auth.accounts[0]);
             this.nfts = nfts.result;
         },
@@ -116,6 +117,10 @@ export default {
     padding-bottom: 50px;
 }
 
+.nfts {
+      width: 100%;
+}
+
 .tabs {
     display: flex;
     align-items: center;
@@ -137,6 +142,7 @@ export default {
 .items {
     display: flex;
     gap: 40px;
+    width: 100%;
     flex-wrap: wrap;
     align-items: center;
     padding-top: 40px;
@@ -269,5 +275,25 @@ export default {
     height: 70px;
     border-radius: 40px;
     object-fit: cover;
+}
+
+@media screen and (max-width: 700px) {
+    .tabs h3 {
+        font-size: 20px;
+    }
+
+    .items {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .wallet p {
+        font-size: 30px;
+    }
+
+    .wallet img {
+        width: 30px;
+        height: 30px;
+    }
 }
 </style>
