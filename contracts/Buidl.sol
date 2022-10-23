@@ -1,19 +1,20 @@
 // SPDX-License-Identifier: GPL-3.0
-
 pragma solidity >=0.7.0 <0.9.0;
 
-import "./BdlToken.sol";
 import "./BdlNft.sol";
 import "./BdlCertificate.sol";
 import "./Models.sol";
+import {PaymentFlow} from "./PaymentFlow.sol";
+import {BdlToken} from "./BdlToken.sol";
 
 contract Buidl {
     // state variables
     address deployer;
 
-    BdlToken private bdlToken;
-    BdlNft private bdlNft;
-    BdlCertificate private bdlCertificate;
+    PaymentFlow private _paymentFlow;
+    BdlToken private _bdlToken;
+    BdlNft private _bdlNft;
+    BdlCertificate private _bdlCertificate;
 
     uint256 private contractInstructorID = 1;
     uint256 private contractStudentID = 1;
@@ -32,14 +33,17 @@ contract Buidl {
 
     // contructor
     constructor(
-        address _bdlToken,
-        address _bdlNft,
-        address _bdlCertificate
+        address bdlToken,
+        address bdlNft,
+        address bdlCertificate,
+        address paymentFlow
     ) {
         deployer = msg.sender;
-        bdlToken = BdlToken(_bdlToken);
-        bdlNft = BdlNft(_bdlNft);
-        bdlCertificate = BdlCertificate(_bdlCertificate);
+
+        _bdlToken = BdlToken(bdlToken);
+        _bdlNft = BdlNft(bdlNft);
+        _bdlCertificate = BdlCertificate(bdlCertificate);
+        _paymentFlow = PaymentFlow(paymentFlow);
 
         addTestCategories();
     }
@@ -187,13 +191,13 @@ contract Buidl {
         uint gender
     ) public notAnyone {
         // stake instruction fee
-        bdlToken.increaseAllowance(
+        _bdlToken.increaseAllowance(
             msg.sender,
             address(this),
             instructorRegistrationFee
         );
 
-        bdlToken.transferFrom(
+        _bdlToken.transferFrom(
             msg.sender,
             address(this),
             instructorRegistrationFee
@@ -257,15 +261,15 @@ contract Buidl {
         uint price = course.price;
 
         if (nftId != 0 && discount != 0) {
-            require(bdlNft.ownerOf(nftId) == msg.sender, "!owner");
+            require(_bdlNft.ownerOf(nftId) == msg.sender, "!owner");
 
-            bdlNft.burn(nftId);
+            _bdlNft.burn(nftId);
             price -= discount;
         }
 
         // lock the student funds to smart contract
-        bdlToken.increaseAllowance(msg.sender, address(this), price);
-        bdlToken.transferFrom(msg.sender, address(this), price);
+        _bdlToken.increaseAllowance(msg.sender, address(this), price);
+        _bdlToken.transferFrom(msg.sender, address(this), price);
 
         // create course for student
         studentCourses[msg.sender].push(
@@ -297,7 +301,7 @@ contract Buidl {
         delete studentCourses[msg.sender][courseId];
 
         // refund the student
-        bdlToken.transferFrom(address(this), msg.sender, refundableAmount);
+        _bdlToken.transferFrom(address(this), msg.sender, refundableAmount);
 
         emit CourseRefunded(msg.sender, courseId, sectionsViewed);
     }
@@ -310,8 +314,8 @@ contract Buidl {
         require(courses[courseId].id != 0, "!exists");
         // check if student has purchase the course
         // require(studentCourses[msg.sender][] != 0, "!exists");
-        bdlCertificate.issue(msg.sender, certificateUri);
-        bdlNft.mint(msg.sender, nftUri);
+        _bdlCertificate.issue(msg.sender, certificateUri);
+        _bdlNft.mint(msg.sender, nftUri);
     }
 
     modifier onlyInstructor() {
@@ -346,7 +350,7 @@ contract Buidl {
     // ========== Development ========== //
 
     function faucetMint() public {
-        bdlToken.mint(msg.sender);
+        _bdlToken.mint(msg.sender, 5000);
     }
 
     function addTestCategories() private {

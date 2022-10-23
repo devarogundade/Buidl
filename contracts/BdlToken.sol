@@ -1,43 +1,29 @@
 // SPDX-License-Identifier: GPL-3.0
-
 pragma solidity >=0.7.0 <0.9.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {BaseSuperToken} from "./BaseSuperToken.sol";
+import {ISuperfluid} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 
-contract BdlToken is ERC20 {
-    address deployer;
-    uint256 public mintAllocation = 5000 * 10**decimals();
 
-    mapping(address => uint256) public mints;
+contract BdlToken is BaseSuperToken {
+    address private deployer;
 
-    constructor() ERC20("Buidl Token", "BDL") {
-        deployer = msg.sender;
-        _mint(msg.sender, 10000000000 * 10**decimals()); // ten billion
-    }
+    string private tokenName = "Bdl Token";
+    string private tokenSymbol = "BDL";
+    uint256 private tokenTotalSupply = 10000000000000000000000000000000;
 
-    // faucet
-    function mint(address _address) public {
-        require((mints[_address] < mintAllocation), ">allocation");
-        _transfer(deployer, _address, mintAllocation);
-        mints[_address] = mintAllocation;
-        emit Faucet(_address, mintAllocation);
-    }
+    constructor(ISuperfluid host) BaseSuperToken(host, tokenName, tokenSymbol, tokenTotalSupply) {}
 
-    // deducts token from user for a particular service
-    function charge(address from, uint256 amount) public {
-        _transfer(from, deployer, amount);
-        emit Charged(from, amount);
+    function mint(address owner, uint256 amount) public returns (bool) {
+        return _transferFrom(deployer, deployer, owner, amount);
     }
 
     function increaseAllowance(
         address owner,
         address spender,
-        uint256 amount
-    ) public virtual returns (bool) {
-        _approve(owner, spender, allowance(owner, spender) + amount);
+        uint256 addedValue
+    ) public returns (bool) {
+        _approve(msg.sender, spender, _allowances[owner][spender] + addedValue);
         return true;
     }
-
-    event Faucet(address, uint256);
-    event Charged(address, uint256);
 }

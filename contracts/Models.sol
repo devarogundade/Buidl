@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0
-
 pragma solidity >=0.7.0 <0.9.0;
 
 contract Models {
@@ -60,5 +59,11 @@ contract Models {
         string title;
         string src; // ipfs source
         string content;
+    }
+
+    struct Balances {
+        uint256 unclaimed; // total tokens that are locked
+        uint256 claimable; // total tokens that are available
+        uint256 claimed; // total tokens claimed
     }
 }

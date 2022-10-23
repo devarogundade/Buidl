@@ -1,4 +1,8 @@
-const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require('@truffle/hdwallet-provider')
+const dotenv = require("dotenv")
+dotenv.config()
+
+const mnemonic = process.env.MNEMONIC;
 
 module.exports = {
     networks: {
@@ -7,9 +11,17 @@ module.exports = {
             port: 7545,
             network_id: "*",
         },
-        testnet: {
-            provider: () => new HDWalletProvider("forget pull traffic comfort guard urban fold mutual bleak swim little foil", `https://data-seed-prebsc-1-s2.binance.org:8545`),
+        bsc: {
+            provider: () => new HDWalletProvider(mnemonic, `https://data-seed-prebsc-1-s2.binance.org:8545`),
             network_id: 97, // Smart chain testnet id
+            confirmations: 2,
+            timeoutBlocks: 99999,
+            skipDryRun: true,
+            networkCheckTimeout: 99999999
+        },
+        matic: {
+            provider: () => new HDWalletProvider(mnemonic, `https://matic-testnet-archive-rpc.bwarelabs.com`),
+            network_id: 80001, // Polygon chain testnet id
             confirmations: 2,
             timeoutBlocks: 99999,
             skipDryRun: true,
@@ -21,7 +33,13 @@ module.exports = {
 
     compilers: {
         solc: {
-            version: "0.8.17"
+            version: "0.8.16",
+            settings: {
+                optimizer: {
+                    enabled: true,
+                    runs: 1500
+                }
+            }
         }
     },
 
