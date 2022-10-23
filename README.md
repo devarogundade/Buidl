@@ -1,7 +1,7 @@
 # Buidl - SocialFi for Creators and Learners
 ## _A Moralis X Google Cloud Hackathon Project_
 
-Building a Borderless, Permissionless and Decentralized Social-Fi for Instructors and Learners.
+Building a Borderless, Permissionless and Decentralized Social-Fi for Creators and Learners.
 
 - Incentives for learning
 - Seamless payments and refunds using DEFI/Staking protocol
@@ -14,13 +14,13 @@ Building a Borderless, Permissionless and Decentralized Social-Fi for Instructor
 ## Tech Stacks
 
 - Binance Smart Chain (Testnet)
-- Moralis
+- Moralis APIs
 - IPFS 
 - Solidity (Smary contract)
 - Nuxtjs (Frontend)
 - Google Cloud Firebase
 - Truffle
-- Covalent
+- Covalent APIs
 
 Markdown is a lightweight markup language based on the formatting conventions
 that people naturally use in email.
