@@ -89,4 +89,24 @@ export default {
     font-size: 24px;
     font-weight: 600;
 }
+
+@media screen and (max-width: 700px) {
+    .categories {
+        gap: 20px;
+    }
+
+    .category {
+        width: 160px;
+        height: 200px;
+        border-radius: 16px;
+    }
+
+    .text {
+        padding: 10px;
+    }
+
+    .text p {
+        font-size: 20px;
+    }
+}
 </style>

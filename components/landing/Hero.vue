@@ -71,6 +71,11 @@ export default {
 <style scoped>
 section {
     overflow: hidden;
+    min-height: 100vh;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: #001731;
 }
 
 .bg {
@@ -78,6 +83,7 @@ section {
     left: 0;
     top: 0;
     width: 500px;
+    max-width: 100%;
     opacity: 0.15;
 }
 
@@ -90,6 +96,7 @@ section {
     right: 100px;
     bottom: -150px;
     width: 1000px;
+    max-width: 100%;
     opacity: 0.15;
     rotate: 90deg;
 }
@@ -114,13 +121,6 @@ section {
     object-fit: cover;
     border-radius: 20px;
     box-shadow: 6px 6px 0 #0176fb2a;
-}
-
-section {
-    min-height: 100vh;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-image: #001731;
 }
 
 .hero {
@@ -182,7 +182,12 @@ section {
 
 .stats {
     display: flex;
+    width: 100%;
     column-gap: 100px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
 }
 
 .stat h3 {
@@ -200,27 +205,72 @@ section {
 }
 
 .profile>div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 20px;
-  margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .profile i {
-  color: #0177fb;
-  font-size: 20px;
+    color: #0177fb;
+    font-size: 20px;
 }
 
 .profile h3 {
-  font-size: 18px;
-  color: #FFFFFF;
+    font-size: 18px;
+    color: #FFFFFF;
 }
 
 .profile p {
-  opacity: 0.8;
-  font-size: 14px;
-  color: #FFFFFF;
-  line-height: 22px;
+    opacity: 0.8;
+    font-size: 14px;
+    color: #FFFFFF;
+    line-height: 22px;
+}
+
+@media screen and (max-width: 1000px) {
+    .stat {
+        text-align: center;
+    }
+
+    .stat h3 {
+        font-size: 28px;
+    }
+
+    .stat p {
+        font-size: 20px;
+        font-weight: 500;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .text h3 {
+        font-size: 34px;
+        line-height: 40px;
+    }
+
+    .text p {
+        font-size: 20px;
+    }
+
+    .hero {
+        padding: 160px 0;
+    }
+
+    .text .feeds {
+        height: 45px;
+        margin-top: 40px;
+        width: 180px;
+        font-size: 20px;
+    }
+
+    .swiper {
+        width: 300px;
+    }
+
+    .swiper-slide img {
+        height: 280px;
+    }
 }
 </style>

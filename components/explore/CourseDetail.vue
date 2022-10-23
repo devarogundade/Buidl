@@ -15,10 +15,10 @@
                     <h3 class="title">{{ course.name }}</h3>
                     <p class="subtitle">{{ course.description }}</p>
                     <div class="stat">
-                        <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; <router-link to="">(128 ratings)</router-link>
+                        <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; <router-link to="">(2 ratings)</router-link>
                         </p>
                         <p>•</p>
-                        <p class="n_students">2,435 students</p>
+                        <p class="n_students">2 students</p>
                     </div>
                     <p class="instructor" v-if="instructor"> <img src="/images/nft2.jpg" alt=""> {{ instructor.lastName + ' ' + instructor.firstName }} </p>
                     <div class="specs">
@@ -38,7 +38,7 @@
                     <div class="coupon" v-if="!bought">
                         <p>Apply Coupon</p>
 
-                        <div class="options" v-show="showNfts">
+                        <div class="options" v-show="showNfts && !bought">
                             <div class="nft_row" v-on:click="removeCoupon()">
                                 <div class="name">
                                     <p>Remove coupon</p>
@@ -73,7 +73,7 @@
                         </div>
                     </div>
 
-                    <div class="pricing">
+                    <div class="pricing" v-if="!bought">
                         <div>
                             <p>Course price</p>
                             <p>{{ course.price.toNumber() }} BDL</p>
@@ -269,9 +269,15 @@ export default {
                 discount = this.calcDiscount(this.selectedSection)
             }
 
-            this.$contracts.buidlContract.purchaseCourse(this.courseId, nftID, discount, {
-                from: this.$auth.accounts[0]
-            })
+            try {
+                const trx = await this.$contracts.buidlContract.purchaseCourse(this.courseId, nftID, discount, {
+                    from: this.$auth.accounts[0]
+                })
+
+                this.bought = true
+            } catch (error) {
+
+            }
         }
     }
 };
@@ -663,5 +669,31 @@ export default {
     font-size: 16px;
     font-weight: 600;
     color: #e0e0e0;
+}
+
+@media screen and (max-width: 1300px) {
+    .head {
+        padding: 0;
+    }
+
+    .wrapper {
+        padding: 20px;
+    }
+
+    .buy {
+        position: unset;
+        width: 100%;
+        margin-top: 20px;
+        border-radius: 0;
+    }
+
+    .wrapper .title {
+        font-size: 24px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+        margin-top: 10px;
+    }
 }
 </style>

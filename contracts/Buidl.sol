@@ -218,14 +218,14 @@ contract Buidl {
         contractInstructorID++;
     }
 
-    function getUnclaimableRevenue() public returns(uint256) {
-      uint256 unclaimed = 0;
+    // function getUnclaimableRevenue() public returns(uint256) {
+    //   uint256 unclaimed = 0;
 
-      for (uint index = 0; index < studentCourses.length; index++) {
-          if (studentsCourse[])
-      }
+    //   for (uint index = 0; index < studentCourses.length; index++) {
+    //       if (studentsCourse[])
+    //   }
 
-    }
+    // }
 
     // ========= Students ========== //
 

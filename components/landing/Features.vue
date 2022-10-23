@@ -69,7 +69,7 @@ section {
 .feature {
     display: flex;
     flex-wrap: wrap;
-    column-gap: 150px;
+    gap: 150px;
     justify-content: center;
     align-items: center;
 }
@@ -105,5 +105,34 @@ section {
 .text a {
     color: #50a2ff;
     text-decoration: underline;
+}
+
+@media screen and (max-width: 1000px) {
+    section {
+        padding: 100px 0;
+    }
+
+    .feature {
+        gap: 60px;
+    }
+
+    .text h3 {
+        font-size: 30px;
+    }
+
+    .text p {
+        font-size: 16px;
+        line-height: 22px;
+        margin-top: 20px;
+        font-weight: 500;
+    }
+
+    .feature .image {
+        width: 300px;
+    }
+
+    .feature:nth-child(even) {
+        flex-direction: column-reverse;
+    }
 }
 </style>

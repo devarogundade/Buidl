@@ -10,8 +10,8 @@ abstract contract ERC4973 is ERC165, IERC4973Metadata, IERC4973 {
     string private _name;
     string private _symbol;
 
-    mapping(uint256 => address) private _owners;
-    mapping(uint256 => string) private _tokenURIs;
+    mapping(uint256 => address) private owners;
+    mapping(uint256 => string) private tokenURIs;
 
     constructor(string memory name_, string memory symbol_) {
         _name = name_;
@@ -46,11 +46,11 @@ abstract contract ERC4973 is ERC165, IERC4973Metadata, IERC4973 {
         returns (string memory)
     {
         require(_exists(tokenId), "tokenURI: token doesn't exist");
-        return _tokenURIs[tokenId];
+        return tokenURIs[tokenId];
     }
 
     function _exists(uint256 tokenId) internal view virtual returns (bool) {
-        return _owners[tokenId] != address(0);
+        return owners[tokenId] != address(0);
     }
 
     function ownerOf(uint256 tokenId)
@@ -60,7 +60,7 @@ abstract contract ERC4973 is ERC165, IERC4973Metadata, IERC4973 {
         override
         returns (address)
     {
-        address owner = _owners[tokenId];
+        address owner = owners[tokenId];
         require(owner != address(0), "ownerOf: token doesn't exist");
         return owner;
     }
@@ -71,8 +71,8 @@ abstract contract ERC4973 is ERC165, IERC4973Metadata, IERC4973 {
         string calldata uri
     ) internal virtual returns (uint256) {
         require(!_exists(tokenId), "mint: tokenID exists");
-        _owners[tokenId] = to;
-        _tokenURIs[tokenId] = uri;
+        owners[tokenId] = to;
+        tokenURIs[tokenId] = uri;
         emit Attest(to, tokenId);
         return tokenId;
     }
@@ -80,8 +80,8 @@ abstract contract ERC4973 is ERC165, IERC4973Metadata, IERC4973 {
     function _burn(uint256 tokenId) internal virtual {
         address owner = ownerOf(tokenId);
 
-        delete _owners[tokenId];
-        delete _tokenURIs[tokenId];
+        delete owners[tokenId];
+        delete tokenURIs[tokenId];
 
         emit Revoke(owner, tokenId);
     }

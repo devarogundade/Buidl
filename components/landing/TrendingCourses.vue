@@ -4,7 +4,7 @@
         <div class="title">
             <h3>Trending Courses</h3>
             <router-link to="/explore">
-                <div class="action">Explore all courses <i class="fa-solid fa-arrow-right-long"></i></div>
+                <div class="action">Explore all <i class="fa-solid fa-arrow-right-long"></i></div>
             </router-link>
         </div>
         <div class="trending">
@@ -64,8 +64,10 @@ export default {
         })
     },
     updated() {
+        const perView = this.$utils.slidesPerView()
+
         new Swiper(".trendSwiper", {
-            slidesPerView: 4,
+            slidesPerView: perView,
             spaceBetween: 30,
             pagination: {
                 el: ".swiper-pagination",
@@ -151,6 +153,7 @@ section {
     align-items: center;
     gap: 10px;
     font-size: 20px;
+    margin: 0;
 }
 
 .swiper {
@@ -302,5 +305,11 @@ ul li {
     border: 1px rgb(255, 209, 5) solid;
     font-size: 20px;
     color: #fff;
+}
+
+@media screen and (max-width: 1000px) {
+    .title h3 {
+        font-size: 20px;
+    }
 }
 </style>

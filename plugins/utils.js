@@ -18,6 +18,41 @@ export default ({}, inject) => {
             const year = date.getUTCFullYear()
 
             return `${day} ${monthsInWord[month]} ${year}`
+        },
+        slidesPerView: function() {
+            const screenWidth = window.innerWidth
+
+            let perView = 4.5
+
+            if (screenWidth < 1400) {
+                perView = 4
+            }
+
+            if (screenWidth < 1200) {
+                perView = 3.2
+            }
+
+            if (screenWidth < 1000) {
+                perView = 2.5
+            }
+
+            if (screenWidth < 800) {
+                perView = 2
+            }
+
+            if (screenWidth < 700) {
+                perView = 1.6
+            }
+
+            if (screenWidth < 500) {
+                perView = 1.2
+            }
+
+            if (screenWidth < 400) {
+                perView = 1
+            }
+
+            return perView
         }
     }))
 }

@@ -14,7 +14,7 @@
 
             <div class="signed" v-if="user && user.type">
                 <p v-if="user.type == 'learner'">Welcome back, {{ user.name }}</p>
-                <p v-if="user.type == 'instructor'">Welcome back, {{ user.firstName }}</p>
+                <p v-if="user.type == 'creator'">Welcome back, {{ user.firstName }}</p>
                 <router-link to="/app">
                     <div class="continue">Continue</div>
                 </router-link>

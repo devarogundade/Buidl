@@ -28,7 +28,7 @@ section {
     display: grid;
     grid-template-columns: 150px auto 150px;
     gap: 40px;
-    height: 50px;
+    min-height: 50px;
     align-items: center;
 }
 
@@ -50,14 +50,26 @@ section {
 }
 
 .socials {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 40px;
 }
 
 .socials i {
-  font-size: 30px;
-  color: #fff;
+    font-size: 30px;
+    color: #fff;
+}
+
+@media screen and (max-width: 1000px) {
+    .footer {
+        grid-template-columns: auto;
+    }
+
+    .links {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
 }
 </style>

@@ -13,7 +13,7 @@
             </div>
         </router-link>
     </div>
-    <div class="courses" v-show="(courses.length > 0) && !fetching && user" v-if="user.type == 'instructor'">
+    <div class="courses" v-show="(courses.length > 0) && !fetching && user" v-if="user.type == 'creator'">
         <router-link :to="`/app/course-builder/${course.id.toNumber()}`" v-for="(course, index) in courses" :key="index">
             <div class="course scaleable">
                 <div class="detail">
@@ -25,7 +25,7 @@
         </router-link>
     </div>
 
-    <div class="explain" v-show="(courses.length == 0) && !fetching">
+    <div class="explain" v-show="(courses.length == 0) && !fetching && user.type == 'creator'">
         <h3>What's a course?</h3>
         <p>
             <b>Buidl Course</b> provides you an environment with the handy tools you need to teach
@@ -36,13 +36,24 @@
         </div>
     </div>
 
+    <div class="explain" v-show="(courses.length == 0) && !fetching && user.type == 'learner'">
+        <h3>What's a course?</h3>
+        <p>
+            <b>Buidl Course</b> provides you an environment with the handy tools you need to learn
+            from creators. <br> <br> You are in full control of your course and data.
+        </p>
+        <div class="action">
+            Click on the <i class="fa-solid fa-search"></i> button to find your first course.
+        </div>
+    </div>
+
     <div class="fab-btn">
-        <router-link to="/app/courses/create" v-if="user.type == 'instructor'">
+        <router-link to="/app/courses/create" v-if="user.type == 'creator'">
             <div class="fab">
                 <i class="fa-solid fa-plus"></i>
             </div>
         </router-link>
-         <router-link to="/app/courses/create" v-if="user.type == 'learner'">
+        <router-link to="/explore" v-if="user.type == 'learner'">
             <div class="fab">
                 <i class="fa-solid fa-search"></i>
             </div>
@@ -104,7 +115,7 @@ export default {
                 }
             }
 
-            if (this.user && this.user.type == 'instructor') {
+            if (this.user && this.user.type == 'creator') {
                 let index = 0
                 try {
                     while (true) {

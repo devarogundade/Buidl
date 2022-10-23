@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import Certificate from '/plugins/certificate.js'
 export default {
     data() {
         return {

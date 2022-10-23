@@ -51,7 +51,7 @@ const Contracts = {
             const instructorAccount = await Contracts.buidlContract.instructors(accounts[0]);
             if (instructorAccount.firstName != '') {
                 Contracts.user = instructorAccount
-                Contracts.user.type = 'instructor'
+                Contracts.user.type = 'creator'
 
                 $nuxt.$emit('user', Contracts.user)
                 $nuxt.$emit('user-status', 'available')

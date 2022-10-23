@@ -62,4 +62,19 @@ section h3 {
     align-items: center;
     justify-content: center;
 }
+
+@media screen and (max-width: 700px) {
+    section {
+        padding-top: 100px;
+    }
+
+    section h3 {
+        font-size: 30px;
+    }
+
+    .desc {
+        font-size: 16px;
+        line-height: 24px;
+    }
+}
 </style>

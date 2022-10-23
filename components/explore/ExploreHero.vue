@@ -43,14 +43,16 @@ export default {
 }
 
 .grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     width: 100%;
     gap: 40px;
 }
 
 .hero {
-    width: 100%;
+    width: 620px;
+    max-width: 100%;
     padding: 40px;
     border-radius: 10px;
     background: rgb(34, 114, 200);
@@ -72,7 +74,7 @@ export default {
 
 .text h3 {
     font-size: 34px;
-    font-family: "Poppins", sans-serif;
+    font-family: 'regular';
 }
 
 .text p {
@@ -93,5 +95,35 @@ export default {
     height: 50px;
     user-select: none;
     cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+    .app-width {
+        padding-top: 100px;
+        padding-bottom: 50px;
+    }
+
+    .grid {
+        gap: 20px;
+    }
+
+    .hero {
+        padding: 20px;
+        flex-direction: column;
+    }
+
+    .text h3 {
+        font-size: 24px;
+    }
+
+    .text p {
+        font-size: 16px;
+    }
+
+    .action {
+        width: fit-content;
+        font-size: 16px;
+        height: 40px;
+    }
 }
 </style>

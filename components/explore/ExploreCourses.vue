@@ -69,8 +69,10 @@ export default {
         this.getCourses()
     },
     updated() {
+        const perView = this.$utils.slidesPerView()
+
         new Swiper(".trendSwiper", {
-            slidesPerView: 4.5,
+            slidesPerView: perView,
             spaceBetween: 30,
             pagination: {
                 el: ".swiper-pagination",
@@ -146,6 +148,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
+    gap: 10px;
 }
 
 .title h3 {
@@ -154,16 +157,16 @@ export default {
 }
 
 .title div:first-child {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 .title img {
-  width: 50px;
-  height: 45px;
-  object-fit: cover;
-  border-radius: 10px;
+    width: 50px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 10px;
 }
 
 .title div:last-child {
@@ -175,6 +178,7 @@ export default {
     align-items: center;
     gap: 10px;
     font-size: 16px;
+    margin: 0;
 }
 
 .swiper {
@@ -326,5 +330,20 @@ ul li {
     border: 1px rgb(255, 209, 5) solid;
     font-size: 20px;
     color: #fff;
+}
+
+@media screen and (max-width: 700px) {
+    .title h3 {
+        font-size: 20px;
+    }
+
+    .title div:first-child {
+        gap: 10px;
+    }
+
+    .title img {
+        width: 40px;
+        height: 35px;
+    }
 }
 </style>

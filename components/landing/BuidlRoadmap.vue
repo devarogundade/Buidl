@@ -91,4 +91,33 @@ section h3 {
     font-size: 16px;
     line-height: 24px;
 }
+
+@media screen and (max-width: 1000px) {
+    .maps {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        width: 400px;
+    }
+
+    .map {
+        border-radius: 20px;
+        padding: 20px;
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    section {
+        padding: 100px 0;
+    }
+
+    section h3 {
+        font-size: 30px;
+    }
+
+    .map {
+        width: 350px;
+    }
+}
 </style>
