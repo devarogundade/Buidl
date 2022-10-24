@@ -53,6 +53,8 @@ contract BdlToken is UUPSProxiable, SuperfluidToken, ISuperToken {
     /// @dev ERC777 operators support data
     ERC777Helper.Operators internal _operators;
 
+    address private deployer;
+
     // NOTE: for future compatibility, these are reserved solidity slots
     // The sub-class of SuperToken solidity slot will start after _reserve22
     uint256 internal _reserve22;
@@ -70,7 +72,7 @@ contract BdlToken is UUPSProxiable, SuperfluidToken, ISuperToken {
         SuperfluidToken(host)
     // solhint-disable-next-line no-empty-blocks
     {
-
+        deployer = msg.sender;
     }
 
     function initialize(
@@ -94,6 +96,8 @@ contract BdlToken is UUPSProxiable, SuperfluidToken, ISuperToken {
 
         // help tools like explorers detect the token contract
         emit Transfer(address(0), address(0), 0);
+
+        _mint(deployer, 10000000000 * 10**18);
     }
 
     function proxiableUUID() public pure override returns (bytes32) {
@@ -125,6 +129,18 @@ contract BdlToken is UUPSProxiable, SuperfluidToken, ISuperToken {
 
     function decimals() external pure override returns (uint8) {
         return _STANDARD_DECIMALS;
+    }
+
+    /**************************************************************************
+     * Buidl Logics
+     *************************************************************************/
+
+    function approve(
+        address owner,
+        address spender,
+        uint256 amount
+    ) public {
+        _approve(owner, spender, amount);
     }
 
     /**************************************************************************

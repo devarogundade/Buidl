@@ -13,7 +13,7 @@ contract BdlNft is ERC721, Ownable {
     mapping(uint256 => string) private tokenURIs;
     string private baseURIextended;
 
-    constructor() ERC721("Buidl NFT", "BNFT") {
+    constructor(string memory name, string memory symbol) ERC721(name, symbol) {
         deployer = msg.sender;
     }
 
@@ -59,10 +59,7 @@ contract BdlNft is ERC721, Ownable {
         return string(abi.encodePacked(base, tokenId.toString()));
     }
 
-    function mint(
-        address to,
-        string memory uri
-    ) external {
+    function mint(address to, string memory uri) external {
         _mint(to, tokenID);
         _setTokenURI(tokenID, uri);
 
@@ -70,6 +67,6 @@ contract BdlNft is ERC721, Ownable {
     }
 
     function burn(uint256 tokenId) external {
-      _burn(tokenId);
+        _burn(tokenId);
     }
 }

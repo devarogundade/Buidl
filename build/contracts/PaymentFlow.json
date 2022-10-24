@@ -23,8 +23,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -37,8 +36,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -209,8 +207,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -249,8 +246,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -289,8 +285,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -308,8 +303,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -343,9 +337,9 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"CFA_ID\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"_deployer\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ISuperToken\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"afterAgreementCreated\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ISuperToken\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"afterAgreementTerminated\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ISuperToken\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"afterAgreementUpdated\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ISuperToken\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"beforeAgreementCreated\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ISuperToken\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"beforeAgreementTerminated\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ISuperToken\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"beforeAgreementUpdated\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"cfaV1Lib\",\"outputs\":[{\"internalType\":\"contract ISuperfluid\",\"name\":\"host\",\"type\":\"address\"},{\"internalType\":\"contract IConstantFlowAgreementV1\",\"name\":\"cfa\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"},{\"internalType\":\"int96\",\"name\":\"flowRate\",\"type\":\"int96\"}],\"name\":\"startStreaming\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"}],\"name\":\"stopStreaming\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/PaymentFlow.sol\":\"PaymentFlow\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1500},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/proxy/utils/Initializable.sol\":{\"keccak256\":\"0x2a21b14ff90012878752f230d3ffd5c3405e5938d06c97a7d89c0a64561d0d66\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3313a8f9bb1f9476857c9050067b31982bf2140b83d84f3bc0cec1f62bbe947f\",\"dweb:/ipfs/Qma17Pk8NRe7aB4UD3jjVxk7nSFaov3eQyv86hcyqkwJRV\"]},\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34\",\"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr\"]},\"@openzeppelin/contracts/token/ERC20/extensions/draft-IERC20Permit.sol\":{\"keccak256\":\"0xf41ca991f30855bf80ffd11e9347856a517b977f0a6c2d52e6421a99b7840329\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b2717fd2bdac99daa960a6de500754ea1b932093c946388c381da48658234b95\",\"dweb:/ipfs/QmP6QVMn6UeA3ByahyJbYQr5M6coHKBKsf3ySZSfbyA8R7\"]},\"@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol\":{\"keccak256\":\"0x032807210d1d7d218963d7355d62e021a84bf1b3339f4f50be2f63b53cccaf29\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://11756f42121f6541a35a8339ea899ee7514cfaa2e6d740625fcc844419296aa6\",\"dweb:/ipfs/QmekMuk6BY4DAjzeXr4MSbKdgoqqsZnA8JPtuyWc6CwXHf\"]},\"@openzeppelin/contracts/token/ERC777/IERC777.sol\":{\"keccak256\":\"0x093eaf9a4b05adf2bd3730b753f9e1725ed34b80ea4b5f08477ff2f46a188586\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://46e9a9b37e8cb6332ed21a8d3f8a6723d897e4a97db63095424522a80b3cfc15\",\"dweb:/ipfs/QmdHcBPPGKQBnmeaAN3Y6YKUPqwR73RrHTiX5uTr6eVx1M\"]},\"@openzeppelin/contracts/token/ERC777/IERC777Recipient.sol\":{\"keccak256\":\"0x1a5d61db2733202ba361e6d6741cd2e662380e22b80e987eacfc91973f2267dc\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://04c0cd697050a6516b7779aa2343ad2d0e5217d8915ac2382681dfdf4e445be3\",\"dweb:/ipfs/QmPCBCZgm7pHBwwogE2F9NCN3UfTdLNhqc8UDEvw8kDzyA\"]},\"@openzeppelin/contracts/token/ERC777/IERC777Sender.sol\":{\"keccak256\":\"0x742e51d63b108240759794360637468d9fcbf072cbd357744790d356a87bb382\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://23912910ce2bb68e49ff83f43fcfa864210ee44580491e876db14922f8aecc18\",\"dweb:/ipfs/QmU6GnRQ51xvY8D57kPCV47oGeYozaz5AQZUCHxFfXdFZ4\"]},\"@openzeppelin/contracts/utils/Address.sol\":{\"keccak256\":\"0xd6153ce99bcdcce22b124f755e72553295be6abcd63804cfdffceb188b8bef10\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://35c47bece3c03caaa07fab37dd2bb3413bfbca20db7bd9895024390e0a469487\",\"dweb:/ipfs/QmPGWT2x3QHcKxqe6gRmAkdakhbaRgx3DLzcakHz5M4eXG\"]},\"@openzeppelin/contracts/utils/introspection/IERC1820Registry.sol\":{\"keccak256\":\"0x1e34ab6382525e2c48a01d9edbcfeab024072e8fa80332d48fb7011ebdf59562\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8d4c3a1cacb1b5ce5681edac3dc3034a9e6ea6b9e4ef338564ca70b9b6ea2fd7\",\"dweb:/ipfs/QmXwhPvgGK4envqERyjh5W7CtrH72geAE7fh1EFcVerviw\"]},\"@openzeppelin/contracts/utils/math/SafeCast.sol\":{\"keccak256\":\"0x02686c31ccb9ee77a299fa5f47327af5271f251a707a0e24f321957166ff0434\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://cb562d8ae1da31249ca0d8553df9f89ef4c3c110a018c4449dde68ae30e51ec1\",\"dweb:/ipfs/QmUwxjtTUYB89ymeV46TZPmTsGnYrKNcgTHk7MQA1MG3hj\"]},\"@openzeppelin/contracts/utils/math/SafeMath.sol\":{\"keccak256\":\"0x0f633a0223d9a1dcccfcf38a64c9de0874dfcbfac0c6941ccf074d63a2ce0e1e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://864a40efcffdf408044c332a5aa38ec5618ed7b4eecb8f65faf45671bd6cdc65\",\"dweb:/ipfs/QmQJquTMtc6fgm5JQzGdsGpA2fqBe3MHWEdt2qzaLySMdN\"]},\"@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol\":{\"keccak256\":\"0x5384b9a56711ce7b72405c653ff8be3bb94131428919b380248e10f1ddb252de\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://979aa0e84f86851125d7ad79d7f974681c91680139e65ae426fee12671f81ca0\",\"dweb:/ipfs/QmVk59WkCeqaUVRBeiCfftVstSXugXgyXMurEeAicAx3du\"]},\"@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol\":{\"keccak256\":\"0x54003e523c7ed6d3e8b5aa3f7c80617d8ee1155554f31a1bf6e3fc3eeb634fd4\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://fb28386a17c82af817ef65fbdf7b2210bd33eab9b3f93a1956155a13eeb22de8\",\"dweb:/ipfs/QmSWp559q5UEKryeqUyyheAPvrLB6NaAjZbbRHMqY8cXkA\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol\":{\"keccak256\":\"0x6b8501cde10ce06296268facb2b504765995eeb948434dbb6292b30e0852a757\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://0ea0a9865ca170dd4b8dd63d298b8b0dc73910242dad0ce567e6a68400c0df0f\",\"dweb:/ipfs/QmfUy1FXn6a6JZW4qE3RUudD1fH7BErNTDTgEPwEcdWCVg\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol\":{\"keccak256\":\"0x78f553c8b63ca0b8ca892e3461aeb2d176f0b5e574ae0ea616bbb70d33d5e5f2\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://f2e9a8f5df9cf5b8326cefa666abc21c41fd09fd4ea3fd73a55b1346fa1693e8\",\"dweb:/ipfs/QmPNrMzHNpE97SwHwjXhHCttKQQSt2oYUforvPenVuemRJ\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol\":{\"keccak256\":\"0x9b4fab6dcac1337f78e04d67d8c2b48b1de8bd4bbf14b475840f9dbda7b8f21e\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://cc2f3629ad0cb46bd4f595880591ad6c9d75a82d920cb9355e462fbf8022c820\",\"dweb:/ipfs/QmXMovxK4qpWT4yffXxUVjkMNwxEfS6mtn39mLSmjaxEdW\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol\":{\"keccak256\":\"0x6cc4b0724d977190c7441dfc3be6c6e48b43b555c3370af32ef5b6600f15f53f\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://3e89c944642772a42429f21a11017b57deb98a9198f8e4f8749f00aaee71299e\",\"dweb:/ipfs/QmaSv9GvqikcGHJ3tcwATDHSpQw6mfnHPDtcfqcZSS7LF6\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol\":{\"keccak256\":\"0x84bb6579908dcb80621e089da34eac2a06856a90bc384710a7c8df07a70d0995\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://3809d93a1cfacdec425c277c519db137b86691459533956ecd18120bfb801ed0\",\"dweb:/ipfs/Qmc66ovCtVYANKH76iv8a58u1FQ3yKVKBVbK1aVk2RZzRT\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol\":{\"keccak256\":\"0xb50180797117711b1ecf7adf628892016ad864d2321bfaf7eaf43901b5394946\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://4121ed7bf52de22702cc42972fecb37c7d0461834ab3c601b32dc737789fde4c\",\"dweb:/ipfs/QmaU1EWAzfzmiazMfuSJMybKMVpyoc6DyUPJpxQCc8UCxb\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol\":{\"keccak256\":\"0x41464648136cbcd34b7df28471eca470f67c80409b2ac01b202ac7092ead4890\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://3dc4cf90b882903e91a0086268a09b541ac0255d6a872a97de3cd81b1ee14885\",\"dweb:/ipfs/QmbF1HfpQ854hhmjc5xqiauevFEZhKWMFHUgDTH1VZXrkQ\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol\":{\"keccak256\":\"0x647f623df16dfb57d0d380bf6aada5f1d9bcca88ac0ea4f998d7159ba8da95e1\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://95d49cf7a3b14214ad231746171d02c0019bc0ef291250f2d68998c7de82069a\",\"dweb:/ipfs/QmbSUAHoEA8iMres2heL2wCnKSRruD92Qd3eMNzr4w8kMW\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol\":{\"keccak256\":\"0xa94f5ad95da2716a21cf6a0c7861ce03ba70c6931cfc8a9bcae741881e489a99\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://2eee2bae93ce8aae1e75aed6153e3d46f2d0c3462f47d9a99713054fff71bc80\",\"dweb:/ipfs/QmVh5HDeJo3p4rUV45RVCBGFpEN2G3gwL7ADT73csPnj5Q\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol\":{\"keccak256\":\"0x55be78ffb441c782f612b153d7d9049e3f0dbfd412c1f7df29c896b972b2985f\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://a223c68e38a6c9b1e363e525911bc7eda44ea517865ae53bd0d34ff858cc02ae\",\"dweb:/ipfs/QmVruGehibG6Emr2A6JHwUnhd4NzsGkE24cbGqnDpEvrKh\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol\":{\"keccak256\":\"0x7456cd394cc905aae7cdbd4601ce1c296c768c13c28e66efbb913cc070bad3e4\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://5a6589b428b724721ba5b4dd196c8f366a6e694ef313add093f29af64496c042\",\"dweb:/ipfs/QmSMgV6y8L6pyyzDz6kKmafVwujNWcjTqutpCBxe4uNRqg\"]},\"@superfluid-finance/ethereum-contracts/contracts/libs/ERC777Helper.sol\":{\"keccak256\":\"0x785bacfcf288c9b1e3cf40bd325e02efc76e8e43f3fc10d29901ce94c2675f41\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://e4ab86efe2b4ce259448bea9c8d97c13568e8447abbd49b90ed1aa60beebfd5f\",\"dweb:/ipfs/QmVS19CDpyUE7wdMejpvcusNX2Ufw9U7h93KrTDQKgKrWq\"]},\"@superfluid-finance/ethereum-contracts/contracts/libs/EventsEmitter.sol\":{\"keccak256\":\"0x20e4df2eb573a690a113afcb014fbcd68a8e622cff483bb0940a99e5b3b044ab\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://fc7d9593f15b9e03622ed5bf666ad41a69ea21e18fab0db2d2f3eeda522f7fe0\",\"dweb:/ipfs/QmRx9EKRFa34LbVyU1mjyyvFMnBYN7jJtQhnXsLA9PimCP\"]},\"@superfluid-finance/ethereum-contracts/contracts/libs/FixedSizeData.sol\":{\"keccak256\":\"0x0e0a0dce20709b28c2df39a8203ce03cf822a81cbcdfaa1e682d0911ded4d42c\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://5a70c9a48e373004db224afe4dea22c993914ba3dd2da3f3c92d6278cccbd6c0\",\"dweb:/ipfs/QmaGMr7xmiTn31RjgTZgYriSCTxXdXVVDK1ZHf26JjzBMB\"]},\"@superfluid-finance/ethereum-contracts/contracts/superfluid/SuperfluidToken.sol\":{\"keccak256\":\"0x8d09c18f0b1315189bcc91c797760792ec9a56ef9c1788f73ffbea2f2b006c2e\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://c3b15fbe1e7b18afb1ab49e4c4f35b9231f4563fb6ba122d93ec488eee092e73\",\"dweb:/ipfs/QmYVicfTymcAm5vsFwEnC9raHYRssqjV7A2qyTp4aJWdHH\"]},\"@superfluid-finance/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol\":{\"keccak256\":\"0x368ba82f761822466ebc49782b99c9eaa2664e7d4582fde1cb38098ee9926f71\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://02984681098e314734e18fc14ffcdbf9cf2bd079fb5735af75c44b5641f0dcf5\",\"dweb:/ipfs/QmedH2QB6VkyJ8Kw1tQC2E8VDF3u23U2eT5tP6VGY1KwBP\"]},\"@superfluid-finance/ethereum-contracts/contracts/upgradability/UUPSUtils.sol\":{\"keccak256\":\"0x6dd522f9867e769a945cea48a15d63488cdbd19091ed38adc95b43a70129b349\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://ed451eb0ed865b2d2338269134236d59ceafe4685d4b5df68843924620f6b715\",\"dweb:/ipfs/QmVr7hh9mnmfFzoJd4oXmuSfkXL2a4gdAKoRYXMfe3BFaE\"]},\"project:/contracts/BdlToken.sol\":{\"keccak256\":\"0x13cc4d77128ffd74ff6f722c9b9d16d646373528f90e24385e875e76b5c06b7c\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://ca5baff816338891b00344559a3f38af8dd31165ccdc1fc89b9b490c91c19e6c\",\"dweb:/ipfs/QmUuPSACR4WB7p4q4VME49LqWVPU8NGFxu55WGMbjLjh6n\"]},\"project:/contracts/PaymentFlow.sol\":{\"keccak256\":\"0x3ef8d6959fd17b27ef179233335507f0c91bb4a9e287c23ac70514ce868b0cfc\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://187b9d216659614417d243afc6796a1a33b7dd005b0e0eeec783d38c3446188a\",\"dweb:/ipfs/QmX7vRUnnY5vNtHntjhsA4LAH1C25xSHUSLJdEEdQepPL2\"]}},\"version\":1}",
-  "bytecode": "0x6080604052600680546001600160a01b031990811673eb796bdb90ffa0f28255275e16936d25d341860317909155600780549091167349e565ed1bdc17f3d220f72df0857c26fa83f87317905534801561005857600080fd5b50604051610c6b380380610c6b8339810160408190526100779161014b565b60028054336001600160a01b0319918216179091556003805482166001600160a01b0384811691909117909155600654600480549183169184168217815560075460058054919094169085168117909355604080518082018252838152602001849052600080548616841790556001805490951690931790935590516315a722b960e31b815264150000000192810183905263ad3915c890602401600060405180830381600087803b15801561012c57600080fd5b505af1158015610140573d6000803e3d6000fd5b50505050505061017b565b60006020828403121561015d57600080fd5b81516001600160a01b038116811461017457600080fd5b9392505050565b610ae18061018a6000396000f3fe608060405234801561001057600080fd5b50600436106100c95760003560e01c80635f9e7d7711610081578063d310556b1161005b578063d310556b146101c3578063d86ed3e5146101ee578063f0ee2ce11461020157600080fd5b80635f9e7d7714610188578063884d1f401461019b578063a987a736146101ae57600080fd5b806330d9c915116100b257806330d9c9151461012857806353c11f991461013b57806355586a311461014e57600080fd5b8063215eed02146100ce578063230dbd2914610108575b600080fd5b6100f57fa9214cc96615e0085d3bb077758db69497dc2dce3b2b1e97bc93c3d18d83efd381565b6040519081526020015b60405180910390f35b61011b6101163660046106f7565b610214565b6040516100ff9190610812565b61011b61013636600461082c565b61028a565b61011b6101493660046106f7565b6102fb565b600054600154610168916001600160a01b03908116911682565b604080516001600160a01b039384168152929091166020830152016100ff565b61011b61019636600461082c565b61036c565b61011b6101a936600461082c565b6103dd565b6101c16101bc3660046108cb565b61044e565b005b6002546101d6906001600160a01b031681565b6040516001600160a01b0390911681526020016100ff565b61011b6101fc3660046106f7565b610472565b6101c161020f3660046108e8565b6104e3565b60405162461bcd60e51b815260206004820152602e60248201527f556e737570706f727465642063616c6c6261636b202d2041667465722041677260448201527f65656d656e74205570646174656400000000000000000000000000000000000060648201526060906084015b60405180910390fd5b60405162461bcd60e51b815260206004820152602f60248201527f556e737570706f727465642063616c6c6261636b202d204265666f726520416760448201527f7265656d656e74204372656174656400000000000000000000000000000000006064820152606090608401610281565b60405162461bcd60e51b815260206004820152603160248201527f556e737570706f727465642063616c6c6261636b202d2041667465722041677260448201527f65656d656e74205465726d696e617465640000000000000000000000000000006064820152606090608401610281565b60405162461bcd60e51b815260206004820152603360248201527f556e737570706f727465642063616c6c6261636b202d20204265666f7265204160448201527f677265656d656e74205465726d696e61746564000000000000000000000000006064820152606090608401610281565b60405162461bcd60e51b815260206004820152602f60248201527f556e737570706f727465642063616c6c6261636b202d204265666f726520416760448201527f7265656d656e74207570646174656400000000000000000000000000000000006064820152606090608401610281565b60025460035461046f916000916001600160a01b0391821691859116610502565b50565b60405162461bcd60e51b815260206004820152602e60248201527f556e737570706f727465642063616c6c6261636b202d2041667465722041677260448201527f65656d656e7420437265617465640000000000000000000000000000000000006064820152606090608401610281565b6003546104fe9060009084906001600160a01b031684610528565b5050565b604080516000815260208101909152610522908590859085908590610548565b50505050565b604080516000815260208101909152610522908590859085908590610654565b845460018601546040805160008152602081019091526001600160a01b03928316926339255d5b921690819063b4b333c69061058d9088908b908b9060448101610957565b60408051808303601f1901815291815260208201805160e094851b7bffffffffffffffffffffffffffffffffffffffffffffffffffffffff909116179052519185901b7fffffffff00000000000000000000000000000000000000000000000000000000168252610605939250908690600401610995565b6000604051808303816000875af1158015610624573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f1916820160405261064c91908101906109c9565b505050505050565b845460018601546040805160008152602081019091526001600160a01b03928316926339255d5b92169081906362fc305e9061058d9089908b908a9060448101610a76565b6001600160a01b038116811461046f57600080fd5b60008083601f8401126106c057600080fd5b50813567ffffffffffffffff8111156106d857600080fd5b6020830191508360208285010111156106f057600080fd5b9250929050565b600080600080600080600080600060c08a8c03121561071557600080fd5b893561072081610699565b985060208a013561073081610699565b975060408a0135965060608a013567ffffffffffffffff8082111561075457600080fd5b6107608d838e016106ae565b909850965060808c013591508082111561077957600080fd5b6107858d838e016106ae565b909650945060a08c013591508082111561079e57600080fd5b506107ab8c828d016106ae565b915080935050809150509295985092959850929598565b60005b838110156107dd5781810151838201526020016107c5565b50506000910152565b600081518084526107fe8160208601602086016107c2565b601f01601f19169290920160200192915050565b60208152600061082560208301846107e6565b9392505050565b600080600080600080600060a0888a03121561084757600080fd5b873561085281610699565b9650602088013561086281610699565b955060408801359450606088013567ffffffffffffffff8082111561088657600080fd5b6108928b838c016106ae565b909650945060808a01359150808211156108ab57600080fd5b506108b88a828b016106ae565b989b979a50959850939692959293505050565b6000602082840312156108dd57600080fd5b813561082581610699565b600080604083850312156108fb57600080fd5b823561090681610699565b91506020830135600b81900b811461091d57600080fd5b809150509250929050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b60006001600160a01b03808716835280861660208401528085166040840152506080606083015261098b60808301846107e6565b9695505050505050565b6001600160a01b03841681526060602082015260006109b760608301856107e6565b828103604084015261098b81856107e6565b6000602082840312156109db57600080fd5b815167ffffffffffffffff808211156109f357600080fd5b818401915084601f830112610a0757600080fd5b815181811115610a1957610a19610928565b604051601f8201601f19908116603f01168101908382118183101715610a4157610a41610928565b81604052828152876020848701011115610a5a57600080fd5b610a6b8360208301602088016107c2565b979650505050505050565b60006001600160a01b03808716835280861660208401525083600b0b60408301526080606083015261098b60808301846107e656fea26469706673582212202d690a5a4fb1c6cc7117c761f6a9fa8d8df100306808766d53d56f6e417ca4cd64736f6c63430008100033",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100c95760003560e01c80635f9e7d7711610081578063d310556b1161005b578063d310556b146101c3578063d86ed3e5146101ee578063f0ee2ce11461020157600080fd5b80635f9e7d7714610188578063884d1f401461019b578063a987a736146101ae57600080fd5b806330d9c915116100b257806330d9c9151461012857806353c11f991461013b57806355586a311461014e57600080fd5b8063215eed02146100ce578063230dbd2914610108575b600080fd5b6100f57fa9214cc96615e0085d3bb077758db69497dc2dce3b2b1e97bc93c3d18d83efd381565b6040519081526020015b60405180910390f35b61011b6101163660046106f7565b610214565b6040516100ff9190610812565b61011b61013636600461082c565b61028a565b61011b6101493660046106f7565b6102fb565b600054600154610168916001600160a01b03908116911682565b604080516001600160a01b039384168152929091166020830152016100ff565b61011b61019636600461082c565b61036c565b61011b6101a936600461082c565b6103dd565b6101c16101bc3660046108cb565b61044e565b005b6002546101d6906001600160a01b031681565b6040516001600160a01b0390911681526020016100ff565b61011b6101fc3660046106f7565b610472565b6101c161020f3660046108e8565b6104e3565b60405162461bcd60e51b815260206004820152602e60248201527f556e737570706f727465642063616c6c6261636b202d2041667465722041677260448201527f65656d656e74205570646174656400000000000000000000000000000000000060648201526060906084015b60405180910390fd5b60405162461bcd60e51b815260206004820152602f60248201527f556e737570706f727465642063616c6c6261636b202d204265666f726520416760448201527f7265656d656e74204372656174656400000000000000000000000000000000006064820152606090608401610281565b60405162461bcd60e51b815260206004820152603160248201527f556e737570706f727465642063616c6c6261636b202d2041667465722041677260448201527f65656d656e74205465726d696e617465640000000000000000000000000000006064820152606090608401610281565b60405162461bcd60e51b815260206004820152603360248201527f556e737570706f727465642063616c6c6261636b202d20204265666f7265204160448201527f677265656d656e74205465726d696e61746564000000000000000000000000006064820152606090608401610281565b60405162461bcd60e51b815260206004820152602f60248201527f556e737570706f727465642063616c6c6261636b202d204265666f726520416760448201527f7265656d656e74207570646174656400000000000000000000000000000000006064820152606090608401610281565b60025460035461046f916000916001600160a01b0391821691859116610502565b50565b60405162461bcd60e51b815260206004820152602e60248201527f556e737570706f727465642063616c6c6261636b202d2041667465722041677260448201527f65656d656e7420437265617465640000000000000000000000000000000000006064820152606090608401610281565b6003546104fe9060009084906001600160a01b031684610528565b5050565b604080516000815260208101909152610522908590859085908590610548565b50505050565b604080516000815260208101909152610522908590859085908590610654565b845460018601546040805160008152602081019091526001600160a01b03928316926339255d5b921690819063b4b333c69061058d9088908b908b9060448101610957565b60408051808303601f1901815291815260208201805160e094851b7bffffffffffffffffffffffffffffffffffffffffffffffffffffffff909116179052519185901b7fffffffff00000000000000000000000000000000000000000000000000000000168252610605939250908690600401610995565b6000604051808303816000875af1158015610624573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f1916820160405261064c91908101906109c9565b505050505050565b845460018601546040805160008152602081019091526001600160a01b03928316926339255d5b92169081906362fc305e9061058d9089908b908a9060448101610a76565b6001600160a01b038116811461046f57600080fd5b60008083601f8401126106c057600080fd5b50813567ffffffffffffffff8111156106d857600080fd5b6020830191508360208285010111156106f057600080fd5b9250929050565b600080600080600080600080600060c08a8c03121561071557600080fd5b893561072081610699565b985060208a013561073081610699565b975060408a0135965060608a013567ffffffffffffffff8082111561075457600080fd5b6107608d838e016106ae565b909850965060808c013591508082111561077957600080fd5b6107858d838e016106ae565b909650945060a08c013591508082111561079e57600080fd5b506107ab8c828d016106ae565b915080935050809150509295985092959850929598565b60005b838110156107dd5781810151838201526020016107c5565b50506000910152565b600081518084526107fe8160208601602086016107c2565b601f01601f19169290920160200192915050565b60208152600061082560208301846107e6565b9392505050565b600080600080600080600060a0888a03121561084757600080fd5b873561085281610699565b9650602088013561086281610699565b955060408801359450606088013567ffffffffffffffff8082111561088657600080fd5b6108928b838c016106ae565b909650945060808a01359150808211156108ab57600080fd5b506108b88a828b016106ae565b989b979a50959850939692959293505050565b6000602082840312156108dd57600080fd5b813561082581610699565b600080604083850312156108fb57600080fd5b823561090681610699565b91506020830135600b81900b811461091d57600080fd5b809150509250929050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b60006001600160a01b03808716835280861660208401528085166040840152506080606083015261098b60808301846107e6565b9695505050505050565b6001600160a01b03841681526060602082015260006109b760608301856107e6565b828103604084015261098b81856107e6565b6000602082840312156109db57600080fd5b815167ffffffffffffffff808211156109f357600080fd5b818401915084601f830112610a0757600080fd5b815181811115610a1957610a19610928565b604051601f8201601f19908116603f01168101908382118183101715610a4157610a41610928565b81604052828152876020848701011115610a5a57600080fd5b610a6b8360208301602088016107c2565b979650505050505050565b60006001600160a01b03808716835280861660208401525083600b0b60408301526080606083015261098b60808301846107e656fea26469706673582212202d690a5a4fb1c6cc7117c761f6a9fa8d8df100306808766d53d56f6e417ca4cd64736f6c63430008100033",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"CFA_ID\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"_deployer\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ISuperToken\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"afterAgreementCreated\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ISuperToken\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"afterAgreementTerminated\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ISuperToken\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"afterAgreementUpdated\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ISuperToken\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"beforeAgreementCreated\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ISuperToken\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"beforeAgreementTerminated\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract ISuperToken\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"beforeAgreementUpdated\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"cfaV1Lib\",\"outputs\":[{\"internalType\":\"contract ISuperfluid\",\"name\":\"host\",\"type\":\"address\"},{\"internalType\":\"contract IConstantFlowAgreementV1\",\"name\":\"cfa\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"},{\"internalType\":\"int96\",\"name\":\"flowRate\",\"type\":\"int96\"}],\"name\":\"startStreaming\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"}],\"name\":\"stopStreaming\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/PaymentFlow.sol\":\"PaymentFlow\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1500},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/proxy/utils/Initializable.sol\":{\"keccak256\":\"0x2a21b14ff90012878752f230d3ffd5c3405e5938d06c97a7d89c0a64561d0d66\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3313a8f9bb1f9476857c9050067b31982bf2140b83d84f3bc0cec1f62bbe947f\",\"dweb:/ipfs/Qma17Pk8NRe7aB4UD3jjVxk7nSFaov3eQyv86hcyqkwJRV\"]},\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34\",\"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr\"]},\"@openzeppelin/contracts/token/ERC20/extensions/draft-IERC20Permit.sol\":{\"keccak256\":\"0xf41ca991f30855bf80ffd11e9347856a517b977f0a6c2d52e6421a99b7840329\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b2717fd2bdac99daa960a6de500754ea1b932093c946388c381da48658234b95\",\"dweb:/ipfs/QmP6QVMn6UeA3ByahyJbYQr5M6coHKBKsf3ySZSfbyA8R7\"]},\"@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol\":{\"keccak256\":\"0x032807210d1d7d218963d7355d62e021a84bf1b3339f4f50be2f63b53cccaf29\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://11756f42121f6541a35a8339ea899ee7514cfaa2e6d740625fcc844419296aa6\",\"dweb:/ipfs/QmekMuk6BY4DAjzeXr4MSbKdgoqqsZnA8JPtuyWc6CwXHf\"]},\"@openzeppelin/contracts/token/ERC777/IERC777.sol\":{\"keccak256\":\"0x093eaf9a4b05adf2bd3730b753f9e1725ed34b80ea4b5f08477ff2f46a188586\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://46e9a9b37e8cb6332ed21a8d3f8a6723d897e4a97db63095424522a80b3cfc15\",\"dweb:/ipfs/QmdHcBPPGKQBnmeaAN3Y6YKUPqwR73RrHTiX5uTr6eVx1M\"]},\"@openzeppelin/contracts/token/ERC777/IERC777Recipient.sol\":{\"keccak256\":\"0x1a5d61db2733202ba361e6d6741cd2e662380e22b80e987eacfc91973f2267dc\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://04c0cd697050a6516b7779aa2343ad2d0e5217d8915ac2382681dfdf4e445be3\",\"dweb:/ipfs/QmPCBCZgm7pHBwwogE2F9NCN3UfTdLNhqc8UDEvw8kDzyA\"]},\"@openzeppelin/contracts/token/ERC777/IERC777Sender.sol\":{\"keccak256\":\"0x742e51d63b108240759794360637468d9fcbf072cbd357744790d356a87bb382\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://23912910ce2bb68e49ff83f43fcfa864210ee44580491e876db14922f8aecc18\",\"dweb:/ipfs/QmU6GnRQ51xvY8D57kPCV47oGeYozaz5AQZUCHxFfXdFZ4\"]},\"@openzeppelin/contracts/utils/Address.sol\":{\"keccak256\":\"0xd6153ce99bcdcce22b124f755e72553295be6abcd63804cfdffceb188b8bef10\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://35c47bece3c03caaa07fab37dd2bb3413bfbca20db7bd9895024390e0a469487\",\"dweb:/ipfs/QmPGWT2x3QHcKxqe6gRmAkdakhbaRgx3DLzcakHz5M4eXG\"]},\"@openzeppelin/contracts/utils/introspection/IERC1820Registry.sol\":{\"keccak256\":\"0x1e34ab6382525e2c48a01d9edbcfeab024072e8fa80332d48fb7011ebdf59562\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8d4c3a1cacb1b5ce5681edac3dc3034a9e6ea6b9e4ef338564ca70b9b6ea2fd7\",\"dweb:/ipfs/QmXwhPvgGK4envqERyjh5W7CtrH72geAE7fh1EFcVerviw\"]},\"@openzeppelin/contracts/utils/math/SafeCast.sol\":{\"keccak256\":\"0x02686c31ccb9ee77a299fa5f47327af5271f251a707a0e24f321957166ff0434\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://cb562d8ae1da31249ca0d8553df9f89ef4c3c110a018c4449dde68ae30e51ec1\",\"dweb:/ipfs/QmUwxjtTUYB89ymeV46TZPmTsGnYrKNcgTHk7MQA1MG3hj\"]},\"@openzeppelin/contracts/utils/math/SafeMath.sol\":{\"keccak256\":\"0x0f633a0223d9a1dcccfcf38a64c9de0874dfcbfac0c6941ccf074d63a2ce0e1e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://864a40efcffdf408044c332a5aa38ec5618ed7b4eecb8f65faf45671bd6cdc65\",\"dweb:/ipfs/QmQJquTMtc6fgm5JQzGdsGpA2fqBe3MHWEdt2qzaLySMdN\"]},\"@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol\":{\"keccak256\":\"0x5384b9a56711ce7b72405c653ff8be3bb94131428919b380248e10f1ddb252de\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://979aa0e84f86851125d7ad79d7f974681c91680139e65ae426fee12671f81ca0\",\"dweb:/ipfs/QmVk59WkCeqaUVRBeiCfftVstSXugXgyXMurEeAicAx3du\"]},\"@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol\":{\"keccak256\":\"0x54003e523c7ed6d3e8b5aa3f7c80617d8ee1155554f31a1bf6e3fc3eeb634fd4\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://fb28386a17c82af817ef65fbdf7b2210bd33eab9b3f93a1956155a13eeb22de8\",\"dweb:/ipfs/QmSWp559q5UEKryeqUyyheAPvrLB6NaAjZbbRHMqY8cXkA\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol\":{\"keccak256\":\"0x6b8501cde10ce06296268facb2b504765995eeb948434dbb6292b30e0852a757\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://0ea0a9865ca170dd4b8dd63d298b8b0dc73910242dad0ce567e6a68400c0df0f\",\"dweb:/ipfs/QmfUy1FXn6a6JZW4qE3RUudD1fH7BErNTDTgEPwEcdWCVg\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol\":{\"keccak256\":\"0x78f553c8b63ca0b8ca892e3461aeb2d176f0b5e574ae0ea616bbb70d33d5e5f2\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://f2e9a8f5df9cf5b8326cefa666abc21c41fd09fd4ea3fd73a55b1346fa1693e8\",\"dweb:/ipfs/QmPNrMzHNpE97SwHwjXhHCttKQQSt2oYUforvPenVuemRJ\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol\":{\"keccak256\":\"0x9b4fab6dcac1337f78e04d67d8c2b48b1de8bd4bbf14b475840f9dbda7b8f21e\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://cc2f3629ad0cb46bd4f595880591ad6c9d75a82d920cb9355e462fbf8022c820\",\"dweb:/ipfs/QmXMovxK4qpWT4yffXxUVjkMNwxEfS6mtn39mLSmjaxEdW\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol\":{\"keccak256\":\"0x6cc4b0724d977190c7441dfc3be6c6e48b43b555c3370af32ef5b6600f15f53f\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://3e89c944642772a42429f21a11017b57deb98a9198f8e4f8749f00aaee71299e\",\"dweb:/ipfs/QmaSv9GvqikcGHJ3tcwATDHSpQw6mfnHPDtcfqcZSS7LF6\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol\":{\"keccak256\":\"0x84bb6579908dcb80621e089da34eac2a06856a90bc384710a7c8df07a70d0995\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://3809d93a1cfacdec425c277c519db137b86691459533956ecd18120bfb801ed0\",\"dweb:/ipfs/Qmc66ovCtVYANKH76iv8a58u1FQ3yKVKBVbK1aVk2RZzRT\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol\":{\"keccak256\":\"0xb50180797117711b1ecf7adf628892016ad864d2321bfaf7eaf43901b5394946\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://4121ed7bf52de22702cc42972fecb37c7d0461834ab3c601b32dc737789fde4c\",\"dweb:/ipfs/QmaU1EWAzfzmiazMfuSJMybKMVpyoc6DyUPJpxQCc8UCxb\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol\":{\"keccak256\":\"0x41464648136cbcd34b7df28471eca470f67c80409b2ac01b202ac7092ead4890\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://3dc4cf90b882903e91a0086268a09b541ac0255d6a872a97de3cd81b1ee14885\",\"dweb:/ipfs/QmbF1HfpQ854hhmjc5xqiauevFEZhKWMFHUgDTH1VZXrkQ\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol\":{\"keccak256\":\"0x647f623df16dfb57d0d380bf6aada5f1d9bcca88ac0ea4f998d7159ba8da95e1\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://95d49cf7a3b14214ad231746171d02c0019bc0ef291250f2d68998c7de82069a\",\"dweb:/ipfs/QmbSUAHoEA8iMres2heL2wCnKSRruD92Qd3eMNzr4w8kMW\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol\":{\"keccak256\":\"0xa94f5ad95da2716a21cf6a0c7861ce03ba70c6931cfc8a9bcae741881e489a99\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://2eee2bae93ce8aae1e75aed6153e3d46f2d0c3462f47d9a99713054fff71bc80\",\"dweb:/ipfs/QmVh5HDeJo3p4rUV45RVCBGFpEN2G3gwL7ADT73csPnj5Q\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol\":{\"keccak256\":\"0x55be78ffb441c782f612b153d7d9049e3f0dbfd412c1f7df29c896b972b2985f\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://a223c68e38a6c9b1e363e525911bc7eda44ea517865ae53bd0d34ff858cc02ae\",\"dweb:/ipfs/QmVruGehibG6Emr2A6JHwUnhd4NzsGkE24cbGqnDpEvrKh\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol\":{\"keccak256\":\"0x7456cd394cc905aae7cdbd4601ce1c296c768c13c28e66efbb913cc070bad3e4\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://5a6589b428b724721ba5b4dd196c8f366a6e694ef313add093f29af64496c042\",\"dweb:/ipfs/QmSMgV6y8L6pyyzDz6kKmafVwujNWcjTqutpCBxe4uNRqg\"]},\"@superfluid-finance/ethereum-contracts/contracts/libs/ERC777Helper.sol\":{\"keccak256\":\"0x785bacfcf288c9b1e3cf40bd325e02efc76e8e43f3fc10d29901ce94c2675f41\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://e4ab86efe2b4ce259448bea9c8d97c13568e8447abbd49b90ed1aa60beebfd5f\",\"dweb:/ipfs/QmVS19CDpyUE7wdMejpvcusNX2Ufw9U7h93KrTDQKgKrWq\"]},\"@superfluid-finance/ethereum-contracts/contracts/libs/EventsEmitter.sol\":{\"keccak256\":\"0x20e4df2eb573a690a113afcb014fbcd68a8e622cff483bb0940a99e5b3b044ab\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://fc7d9593f15b9e03622ed5bf666ad41a69ea21e18fab0db2d2f3eeda522f7fe0\",\"dweb:/ipfs/QmRx9EKRFa34LbVyU1mjyyvFMnBYN7jJtQhnXsLA9PimCP\"]},\"@superfluid-finance/ethereum-contracts/contracts/libs/FixedSizeData.sol\":{\"keccak256\":\"0x0e0a0dce20709b28c2df39a8203ce03cf822a81cbcdfaa1e682d0911ded4d42c\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://5a70c9a48e373004db224afe4dea22c993914ba3dd2da3f3c92d6278cccbd6c0\",\"dweb:/ipfs/QmaGMr7xmiTn31RjgTZgYriSCTxXdXVVDK1ZHf26JjzBMB\"]},\"@superfluid-finance/ethereum-contracts/contracts/superfluid/SuperfluidToken.sol\":{\"keccak256\":\"0x8d09c18f0b1315189bcc91c797760792ec9a56ef9c1788f73ffbea2f2b006c2e\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://c3b15fbe1e7b18afb1ab49e4c4f35b9231f4563fb6ba122d93ec488eee092e73\",\"dweb:/ipfs/QmYVicfTymcAm5vsFwEnC9raHYRssqjV7A2qyTp4aJWdHH\"]},\"@superfluid-finance/ethereum-contracts/contracts/upgradability/UUPSProxiable.sol\":{\"keccak256\":\"0x368ba82f761822466ebc49782b99c9eaa2664e7d4582fde1cb38098ee9926f71\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://02984681098e314734e18fc14ffcdbf9cf2bd079fb5735af75c44b5641f0dcf5\",\"dweb:/ipfs/QmedH2QB6VkyJ8Kw1tQC2E8VDF3u23U2eT5tP6VGY1KwBP\"]},\"@superfluid-finance/ethereum-contracts/contracts/upgradability/UUPSUtils.sol\":{\"keccak256\":\"0x6dd522f9867e769a945cea48a15d63488cdbd19091ed38adc95b43a70129b349\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://ed451eb0ed865b2d2338269134236d59ceafe4685d4b5df68843924620f6b715\",\"dweb:/ipfs/QmVr7hh9mnmfFzoJd4oXmuSfkXL2a4gdAKoRYXMfe3BFaE\"]},\"project:/contracts/BdlToken.sol\":{\"keccak256\":\"0x0962797db586d87fb8d1316f11d44a0d3b6eb15dd21e19f3855fa2786b2f3bac\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://026bfb2473add14379e747e9b36e9714553e6f4284bfce87086f5446e1afdfd0\",\"dweb:/ipfs/QmQjnUtVezhxeuM5akwicGX1XWUfgAm3V5usSUsqqkXe3w\"]},\"project:/contracts/PaymentFlow.sol\":{\"keccak256\":\"0x3ef8d6959fd17b27ef179233335507f0c91bb4a9e287c23ac70514ce868b0cfc\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://187b9d216659614417d243afc6796a1a33b7dd005b0e0eeec783d38c3446188a\",\"dweb:/ipfs/QmX7vRUnnY5vNtHntjhsA4LAH1C25xSHUSLJdEEdQepPL2\"]}},\"version\":1}",
+  "bytecode": "0x6080604052600680546001600160a01b031990811673eb796bdb90ffa0f28255275e16936d25d341860317909155600780549091167349e565ed1bdc17f3d220f72df0857c26fa83f87317905534801561005857600080fd5b50604051610c6b380380610c6b8339810160408190526100779161014b565b60028054336001600160a01b0319918216179091556003805482166001600160a01b0384811691909117909155600654600480549183169184168217815560075460058054919094169085168117909355604080518082018252838152602001849052600080548616841790556001805490951690931790935590516315a722b960e31b815264150000000192810183905263ad3915c890602401600060405180830381600087803b15801561012c57600080fd5b505af1158015610140573d6000803e3d6000fd5b50505050505061017b565b60006020828403121561015d57600080fd5b81516001600160a01b038116811461017457600080fd5b9392505050565b610ae18061018a6000396000f3fe608060405234801561001057600080fd5b50600436106100c95760003560e01c80635f9e7d7711610081578063d310556b1161005b578063d310556b146101c3578063d86ed3e5146101ee578063f0ee2ce11461020157600080fd5b80635f9e7d7714610188578063884d1f401461019b578063a987a736146101ae57600080fd5b806330d9c915116100b257806330d9c9151461012857806353c11f991461013b57806355586a311461014e57600080fd5b8063215eed02146100ce578063230dbd2914610108575b600080fd5b6100f57fa9214cc96615e0085d3bb077758db69497dc2dce3b2b1e97bc93c3d18d83efd381565b6040519081526020015b60405180910390f35b61011b6101163660046106f7565b610214565b6040516100ff9190610812565b61011b61013636600461082c565b61028a565b61011b6101493660046106f7565b6102fb565b600054600154610168916001600160a01b03908116911682565b604080516001600160a01b039384168152929091166020830152016100ff565b61011b61019636600461082c565b61036c565b61011b6101a936600461082c565b6103dd565b6101c16101bc3660046108cb565b61044e565b005b6002546101d6906001600160a01b031681565b6040516001600160a01b0390911681526020016100ff565b61011b6101fc3660046106f7565b610472565b6101c161020f3660046108e8565b6104e3565b60405162461bcd60e51b815260206004820152602e60248201527f556e737570706f727465642063616c6c6261636b202d2041667465722041677260448201527f65656d656e74205570646174656400000000000000000000000000000000000060648201526060906084015b60405180910390fd5b60405162461bcd60e51b815260206004820152602f60248201527f556e737570706f727465642063616c6c6261636b202d204265666f726520416760448201527f7265656d656e74204372656174656400000000000000000000000000000000006064820152606090608401610281565b60405162461bcd60e51b815260206004820152603160248201527f556e737570706f727465642063616c6c6261636b202d2041667465722041677260448201527f65656d656e74205465726d696e617465640000000000000000000000000000006064820152606090608401610281565b60405162461bcd60e51b815260206004820152603360248201527f556e737570706f727465642063616c6c6261636b202d20204265666f7265204160448201527f677265656d656e74205465726d696e61746564000000000000000000000000006064820152606090608401610281565b60405162461bcd60e51b815260206004820152602f60248201527f556e737570706f727465642063616c6c6261636b202d204265666f726520416760448201527f7265656d656e74207570646174656400000000000000000000000000000000006064820152606090608401610281565b60025460035461046f916000916001600160a01b0391821691859116610502565b50565b60405162461bcd60e51b815260206004820152602e60248201527f556e737570706f727465642063616c6c6261636b202d2041667465722041677260448201527f65656d656e7420437265617465640000000000000000000000000000000000006064820152606090608401610281565b6003546104fe9060009084906001600160a01b031684610528565b5050565b604080516000815260208101909152610522908590859085908590610548565b50505050565b604080516000815260208101909152610522908590859085908590610654565b845460018601546040805160008152602081019091526001600160a01b03928316926339255d5b921690819063b4b333c69061058d9088908b908b9060448101610957565b60408051808303601f1901815291815260208201805160e094851b7bffffffffffffffffffffffffffffffffffffffffffffffffffffffff909116179052519185901b7fffffffff00000000000000000000000000000000000000000000000000000000168252610605939250908690600401610995565b6000604051808303816000875af1158015610624573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f1916820160405261064c91908101906109c9565b505050505050565b845460018601546040805160008152602081019091526001600160a01b03928316926339255d5b92169081906362fc305e9061058d9089908b908a9060448101610a76565b6001600160a01b038116811461046f57600080fd5b60008083601f8401126106c057600080fd5b50813567ffffffffffffffff8111156106d857600080fd5b6020830191508360208285010111156106f057600080fd5b9250929050565b600080600080600080600080600060c08a8c03121561071557600080fd5b893561072081610699565b985060208a013561073081610699565b975060408a0135965060608a013567ffffffffffffffff8082111561075457600080fd5b6107608d838e016106ae565b909850965060808c013591508082111561077957600080fd5b6107858d838e016106ae565b909650945060a08c013591508082111561079e57600080fd5b506107ab8c828d016106ae565b915080935050809150509295985092959850929598565b60005b838110156107dd5781810151838201526020016107c5565b50506000910152565b600081518084526107fe8160208601602086016107c2565b601f01601f19169290920160200192915050565b60208152600061082560208301846107e6565b9392505050565b600080600080600080600060a0888a03121561084757600080fd5b873561085281610699565b9650602088013561086281610699565b955060408801359450606088013567ffffffffffffffff8082111561088657600080fd5b6108928b838c016106ae565b909650945060808a01359150808211156108ab57600080fd5b506108b88a828b016106ae565b989b979a50959850939692959293505050565b6000602082840312156108dd57600080fd5b813561082581610699565b600080604083850312156108fb57600080fd5b823561090681610699565b91506020830135600b81900b811461091d57600080fd5b809150509250929050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b60006001600160a01b03808716835280861660208401528085166040840152506080606083015261098b60808301846107e6565b9695505050505050565b6001600160a01b03841681526060602082015260006109b760608301856107e6565b828103604084015261098b81856107e6565b6000602082840312156109db57600080fd5b815167ffffffffffffffff808211156109f357600080fd5b818401915084601f830112610a0757600080fd5b815181811115610a1957610a19610928565b604051601f8201601f19908116603f01168101908382118183101715610a4157610a41610928565b81604052828152876020848701011115610a5a57600080fd5b610a6b8360208301602088016107c2565b979650505050505050565b60006001600160a01b03808716835280861660208401525083600b0b60408301526080606083015261098b60808301846107e656fea2646970667358221220f5b093a674d8d7899e029a4a7a46a4b6323d6ef1957b045d03a75b185bace09a64736f6c63430008100033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100c95760003560e01c80635f9e7d7711610081578063d310556b1161005b578063d310556b146101c3578063d86ed3e5146101ee578063f0ee2ce11461020157600080fd5b80635f9e7d7714610188578063884d1f401461019b578063a987a736146101ae57600080fd5b806330d9c915116100b257806330d9c9151461012857806353c11f991461013b57806355586a311461014e57600080fd5b8063215eed02146100ce578063230dbd2914610108575b600080fd5b6100f57fa9214cc96615e0085d3bb077758db69497dc2dce3b2b1e97bc93c3d18d83efd381565b6040519081526020015b60405180910390f35b61011b6101163660046106f7565b610214565b6040516100ff9190610812565b61011b61013636600461082c565b61028a565b61011b6101493660046106f7565b6102fb565b600054600154610168916001600160a01b03908116911682565b604080516001600160a01b039384168152929091166020830152016100ff565b61011b61019636600461082c565b61036c565b61011b6101a936600461082c565b6103dd565b6101c16101bc3660046108cb565b61044e565b005b6002546101d6906001600160a01b031681565b6040516001600160a01b0390911681526020016100ff565b61011b6101fc3660046106f7565b610472565b6101c161020f3660046108e8565b6104e3565b60405162461bcd60e51b815260206004820152602e60248201527f556e737570706f727465642063616c6c6261636b202d2041667465722041677260448201527f65656d656e74205570646174656400000000000000000000000000000000000060648201526060906084015b60405180910390fd5b60405162461bcd60e51b815260206004820152602f60248201527f556e737570706f727465642063616c6c6261636b202d204265666f726520416760448201527f7265656d656e74204372656174656400000000000000000000000000000000006064820152606090608401610281565b60405162461bcd60e51b815260206004820152603160248201527f556e737570706f727465642063616c6c6261636b202d2041667465722041677260448201527f65656d656e74205465726d696e617465640000000000000000000000000000006064820152606090608401610281565b60405162461bcd60e51b815260206004820152603360248201527f556e737570706f727465642063616c6c6261636b202d20204265666f7265204160448201527f677265656d656e74205465726d696e61746564000000000000000000000000006064820152606090608401610281565b60405162461bcd60e51b815260206004820152602f60248201527f556e737570706f727465642063616c6c6261636b202d204265666f726520416760448201527f7265656d656e74207570646174656400000000000000000000000000000000006064820152606090608401610281565b60025460035461046f916000916001600160a01b0391821691859116610502565b50565b60405162461bcd60e51b815260206004820152602e60248201527f556e737570706f727465642063616c6c6261636b202d2041667465722041677260448201527f65656d656e7420437265617465640000000000000000000000000000000000006064820152606090608401610281565b6003546104fe9060009084906001600160a01b031684610528565b5050565b604080516000815260208101909152610522908590859085908590610548565b50505050565b604080516000815260208101909152610522908590859085908590610654565b845460018601546040805160008152602081019091526001600160a01b03928316926339255d5b921690819063b4b333c69061058d9088908b908b9060448101610957565b60408051808303601f1901815291815260208201805160e094851b7bffffffffffffffffffffffffffffffffffffffffffffffffffffffff909116179052519185901b7fffffffff00000000000000000000000000000000000000000000000000000000168252610605939250908690600401610995565b6000604051808303816000875af1158015610624573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f1916820160405261064c91908101906109c9565b505050505050565b845460018601546040805160008152602081019091526001600160a01b03928316926339255d5b92169081906362fc305e9061058d9089908b908a9060448101610a76565b6001600160a01b038116811461046f57600080fd5b60008083601f8401126106c057600080fd5b50813567ffffffffffffffff8111156106d857600080fd5b6020830191508360208285010111156106f057600080fd5b9250929050565b600080600080600080600080600060c08a8c03121561071557600080fd5b893561072081610699565b985060208a013561073081610699565b975060408a0135965060608a013567ffffffffffffffff8082111561075457600080fd5b6107608d838e016106ae565b909850965060808c013591508082111561077957600080fd5b6107858d838e016106ae565b909650945060a08c013591508082111561079e57600080fd5b506107ab8c828d016106ae565b915080935050809150509295985092959850929598565b60005b838110156107dd5781810151838201526020016107c5565b50506000910152565b600081518084526107fe8160208601602086016107c2565b601f01601f19169290920160200192915050565b60208152600061082560208301846107e6565b9392505050565b600080600080600080600060a0888a03121561084757600080fd5b873561085281610699565b9650602088013561086281610699565b955060408801359450606088013567ffffffffffffffff8082111561088657600080fd5b6108928b838c016106ae565b909650945060808a01359150808211156108ab57600080fd5b506108b88a828b016106ae565b989b979a50959850939692959293505050565b6000602082840312156108dd57600080fd5b813561082581610699565b600080604083850312156108fb57600080fd5b823561090681610699565b91506020830135600b81900b811461091d57600080fd5b809150509250929050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b60006001600160a01b03808716835280861660208401528085166040840152506080606083015261098b60808301846107e6565b9695505050505050565b6001600160a01b03841681526060602082015260006109b760608301856107e6565b828103604084015261098b81856107e6565b6000602082840312156109db57600080fd5b815167ffffffffffffffff808211156109f357600080fd5b818401915084601f830112610a0757600080fd5b815181811115610a1957610a19610928565b604051601f8201601f19908116603f01168101908382118183101715610a4157610a41610928565b81604052828152876020848701011115610a5a57600080fd5b610a6b8360208301602088016107c2565b979650505050505050565b60006001600160a01b03808716835280861660208401525083600b0b60408301526080606083015261098b60808301846107e656fea2646970667358221220f5b093a674d8d7899e029a4a7a46a4b6323d6ef1957b045d03a75b185bace09a64736f6c63430008100033",
   "immutableReferences": {},
   "generatedSources": [
     {
@@ -7658,7 +7652,7 @@
     "absolutePath": "project:/contracts/PaymentFlow.sol",
     "exportedSymbols": {
       "BdlToken": [
-        12173
+        12205
       ],
       "CFAv1Library": [
         6076
@@ -7679,7 +7673,7 @@
         8324
       ],
       "PaymentFlow": [
-        13621
+        13709
       ],
       "SuperAppBase": [
         6224
@@ -7688,12 +7682,12 @@
         6757
       ]
     },
-    "id": 13622,
+    "id": 13710,
     "license": "GPL-3.0",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 13414,
+        "id": 13502,
         "literals": [
           "solidity",
           ">=",
@@ -7709,16 +7703,16 @@
       {
         "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
         "file": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
-        "id": 13420,
+        "id": 13508,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 13622,
+        "scope": 13710,
         "sourceUnit": 8325,
         "src": "69:177:51",
         "symbolAliases": [
           {
             "foreign": {
-              "id": 13415,
+              "id": 13503,
               "name": "ISuperfluid",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -7730,7 +7724,7 @@
           },
           {
             "foreign": {
-              "id": 13416,
+              "id": 13504,
               "name": "ISuperToken",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -7742,7 +7736,7 @@
           },
           {
             "foreign": {
-              "id": 13417,
+              "id": 13505,
               "name": "ISuperApp",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -7754,7 +7748,7 @@
           },
           {
             "foreign": {
-              "id": 13418,
+              "id": 13506,
               "name": "ISuperAgreement",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -7766,7 +7760,7 @@
           },
           {
             "foreign": {
-              "id": 13419,
+              "id": 13507,
               "name": "SuperAppDefinitions",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -7782,16 +7776,16 @@
       {
         "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol",
         "file": "@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol",
-        "id": 13422,
+        "id": 13510,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 13622,
+        "scope": 13710,
         "sourceUnit": 6077,
         "src": "247:100:51",
         "symbolAliases": [
           {
             "foreign": {
-              "id": 13421,
+              "id": 13509,
               "name": "CFAv1Library",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -7807,16 +7801,16 @@
       {
         "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
         "file": "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
-        "id": 13424,
+        "id": 13512,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 13622,
+        "scope": 13710,
         "sourceUnit": 6595,
         "src": "348:141:51",
         "symbolAliases": [
           {
             "foreign": {
-              "id": 13423,
+              "id": 13511,
               "name": "IConstantFlowAgreementV1",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -7832,16 +7826,16 @@
       {
         "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol",
         "file": "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol",
-        "id": 13426,
+        "id": 13514,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 13622,
+        "scope": 13710,
         "sourceUnit": 6225,
         "src": "490:100:51",
         "symbolAliases": [
           {
             "foreign": {
-              "id": 13425,
+              "id": 13513,
               "name": "SuperAppBase",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -7857,20 +7851,20 @@
       {
         "absolutePath": "project:/contracts/BdlToken.sol",
         "file": "./BdlToken.sol",
-        "id": 13428,
+        "id": 13516,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 13622,
-        "sourceUnit": 12174,
+        "scope": 13710,
+        "sourceUnit": 12206,
         "src": "591:40:51",
         "symbolAliases": [
           {
             "foreign": {
-              "id": 13427,
+              "id": 13515,
               "name": "BdlToken",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 12173,
+              "referencedDeclaration": 12205,
               "src": "599:8:51",
               "typeDescriptions": {}
             },
@@ -7884,7 +7878,7 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 13429,
+              "id": 13517,
               "name": "SuperAppBase",
               "nameLocations": [
                 "657:12:51"
@@ -7893,7 +7887,7 @@
               "referencedDeclaration": 6224,
               "src": "657:12:51"
             },
-            "id": 13430,
+            "id": 13518,
             "nodeType": "InheritanceSpecifier",
             "src": "657:12:51"
           }
@@ -7902,9 +7896,9 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 13621,
+        "id": 13709,
         "linearizedBaseContracts": [
-          13621,
+          13709,
           6224,
           7334
         ],
@@ -7914,9 +7908,9 @@
         "nodes": [
           {
             "global": false,
-            "id": 13434,
+            "id": 13522,
             "libraryName": {
-              "id": 13431,
+              "id": 13519,
               "name": "CFAv1Library",
               "nameLocations": [
                 "682:12:51"
@@ -7928,10 +7922,10 @@
             "nodeType": "UsingForDirective",
             "src": "676:45:51",
             "typeName": {
-              "id": 13433,
+              "id": 13521,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 13432,
+                "id": 13520,
                 "name": "CFAv1Library.InitData",
                 "nameLocations": [
                   "699:12:51",
@@ -7952,12 +7946,12 @@
           {
             "constant": false,
             "functionSelector": "55586a31",
-            "id": 13437,
+            "id": 13525,
             "mutability": "mutable",
             "name": "cfaV1Lib",
             "nameLocation": "756:8:51",
             "nodeType": "VariableDeclaration",
-            "scope": 13621,
+            "scope": 13709,
             "src": "727:37:51",
             "stateVariable": true,
             "storageLocation": "default",
@@ -7966,10 +7960,10 @@
               "typeString": "struct CFAv1Library.InitData"
             },
             "typeName": {
-              "id": 13436,
+              "id": 13524,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 13435,
+                "id": 13523,
                 "name": "CFAv1Library.InitData",
                 "nameLocations": [
                   "727:12:51",
@@ -7991,12 +7985,12 @@
           {
             "constant": true,
             "functionSelector": "215eed02",
-            "id": 13442,
+            "id": 13530,
             "mutability": "constant",
             "name": "CFA_ID",
             "nameLocation": "794:6:51",
             "nodeType": "VariableDeclaration",
-            "scope": 13621,
+            "scope": 13709,
             "src": "770:112:51",
             "stateVariable": true,
             "storageLocation": "default",
@@ -8005,7 +7999,7 @@
               "typeString": "bytes32"
             },
             "typeName": {
-              "id": 13438,
+              "id": 13526,
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "770:7:51",
@@ -8018,7 +8012,7 @@
               "arguments": [
                 {
                   "hexValue": "6f72672e7375706572666c7569642d66696e616e63652e61677265656d656e74732e436f6e7374616e74466c6f7741677265656d656e742e7631",
-                  "id": 13440,
+                  "id": 13528,
                   "isConstant": false,
                   "isLValue": false,
                   "isPure": true,
@@ -8040,7 +8034,7 @@
                     "typeString": "literal_string \"org.superfluid-finance.agreements.ConstantFlowAgreement.v1\""
                   }
                 ],
-                "id": 13439,
+                "id": 13527,
                 "name": "keccak256",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
@@ -8051,7 +8045,7 @@
                   "typeString": "function (bytes memory) pure returns (bytes32)"
                 }
               },
-              "id": 13441,
+              "id": 13529,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -8072,12 +8066,12 @@
           {
             "constant": false,
             "functionSelector": "d310556b",
-            "id": 13444,
+            "id": 13532,
             "mutability": "mutable",
             "name": "_deployer",
             "nameLocation": "904:9:51",
             "nodeType": "VariableDeclaration",
-            "scope": 13621,
+            "scope": 13709,
             "src": "889:24:51",
             "stateVariable": true,
             "storageLocation": "default",
@@ -8086,7 +8080,7 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 13443,
+              "id": 13531,
               "name": "address",
               "nodeType": "ElementaryTypeName",
               "src": "889:7:51",
@@ -8100,36 +8094,36 @@
           },
           {
             "constant": false,
-            "id": 13447,
+            "id": 13535,
             "mutability": "mutable",
             "name": "_token",
             "nameLocation": "937:6:51",
             "nodeType": "VariableDeclaration",
-            "scope": 13621,
+            "scope": 13709,
             "src": "920:23:51",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_BdlToken_$12173",
+              "typeIdentifier": "t_contract$_BdlToken_$12205",
               "typeString": "contract BdlToken"
             },
             "typeName": {
-              "id": 13446,
+              "id": 13534,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 13445,
+                "id": 13533,
                 "name": "BdlToken",
                 "nameLocations": [
                   "920:8:51"
                 ],
                 "nodeType": "IdentifierPath",
-                "referencedDeclaration": 12173,
+                "referencedDeclaration": 12205,
                 "src": "920:8:51"
               },
-              "referencedDeclaration": 12173,
+              "referencedDeclaration": 12205,
               "src": "920:8:51",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_BdlToken_$12173",
+                "typeIdentifier": "t_contract$_BdlToken_$12205",
                 "typeString": "contract BdlToken"
               }
             },
@@ -8137,12 +8131,12 @@
           },
           {
             "constant": false,
-            "id": 13450,
+            "id": 13538,
             "mutability": "mutable",
             "name": "_superFluid",
             "nameLocation": "969:11:51",
             "nodeType": "VariableDeclaration",
-            "scope": 13621,
+            "scope": 13709,
             "src": "949:31:51",
             "stateVariable": true,
             "storageLocation": "default",
@@ -8151,10 +8145,10 @@
               "typeString": "contract ISuperfluid"
             },
             "typeName": {
-              "id": 13449,
+              "id": 13537,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 13448,
+                "id": 13536,
                 "name": "ISuperfluid",
                 "nameLocations": [
                   "949:11:51"
@@ -8174,12 +8168,12 @@
           },
           {
             "constant": false,
-            "id": 13453,
+            "id": 13541,
             "mutability": "mutable",
             "name": "_agreement",
             "nameLocation": "1019:10:51",
             "nodeType": "VariableDeclaration",
-            "scope": 13621,
+            "scope": 13709,
             "src": "986:43:51",
             "stateVariable": true,
             "storageLocation": "default",
@@ -8188,10 +8182,10 @@
               "typeString": "contract IConstantFlowAgreementV1"
             },
             "typeName": {
-              "id": 13452,
+              "id": 13540,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 13451,
+                "id": 13539,
                 "name": "IConstantFlowAgreementV1",
                 "nameLocations": [
                   "986:24:51"
@@ -8211,12 +8205,12 @@
           },
           {
             "constant": false,
-            "id": 13456,
+            "id": 13544,
             "mutability": "mutable",
             "name": "host",
             "nameLocation": "1052:4:51",
             "nodeType": "VariableDeclaration",
-            "scope": 13621,
+            "scope": 13709,
             "src": "1036:65:51",
             "stateVariable": true,
             "storageLocation": "default",
@@ -8225,7 +8219,7 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 13454,
+              "id": 13542,
               "name": "address",
               "nodeType": "ElementaryTypeName",
               "src": "1036:7:51",
@@ -8237,7 +8231,7 @@
             },
             "value": {
               "hexValue": "307845423739366264623930664641306632383235353237356531363933364432356433343138363033",
-              "id": 13455,
+              "id": 13543,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -8255,12 +8249,12 @@
           },
           {
             "constant": false,
-            "id": 13459,
+            "id": 13547,
             "mutability": "mutable",
             "name": "cfa",
             "nameLocation": "1123:3:51",
             "nodeType": "VariableDeclaration",
-            "scope": 13621,
+            "scope": 13709,
             "src": "1107:64:51",
             "stateVariable": true,
             "storageLocation": "default",
@@ -8269,7 +8263,7 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 13457,
+              "id": 13545,
               "name": "address",
               "nodeType": "ElementaryTypeName",
               "src": "1107:7:51",
@@ -8281,7 +8275,7 @@
             },
             "value": {
               "hexValue": "307834396535363545643162646331374633643232306637324446303835374332364641383346383733",
-              "id": 13458,
+              "id": 13546,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -8299,23 +8293,23 @@
           },
           {
             "body": {
-              "id": 13515,
+              "id": 13603,
               "nodeType": "Block",
               "src": "1205:542:51",
               "statements": [
                 {
                   "expression": {
-                    "id": 13467,
+                    "id": 13555,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 13464,
+                      "id": 13552,
                       "name": "_deployer",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 13444,
+                      "referencedDeclaration": 13532,
                       "src": "1215:9:51",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -8326,7 +8320,7 @@
                     "operator": "=",
                     "rightHandSide": {
                       "expression": {
-                        "id": 13465,
+                        "id": 13553,
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
@@ -8337,7 +8331,7 @@
                           "typeString": "msg"
                         }
                       },
-                      "id": 13466,
+                      "id": 13554,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -8357,26 +8351,26 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 13468,
+                  "id": 13556,
                   "nodeType": "ExpressionStatement",
                   "src": "1215:22:51"
                 },
                 {
                   "expression": {
-                    "id": 13473,
+                    "id": 13561,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 13469,
+                      "id": 13557,
                       "name": "_token",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 13447,
+                      "referencedDeclaration": 13535,
                       "src": "1247:6:51",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_BdlToken_$12173",
+                        "typeIdentifier": "t_contract$_BdlToken_$12205",
                         "typeString": "contract BdlToken"
                       }
                     },
@@ -8385,11 +8379,11 @@
                     "rightHandSide": {
                       "arguments": [
                         {
-                          "id": 13471,
+                          "id": 13559,
                           "name": "token",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 13461,
+                          "referencedDeclaration": 13549,
                           "src": "1265:5:51",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -8404,18 +8398,18 @@
                             "typeString": "address"
                           }
                         ],
-                        "id": 13470,
+                        "id": 13558,
                         "name": "BdlToken",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 12173,
+                        "referencedDeclaration": 12205,
                         "src": "1256:8:51",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_BdlToken_$12173_$",
+                          "typeIdentifier": "t_type$_t_contract$_BdlToken_$12205_$",
                           "typeString": "type(contract BdlToken)"
                         }
                       },
-                      "id": 13472,
+                      "id": 13560,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -8427,33 +8421,33 @@
                       "src": "1256:15:51",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_BdlToken_$12173",
+                        "typeIdentifier": "t_contract$_BdlToken_$12205",
                         "typeString": "contract BdlToken"
                       }
                     },
                     "src": "1247:24:51",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_BdlToken_$12173",
+                      "typeIdentifier": "t_contract$_BdlToken_$12205",
                       "typeString": "contract BdlToken"
                     }
                   },
-                  "id": 13474,
+                  "id": 13562,
                   "nodeType": "ExpressionStatement",
                   "src": "1247:24:51"
                 },
                 {
                   "expression": {
-                    "id": 13479,
+                    "id": 13567,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 13475,
+                      "id": 13563,
                       "name": "_superFluid",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 13450,
+                      "referencedDeclaration": 13538,
                       "src": "1281:11:51",
                       "typeDescriptions": {
                         "typeIdentifier": "t_contract$_ISuperfluid_$8324",
@@ -8465,11 +8459,11 @@
                     "rightHandSide": {
                       "arguments": [
                         {
-                          "id": 13477,
+                          "id": 13565,
                           "name": "host",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 13456,
+                          "referencedDeclaration": 13544,
                           "src": "1307:4:51",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -8484,7 +8478,7 @@
                             "typeString": "address"
                           }
                         ],
-                        "id": 13476,
+                        "id": 13564,
                         "name": "ISuperfluid",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
@@ -8495,7 +8489,7 @@
                           "typeString": "type(contract ISuperfluid)"
                         }
                       },
-                      "id": 13478,
+                      "id": 13566,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -8517,23 +8511,23 @@
                       "typeString": "contract ISuperfluid"
                     }
                   },
-                  "id": 13480,
+                  "id": 13568,
                   "nodeType": "ExpressionStatement",
                   "src": "1281:31:51"
                 },
                 {
                   "expression": {
-                    "id": 13485,
+                    "id": 13573,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 13481,
+                      "id": 13569,
                       "name": "_agreement",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 13453,
+                      "referencedDeclaration": 13541,
                       "src": "1322:10:51",
                       "typeDescriptions": {
                         "typeIdentifier": "t_contract$_IConstantFlowAgreementV1_$6594",
@@ -8545,11 +8539,11 @@
                     "rightHandSide": {
                       "arguments": [
                         {
-                          "id": 13483,
+                          "id": 13571,
                           "name": "cfa",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 13459,
+                          "referencedDeclaration": 13547,
                           "src": "1360:3:51",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -8564,7 +8558,7 @@
                             "typeString": "address"
                           }
                         ],
-                        "id": 13482,
+                        "id": 13570,
                         "name": "IConstantFlowAgreementV1",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
@@ -8575,7 +8569,7 @@
                           "typeString": "type(contract IConstantFlowAgreementV1)"
                         }
                       },
-                      "id": 13484,
+                      "id": 13572,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -8597,23 +8591,23 @@
                       "typeString": "contract IConstantFlowAgreementV1"
                     }
                   },
-                  "id": 13486,
+                  "id": 13574,
                   "nodeType": "ExpressionStatement",
                   "src": "1322:42:51"
                 },
                 {
                   "expression": {
-                    "id": 13493,
+                    "id": 13581,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 13487,
+                      "id": 13575,
                       "name": "cfaV1Lib",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 13437,
+                      "referencedDeclaration": 13525,
                       "src": "1375:8:51",
                       "typeDescriptions": {
                         "typeIdentifier": "t_struct$_InitData_$4911_storage",
@@ -8625,11 +8619,11 @@
                     "rightHandSide": {
                       "arguments": [
                         {
-                          "id": 13490,
+                          "id": 13578,
                           "name": "_superFluid",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 13450,
+                          "referencedDeclaration": 13538,
                           "src": "1408:11:51",
                           "typeDescriptions": {
                             "typeIdentifier": "t_contract$_ISuperfluid_$8324",
@@ -8637,11 +8631,11 @@
                           }
                         },
                         {
-                          "id": 13491,
+                          "id": 13579,
                           "name": "_agreement",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 13453,
+                          "referencedDeclaration": 13541,
                           "src": "1421:10:51",
                           "typeDescriptions": {
                             "typeIdentifier": "t_contract$_IConstantFlowAgreementV1_$6594",
@@ -8661,7 +8655,7 @@
                           }
                         ],
                         "expression": {
-                          "id": 13488,
+                          "id": 13576,
                           "name": "CFAv1Library",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -8672,7 +8666,7 @@
                             "typeString": "type(library CFAv1Library)"
                           }
                         },
-                        "id": 13489,
+                        "id": 13577,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -8687,7 +8681,7 @@
                           "typeString": "type(struct CFAv1Library.InitData storage pointer)"
                         }
                       },
-                      "id": 13492,
+                      "id": 13580,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -8709,23 +8703,23 @@
                       "typeString": "struct CFAv1Library.InitData storage ref"
                     }
                   },
-                  "id": 13494,
+                  "id": 13582,
                   "nodeType": "ExpressionStatement",
                   "src": "1375:57:51"
                 },
                 {
                   "assignments": [
-                    13496
+                    13584
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 13496,
+                      "id": 13584,
                       "mutability": "mutable",
                       "name": "configWord",
                       "nameLocation": "1451:10:51",
                       "nodeType": "VariableDeclaration",
-                      "scope": 13515,
+                      "scope": 13603,
                       "src": "1443:18:51",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -8734,7 +8728,7 @@
                         "typeString": "uint256"
                       },
                       "typeName": {
-                        "id": 13495,
+                        "id": 13583,
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
                         "src": "1443:7:51",
@@ -8746,13 +8740,13 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 13508,
+                  "id": 13596,
                   "initialValue": {
                     "commonType": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-                    "id": 13507,
+                    "id": 13595,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -8762,7 +8756,7 @@
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       },
-                      "id": 13504,
+                      "id": 13592,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -8772,14 +8766,14 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 13501,
+                        "id": 13589,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "lValueRequested": false,
                         "leftExpression": {
                           "expression": {
-                            "id": 13497,
+                            "id": 13585,
                             "name": "SuperAppDefinitions",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -8790,7 +8784,7 @@
                               "typeString": "type(library SuperAppDefinitions)"
                             }
                           },
-                          "id": 13498,
+                          "id": 13586,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -8809,7 +8803,7 @@
                         "operator": "|",
                         "rightExpression": {
                           "expression": {
-                            "id": 13499,
+                            "id": 13587,
                             "name": "SuperAppDefinitions",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -8820,7 +8814,7 @@
                               "typeString": "type(library SuperAppDefinitions)"
                             }
                           },
-                          "id": 13500,
+                          "id": 13588,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -8845,7 +8839,7 @@
                       "operator": "|",
                       "rightExpression": {
                         "expression": {
-                          "id": 13502,
+                          "id": 13590,
                           "name": "SuperAppDefinitions",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -8856,7 +8850,7 @@
                             "typeString": "type(library SuperAppDefinitions)"
                           }
                         },
-                        "id": 13503,
+                        "id": 13591,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -8881,7 +8875,7 @@
                     "operator": "|",
                     "rightExpression": {
                       "expression": {
-                        "id": 13505,
+                        "id": 13593,
                         "name": "SuperAppDefinitions",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
@@ -8892,7 +8886,7 @@
                           "typeString": "type(library SuperAppDefinitions)"
                         }
                       },
-                      "id": 13506,
+                      "id": 13594,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -8920,11 +8914,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 13512,
+                        "id": 13600,
                         "name": "configWord",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 13496,
+                        "referencedDeclaration": 13584,
                         "src": "1729:10:51",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -8940,18 +8934,18 @@
                         }
                       ],
                       "expression": {
-                        "id": 13509,
+                        "id": 13597,
                         "name": "_superFluid",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 13450,
+                        "referencedDeclaration": 13538,
                         "src": "1705:11:51",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_ISuperfluid_$8324",
                           "typeString": "contract ISuperfluid"
                         }
                       },
-                      "id": 13511,
+                      "id": 13599,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -8966,7 +8960,7 @@
                         "typeString": "function (uint256) external"
                       }
                     },
-                    "id": 13513,
+                    "id": 13601,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -8982,13 +8976,13 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 13514,
+                  "id": 13602,
                   "nodeType": "ExpressionStatement",
                   "src": "1705:35:51"
                 }
               ]
             },
-            "id": 13516,
+            "id": 13604,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [],
@@ -8996,17 +8990,17 @@
             "nameLocation": "-1:-1:-1",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 13462,
+              "id": 13550,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 13461,
+                  "id": 13549,
                   "mutability": "mutable",
                   "name": "token",
                   "nameLocation": "1198:5:51",
                   "nodeType": "VariableDeclaration",
-                  "scope": 13516,
+                  "scope": 13604,
                   "src": "1190:13:51",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -9015,7 +9009,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 13460,
+                    "id": 13548,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1190:7:51",
@@ -9031,12 +9025,12 @@
               "src": "1189:15:51"
             },
             "returnParameters": {
-              "id": 13463,
+              "id": 13551,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1205:0:51"
             },
-            "scope": 13621,
+            "scope": 13709,
             "src": "1178:569:51",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -9044,7 +9038,7 @@
           },
           {
             "body": {
-              "id": 13531,
+              "id": 13619,
               "nodeType": "Block",
               "src": "1818:64:51",
               "statements": [
@@ -9052,11 +9046,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 13526,
+                        "id": 13614,
                         "name": "receiver",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 13518,
+                        "referencedDeclaration": 13606,
                         "src": "1848:8:51",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -9064,23 +9058,23 @@
                         }
                       },
                       {
-                        "id": 13527,
+                        "id": 13615,
                         "name": "_token",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 13447,
+                        "referencedDeclaration": 13535,
                         "src": "1858:6:51",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_BdlToken_$12173",
+                          "typeIdentifier": "t_contract$_BdlToken_$12205",
                           "typeString": "contract BdlToken"
                         }
                       },
                       {
-                        "id": 13528,
+                        "id": 13616,
                         "name": "flowRate",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 13520,
+                        "referencedDeclaration": 13608,
                         "src": "1866:8:51",
                         "typeDescriptions": {
                           "typeIdentifier": "t_int96",
@@ -9095,7 +9089,7 @@
                           "typeString": "address"
                         },
                         {
-                          "typeIdentifier": "t_contract$_BdlToken_$12173",
+                          "typeIdentifier": "t_contract$_BdlToken_$12205",
                           "typeString": "contract BdlToken"
                         },
                         {
@@ -9104,18 +9098,18 @@
                         }
                       ],
                       "expression": {
-                        "id": 13523,
+                        "id": 13611,
                         "name": "cfaV1Lib",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 13437,
+                        "referencedDeclaration": 13525,
                         "src": "1828:8:51",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_InitData_$4911_storage",
                           "typeString": "struct CFAv1Library.InitData storage ref"
                         }
                       },
-                      "id": 13525,
+                      "id": 13613,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -9130,7 +9124,7 @@
                         "typeString": "function (struct CFAv1Library.InitData storage pointer,address,contract ISuperfluidToken,int96)"
                       }
                     },
-                    "id": 13529,
+                    "id": 13617,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -9146,14 +9140,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 13530,
+                  "id": 13618,
                   "nodeType": "ExpressionStatement",
                   "src": "1828:47:51"
                 }
               ]
             },
             "functionSelector": "f0ee2ce1",
-            "id": 13532,
+            "id": 13620,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -9161,17 +9155,17 @@
             "nameLocation": "1762:14:51",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 13521,
+              "id": 13609,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 13518,
+                  "id": 13606,
                   "mutability": "mutable",
                   "name": "receiver",
                   "nameLocation": "1785:8:51",
                   "nodeType": "VariableDeclaration",
-                  "scope": 13532,
+                  "scope": 13620,
                   "src": "1777:16:51",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -9180,7 +9174,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 13517,
+                    "id": 13605,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1777:7:51",
@@ -9194,12 +9188,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 13520,
+                  "id": 13608,
                   "mutability": "mutable",
                   "name": "flowRate",
                   "nameLocation": "1801:8:51",
                   "nodeType": "VariableDeclaration",
-                  "scope": 13532,
+                  "scope": 13620,
                   "src": "1795:14:51",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -9208,7 +9202,7 @@
                     "typeString": "int96"
                   },
                   "typeName": {
-                    "id": 13519,
+                    "id": 13607,
                     "name": "int96",
                     "nodeType": "ElementaryTypeName",
                     "src": "1795:5:51",
@@ -9223,12 +9217,12 @@
               "src": "1776:34:51"
             },
             "returnParameters": {
-              "id": 13522,
+              "id": 13610,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1818:0:51"
             },
-            "scope": 13621,
+            "scope": 13709,
             "src": "1753:129:51",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -9236,7 +9230,7 @@
           },
           {
             "body": {
-              "id": 13545,
+              "id": 13633,
               "nodeType": "Block",
               "src": "1936:65:51",
               "statements": [
@@ -9244,11 +9238,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 13540,
+                        "id": 13628,
                         "name": "_deployer",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 13444,
+                        "referencedDeclaration": 13532,
                         "src": "1966:9:51",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -9256,11 +9250,11 @@
                         }
                       },
                       {
-                        "id": 13541,
+                        "id": 13629,
                         "name": "receiver",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 13534,
+                        "referencedDeclaration": 13622,
                         "src": "1977:8:51",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -9268,14 +9262,14 @@
                         }
                       },
                       {
-                        "id": 13542,
+                        "id": 13630,
                         "name": "_token",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 13447,
+                        "referencedDeclaration": 13535,
                         "src": "1987:6:51",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_BdlToken_$12173",
+                          "typeIdentifier": "t_contract$_BdlToken_$12205",
                           "typeString": "contract BdlToken"
                         }
                       }
@@ -9291,23 +9285,23 @@
                           "typeString": "address"
                         },
                         {
-                          "typeIdentifier": "t_contract$_BdlToken_$12173",
+                          "typeIdentifier": "t_contract$_BdlToken_$12205",
                           "typeString": "contract BdlToken"
                         }
                       ],
                       "expression": {
-                        "id": 13537,
+                        "id": 13625,
                         "name": "cfaV1Lib",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 13437,
+                        "referencedDeclaration": 13525,
                         "src": "1946:8:51",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_InitData_$4911_storage",
                           "typeString": "struct CFAv1Library.InitData storage ref"
                         }
                       },
-                      "id": 13539,
+                      "id": 13627,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -9322,7 +9316,7 @@
                         "typeString": "function (struct CFAv1Library.InitData storage pointer,address,address,contract ISuperfluidToken)"
                       }
                     },
-                    "id": 13543,
+                    "id": 13631,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -9338,14 +9332,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 13544,
+                  "id": 13632,
                   "nodeType": "ExpressionStatement",
                   "src": "1946:48:51"
                 }
               ]
             },
             "functionSelector": "a987a736",
-            "id": 13546,
+            "id": 13634,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -9353,17 +9347,17 @@
             "nameLocation": "1897:13:51",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 13535,
+              "id": 13623,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 13534,
+                  "id": 13622,
                   "mutability": "mutable",
                   "name": "receiver",
                   "nameLocation": "1919:8:51",
                   "nodeType": "VariableDeclaration",
-                  "scope": 13546,
+                  "scope": 13634,
                   "src": "1911:16:51",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -9372,7 +9366,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 13533,
+                    "id": 13621,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1911:7:51",
@@ -9388,12 +9382,12 @@
               "src": "1910:18:51"
             },
             "returnParameters": {
-              "id": 13536,
+              "id": 13624,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1936:0:51"
             },
-            "scope": 13621,
+            "scope": 13709,
             "src": "1888:113:51",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -9401,7 +9395,7 @@
           },
           {
             "body": {
-              "id": 13564,
+              "id": 13652,
               "nodeType": "Block",
               "src": "2081:62:51",
               "statements": [
@@ -9411,7 +9405,7 @@
                       "typeIdentifier": "t_address",
                       "typeString": "address"
                     },
-                    "id": 13562,
+                    "id": 13650,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -9419,11 +9413,11 @@
                     "leftExpression": {
                       "arguments": [
                         {
-                          "id": 13556,
+                          "id": 13644,
                           "name": "superToken",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 13549,
+                          "referencedDeclaration": 13637,
                           "src": "2106:10:51",
                           "typeDescriptions": {
                             "typeIdentifier": "t_contract$_ISuperToken_$7722",
@@ -9438,7 +9432,7 @@
                             "typeString": "contract ISuperToken"
                           }
                         ],
-                        "id": 13555,
+                        "id": 13643,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -9450,14 +9444,14 @@
                           "typeString": "type(address)"
                         },
                         "typeName": {
-                          "id": 13554,
+                          "id": 13642,
                           "name": "address",
                           "nodeType": "ElementaryTypeName",
                           "src": "2098:7:51",
                           "typeDescriptions": {}
                         }
                       },
-                      "id": 13557,
+                      "id": 13645,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -9478,14 +9472,14 @@
                     "rightExpression": {
                       "arguments": [
                         {
-                          "id": 13560,
+                          "id": 13648,
                           "name": "_token",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 13447,
+                          "referencedDeclaration": 13535,
                           "src": "2129:6:51",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_contract$_BdlToken_$12173",
+                            "typeIdentifier": "t_contract$_BdlToken_$12205",
                             "typeString": "contract BdlToken"
                           }
                         }
@@ -9493,11 +9487,11 @@
                       "expression": {
                         "argumentTypes": [
                           {
-                            "typeIdentifier": "t_contract$_BdlToken_$12173",
+                            "typeIdentifier": "t_contract$_BdlToken_$12205",
                             "typeString": "contract BdlToken"
                           }
                         ],
-                        "id": 13559,
+                        "id": 13647,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -9509,14 +9503,14 @@
                           "typeString": "type(address)"
                         },
                         "typeName": {
-                          "id": 13558,
+                          "id": 13646,
                           "name": "address",
                           "nodeType": "ElementaryTypeName",
                           "src": "2121:7:51",
                           "typeDescriptions": {}
                         }
                       },
-                      "id": 13561,
+                      "id": 13649,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -9538,14 +9532,14 @@
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 13553,
-                  "id": 13563,
+                  "functionReturnParameters": 13641,
+                  "id": 13651,
                   "nodeType": "Return",
                   "src": "2091:45:51"
                 }
               ]
             },
-            "id": 13565,
+            "id": 13653,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -9553,17 +9547,17 @@
             "nameLocation": "2016:12:51",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 13550,
+              "id": 13638,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 13549,
+                  "id": 13637,
                   "mutability": "mutable",
                   "name": "superToken",
                   "nameLocation": "2041:10:51",
                   "nodeType": "VariableDeclaration",
-                  "scope": 13565,
+                  "scope": 13653,
                   "src": "2029:22:51",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -9572,10 +9566,10 @@
                     "typeString": "contract ISuperToken"
                   },
                   "typeName": {
-                    "id": 13548,
+                    "id": 13636,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 13547,
+                      "id": 13635,
                       "name": "ISuperToken",
                       "nameLocations": [
                         "2029:11:51"
@@ -9597,17 +9591,17 @@
               "src": "2028:24:51"
             },
             "returnParameters": {
-              "id": 13553,
+              "id": 13641,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 13552,
+                  "id": 13640,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 13565,
+                  "scope": 13653,
                   "src": "2075:4:51",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -9616,7 +9610,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 13551,
+                    "id": 13639,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "2075:4:51",
@@ -9630,7 +9624,7 @@
               ],
               "src": "2074:6:51"
             },
-            "scope": 13621,
+            "scope": 13709,
             "src": "2007:136:51",
             "stateMutability": "view",
             "virtual": false,
@@ -9638,7 +9632,7 @@
           },
           {
             "body": {
-              "id": 13580,
+              "id": 13668,
               "nodeType": "Block",
               "src": "2219:81:51",
               "statements": [
@@ -9648,7 +9642,7 @@
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
                     },
-                    "id": 13578,
+                    "id": 13666,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -9660,11 +9654,11 @@
                         "expression": {
                           "arguments": [
                             {
-                              "id": 13573,
+                              "id": 13661,
                               "name": "agreementClass",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 13567,
+                              "referencedDeclaration": 13655,
                               "src": "2252:14:51",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_address",
@@ -9679,7 +9673,7 @@
                                 "typeString": "address"
                               }
                             ],
-                            "id": 13572,
+                            "id": 13660,
                             "name": "ISuperAgreement",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -9690,7 +9684,7 @@
                               "typeString": "type(contract ISuperAgreement)"
                             }
                           },
-                          "id": 13574,
+                          "id": 13662,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -9706,7 +9700,7 @@
                             "typeString": "contract ISuperAgreement"
                           }
                         },
-                        "id": 13575,
+                        "id": 13663,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -9721,7 +9715,7 @@
                           "typeString": "function () view external returns (bytes32)"
                         }
                       },
-                      "id": 13576,
+                      "id": 13664,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -9740,11 +9734,11 @@
                     "nodeType": "BinaryOperation",
                     "operator": "==",
                     "rightExpression": {
-                      "id": 13577,
+                      "id": 13665,
                       "name": "CFA_ID",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 13442,
+                      "referencedDeclaration": 13530,
                       "src": "2287:6:51",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -9757,14 +9751,14 @@
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 13571,
-                  "id": 13579,
+                  "functionReturnParameters": 13659,
+                  "id": 13667,
                   "nodeType": "Return",
                   "src": "2229:64:51"
                 }
               ]
             },
-            "id": 13581,
+            "id": 13669,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -9772,17 +9766,17 @@
             "nameLocation": "2158:8:51",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 13568,
+              "id": 13656,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 13567,
+                  "id": 13655,
                   "mutability": "mutable",
                   "name": "agreementClass",
                   "nameLocation": "2175:14:51",
                   "nodeType": "VariableDeclaration",
-                  "scope": 13581,
+                  "scope": 13669,
                   "src": "2167:22:51",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -9791,7 +9785,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 13566,
+                    "id": 13654,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2167:7:51",
@@ -9807,17 +9801,17 @@
               "src": "2166:24:51"
             },
             "returnParameters": {
-              "id": 13571,
+              "id": 13659,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 13570,
+                  "id": 13658,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 13581,
+                  "scope": 13669,
                   "src": "2213:4:51",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -9826,7 +9820,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 13569,
+                    "id": 13657,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "2213:4:51",
@@ -9840,7 +9834,7 @@
               ],
               "src": "2212:6:51"
             },
-            "scope": 13621,
+            "scope": 13709,
             "src": "2149:151:51",
             "stateMutability": "view",
             "virtual": false,
@@ -9848,7 +9842,7 @@
           },
           {
             "body": {
-              "id": 13596,
+              "id": 13684,
               "nodeType": "Block",
               "src": "2326:145:51",
               "statements": [
@@ -9860,14 +9854,14 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 13591,
+                        "id": 13679,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "expression": {
-                            "id": 13584,
+                            "id": 13672,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -9878,7 +9872,7 @@
                               "typeString": "msg"
                             }
                           },
-                          "id": 13585,
+                          "id": 13673,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -9898,18 +9892,18 @@
                           "arguments": [
                             {
                               "expression": {
-                                "id": 13588,
+                                "id": 13676,
                                 "name": "cfaV1Lib",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 13437,
+                                "referencedDeclaration": 13525,
                                 "src": "2379:8:51",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_struct$_InitData_$4911_storage",
                                   "typeString": "struct CFAv1Library.InitData storage ref"
                                 }
                               },
-                              "id": 13589,
+                              "id": 13677,
                               "isConstant": false,
                               "isLValue": true,
                               "isPure": false,
@@ -9932,7 +9926,7 @@
                                 "typeString": "contract ISuperfluid"
                               }
                             ],
-                            "id": 13587,
+                            "id": 13675,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -9944,14 +9938,14 @@
                               "typeString": "type(address)"
                             },
                             "typeName": {
-                              "id": 13586,
+                              "id": 13674,
                               "name": "address",
                               "nodeType": "ElementaryTypeName",
                               "src": "2371:7:51",
                               "typeDescriptions": {}
                             }
                           },
-                          "id": 13590,
+                          "id": 13678,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -9975,7 +9969,7 @@
                       },
                       {
                         "hexValue": "5265646972656374416c6c3a20737570706f7274206f6e6c79206f6e6520686f7374",
-                        "id": 13592,
+                        "id": 13680,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -10001,7 +9995,7 @@
                           "typeString": "literal_string \"RedirectAll: support only one host\""
                         }
                       ],
-                      "id": 13583,
+                      "id": 13671,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -10015,7 +10009,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 13593,
+                    "id": 13681,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -10031,23 +10025,23 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 13594,
+                  "id": 13682,
                   "nodeType": "ExpressionStatement",
                   "src": "2336:117:51"
                 },
                 {
-                  "id": 13595,
+                  "id": 13683,
                   "nodeType": "PlaceholderStatement",
                   "src": "2463:1:51"
                 }
               ]
             },
-            "id": 13597,
+            "id": 13685,
             "name": "onlyHost",
             "nameLocation": "2315:8:51",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 13582,
+              "id": 13670,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2323:2:51"
@@ -10058,7 +10052,7 @@
           },
           {
             "body": {
-              "id": 13619,
+              "id": 13707,
               "nodeType": "Block",
               "src": "2547:176:51",
               "statements": [
@@ -10068,11 +10062,11 @@
                       {
                         "arguments": [
                           {
-                            "id": 13606,
+                            "id": 13694,
                             "name": "superToken",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 13600,
+                            "referencedDeclaration": 13688,
                             "src": "2578:10:51",
                             "typeDescriptions": {
                               "typeIdentifier": "t_contract$_ISuperToken_$7722",
@@ -10087,18 +10081,18 @@
                               "typeString": "contract ISuperToken"
                             }
                           ],
-                          "id": 13605,
+                          "id": 13693,
                           "name": "_isSameToken",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 13565,
+                          "referencedDeclaration": 13653,
                           "src": "2565:12:51",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_view$_t_contract$_ISuperToken_$7722_$returns$_t_bool_$",
                             "typeString": "function (contract ISuperToken) view returns (bool)"
                           }
                         },
-                        "id": 13607,
+                        "id": 13695,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -10116,7 +10110,7 @@
                       },
                       {
                         "hexValue": "5265646972656374416c6c3a206e6f7420616363657074656420746f6b656e",
-                        "id": 13608,
+                        "id": 13696,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -10142,7 +10136,7 @@
                           "typeString": "literal_string \"RedirectAll: not accepted token\""
                         }
                       ],
-                      "id": 13604,
+                      "id": 13692,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -10156,7 +10150,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 13609,
+                    "id": 13697,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -10172,7 +10166,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 13610,
+                  "id": 13698,
                   "nodeType": "ExpressionStatement",
                   "src": "2557:68:51"
                 },
@@ -10182,11 +10176,11 @@
                       {
                         "arguments": [
                           {
-                            "id": 13613,
+                            "id": 13701,
                             "name": "agreementClass",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 13602,
+                            "referencedDeclaration": 13690,
                             "src": "2652:14:51",
                             "typeDescriptions": {
                               "typeIdentifier": "t_address",
@@ -10201,18 +10195,18 @@
                               "typeString": "address"
                             }
                           ],
-                          "id": 13612,
+                          "id": 13700,
                           "name": "_isCFAv1",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 13581,
+                          "referencedDeclaration": 13669,
                           "src": "2643:8:51",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_view$_t_address_$returns$_t_bool_$",
                             "typeString": "function (address) view returns (bool)"
                           }
                         },
-                        "id": 13614,
+                        "id": 13702,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -10230,7 +10224,7 @@
                       },
                       {
                         "hexValue": "5265646972656374416c6c3a206f6e6c7920434641763120737570706f72746564",
-                        "id": 13615,
+                        "id": 13703,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -10256,7 +10250,7 @@
                           "typeString": "literal_string \"RedirectAll: only CFAv1 supported\""
                         }
                       ],
-                      "id": 13611,
+                      "id": 13699,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -10270,7 +10264,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 13616,
+                    "id": 13704,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -10286,33 +10280,33 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 13617,
+                  "id": 13705,
                   "nodeType": "ExpressionStatement",
                   "src": "2635:70:51"
                 },
                 {
-                  "id": 13618,
+                  "id": 13706,
                   "nodeType": "PlaceholderStatement",
                   "src": "2715:1:51"
                 }
               ]
             },
-            "id": 13620,
+            "id": 13708,
             "name": "onlyExpected",
             "nameLocation": "2486:12:51",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 13603,
+              "id": 13691,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 13600,
+                  "id": 13688,
                   "mutability": "mutable",
                   "name": "superToken",
                   "nameLocation": "2511:10:51",
                   "nodeType": "VariableDeclaration",
-                  "scope": 13620,
+                  "scope": 13708,
                   "src": "2499:22:51",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -10321,10 +10315,10 @@
                     "typeString": "contract ISuperToken"
                   },
                   "typeName": {
-                    "id": 13599,
+                    "id": 13687,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 13598,
+                      "id": 13686,
                       "name": "ISuperToken",
                       "nameLocations": [
                         "2499:11:51"
@@ -10344,12 +10338,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 13602,
+                  "id": 13690,
                   "mutability": "mutable",
                   "name": "agreementClass",
                   "nameLocation": "2531:14:51",
                   "nodeType": "VariableDeclaration",
-                  "scope": 13620,
+                  "scope": 13708,
                   "src": "2523:22:51",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -10358,7 +10352,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 13601,
+                    "id": 13689,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2523:7:51",
@@ -10378,7 +10372,7 @@
             "visibility": "internal"
           }
         ],
-        "scope": 13622,
+        "scope": 13710,
         "src": "633:2092:51",
         "usedErrors": []
       }
@@ -10389,17 +10383,9 @@
     "name": "solc",
     "version": "0.8.16+commit.07a7930e.Emscripten.clang"
   },
-  "networks": {
-    "80001": {
-      "events": {},
-      "links": {},
-      "address": "0xa0C2bD841364D92430b353439B6Aa688Cb34A40B",
-      "transactionHash": "0xaf184e73e3ab4ec52329d01ec3c9a51a5a6a1046695993eec54c8125ccb73c12"
-    }
-  },
+  "networks": {},
   "schemaVersion": "3.4.10",
-  "updatedAt": "2022-10-24T09:51:45.598Z",
-  "networkType": "ethereum",
+  "updatedAt": "2022-10-24T10:30:54.145Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
