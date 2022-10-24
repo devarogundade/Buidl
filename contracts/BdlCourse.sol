@@ -61,8 +61,9 @@ contract BdlCourse {
         courses[id] = Models.Course(
             id,
             category,
-            price,
             creator,
+            price,
+            block.timestamp,
             block.timestamp
         );
 
@@ -84,8 +85,9 @@ contract BdlCourse {
         courses[id] = Models.Course(
             id,
             category,
-            price,
             creator,
+            price,
+            course.createdAt,
             block.timestamp
         );
     }

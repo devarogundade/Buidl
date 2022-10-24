@@ -44,8 +44,8 @@ contract Buidl {
     }
 
     // bdlCourse
-    function createCourse(uint id, uint256 price) public onlyVerified {
-        _bdlCourse.createCourse(id, price, msg.sender);
+    function createCourse(uint id, uint category, uint256 price) public onlyVerified {
+        _bdlCourse.createCourse(id, category, price, msg.sender);
     }
 
     modifier onlyVerified() {

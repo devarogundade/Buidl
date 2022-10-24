@@ -14,7 +14,6 @@ contract Models {
         uint id;
         uint category;
         address creator;
-        address[] leaners;
         uint256 price;
         uint createdAt;
         uint updatedAt;
