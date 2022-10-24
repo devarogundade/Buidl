@@ -3,6 +3,7 @@ const dotenv = require("dotenv")
 dotenv.config()
 
 const mnemonic = process.env.MNEMONIC;
+const rpc_id = process.env.MATIC_RPC_ID;
 
 module.exports = {
     networks: {
@@ -20,7 +21,7 @@ module.exports = {
             networkCheckTimeout: 99999999
         },
         matic: {
-            provider: () => new HDWalletProvider(mnemonic, `https://matic-testnet-archive-rpc.bwarelabs.com`),
+            provider: () => new HDWalletProvider(mnemonic, `https://rpc-mumbai.maticvigil.com/v1/${rpc_id}`),
             network_id: 80001, // Polygon chain testnet id
             confirmations: 2,
             timeoutBlocks: 99999,

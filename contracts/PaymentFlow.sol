@@ -14,32 +14,37 @@ contract PaymentFlow is SuperAppBase {
     bytes32 public constant CFA_ID =
         keccak256("org.superfluid-finance.agreements.ConstantFlowAgreement.v1");
 
-    BdlToken private _token; // accepted token
     address public _deployer;
 
-    constructor(ISuperfluid host, address token) {
+    BdlToken private _token;
+    ISuperfluid private _superFluid;
+    IConstantFlowAgreementV1 private _agreement;
+
+    address private host = 0xEB796bdb90fFA0f28255275e16936D25d3418603;
+    address private cfa = 0x49e565Ed1bdc17F3d220f72DF0857C26FA83F873;
+
+    constructor(address token) {
         _deployer = msg.sender;
         _token = BdlToken(token);
+        _superFluid = ISuperfluid(host);
+        _agreement = IConstantFlowAgreementV1(cfa);
 
-        cfaV1Lib = CFAv1Library.InitData(
-            host,
-            IConstantFlowAgreementV1(address(host.getAgreementClass(CFA_ID)))
-        );
+        cfaV1Lib = CFAv1Library.InitData(_superFluid, _agreement);
 
         uint256 configWord = SuperAppDefinitions.APP_LEVEL_FINAL |
             SuperAppDefinitions.BEFORE_AGREEMENT_CREATED_NOOP |
             SuperAppDefinitions.BEFORE_AGREEMENT_UPDATED_NOOP |
             SuperAppDefinitions.BEFORE_AGREEMENT_TERMINATED_NOOP;
 
-        host.registerApp(configWord);
+        _superFluid.registerApp(configWord);
     }
 
     function startStreaming(address receiver, int96 flowRate) public {
-        cfaV1Lib.createFlow(receiver, token, flowRate);
+        cfaV1Lib.createFlow(receiver, _token, flowRate);
     }
 
     function stopStreaming(address receiver) public {
-        cfaV1Lib.deleteFlow(_deployer, receiver, token);
+        cfaV1Lib.deleteFlow(_deployer, receiver, _token);
     }
 
     function _isSameToken(ISuperToken superToken) private view returns (bool) {

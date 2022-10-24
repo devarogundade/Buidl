@@ -191,17 +191,17 @@ contract Buidl {
         uint gender
     ) public notAnyone {
         // stake instruction fee
-        _bdlToken.increaseAllowance(
-            msg.sender,
-            address(this),
-            instructorRegistrationFee
-        );
+        // _bdlToken.increaseAllowance(
+        //     msg.sender,
+        //     address(this),
+        //     instructorRegistrationFee
+        // );
 
-        _bdlToken.transferFrom(
-            msg.sender,
-            address(this),
-            instructorRegistrationFee
-        );
+        // _bdlToken.transferFrom(
+        //     msg.sender,
+        //     address(this),
+        //     instructorRegistrationFee
+        // );
 
         Models.Instructor memory instructor = instructors[msg.sender];
 
@@ -268,8 +268,8 @@ contract Buidl {
         }
 
         // lock the student funds to smart contract
-        _bdlToken.increaseAllowance(msg.sender, address(this), price);
-        _bdlToken.transferFrom(msg.sender, address(this), price);
+        // _bdlToken.increaseAllowance(msg.sender, address(this), price);
+        // _bdlToken.transferFrom(msg.sender, address(this), price);
 
         // create course for student
         studentCourses[msg.sender].push(
@@ -301,7 +301,7 @@ contract Buidl {
         delete studentCourses[msg.sender][courseId];
 
         // refund the student
-        _bdlToken.transferFrom(address(this), msg.sender, refundableAmount);
+        // _bdlToken.transferFrom(address(this), msg.sender, refundableAmount);
 
         emit CourseRefunded(msg.sender, courseId, sectionsViewed);
     }
@@ -315,7 +315,7 @@ contract Buidl {
         // check if student has purchase the course
         // require(studentCourses[msg.sender][] != 0, "!exists");
         _bdlCertificate.issue(msg.sender, certificateUri);
-        _bdlNft.mint(msg.sender, nftUri);
+        // _bdlNft.mint(msg.sender, nftUri);
     }
 
     modifier onlyInstructor() {
@@ -350,7 +350,7 @@ contract Buidl {
     // ========== Development ========== //
 
     function faucetMint() public {
-        _bdlToken.mint(msg.sender, 5000);
+        // _bdlToken.mint(msg.sender, 5000);
     }
 
     function addTestCategories() private {
