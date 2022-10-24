@@ -47,11 +47,20 @@ contract Buidl {
         _staking = Staking(staking);
     }
 
+    function createAccount(string memory name, string memory photo) public {
+        emit CreateAccount(name, photo, msg.sender);
+    }
+
     /* unlock creator */
     function unlockCreator() public notVerified {
         _bdlToken.approve(msg.sender, address(this), creatorStakingFee);
         _bdlToken.transferFrom(msg.sender, address(this), creatorStakingFee);
-        _staking.stake(msg.sender, creatorStakingFee, creatorStakingDuration, 0);
+        _staking.stake(
+            msg.sender,
+            creatorStakingFee,
+            creatorStakingDuration,
+            0
+        );
         users[msg.sender].verified = true;
     }
 
@@ -69,8 +78,11 @@ contract Buidl {
         _;
     }
 
-     modifier notVerified() {
+    modifier notVerified() {
         require(!users[msg.sender].verified, "!authorized");
         _;
     }
+
+    // == events == //
+    event CreateAccount(string name, string photo, address owner);
 }
