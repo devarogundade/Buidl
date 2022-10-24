@@ -4,12 +4,7 @@ pragma solidity >=0.7.0 <0.9.0;
 import {Models} from "./base/Models.sol";
 
 contract Staking {
-    address _stakeAddress;
     mapping(address => Models.Stake) public stakes;
-
-    constructor(address stakeAddress) {
-        _stakeAddress = stakeAddress;
-    }
 
     function stake(
         address from,

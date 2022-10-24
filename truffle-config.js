@@ -24,9 +24,9 @@ module.exports = {
             provider: () => new HDWalletProvider(mnemonic, `https://rpc-mumbai.maticvigil.com/v1/${rpc_id}`),
             network_id: 80001, // Polygon chain testnet id
             confirmations: 2,
-            timeoutBlocks: 99999,
+            timeoutBlocks: 9999999,
             skipDryRun: true,
-            networkCheckTimeout: 99999999
+            networkCheckTimeout: 999999999
         },
     },
 
