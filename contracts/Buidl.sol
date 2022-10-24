@@ -7,6 +7,7 @@ import {Models} from "./base/Models.sol";
 import {PaymentFlow} from "./PaymentFlow.sol";
 import {BdlToken} from "./BdlToken.sol";
 import {BdlCourse} from "./BdlCourse.sol";
+import {Staking} from "./Staking.sol";
 
 contract Buidl {
     address private immutable deployer;
@@ -16,6 +17,7 @@ contract Buidl {
     BdlCertificate private _bdlCertificate; // erc4973 certificate contract
     BdlCourse private _bdlCourse; // course contract
     PaymentFlow private _paymentFlow; // flow (erc20 streaming) contract
+    Staking private _staking; // staking contract
 
     // creators requirement
     // these requirement helps us to filter fuds
@@ -32,7 +34,8 @@ contract Buidl {
         address bdlNft,
         address bdlCertificate,
         address bdlCourse,
-        address paymentFlow
+        address paymentFlow,
+        address staking
     ) {
         deployer = msg.sender;
 
@@ -41,15 +44,33 @@ contract Buidl {
         _bdlCertificate = BdlCertificate(bdlCertificate);
         _bdlCourse = BdlCourse(bdlCourse);
         _paymentFlow = PaymentFlow(paymentFlow);
+        _staking = Staking(staking);
+    }
+
+    /* unlock creator */
+    function unlockCreator() public notVerified {
+        _bdlToken.approve(msg.sender, address(this), creatorStakingFee);
+        _bdlToken.transferFrom(msg.sender, address(this), creatorStakingFee);
+        _staking.stake(msg.sender, creatorStakingFee, creatorStakingDuration, 0);
+        users[msg.sender].verified = true;
     }
 
     // bdlCourse
-    function createCourse(uint id, uint category, uint256 price) public onlyVerified {
+    function createCourse(
+        uint id,
+        uint category,
+        uint256 price
+    ) public onlyVerified {
         _bdlCourse.createCourse(id, category, price, msg.sender);
     }
 
     modifier onlyVerified() {
         require(users[msg.sender].verified, "!authorized");
+        _;
+    }
+
+     modifier notVerified() {
+        require(!users[msg.sender].verified, "!authorized");
         _;
     }
 }
