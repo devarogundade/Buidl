@@ -29,13 +29,24 @@ contract PaymentFlow {
 
     function createFlow(address receiver, int96 flowRate) public {
         cfaV1Lib.createFlow(receiver, _token, flowRate);
+
+        emit PaymentFlowCreated(receiver, flowRate);
     }
 
     function updateFlow(address receiver, int96 flowRate) public {
         cfaV1Lib.updateFlow(receiver, _token, flowRate);
+
+        emit PaymentFlowUpdated(receiver, flowRate);
     }
 
     function deleteFlow(address receiver) public {
         cfaV1Lib.deleteFlow(address(this), receiver, _token);
+
+        emit PaymentFlowDeleted(receiver);
     }
+
+    // == events == //
+    event PaymentFlowCreated(address receiver, int96 flowRate);
+    event PaymentFlowUpdated(address receiver, int96 flowRate);
+    event PaymentFlowDeleted(address receiver);
 }

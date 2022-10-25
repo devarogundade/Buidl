@@ -30,13 +30,12 @@ contract Models {
         uint256 unclaimed; // total tokens that are locked
         uint256 claimable; // total tokens that are available
         uint256 claimed; // total tokens claimed
-        int96 flowRate; // amount of token user receives per second
     }
 
     struct Stake {
         uint256 amount;
         uint time;
         uint duration;
-        uint96 rewardFlowRate;
+        int96 rewardFlowRate;
     }
 }

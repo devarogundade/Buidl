@@ -10,7 +10,7 @@ contract Staking {
         address from,
         uint256 amount,
         uint duration,
-        uint96 rewardFlowRate
+        int96 rewardFlowRate
     ) external {
         require(amount > 0, "!stake_zero_tokens");
 

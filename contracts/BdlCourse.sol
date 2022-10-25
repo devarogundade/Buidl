@@ -7,19 +7,22 @@ contract BdlCourse {
     /* all ecosystem courses */
     mapping(uint => Models.Course) public courses;
 
-    // creator => course id
+    /* creator => course id */
     mapping(address => uint[]) public createdCourses;
 
     /* holds all course subscriptions */
     mapping(uint => Models.Subscription[]) public subscriptions;
 
-    // learner => course id
+    /* learner => course id */
     mapping(address => uint[]) public subscribeds;
+
+    /* 2 weeks */
+    uint private refundableDuration = 10000;
 
     // == learner related functions == //
 
     /* function to subscribe to a course */
-    function subscribe(uint id, address learner) external {
+    function subscribe(uint id, address learner) external returns (uint256, address) {
         Models.Course memory course = courses[id];
 
         require(course.id != 0, "!exists");
@@ -32,6 +35,7 @@ contract BdlCourse {
         subscribeds[learner].push(id);
 
         emit CourseSubscribe(id, course.creator, learner);
+        return (course.price, course.creator);
     }
 
     /* function to unsubscribe from a course */
@@ -39,12 +43,21 @@ contract BdlCourse {
         uint id,
         uint sId,
         address learner
-    ) external {
-        require(subscriptions[id][sId].owner == learner, "!authorized");
+    ) external returns (uint256, address) {
+        Models.Subscription memory subscription = subscriptions[id][sId];
+        Models.Course memory course = courses[id];
+
+        require(course.id != 0, "!exists");
+        require(subscription.owner == learner, "!authorized");
+
+        uint dueTime = (block.timestamp + refundableDuration);
+        require(subscription.time < dueTime, ">2weeks");
+
         delete subscriptions[id][sId];
         delete subscribeds[learner][id];
 
         emit CourseUnSubscribe(id, sId, learner);
+        return (subscription.price, course.creator);
     }
 
     // == creator related functions == //
@@ -54,7 +67,12 @@ contract BdlCourse {
         uint id,
         uint category,
         uint256 price,
-        address creator
+        address creator,
+        /* course metadata */
+        string memory name,
+        string memory description,
+        string memory thumbnail,
+        string memory previewSrc
     ) external {
         require(courses[id].id == 0, "exists");
 
@@ -68,14 +86,24 @@ contract BdlCourse {
         );
 
         createdCourses[creator].push(id);
+
+        emit CourseCreated(
+            id,
+            name,
+            description,
+            category,
+            thumbnail,
+            previewSrc,
+            creator
+        );
     }
 
     /* updates an existing course */
     function updateCourse(
         uint id,
         uint category,
-        uint256 price,
-        address creator
+        address creator,
+        uint256 price
     ) external {
         Models.Course memory course = courses[id];
 
@@ -111,4 +139,13 @@ contract BdlCourse {
     event CourseSubscribe(uint id, address creator, address learner);
     event CourseUnSubscribe(uint id, uint sId, address learner);
     event CourseTransfer(uint id, address creator, address receiver);
+    event CourseCreated(
+        uint id,
+        string name,
+        string description,
+        uint category,
+        string thumbnail,
+        string previewSrc,
+        address creator
+    );
 }
