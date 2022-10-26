@@ -33,30 +33,30 @@
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [],
-  "sourceMap": "195:227:33:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;195:227:33;;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "195:227:33:-:0;;;;;;;;",
+  "sourceMap": "195:227:35:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;195:227:35;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "195:227:35:-:0;;;;;;;;",
   "source": "// SPDX-License-Identifier: AGPLv3\npragma solidity 0.8.16;\n\n/**\n * @title Events Emitter Library\n * @author Superfluid\n * @dev A library used for emitting missing and unaccessable events.\n *\n */\nlibrary EventsEmitter {\n    event Transfer(address indexed from, address indexed to, uint256 value);\n\n    function emitTransfer(address from, address to, uint256 value) internal {\n        emit Transfer(from, to, value);\n    }\n}",
   "sourcePath": "@superfluid-finance\\ethereum-contracts\\contracts\\libs\\EventsEmitter.sol",
   "ast": {
     "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/libs/EventsEmitter.sol",
     "exportedSymbols": {
       "EventsEmitter": [
-        8723
+        9334
       ]
     },
-    "id": 8724,
+    "id": 9335,
     "license": "AGPLv3",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 8697,
+        "id": 9308,
         "literals": [
           "solidity",
           "0.8",
           ".16"
         ],
         "nodeType": "PragmaDirective",
-        "src": "35:23:33"
+        "src": "35:23:35"
       },
       {
         "abstract": false,
@@ -65,41 +65,41 @@
         "contractDependencies": [],
         "contractKind": "library",
         "documentation": {
-          "id": 8698,
+          "id": 9309,
           "nodeType": "StructuredDocumentation",
-          "src": "60:134:33",
+          "src": "60:134:35",
           "text": " @title Events Emitter Library\n @author Superfluid\n @dev A library used for emitting missing and unaccessable events."
         },
         "fullyImplemented": true,
-        "id": 8723,
+        "id": 9334,
         "linearizedBaseContracts": [
-          8723
+          9334
         ],
         "name": "EventsEmitter",
-        "nameLocation": "203:13:33",
+        "nameLocation": "203:13:35",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "anonymous": false,
             "eventSelector": "ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-            "id": 8706,
+            "id": 9317,
             "name": "Transfer",
-            "nameLocation": "229:8:33",
+            "nameLocation": "229:8:35",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 8705,
+              "id": 9316,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 8700,
+                  "id": 9311,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "from",
-                  "nameLocation": "254:4:33",
+                  "nameLocation": "254:4:35",
                   "nodeType": "VariableDeclaration",
-                  "scope": 8706,
-                  "src": "238:20:33",
+                  "scope": 9317,
+                  "src": "238:20:35",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -107,10 +107,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 8699,
+                    "id": 9310,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "238:7:33",
+                    "src": "238:7:35",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -121,14 +121,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 8702,
+                  "id": 9313,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "to",
-                  "nameLocation": "276:2:33",
+                  "nameLocation": "276:2:35",
                   "nodeType": "VariableDeclaration",
-                  "scope": 8706,
-                  "src": "260:18:33",
+                  "scope": 9317,
+                  "src": "260:18:35",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -136,10 +136,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 8701,
+                    "id": 9312,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "260:7:33",
+                    "src": "260:7:35",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -150,14 +150,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 8704,
+                  "id": 9315,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "value",
-                  "nameLocation": "288:5:33",
+                  "nameLocation": "288:5:35",
                   "nodeType": "VariableDeclaration",
-                  "scope": 8706,
-                  "src": "280:13:33",
+                  "scope": 9317,
+                  "src": "280:13:35",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -165,10 +165,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 8703,
+                    "id": 9314,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "280:7:33",
+                    "src": "280:7:35",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -177,50 +177,50 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "237:57:33"
+              "src": "237:57:35"
             },
-            "src": "223:72:33"
+            "src": "223:72:35"
           },
           {
             "body": {
-              "id": 8721,
+              "id": 9332,
               "nodeType": "Block",
-              "src": "373:47:33",
+              "src": "373:47:35",
               "statements": [
                 {
                   "eventCall": {
                     "arguments": [
                       {
-                        "id": 8716,
+                        "id": 9327,
                         "name": "from",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 8708,
-                        "src": "397:4:33",
+                        "referencedDeclaration": 9319,
+                        "src": "397:4:35",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         }
                       },
                       {
-                        "id": 8717,
+                        "id": 9328,
                         "name": "to",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 8710,
-                        "src": "403:2:33",
+                        "referencedDeclaration": 9321,
+                        "src": "403:2:35",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         }
                       },
                       {
-                        "id": 8718,
+                        "id": 9329,
                         "name": "value",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 8712,
-                        "src": "407:5:33",
+                        "referencedDeclaration": 9323,
+                        "src": "407:5:35",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -242,18 +242,18 @@
                           "typeString": "uint256"
                         }
                       ],
-                      "id": 8715,
+                      "id": 9326,
                       "name": "Transfer",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 8706,
-                      "src": "388:8:33",
+                      "referencedDeclaration": 9317,
+                      "src": "388:8:35",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_address_$_t_uint256_$returns$__$",
                         "typeString": "function (address,address,uint256)"
                       }
                     },
-                    "id": 8719,
+                    "id": 9330,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -262,39 +262,39 @@
                     "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "388:25:33",
+                    "src": "388:25:35",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 8720,
+                  "id": 9331,
                   "nodeType": "EmitStatement",
-                  "src": "383:30:33"
+                  "src": "383:30:35"
                 }
               ]
             },
-            "id": 8722,
+            "id": 9333,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "emitTransfer",
-            "nameLocation": "310:12:33",
+            "nameLocation": "310:12:35",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 8713,
+              "id": 9324,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 8708,
+                  "id": 9319,
                   "mutability": "mutable",
                   "name": "from",
-                  "nameLocation": "331:4:33",
+                  "nameLocation": "331:4:35",
                   "nodeType": "VariableDeclaration",
-                  "scope": 8722,
-                  "src": "323:12:33",
+                  "scope": 9333,
+                  "src": "323:12:35",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -302,10 +302,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 8707,
+                    "id": 9318,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "323:7:33",
+                    "src": "323:7:35",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -316,13 +316,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 8710,
+                  "id": 9321,
                   "mutability": "mutable",
                   "name": "to",
-                  "nameLocation": "345:2:33",
+                  "nameLocation": "345:2:35",
                   "nodeType": "VariableDeclaration",
-                  "scope": 8722,
-                  "src": "337:10:33",
+                  "scope": 9333,
+                  "src": "337:10:35",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -330,10 +330,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 8709,
+                    "id": 9320,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "337:7:33",
+                    "src": "337:7:35",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -344,13 +344,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 8712,
+                  "id": 9323,
                   "mutability": "mutable",
                   "name": "value",
-                  "nameLocation": "357:5:33",
+                  "nameLocation": "357:5:35",
                   "nodeType": "VariableDeclaration",
-                  "scope": 8722,
-                  "src": "349:13:33",
+                  "scope": 9333,
+                  "src": "349:13:35",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -358,10 +358,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 8711,
+                    "id": 9322,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "349:7:33",
+                    "src": "349:7:35",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -370,27 +370,27 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "322:41:33"
+              "src": "322:41:35"
             },
             "returnParameters": {
-              "id": 8714,
+              "id": 9325,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "373:0:33"
+              "src": "373:0:35"
             },
-            "scope": 8723,
-            "src": "301:119:33",
+            "scope": 9334,
+            "src": "301:119:35",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           }
         ],
-        "scope": 8724,
-        "src": "195:227:33",
+        "scope": 9335,
+        "src": "195:227:35",
         "usedErrors": []
       }
     ],
-    "src": "35:387:33"
+    "src": "35:387:35"
   },
   "compiler": {
     "name": "solc",
@@ -398,7 +398,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.10",
-  "updatedAt": "2022-10-24T20:49:52.908Z",
+  "updatedAt": "2022-10-25T14:32:42.671Z",
   "devdoc": {
     "author": "Superfluid",
     "details": "A library used for emitting missing and unaccessable events.",

@@ -1,6 +1,7 @@
 import Vue from "vue"
 import contract from 'truffle-contract'
 import buidlJson from "../build/contracts/Buidl.json"
+import courseJson from "../build/contracts/BdlCourse.json"
 
 const Contracts = {
     isInit: false,

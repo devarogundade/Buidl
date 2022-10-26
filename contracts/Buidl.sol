@@ -4,8 +4,9 @@ pragma solidity >=0.7.0 <0.9.0;
 import {BdlNft} from "./BdlNft.sol";
 import {BdlCertificate} from "./BdlCertificate.sol";
 import {Models} from "./base/Models.sol";
-import {PaymentFlow} from "./PaymentFlow.sol";
-import {BdlToken} from "./BdlToken.sol";
+// import {PaymentFlow} from "./PaymentFlow.sol";
+// import {BdlToken} from "./BdlToken.sol";
+import {BdlTestToken} from "./BdlTestToken.sol";
 import {BdlCourse} from "./BdlCourse.sol";
 import {Staking} from "./Staking.sol";
 
@@ -16,10 +17,11 @@ contract Buidl {
     uint256 private subscriptionFee = 10; // percentage rate
 
     BdlNft private _bdlNft; // nft reward (coupon) contract
-    BdlToken private _bdlToken; // erc20(streamable token) contract
+    // BdlToken private _bdlToken; // erc20(streamable token) contract
+    BdlTestToken private _bdlToken; // erc20(streamable token) contract
     BdlCertificate private _bdlCertificate; // erc4973 certificate contract
     BdlCourse private _bdlCourse; // course contract
-    PaymentFlow private _paymentFlow; // flow (erc20 streaming) contract
+    // PaymentFlow private _paymentFlow; // flow (erc20 streaming) contract
     Staking private _staking; // staking contract
 
     // creators requirement
@@ -38,16 +40,17 @@ contract Buidl {
         address bdlNft,
         address bdlCertificate,
         address bdlCourse,
-        address paymentFlow,
+        // address paymentFlow,
         address staking
     ) {
         deployer = msg.sender;
 
         _bdlNft = BdlNft(bdlNft);
-        _bdlToken = BdlToken(bdlToken);
+        _bdlToken = BdlTestToken(bdlToken);
+        // _bdlToken = BdlToken(bdlToken);
         _bdlCertificate = BdlCertificate(bdlCertificate);
         _bdlCourse = BdlCourse(bdlCourse);
-        _paymentFlow = PaymentFlow(paymentFlow);
+        // _paymentFlow = PaymentFlow(paymentFlow);
         _staking = Staking(staking);
     }
 

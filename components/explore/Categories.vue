@@ -25,24 +25,7 @@ export default {
     },
     methods: {
         async getCategories() {
-            let index = 1;
-            let ended = false;
-
-            try {
-                while (!ended) {
-                    const category = await this.$contracts.buidlContract.categories(index);
-
-                    if (category.name != '') {
-                        this.categories.push(category)
-                    } else {
-                        ended = true
-                    }
-
-                    index++
-                }
-            } catch (error) {
-                ended = true
-            }
+         
         },
     }
 }

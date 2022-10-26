@@ -19,10 +19,33 @@ contract BdlCourse {
     /* 2 weeks */
     uint private refundableDuration = 10000;
 
+    uint private categoryCount = 0;
+
+    address private deployer;
+
+    constructor() {
+        deployer = msg.sender;
+
+        // initial categories
+        createCategory("Web Developent", "web-development.webp");
+        createCategory("Gaming", "gaming.webp");
+        createCategory("Cooking", "cooking.webp");
+        createCategory("Animation", "animation.webp");
+        createCategory("Marketing", "marketing.webp");
+        createCategory("Data Science", "data-science.webp");
+        createCategory("Photography", "photography.webp");
+        createCategory("Music", "music.webp");
+        createCategory("Speaking", "speaking.webp");
+        createCategory("UI/UX Designing", "ui-ux.webp");
+    }
+
     // == learner related functions == //
 
     /* function to subscribe to a course */
-    function subscribe(uint id, address learner) external returns (uint256, address) {
+    function subscribe(uint id, address learner)
+        external
+        returns (uint256, address)
+    {
         Models.Course memory course = courses[id];
 
         require(course.id != 0, "!exists");
@@ -61,6 +84,14 @@ contract BdlCourse {
     }
 
     // == creator related functions == //
+
+    function createCategory(string memory name, string memory image)
+        public
+        onlyOwner
+    {
+        categoryCount++;
+        emit CourseCategoryCreated(categoryCount, name, image);
+    }
 
     /* create a new course */
     function createCourse(
@@ -120,6 +151,16 @@ contract BdlCourse {
         );
     }
 
+    /* creates a course section */
+    function createCourseSection(
+        uint id,
+        string memory title,
+        string memory content,
+        string memory src
+    ) public {
+        emit CourseSectionCreates(id, title, content, src);
+    }
+
     /* transfer course onwership */
     function tranfersCourse(
         uint id,
@@ -139,6 +180,7 @@ contract BdlCourse {
     event CourseSubscribe(uint id, address creator, address learner);
     event CourseUnSubscribe(uint id, uint sId, address learner);
     event CourseTransfer(uint id, address creator, address receiver);
+    event CourseCategoryCreated(uint id, string name, string image);
     event CourseCreated(
         uint id,
         string name,
@@ -148,4 +190,16 @@ contract BdlCourse {
         string previewSrc,
         address creator
     );
+    event CourseSectionCreates(
+        uint id,
+        string title,
+        string content,
+        string src
+    );
+
+    // == modifiers == //
+    modifier onlyOwner() {
+        require(msg.sender == deployer, "!authorized");
+        _;
+    }
 }
