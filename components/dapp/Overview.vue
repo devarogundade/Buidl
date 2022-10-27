@@ -1,7 +1,7 @@
 <template>
 <div class="container">
     <div class="overview">
-        <div class="verify" v-on:click="$nuxt.$emit('username')">
+        <div class="verify">
             <p><i class="fa-solid fa-circle-exclamation"></i> Claim your unique @username</p>
             <p class="scaleable" v-on:click="claimUsername()">Claim now</p>
         </div>
@@ -209,7 +209,6 @@ export default {
     data() {
         return {
             saving: false,
-            user: this.$contracts.user
         }
     },
 

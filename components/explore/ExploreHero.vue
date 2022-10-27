@@ -4,9 +4,9 @@
         <div class="grid">
             <div class="hero">
                 <div class="text">
-                    <h3>Earn for learning.</h3>
+                    <h3>Earn from learning.</h3>
                     <p>
-                        Get a valuable NFTs (and/or) use them for a coupon for your next course.
+                        Get a valuable NFTs you can sell or use them for a coupon for your next course.
                     </p>
                 </div>
                 <div class="action scaleable">

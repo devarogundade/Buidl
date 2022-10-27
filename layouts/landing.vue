@@ -24,10 +24,6 @@ export default {
         $nuxt.$on('release-connect-wallet', () => {
             this.wcState = 'hide'
         })
-        $nuxt.$on('connected', (data) => {
-            this.address = data.account
-            this.$contracts.init(this.$auth.provider, this.$auth.accounts)
-        })
 
         $nuxt.$on('user-status', (status) => {
             if (status == 'loading') {
@@ -40,7 +36,6 @@ export default {
         })
 
         await this.$auth.checkAuth()
-        this.$contracts.init(this.$auth.provider, this.$auth.accounts)
     },
 }
 </script>

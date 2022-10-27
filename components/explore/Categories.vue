@@ -22,7 +22,7 @@ export default {
             fetching: true
         }
     },
-    async mounted() {
+    async created() {
         const response = await this.$stream.fetch('create-category')
         const status = response.status
 

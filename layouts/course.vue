@@ -53,10 +53,6 @@ export default {
             this.dbState = 'hide'
         })
 
-        $nuxt.$on('connected', (data) => {
-            this.$contracts.init(this.$auth.provider, this.$auth.accounts)
-        })
-
         $nuxt.$on('user-status', (status) => {
             if (status == 'loading') {
                 this.loading = true
@@ -72,7 +68,6 @@ export default {
         })
 
         await this.$auth.checkAuth()
-        this.$contracts.init(this.$auth.provider, this.$auth.accounts)
     }
 }
 </script>

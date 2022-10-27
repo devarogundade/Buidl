@@ -36,12 +36,7 @@ export default {
             this.cpState = 'hide'
         })
 
-        $nuxt.$on('connected', (data) => {
-            this.$contracts.init(this.$auth.provider, this.$auth.accounts)
-        })
-
         await this.$auth.checkAuth()
-        this.$contracts.init(this.$auth.provider, this.$auth.accounts)
     }
 }
 </script>
