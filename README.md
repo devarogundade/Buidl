@@ -1,11 +1,13 @@
 # Buidl - SocialFi for Creators and Learners
 ## _A Moralis X Google Cloud Hackathon Project_
 
-Building a Borderless, Permissionless and Decentralized Social-Fi for Creators and Learners.
+Buidl is a Social-Fi community for content creators (e.g instructors, youtubers, DIY makers, etc) basically anyone that shares their skills with other people online either for free or at a particular cost.
+
+Today, there are various existing Web2 solutions for this particular aspect, but we are taking it further leveraging on the blockchain technology to provide a more secured, learning incentives and ownership to the community.
 
 - Incentives for learning
-- Seamless payments and refunds using DEFI/Staking protocol
-- Get an on-chain certificate
+- Seamless payments and Guarantee refunds system using DEFI/Staking protocol
+- On-chain certificate (ERC4973)
 - IPFS ond On-chain encryption for premium contents
 
 ## Hackathon Track
@@ -14,11 +16,11 @@ Building a Borderless, Permissionless and Decentralized Social-Fi for Creators a
 ## Tech Stacks
 
 - Binance Smart Chain (Testnet)
-- Moralis APIs
+- Moralis Stream and Web3 APIs
 - IPFS 
 - Solidity (Smary contract)
 - Nuxtjs (Frontend)
-- Google Cloud Firebase
+- Lravel (Backend)
 - Truffle
 - Covalent APIs
 
