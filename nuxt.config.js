@@ -53,7 +53,7 @@ export default {
         '@/plugins/moralis-apis/ipfs.js',
         '@/plugins/moralis-apis/nft.js',
         '@/plugins/moralis-apis/token.js',
-        '@/plugins/moralis-apis/logs.js',
+        '@/plugins/moralis-apis/stream.js',
         '@/plugins/encryption.js',
     ],
 

@@ -84,23 +84,7 @@ export default {
     },
     methods: {
         async getCategories() {
-            let index = 1;
-            let ended = false;
-            try {
-                while (!ended) {
-                    const category = await this.$contracts.buidlContract.categories(index);
 
-                    if (category.name != '') {
-                        this.categories.push(category)
-                    } else {
-                        ended = true
-                    }
-
-                    index++
-                }
-            } catch (error) {
-                ended = true
-            }
         },
         onCategoryChanged(event) {
             this.selectedCategory = event.target.value
@@ -134,17 +118,7 @@ export default {
 
             this.creating = true
 
-            try {
-                const trx = await this.$contracts.buidlContract.createCourse(
-                    this.name, this.description, this.selectedCategory, {
-                        from: this.$auth.accounts[0]
-                    }
-                )
 
-                console.log(trx);
-
-                this.$router.push('/app/courses')
-            } catch (error) {}
         },
         getInputClassForName() {
             if (this.name == '') {

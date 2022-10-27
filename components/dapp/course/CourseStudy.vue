@@ -78,115 +78,13 @@ export default {
             this.swiper.slideNext();
         },
         onComplete: async function () {
-            if (this.user != null && this.user.type == "learner") {
-                // generate a certificate for learner with their name on it
-                const document = await Certificate.generateDocument(this.user.name);
 
-                const documentUrl = await this.$ipfs.upload(
-                    `certificates/${this.$auth.accounts[0]}/${this.courseId}`,
-                    document
-                );
-
-                if (documentUrl == null) {
-                    $nuxt.$emit("error", "Failed to mint course certificate");
-                    return;
-                }
-
-                const certificateJson = {
-                    "name": `${this.course.name} certificate`,
-                    "description": `This certificate is issued by Buidl to ${this.user.name} on ${Date()}`,
-                    "image": documentUrl,
-                    "external_url": `https://buidl.netlify.app/certificate?owner=${this.$auth.accounts[0]}&course=${this.courseId}`,
-                };
-
-                // upload certificates nft metadata to ipfs
-                const certificateMetadataUrl = await this.$ipfs.upload(
-                    `certificates/${this.$auth.accounts[0]}/${this.courseId}.json`,
-                    certificateJson
-                );
-
-                if (certificateMetadataUrl == null) {
-                    $nuxt.$emit("error", "Failed to mint course certificate")
-                    return;
-                }
-
-                // randomly selects a nft picture
-                const nftIndex = Math.floor(Math.random() * 4) + 1
-
-                // generates nft weight (coupon value at random in respect to the course price)
-                const nftWeight = ((Math.floor(Math.random() * 10) + 1) / 100) * this.course.price
-
-                const nftJson = {
-                    "name": `Mr. Nice Monkey`,
-                    "description": `This nice monkey will give you some discounts on your next buidl course purchase.`,
-                    "image": `https://buidl-testing.netlify.app/images/nft${nftIndex}.jpg`,
-                    "external_url": 'https://buidl.netlify.app/',
-                    "attributes": [{
-                        "display_type": "boost_percentage",
-                        "trait_type": "Weight",
-                        "value": nftWeight
-                    }]
-                };
-
-                const nftMetadataUrl = await this.$ipfs.upload(
-                    `nfts/${this.$auth.accounts[0]}/${this.courseId}.json`,
-                    nftJson
-                )
-
-                if (nftMetadataUrl == null) {
-                    $nuxt.$emit("error", "Failed to mint course certificate");
-                    return;
-                }
-
-                try {
-                    const trx = await this.$contracts.buidlContract.onCompletedCourse(
-                        this.courseId, certificateMetadataUrl, nftMetadataUrl, {
-                            from: this.$auth.accounts[0],
-                        }
-                    );
-
-                    console.log(trx);
-                } catch (error) {
-                    console.log(error);
-                }
-            }
         },
         async getCourse() {
-            const course = await this.$contracts.buidlContract.courses(this.courseId);
 
-            if (course.id.toNumber() != 0) {
-                this.course = course;
-                $nuxt.$emit(`course${this.courseId}`, course);
-            } else {
-                this.notFound = true;
-            }
-
-            this.fetching = false;
         },
         async getCourseSections() {
-            let index = 0;
-            try {
-                while (index < 5) {
-                    const section = await this.$contracts.buidlContract.courseSections(
-                        this.courseId,
-                        index
-                    );
-
-                    if (section.id.toNumber() == 0) {
-                        break;
-                    }
-
-                    const existing = this.sections.filter(
-                        (_section) => section.id.toNumber() == _section.id.toNumber()
-                    );
-
-                    if (existing.length == 0) {
-                        this.sections.push(section);
-                    }
-
-                    index++;
-                }
-            } catch (error) {}
+           
         },
     },
 };

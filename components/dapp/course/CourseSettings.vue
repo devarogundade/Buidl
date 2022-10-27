@@ -138,52 +138,18 @@ export default {
             }
 
             try {
-                const trx = await this.$contracts.buidlContract.updateCourse(
-                    this.course.name, this.course.description, this.course.ipfsPhoto, this.selectedCategory, this.course.price,
-                    this.course.id.toNumber(), this.course.isPublished, {
-                        from: this.$auth.accounts[0]
-                    }
-                )
 
-                $nuxt.$emit('trx', trx)
             } catch (error) {
-                console.log(error);
+
             }
 
             this.saving = false
         },
         async getCourse() {
-            const course = await this.$contracts.buidlContract.courses(this.courseId);
 
-            if (course.id.toNumber() != 0) {
-                this.course = course
-
-                $nuxt.$emit(`course${this.courseId}`, course);
-                this.selectedCategory = course.categoryId.toNumber()
-            } else {
-                this.notFound = true
-            }
-
-            this.fetching = false
         },
         async getCategories() {
-            let index = 1;
-            let ended = false;
-            try {
-                while (!ended) {
-                    const category = await this.$contracts.buidlContract.categories(index);
 
-                    if (category.name != '') {
-                        this.categories.push(category)
-                    } else {
-                        ended = true
-                    }
-
-                    index++
-                }
-            } catch (error) {
-                ended = true
-            }
         },
         onCategoryChanged(event) {
             this.selectedCategory = event.target.value

@@ -23,13 +23,17 @@ export default {
         }
     },
     async mounted() {
-        const contractAddress = this.$contracts.courseContract.address
-        const categories = await this.$logs.getCategories(contractAddress)
-        categories.result.forEach(category => {
-            const data = this.$utils.decode(['uint256', 'string', 'string'], category.data)
-            this.categories.push(data)
-        })
+        const response = await this.$stream.fetch('create-category')
+        const status = response.status
 
+        if (status) {
+            const categories = response.data.data
+            categories.forEach(category => {
+                const data = this.$utils.decode(['uint256', 'string', 'string'], category.data)
+                this.categories.push(data)
+            })
+
+        }
         this.fetching = false
     },
 }
@@ -37,7 +41,7 @@ export default {
 
 <style scoped>
 section {
-  min-height: 100vh;
+    min-height: 100vh;
 }
 
 .categories {

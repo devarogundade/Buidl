@@ -61,8 +61,7 @@ export default {
     data() {
         return {
             categories: [],
-            courses: [],
-            contract: this.$contracts.buidlContract
+            courses: []
         }
     },
     mounted() {

@@ -22,36 +22,7 @@ export default {
         }
     },
     methods: {
-        // async mint() {
-        //     if (this.address == '' || this.minting) return
-        //     this.minting = true
 
-        //     try {
-        //         const trx = await this.$contracts.buidlContract.faucetMint({
-        //             from: this.address
-        //         })
-        //     } catch (error) {}
-
-        //     this.minting = false
-        // },
-
-        async mint() {
-            console.log(this.address);
-            if (this.address == '' || this.minting) return
-            this.minting = true
-
-            console.log(this.$contracts.courseContract);
-
-            try {
-                const trx = await this.$contracts.courseContract.createCategory("New Category", "image", {
-                    from: this.address
-                })
-            } catch (error) {
-                console.log(error);
-            }
-
-            this.minting = false
-        }
     }
 }
 </script>

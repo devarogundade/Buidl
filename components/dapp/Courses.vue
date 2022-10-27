@@ -2,7 +2,7 @@
 <div class="container">
     <InProgress v-if="fetching" />
 
-    <div class="courses" v-show="(courses.length > 0) && !fetching && user" v-if="user.type == 'learner'">
+    <div class="courses" v-show="(courses.length > 0) && !fetching">
         <router-link :to="`/app/courses/${course.id.toNumber()}`" v-for="(course, index) in courses" :key="index">
             <div class="course scaleable">
                 <div class="detail">
@@ -13,7 +13,7 @@
             </div>
         </router-link>
     </div>
-    <div class="courses" v-show="(courses.length > 0) && !fetching && user" v-if="user.type == 'creator'">
+    <div class="courses" v-show="(courses.length > 0) && !fetching">
         <router-link :to="`/app/course-builder/${course.id.toNumber()}`" v-for="(course, index) in courses" :key="index">
             <div class="course scaleable">
                 <div class="detail">
@@ -25,7 +25,7 @@
         </router-link>
     </div>
 
-    <div class="explain" v-show="(courses.length == 0) && !fetching && user.type == 'creator'">
+    <div class="explain" v-show="(courses.length == 0) && !fetching">
         <h3>What's a course?</h3>
         <p>
             <b>Buidl Course</b> provides you an environment with the handy tools you need to teach
@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    <div class="explain" v-show="(courses.length == 0) && !fetching && user.type == 'learner'">
+    <div class="explain" v-show="(courses.length == 0) && !fetching">
         <h3>What's a course?</h3>
         <p>
             <b>Buidl Course</b> provides you an environment with the handy tools you need to learn
@@ -48,14 +48,9 @@
     </div>
 
     <div class="fab-btn">
-        <router-link to="/app/courses/create" v-if="user.type == 'creator'">
+        <router-link to="/app/courses/create">
             <div class="fab">
                 <i class="fa-solid fa-plus"></i>
-            </div>
-        </router-link>
-        <router-link to="/explore" v-if="user.type == 'learner'">
-            <div class="fab">
-                <i class="fa-solid fa-search"></i>
             </div>
         </router-link>
     </div>
@@ -66,86 +61,17 @@
 export default {
     data() {
         return {
-            user: this.$contracts.user,
             courses: [],
             fetching: true,
         }
     },
     mounted() {
-        $nuxt.$on('user', (user) => {
-            this.user = user
-            // this.init()
-        })
-
         this.init()
     },
     methods: {
         async init() {
-            const address = this.$auth.accounts[0]
 
-            if (this.user && this.user.type == 'learner') {
-                let index = 0
-                try {
-                    while (true) {
-                        const studentCourse = await this.$contracts.buidlContract.studentCourses(address, index)
 
-                        if (studentCourse.courseId.toNumber() == 0) {
-                            // end of result
-                            this.fetching = false
-                            break
-                        }
-
-                        const existing = this.courses.filter(course =>
-                            studentCourse.courseId.toNumber() == course.id.toNumber()
-                        )
-
-                        if (existing.length == 0) {
-                            const course = await this.$contracts.buidlContract.courses(studentCourse.courseId.toNumber())
-                            if (course.id.toNumber() != 0) {
-                                this.courses.push(course)
-                            }
-                        }
-
-                        this.fetching = false
-
-                        index++
-                    }
-                } catch (error) {
-                    this.fetching = false
-                }
-            }
-
-            if (this.user && this.user.type == 'creator') {
-                let index = 0
-                try {
-                    while (true) {
-                        const courseId = await this.$contracts.buidlContract.getInstructorCourseIdAtIndex(address, index)
-
-                        if (courseId.toNumber() == 0) {
-                            // end of result
-                            this.fetching = false
-                            break
-                        }
-
-                        const existing = this.courses.filter(course =>
-                            courseId.toNumber() == course.id.toNumber()
-                        )
-
-                        if (existing.length == 0) {
-                            const course = await this.$contracts.buidlContract.courses(courseId.toNumber())
-                            if (course.id.toNumber() != 0) {
-                                this.courses.push(course)
-                            }
-                        }
-
-                        this.fetching = false
-
-                        index++
-                    }
-                } catch (error) {
-                    this.fetching = false
-                }
-            }
         }
     }
 }

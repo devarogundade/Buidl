@@ -1,40 +1,40 @@
 <template>
 <div class="nav" v-if="user">
     <div class="items">
-        <router-link v-if="user.type == 'creator'" :to="`/app/course-builder/${$route.params.course}`">
+        <router-link :to="`/app/course-builder/${$route.params.course}`">
             <div :class="$route.name == 'app-course-builder-course' ? 'item active' : 'item'">
                 <i class="fa-solid fa-pen-to-square"></i>
                 <p>Edit Course</p>
             </div>
         </router-link>
-        <router-link v-if="user.type == 'learner'" :to="`/app/courses/${$route.params.course}`">
+        <router-link :to="`/app/courses/${$route.params.course}`">
             <div :class="$route.name == 'app-courses-course' ? 'item active' : 'item'">
                 <i class="fa-solid fa-chart-pie"></i>
                 <p>Study</p>
             </div>
         </router-link>
 
-        <router-link v-if="user.type == 'creator'" :to="`/app/course-builder/${$route.params.course}/chat`">
+        <router-link :to="`/app/course-builder/${$route.params.course}/chat`">
             <div :class="$route.name == 'app-course-builder-course-chat' ? 'item active' : 'item'">
                 <i class="fa-solid fa-comments"></i>
                 <p>Students</p>
             </div>
         </router-link>
-        <router-link v-if="user.type == 'learner'" :to="`/app/courses/${$route.params.course}/chat`">
+        <router-link :to="`/app/courses/${$route.params.course}/chat`">
             <div :class="$route.name == 'app-courses-course-chat' ? 'item active' : 'item'">
                 <i class="fa-solid fa-comments"></i>
                 <p>Chat Instructor</p>
             </div>
         </router-link>
 
-        <router-link v-if="user.type == 'learner'" :to="`/app/courses/${$route.params.course}/goals`">
+        <router-link :to="`/app/courses/${$route.params.course}/goals`">
             <div :class="$route.name == 'app-courses-course-goals' ? 'item active' : 'item'">
                 <i class="fa-solid fa-road"></i>
                 <p>Timeline</p>
             </div>
         </router-link>
 
-        <router-link v-if="user.type == 'creator'" :to="`/app/course-builder/${$route.params.course}/settings`">
+        <router-link :to=" `/app/course-builder/${$route.params.course}/settings`">
             <div :class="$route.name == 'app-course-builder-course-settings' ? 'item active' : 'item'">
                 <i class="fa-solid fa-gear"></i>
                 <p>Settings</p>
@@ -97,7 +97,6 @@ export default {
     background: rgb(201, 227, 255);
     color: #0177fb;
 }
-
 
 @media screen and (max-width: 800px) {
     .nav {

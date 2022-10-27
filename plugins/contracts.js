@@ -1,91 +1,90 @@
 import Vue from "vue"
 import contract from 'truffle-contract'
+
 import buidlJson from "../build/contracts/Buidl.json"
 import courseJson from "../build/contracts/BdlCourse.json"
+import tokenJson from "../build/contracts/BdlToken.json"
 
 const Contracts = {
-    isInit: false,
     buidlContract: null,
     courseContract: null,
-    user: null,
+    tokenContract: null,
 
-    init: async function(provider) {
+    initBuidlContract: async function(provider) {
         const buidlContract = contract(buidlJson)
-        const courseContract = contract(courseJson)
-
         if (!provider) {
             if (typeof ethereum === 'undefined') {
                 $nuxt.$emit('request-connect-wallet')
             } else {
                 buidlContract.setProvider(ethereum)
-                courseContract.setProvider(ethereum)
             }
         } else {
             buidlContract.setProvider(provider)
+        }
+
+        try {
+            buidlContract.deployed().then(instance => {
+                Contracts.buidlContract = instance
+                $nuxt.$emit('buidl-contract', instance)
+            })
+        } catch (error) {}
+    },
+
+    initCourseContract: async function(provider) {
+        const courseContract = contract(courseJson)
+        if (!provider) {
+            if (typeof ethereum === 'undefined') {
+                $nuxt.$emit('request-connect-wallet')
+            } else {
+                courseContract.setProvider(ethereum)
+            }
+        } else {
             courseContract.setProvider(provider)
         }
 
         try {
-            // await buidlContract.deployed().then(instance => {
-            //     Contracts.buidlContract = instance
-            //     $nuxt.$emit('contracts-ready', Contracts.buidlContract)
-            // })
-
-            await courseContract.deployed().then(instance => {
+            courseContract.deployed().then(instance => {
                 Contracts.courseContract = instance
-                $nuxt.$emit('course-contracts-ready', Contracts.courseContract)
+                $nuxt.$emit('course-contract', instance)
             })
-
-            this.isInit = true
-        } catch (error) {
-            this.isInit = false
-        }
+        } catch (error) {}
     },
 
-    checkUser: async function(provider, accounts) {
-        if (provider != null) {
-            $nuxt.$emit('user-status', 'loading')
-
-            // first check if user is already a student
-            const studentAccount = await Contracts.buidlContract.students(accounts[0]);
-            if (studentAccount.emailAddress != '') {
-                Contracts.user = studentAccount
-                Contracts.user.type = 'learner'
-
-                $nuxt.$emit('user', Contracts.user)
-                $nuxt.$emit('user-status', 'available')
-                return
+    initTokenContract: async function(provider) {
+        const tokenContract = contract(tokenJson)
+        if (!provider) {
+            if (typeof ethereum === 'undefined') {
+                $nuxt.$emit('request-connect-wallet')
+            } else {
+                tokenContract.setProvider(ethereum)
             }
-
-            // then check if user is an instructor
-            const instructorAccount = await Contracts.buidlContract.instructors(accounts[0]);
-            if (instructorAccount.firstName != '') {
-                Contracts.user = instructorAccount
-                Contracts.user.type = 'creator'
-
-                $nuxt.$emit('user', Contracts.user)
-                $nuxt.$emit('user-status', 'available')
-                return
-            }
-
-            // user is neither a student nor instructor
-            $nuxt.$emit('user-status', 'not-available')
+        } else {
+            tokenContract.setProvider(provider)
         }
+
+        try {
+            tokenContract.deployed().then(instance => {
+                Contracts.tokenContract = instance
+                $nuxt.$emit('token-contract', instance)
+            })
+        } catch (error) {}
     }
 }
 
-export default ({ app }, inject) => {
+export default ({}, inject) => {
     inject('contracts', Vue.observable({
         buidlContract: Contracts.buidlContract,
         courseContract: Contracts.courseContract,
-        user: Contracts.user,
+        tokenContract: Contracts.tokenContract,
 
-        init: async function(provider, accounts) {
-            await Contracts.init(provider)
-            this.buidlContract = Contracts.buidlContract
-            this.courseContract = Contracts.courseContract
-            await Contracts.checkUser(provider, accounts)
-            this.user = Contracts.user
+        initBuidlContract: async function(provider) {
+            await Contracts.initBuidlContract(provider)
+        },
+        initCourseContract: async function(provider) {
+            await Contracts.initCourseContract(provider)
+        },
+        initTokenContract: async function(provider) {
+            await Contracts.initTokenContract(provider)
         }
     }))
 }

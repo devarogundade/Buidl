@@ -99,12 +99,7 @@ export default {
             const encryptedSrc = this.$encryption.encrypt(src, "key")
 
             try {
-                const trx = await this.$contracts.buidlContract.addSectionToCourse(
-                    this.courseId, this.sections[this.selectedIndex].title, encryptedSrc,
-                    this.sections[this.selectedIndex].content, this.sections[this.selectedIndex].id, {
-                        from: this.$auth.accounts[0]
-                    }
-                )
+
             } catch (error) {
 
             }
@@ -112,53 +107,10 @@ export default {
             this.saving = false
         },
         async getCourse() {
-            const course = await this.$contracts.buidlContract.courses(this.courseId);
 
-            if (course.id.toNumber() != 0) {
-                this.course = course
-
-                $nuxt.$emit(`course${this.courseId}`, course);
-
-                // this.instructor = await this.$contracts.buidlContract.instructors(course.instructor)
-                // this.category = await this.$contracts.buidlContract.categories(course.categoryId)
-            } else {
-                this.notFound = true
-            }
-
-            this.fetching = false
         },
         async getCourseSections() {
-            let index = 0
-            try {
-                while (true) {
-                    console.log('index', index);
-                    const section = await this.$contracts.buidlContract.courseSections(this.courseId, index);
-
-                    if (section.id.toNumber() == 0) {
-                        break
-                    }
-
-                    const existing = this.sections.filter(_section =>
-                        section.id.toNumber() == _section.id
-                    )
-
-                    if (existing.length == 0) {
-                        this.sections.push({
-                            id: section.id.toNumber(),
-                            title: section.title,
-                            src: section.src,
-                            content: section.content,
-                            file: null
-                        })
-                    }
-
-                    index++
-                }
-            } catch (error) {}
-
-            if (this.sections.length == 0) {
-                this.addSection()
-            }
+            
         },
     }
 }

@@ -12,9 +12,9 @@
                 <p :class="tab == 2 ? 'tab tab_active' : 'tab'" v-on:click="tab = 2">Creator</p>
             </div>
 
-            <div class="signed" v-if="user && user.type">
-                <p v-if="user.type == 'learner'">Welcome back, {{ user.name }}</p>
-                <p v-if="user.type == 'creator'">Welcome back, {{ user.firstName }}</p>
+            <div class="signed">
+                <p >Welcome back,</p>
+                <p>Welcome back,</p>
                 <router-link to="/app">
                     <div class="continue">Continue</div>
                 </router-link>
@@ -81,7 +81,6 @@
 export default {
     data() {
         return {
-            user: this.$contracts.user,
             tab: 1,
 
             name: '',
@@ -98,11 +97,6 @@ export default {
 
             registering: false
         }
-    },
-    mounted() {
-        $nuxt.$on('user', (user) => {
-            this.user = user
-        })
     },
     methods: {
         async registerAsStudent() {
@@ -121,12 +115,7 @@ export default {
             this.registering = true
 
             try {
-                const trx = await this.$contracts.buidlContract.createStudentAccount(
-                    this.name, this.email, '' /* gender */ , {
-                        from: this.$auth.accounts[0]
-                    }
-                )
-                this.$router.push('/app')
+
             } catch (error) {}
         },
         async registerAsInstructor() {
@@ -152,11 +141,7 @@ export default {
             this.registering = true
 
             try {
-                const trx = await this.$contracts.buidlContract.createInstructorAccount(
-                    this.firstName, this.lastName, this.country, 0 /* gender */ , {
-                        from: this.$auth.accounts[0]
-                    }
-                )
+ 
                 this.$router.push('/app')
             } catch (error) {}
         },

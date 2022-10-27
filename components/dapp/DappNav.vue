@@ -1,7 +1,7 @@
 <template>
-<div class="nav" v-if="user">
+<div class="nav">
     <div class="items">
-        <router-link to="/app" v-if="user.type == 'creator'">
+        <router-link to="/app">
             <div :class="$route.name == 'app' ? 'item active' : 'item'">
                 <i class="fa-solid fa-house"></i>
                 <p>Overview</p>
@@ -15,14 +15,14 @@
             </div>
         </router-link>
 
-        <router-link to="/app/revenue" v-if="user.type == 'creator'">
+        <router-link to="/app/revenue">
             <div :class="$route.name == 'app-revenue'  ? 'item active' : 'item'">
                 <i class="fa-solid fa-briefcase"></i>
                 <p>Revenue</p>
             </div>
         </router-link>
 
-        <div v-if="user.type == 'creator'" :class="($route.name == 'app-create-post-feed' || $route.name == 'app-create-post-job') ? 'item active' : 'item'" v-on:click="$nuxt.$emit('create-new-post')">
+        <div :class="($route.name == 'app-create-post-feed' || $route.name == 'app-create-post-job') ? 'item active' : 'item'" v-on:click="$nuxt.$emit('create-new-post')">
             <i class="fa-solid fa-plus"></i>
             <p>Broadcast</p>
         </div>
@@ -49,15 +49,11 @@ export default {
     data() {
         return {
             tab: 1,
-            user: this.$contracts.user
         }
     },
     mounted() {
         $nuxt.$on('dapp-tab', (tab) => {
             this.tab = tab
-        })
-        $nuxt.$on('user', (user) => {
-            this.user = user
         })
     }
 }

@@ -141,7 +141,6 @@ export default {
     data() {
         return {
             selectedSection: 0,
-            user: this.$contracts.user,
             courseId: this.$route.params.course,
             course: null,
             sections: [],
@@ -152,24 +151,9 @@ export default {
             nfts: [],
             selectedNft: null,
             showNfts: false,
-            contract: this.$contracts.buidlContract
         }
     },
     mounted() {
-        $nuxt.$on('user', (user) => {
-            if (this.user == null) {
-                this.user = user
-            }
-        })
-
-        $nuxt.$on('contracts-ready', (buidlContract) => {
-            if (this.contract == null) {
-                this.contract = buidlContract
-
-                this.init()
-            }
-        })
-
         this.init()
         this.getNfts()
     },
@@ -214,83 +198,15 @@ export default {
             this.nfts = nfts.result
         },
         async getCourse() {
-            const course = await this.contract.courses(this.courseId);
 
-            if (course.id.toNumber() != 0) {
-                this.course = course
-
-                this.instructor = await this.contract.instructors(course.instructor)
-                this.category = await this.contract.categories(course.categoryId)
-            } else {
-                this.notFound = true
-            }
         },
         async init() {
-            if (this.contract == null) return
 
-            this.getCourse()
-            this.getCourseSections()
-
-            if (this.user && this.user.type == 'learner') {
-                const address = this.$auth.accounts[0]
-
-                let index = 0
-
-                try {
-                    while (!this.bought) {
-                        const studentCourse = await this.contract.studentCourses(address, index)
-                        if (studentCourse.courseId.toNumber() == 0) {
-                            break
-                        }
-                        if (studentCourse.courseId.toNumber() == this.courseId) {
-                            this.bought = true
-                        }
-
-                        index++
-                    }
-                } catch (error) {}
-            }
         },
         async getCourseSections() {
-            let index = 0
-            try {
-                while (true) {
-                    const section = await this.contract.courseSections(this.courseId, index);
 
-                    if (section.id.toNumber() == 0) {
-                        break
-                    }
-
-                    const existing = this.sections.filter(_section =>
-                        section.id.toNumber() == _section.id.toNumber()
-                    )
-
-                    if (existing.length == 0) {
-                        this.sections.push(section)
-                    }
-
-                    index++
-                }
-            } catch (error) {}
         },
         async buyCourse() {
-            let nftID = 0
-            let discount = 0
-
-            if (this.selectedNft != null) {
-                nftID = this.nfts[this.selectedNft].token_id
-                discount = this.calcDiscount(this.selectedSection)
-            }
-
-            try {
-                const trx = await this.contract.purchaseCourse(this.courseId, nftID, discount, {
-                    from: this.$auth.accounts[0]
-                })
-
-                this.bought = true
-            } catch (error) {
-
-            }
         }
     }
 };

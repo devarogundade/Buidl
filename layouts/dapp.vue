@@ -3,8 +3,7 @@
     <div class="bg"><img src="https://idle.finance/assets/img/Ellipse1.ee547e.png" alt=""></div>
     <div class="bg2"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
     <DappHeader />
-    <Progress v-if="loading" />
-    <section v-else>
+    <section>
         <div class="app-width">
             <div class="grid">
                 <div class="nav">
@@ -28,7 +27,6 @@ export default {
             wcState: 'hide',
             cpState: 'hide',
             unState: 'hide',
-            loading: true,
         }
     },
     async mounted() {
@@ -54,26 +52,7 @@ export default {
             this.unState = 'hide'
         })
 
-        $nuxt.$on('connected', (data) => {
-            this.$contracts.init(this.$auth.provider, this.$auth.accounts)
-        })
-
-        $nuxt.$on('user-status', (status) => {
-            if (status == 'loading') {
-                this.loading = true
-            }
-
-            if (status == 'available') {
-                this.loading = false
-            }
-
-            if (status == 'not-available') {
-                this.$router.push('/register')
-            }
-        })
-
         await this.$auth.checkAuth()
-        this.$contracts.init(this.$auth.provider, this.$auth.accounts)
     }
 }
 </script>
