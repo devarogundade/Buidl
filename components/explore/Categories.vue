@@ -3,9 +3,9 @@
     <div class="app-width">
         <div class="categories">
             <div class="category scaleable" v-for="(category, index) in categories" :key="index">
-                <img :src="category.image" alt="">
+                <img :src="`/images/categories/${category[2]}`" alt="">
                 <div class="text">
-                    <p>{{ category.name }}</p>
+                    <p>{{ category[1] }}</p>
                 </div>
             </div>
         </div>
@@ -20,14 +20,14 @@ export default {
             categories: []
         }
     },
-    mounted() {
-        this.getCategories()
+    async mounted() {
+        const contractAddress = this.$contracts.courseContract.address
+        const categories = await this.$logs.getCategories(contractAddress)
+        categories.result.forEach(category => {
+            const data = this.$utils.decode(['uint256', 'string', 'string'], category.data)
+            this.categories.push(data)
+        })
     },
-    methods: {
-        async getCategories() {
-         
-        },
-    }
 }
 </script>
 

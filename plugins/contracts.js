@@ -6,28 +6,37 @@ import courseJson from "../build/contracts/BdlCourse.json"
 const Contracts = {
     isInit: false,
     buidlContract: null,
+    courseContract: null,
     user: null,
 
     init: async function(provider) {
         const buidlContract = contract(buidlJson)
+        const courseContract = contract(courseJson)
 
         if (!provider) {
             if (typeof ethereum === 'undefined') {
                 $nuxt.$emit('request-connect-wallet')
             } else {
                 buidlContract.setProvider(ethereum)
+                courseContract.setProvider(ethereum)
             }
         } else {
             buidlContract.setProvider(provider)
+            courseContract.setProvider(provider)
         }
 
         try {
-            await buidlContract.deployed().then(instance => {
-                Contracts.buidlContract = instance
+            // await buidlContract.deployed().then(instance => {
+            //     Contracts.buidlContract = instance
+            //     $nuxt.$emit('contracts-ready', Contracts.buidlContract)
+            // })
+
+            await courseContract.deployed().then(instance => {
+                Contracts.courseContract = instance
+                $nuxt.$emit('course-contracts-ready', Contracts.courseContract)
             })
 
             this.isInit = true
-            $nuxt.$emit('contracts-ready', Contracts.buidlContract)
         } catch (error) {
             this.isInit = false
         }
@@ -68,11 +77,13 @@ const Contracts = {
 export default ({ app }, inject) => {
     inject('contracts', Vue.observable({
         buidlContract: Contracts.buidlContract,
+        courseContract: Contracts.courseContract,
         user: Contracts.user,
 
         init: async function(provider, accounts) {
             await Contracts.init(provider)
             this.buidlContract = Contracts.buidlContract
+            this.courseContract = Contracts.courseContract
             await Contracts.checkUser(provider, accounts)
             this.user = Contracts.user
         }

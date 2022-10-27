@@ -21,16 +21,41 @@ export default {
             minting: false
         }
     },
+    async mounted() {
+        const categories = await this.$logs.getCategories("0xcADa1529F21D4ce749Ad540955E65E24dB2B01d1")
+        categories.result.forEach(category => {
+            const data = this.$utils.decode(['uint256', 'string', 'string'], category.data)
+            console.log(data);
+        })
+    },
     methods: {
+        // async mint() {
+        //     if (this.address == '' || this.minting) return
+        //     this.minting = true
+
+        //     try {
+        //         const trx = await this.$contracts.buidlContract.faucetMint({
+        //             from: this.address
+        //         })
+        //     } catch (error) {}
+
+        //     this.minting = false
+        // },
+
         async mint() {
+            console.log(this.address);
             if (this.address == '' || this.minting) return
             this.minting = true
 
+            console.log(this.$contracts.courseContract);
+
             try {
-                const trx = await this.$contracts.buidlContract.faucetMint({
+                const trx = await this.$contracts.courseContract.createCategory("New Category", "image", {
                     from: this.address
                 })
-            } catch (error) {}
+            } catch (error) {
+                console.log(error);
+            }
 
             this.minting = false
         }

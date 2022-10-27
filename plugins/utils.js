@@ -1,7 +1,12 @@
 import Vue from "vue"
+import Web3 from "web3"
 
 export default ({}, inject) => {
     inject('utils', Vue.observable({
+        decode: function(format, data) {
+            const web3 = new Web3(ethereum)
+            return web3.eth.abi.decodeParameters(format, data)
+        },
         formatToDate: function(timestamp) {
             const monthsInWord = [
                 'January', 'February',

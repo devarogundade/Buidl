@@ -4,9 +4,7 @@ pragma solidity >=0.7.0 <0.9.0;
 import {BdlNft} from "./BdlNft.sol";
 import {BdlCertificate} from "./BdlCertificate.sol";
 import {Models} from "./base/Models.sol";
-// import {PaymentFlow} from "./PaymentFlow.sol";
-// import {BdlToken} from "./BdlToken.sol";
-import {BdlTestToken} from "./BdlTestToken.sol";
+import {BdlToken} from "./BdlToken.sol";
 import {BdlCourse} from "./BdlCourse.sol";
 import {Staking} from "./Staking.sol";
 
@@ -17,11 +15,9 @@ contract Buidl {
     uint256 private subscriptionFee = 10; // percentage rate
 
     BdlNft private _bdlNft; // nft reward (coupon) contract
-    // BdlToken private _bdlToken; // erc20(streamable token) contract
-    BdlTestToken private _bdlToken; // erc20(streamable token) contract
+    BdlToken private _bdlToken; // erc20(streamable token) contract
     BdlCertificate private _bdlCertificate; // erc4973 certificate contract
     BdlCourse private _bdlCourse; // course contract
-    // PaymentFlow private _paymentFlow; // flow (erc20 streaming) contract
     Staking private _staking; // staking contract
 
     // creators requirement
@@ -40,17 +36,14 @@ contract Buidl {
         address bdlNft,
         address bdlCertificate,
         address bdlCourse,
-        // address paymentFlow,
         address staking
     ) {
         deployer = msg.sender;
 
         _bdlNft = BdlNft(bdlNft);
-        _bdlToken = BdlTestToken(bdlToken);
-        // _bdlToken = BdlToken(bdlToken);
+        _bdlToken = BdlToken(bdlToken);
         _bdlCertificate = BdlCertificate(bdlCertificate);
         _bdlCourse = BdlCourse(bdlCourse);
-        // _paymentFlow = PaymentFlow(paymentFlow);
         _staking = Staking(staking);
     }
 
@@ -90,8 +83,16 @@ contract Buidl {
 
     /* subscribe to a course */
     /* params course id, subscription id, refundable percentage */
-    function unSubscribe(uint id, uint sId, uint weight) public {
-        (uint256 price, address creator) = _bdlCourse.unSubscribe(id, sId, msg.sender);
+    function unSubscribe(
+        uint id,
+        uint sId,
+        uint weight
+    ) public {
+        (uint256 price, address creator) = _bdlCourse.unSubscribe(
+            id,
+            sId,
+            msg.sender
+        );
 
         uint256 refundable = weight * price; /* amount learner will receive back */
         uint256 nonRefundable = (price - refundable); /* not refundable due to learner activity on the course */
