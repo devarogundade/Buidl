@@ -21,13 +21,13 @@ A creator with suspicious activities and high report rate will be banned and the
   In this hackathon scope the platfoem only supports free or premium video contents.
 
 ## Products
-  # Buidl Token
+ - # Buidl Token
   
-  # Buidl Certificate
+ - # Buidl Certificate
      
-  # Buidl NFT
+-  # Buidl NFT
   
-  # Buidl Video Player
+-  # Buidl Video Player
 
 ## Hackathon Track
   Binance Smart Chain => Social & Entertainment
