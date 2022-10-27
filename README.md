@@ -10,7 +10,7 @@ A creator with suspicious activities and high report rate will be banned and the
 
 ## Core Features
 - # Incentives for learning
- -   Non creators(i.e learners) cover the largest base of the platform size, it's a crucial part of the platform to motivate and reward learners to use.....
+    Non creators(i.e learners) cover the largest base of the platform size, it's a crucial part of the platform to motivate and reward learners to use.....
     On each every premium content a user purchase on the platform, given that they completed learning the content a Buidl NFT will be minted for them based on the content price. Click here to read more about the Buidl NFT
     
 - Cryptocurrency payment and Guaranteed refund system using DEFI Staking protocol
