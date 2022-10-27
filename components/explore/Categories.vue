@@ -1,7 +1,8 @@
 <template>
 <section>
     <div class="app-width">
-        <div class="categories">
+        <InProgress v-if="fetching" />
+        <div class="categories" v-else>
             <div class="category scaleable" v-for="(category, index) in categories" :key="index">
                 <img :src="`/images/categories/${category[2]}`" alt="">
                 <div class="text">
@@ -17,7 +18,8 @@
 export default {
     data() {
         return {
-            categories: []
+            categories: [],
+            fetching: true
         }
     },
     async mounted() {
@@ -27,11 +29,17 @@ export default {
             const data = this.$utils.decode(['uint256', 'string', 'string'], category.data)
             this.categories.push(data)
         })
+
+        this.fetching = false
     },
 }
 </script>
 
 <style scoped>
+section {
+  min-height: 100vh;
+}
+
 .categories {
     display: flex;
     flex-wrap: wrap;
