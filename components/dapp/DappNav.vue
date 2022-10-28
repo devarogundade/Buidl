@@ -10,7 +10,7 @@
 
         <router-link to="/app/courses">
             <div :class="($route.name == 'app-courses' || $route.name == 'app-courses-create')  ? 'item active' : 'item'">
-                <i class="fa-solid fa-hammer"></i>
+              <i class="fa-brands fa-youtube"></i>
                 <p>Courses</p>
             </div>
         </router-link>

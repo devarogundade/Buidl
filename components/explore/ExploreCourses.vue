@@ -6,30 +6,30 @@
             <div class="category" v-else v-for="(category, index) in categories" :key="index">
                 <div class="title">
                     <div>
-                        <img :src="`/images/categories/${category[2]}`" alt="">
-                        <h3>{{ category[1] }}</h3>
+                        <img :src="`/images/categories/${category.photo}`" alt="">
+                        <h3>{{ category.name }}</h3>
                     </div>
                     <div class="action">View all <i class="fa-solid fa-arrow-right-long"></i></div>
                 </div>
                 <div class="trending">
                     <div class="swiper trendSwiper">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide" v-for="(course, index) in getCategoryCourses(Number(category[0]))" :key="index">
+                            <div class="swiper-slide" v-for="(course, index) in getCategoryCourses(category.id)" :key="index">
                                 <div class="image">
-                                    <img :src="course[5]" alt="">
+                                    <img :src="course.photo" alt="">
                                 </div>
                                 <div class="detail">
-                                    <h3 class="course_title">{{ course[1] }}</h3>
-                                    <p class="instructor" v-if="course.instructorData"> <img src="/images/nft2.jpg" alt=""> {{ course.instructorData.lastName + ' ' + course.instructorData.firstName }} </p>
+                                    <h3 class="course_title">{{ course.name }}</h3>
+                                    <p class="instructor"> <img :src="course.creator.image" alt=""> {{ course.creator.name }} </p>
                                     <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; • &nbsp; 235 students</p>
                                     <p class="price">{{ 0 }} $BDL</p>
                                 </div>
 
                                 <div class="description">
                                     <div class="detail">
-                                        <p class="price">{{0 }} $BDL</p>
-                                        <h3 class="course_title">{{ course[1] }}</h3>
-                                        <p class="instructor" v-if="course.instructorData"> <img src="/images/nft2.jpg" alt=""> {{ course.instructorData.lastName + ' ' + course.instructorData.firstName }} </p>
+                                        <p class="price">{{ 0 }} $BDL</p>
+                                        <h3 class="course_title">{{ course.name }}</h3>
+                                        <p class="instructor"> <img :src="course.creator.image" alt=""> {{ course.creator.name }} </p>
                                         <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; • &nbsp; 235 students</p>
                                         <p class="sections">Sections</p>
                                         <ul>
@@ -39,7 +39,7 @@
                                             <p class="more_sections">+2 sections</p>
                                         </ul>
                                         <div class="action">
-                                            <router-link :to="`/explore/courses/${Number(course[0])}`">
+                                            <router-link :to="`/explore/courses/${course.id}`">
                                                 <div class="buy">View Course</div>
                                             </router-link>
                                             <i class="fa-solid fa-heart-circle-plus"></i>
@@ -93,7 +93,11 @@ export default {
                 const categories = response.data.data
                 categories.forEach(category => {
                     const data = this.$utils.decode(['uint256', 'string', 'string'], category.data)
-                    this.categories.push(data)
+                    this.categories.push({
+                        id: Number(data[0]),
+                        name: data[1],
+                        photo: data[2]
+                    })
                 })
             }
         },
@@ -107,25 +111,29 @@ export default {
                 const courses = response.data.data
                 courses.forEach(course => {
                     const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
-                    this.courses.push(data)
+                    const creator = this.$utils.decode(['string', 'string', 'address'], course.creator.data)
+
+                    this.courses.push({
+                        id: Number(data[0]),
+                        name: data[1],
+                        description: data[2],
+                        category: Number(data[3]),
+                        photo: data[4],
+                        preview: data[5],
+                        address: data[6],
+                        creator: {
+                            name: creator[0],
+                            image: creator[1],
+                        }
+                    })
                 })
 
             }
             this.fetching = false
         },
         getCategoryCourses(id) {
-            return this.courses.filter(course => Number(course[3]) == id)
+            return this.courses.filter(course => course.category == id)
         },
-        async getInstructors() {
-            if (this.contract == null) return
-
-            for (let index = 0; index < this.courses.length; index++) {
-                const instructor = await this.contract.instructors(this.courses[index].instructor);
-                if (instructor.id.toNumber() != 0) {
-                    this.courses[index].instructorData = instructor
-                }
-            }
-        }
     }
 }
 </script>

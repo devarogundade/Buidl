@@ -3,8 +3,8 @@
     <div class="swap">
         <div class="from">
             <div class="label">
-                <p>Pay</p>
-                <p>Available: {{ from.balance }}</p>
+                <p>Balance</p>
+                <p>Available: {{ $utils.fromWei(from.balance) }}</p>
             </div>
             <div class="input">
                 <div class="token">
@@ -12,20 +12,19 @@
                         <img :src="from.image" alt="">
                         <p>{{ from.symbol }}</p>
                     </div>
-                    <i class="fa-solid fa-chevron-down"></i>
                 </div>
                 <input type="number" placeholder="0">
             </div>
         </div>
 
         <div class="swap-down">
-            <i class="fa-regular fa-circle-down scaleable" v-on:click="interChange()"></i>
+            <i class="fa-regular fa-circle-down"></i>
         </div>
 
         <div class="from">
             <div class="label">
-                <p>Receive (Estimated)</p>
-                <p>Available: {{ to.balance }}</p>
+                <p>Stake Amount</p>
+                <p v-on:click="useMax()">Use Max</p>
             </div>
             <div class="input">
                 <div class="token">
@@ -33,19 +32,17 @@
                         <img :src="to.image" alt="">
                         <p>{{ to.symbol }}</p>
                     </div>
-                    <i class="fa-solid fa-chevron-down"></i>
                 </div>
-                <input type="number" placeholder="0">
+                <input type="number" v-model="to.balance" placeholder="0">
             </div>
         </div>
 
         <div class="rate">
-            <p>1 BDL = 0.005 BNB</p>
-            <i class="fa-solid fa-rotate-right scaleable"></i>
+            <p>1 BDL = 1 sBDL</p>
         </div>
 
-        <div class="confirm">Confirm</div>
-        <p class="confirm_desc">Enter an amount to see more trading details</p>
+        <div class="confirm" v-on:click="stake()">Stake</div>
+        <p class="confirm_desc">Enter an amount to stake and click "Stake"</p>
     </div>
 </div>
 </template>
@@ -56,27 +53,51 @@ export default {
         return {
             to: {
                 contractAddress: '',
-                symbol: 'BDL',
-                logo: '',
-                rateToUsd: 0.01,
-                balance: 450.43,
-                image: '/images/nft1.jpg'
+                symbol: 'sBDL',
+                balance: "0",
+                image: '/favicon.ico'
             },
             from: {
                 contractAddress: '',
-                symbol: 'BNB',
-                logo: '',
-                rateToUsd: 328,
-                balance: 0.021,
-                image: '/images/bnb.png'
-            }
+                symbol: 'BDL',
+                balance: "0",
+                image: '/favicon.ico'
+            },
+            token: null,
+            buidlContract: this.$contracts.buidlContract,
+            provider: this.$auth.provider
         }
     },
+    created() {
+        this.getTokenBalances()
+        this.$contracts.initBuidlContract(this.provider)
+        $nuxt.$on('buidl-contract', (contract) => {
+            this.buidlContract = contract
+        })
+    },
     methods: {
-        interChange() {
-            let temp = this.from
-            this.from = this.to
-            this.to = temp
+        getTokenBalances: async function () {
+            const response = await this.$token.getTokenBalances(this.$auth.accounts[0])
+            const token = response.filter(_token => _token.token_address.toLowerCase() == "0xf7d28F30B4EB702fD2807080BeF1CEec0b1feDF0".toLowerCase())
+            if (token.length > 0) {
+                this.token = token[0]
+                this.from.balance = this.token.balance
+            }
+        },
+        useMax: function () {
+            this.to.balance = this.from.balance
+        },
+        stake: async function () {
+            if (this.buidlContract == null) return
+
+            try {
+                const trx = await this.buidlContract.unlockCreator({
+                    from: this.$auth.accounts[0]
+                })
+            } catch (error) {
+
+            }
+
         }
     }
 }
@@ -115,6 +136,7 @@ export default {
     color: #b3b4cc;
     font-size: 16px;
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .input {
@@ -186,7 +208,7 @@ input[type=number] {
 }
 
 .swap-down i {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .rate {

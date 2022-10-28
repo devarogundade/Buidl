@@ -27,6 +27,9 @@ export default {
             this.content = _value
         }
     },
+    created() {
+        this.content = this.value
+    },
     data() {
         return {
             content: '',

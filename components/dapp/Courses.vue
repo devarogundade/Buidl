@@ -3,8 +3,8 @@
     <InProgress v-if="fetching" />
 
     <div class="tabs">
-        <h3 :class="tab == 1 ? 'active' : ''" v-on:click="tab = 1">All Courses</h3>
-        <h3 :class="tab == 2 ? 'active' : ''" v-on:click="tab = 2">Created</h3>
+        <h3 :class="tab == 1 ? 'active' : ''" v-on:click="tab = 1">Subscribed</h3>
+        <h3 v-if="user && user.verified" :class="tab == 2 ? 'active' : ''" v-on:click="tab = 2">Created</h3>
     </div>
 
     <div class="courses" v-show="(courses.length > 0) && !fetching && tab == 1">
@@ -19,19 +19,40 @@
         </router-link>
     </div>
 
-     <div class="courses" v-show="(courses.length > 0) && !fetching && tab == 2">
-        <router-link :to="`/app/course-builder/${Number(course[0])}`" v-for="(course, index) in createdCourses" :key="index">
+    <div class="explain" v-show="(courses.length == 0) && !fetching && tab == 1">
+        <h3>What's a course?</h3>
+        <p>
+            <b>Buidl Course</b> provides you an environment with the handy tools you need to teach
+            and publish your lectures to students. <br> <br> You are in full control of your course and data.
+        </p>
+        <div class="action">
+            Click on the <i class="fa-solid fa-search"></i> button to subscribe to your first course.
+        </div>
+    </div>
+
+    <div class="fab-btn" v-if="tab == 1">
+        <router-link to="/explore">
+            <div class="fab">
+                <i class="fa-solid fa-search"></i>
+            </div>
+        </router-link>
+    </div>
+
+    <!-- /////////////////////////////// -->
+
+    <div class="courses" v-show="(createdCourses.length > 0) && !fetching && tab == 2">
+        <router-link :to="`/app/course-builder/${course.id}`" v-for="(course, index) in createdCourses" :key="index">
             <div class="course scaleable">
                 <div class="detail">
-                    <img :src="course[4]" alt="">
-                    <h3>{{ course[1] }}</h3>
-                    <p>{{ course[2] }}</p>
+                    <img :src="course.photo" alt="">
+                    <h3>{{ course.name }}</h3>
+                    <p>{{ course.description }}</p>
                 </div>
             </div>
         </router-link>
     </div>
 
-    <div class="explain" v-show="(courses.length == 0) && !fetching">
+    <div class="explain" v-show="(createdCourses.length == 0) && !fetching && tab == 2">
         <h3>What's a course?</h3>
         <p>
             <b>Buidl Course</b> provides you an environment with the handy tools you need to teach
@@ -42,13 +63,14 @@
         </div>
     </div>
 
-    <div class="fab-btn">
+    <div class="fab-btn" v-if="user && user.verified && tab == 2">
         <router-link to="/app/courses/create">
             <div class="fab">
                 <i class="fa-solid fa-plus"></i>
             </div>
         </router-link>
     </div>
+
 </div>
 </template>
 
@@ -59,31 +81,31 @@ export default {
             courses: [],
             createdCourses: [],
             fetching: true,
-            tab: 1
+            tab: 1,
+            user: null,
+            buidlContract: this.$contracts.buidlContract,
+            provider: this.$auth.provider,
         }
     },
     created() {
+        this.$contracts.initBuidlContract(this.provider)
+        this.$contracts.initCourseContract(this.provider)
+        $nuxt.$on('buidl-contract', (contract) => {
+            if (this.buidlContract == null) {
+                this.buidlContract = contract
+                this.getUser()
+            }
+        })
+
         this.getCourses()
         this.getCreatedCourses()
+        this.getUser()
     },
     methods: {
-        async getCourses() {
-            const response = await this.$stream.fetch('course-created')
-            if (!response) return
-
-            const status = response.status
-
-            if (status) {
-                const courses = response.data.data
-                courses.forEach(course => {
-                    const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
-                    this.courses.push(data)
-                })
-
-            }
+        getCourses: async function () {
             this.fetching = false
         },
-        async getCreatedCourses() {
+        getCreatedCourses: async function () {
             const response = await this.$stream.fetchForAddress('course-created', this.$auth.accounts[0])
             if (!response) return
 
@@ -93,11 +115,28 @@ export default {
                 const courses = response.data.data
                 courses.forEach(course => {
                     const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
-                    this.createdCourses.push(data)
+                    this.createdCourses.push({
+                        id: Number(data[0]),
+                        name: data[1],
+                        description: data[2],
+                        category: data[3],
+                        photo: data[4],
+                        preview: data[5],
+                        address: data[6]
+                    })
                 })
-
             }
         },
+        getUser: async function () {
+            const address = this.$auth.accounts[0]
+            if (!address || !this.buidlContract) return
+
+            const user = await this.buidlContract.users(address)
+            this.user = {
+                verified: user.verified,
+                createdAt: Number(user.createdAt)
+            }
+        }
     }
 }
 </script>
@@ -115,6 +154,7 @@ export default {
     display: flex;
     align-items: center;
     gap: 30px;
+    margin-bottom: 60px;
 }
 
 .tabs h3 {
@@ -134,12 +174,11 @@ export default {
     flex-wrap: wrap;
     gap: 40px;
     width: 100%;
-    margin-top: 60px;
 }
 
 .courses a {
-    font-display: block;
     max-width: 100%;
+    display: block;
 }
 
 .course {
@@ -243,12 +282,22 @@ export default {
     font-size: 24px;
     font-weight: 600;
     margin-top: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .detail p {
     font-size: 16px;
     margin-top: 10px;
     opacity: 0.8;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 @media screen and (max-width: 700px) {

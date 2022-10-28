@@ -18,11 +18,32 @@ export default {
     data() {
         return {
             address: this.$auth.accounts ? this.$auth.accounts[0] : '',
-            minting: false
+            minting: false,
+            tokenContract: this.$contracts.tokenContract,
+            provider: this.$auth.provider,
         }
     },
+    mounted() {
+        this.$contracts.initTokenContract(this.provider)
+        $nuxt.$on('token-contract', (contract) => {
+            this.tokenContract = contract
+        })
+    },
     methods: {
+        mint: async function () {
+            if (this.tokenContract == null) return
 
+            this.minting = true
+            try {
+                const trx = await this.tokenContract.faucetMint({
+                    from: this.$auth.accounts[0]
+                })
+            } catch (error) {
+
+            }
+
+            this.minting = false
+        }
     }
 }
 </script>

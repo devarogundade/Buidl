@@ -118,7 +118,6 @@ export default {
                     const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
                     if (Number(data[0] == this.courseId)) {
                         this.course = data
-                        console.log('here');
                         $nuxt.$emit(`course${this.courseId}`, data)
                         return
                     }

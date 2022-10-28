@@ -1,10 +1,20 @@
 <template>
 <div class="container">
     <div class="overview">
-        <div class="verify">
+        <div class="verify" v-if="user && !user.verified">
             <p><i class="fa-solid fa-circle-exclamation"></i> Stake 2000 BDL to become a creator</p>
-            <router-link to="/collectibles/stake"><p class="stake scaleable">Stake now</p></router-link>
+            <router-link to="/collectibles/stake">
+                <p class="stake scaleable">Stake now</p>
+            </router-link>
         </div>
+
+        <div class="verify" v-if="user && user.verified">
+            <p><i class="fa-solid fa-circle-exclamation"></i> Hi!, create a new course</p>
+            <router-link to="/app/courses/create">
+                <p class="stake scaleable">Create now</p>
+            </router-link>
+        </div>
+
         <div class="tab">
             <div class="analytics">
                 <div class="title">
@@ -208,18 +218,32 @@
 export default {
     data() {
         return {
-            saving: false,
+            fetching: true,
+            user: null,
+            buidlContract: this.$contracts.buidlContract,
+            provider: this.$auth.provider,
         }
     },
-
-    mounted() {
-        $nuxt.$on('user', (user) => {
-            this.user = user
+    created() {
+        this.$contracts.initBuidlContract(this.provider)
+        $nuxt.$on('buidl-contract', (contract) => {
+            if (this.buidlContract == null) {
+                this.buidlContract = contract
+                this.getUser()
+            }
         })
+        this.getUser()
     },
     methods: {
-        claimUsername: function () {
+        getUser: async function () {
+            const address = this.$auth.accounts[0]
+            if (!address || !this.buidlContract) return
 
+            const user = await this.buidlContract.users(address)
+            this.user = {
+                verified: user.verified,
+                createdAt: Number(user.createdAt)
+            }
         }
     }
 }
@@ -265,7 +289,7 @@ export default {
 
 .verify p:first-child {
     font-size: 20px;
-    color: #FF6370;
+    color: #638dff;
 }
 
 .verify .stake {

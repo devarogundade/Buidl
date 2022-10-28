@@ -1,38 +1,34 @@
 <template>
 <div class="container">
-    <div class="grid">
+    <InProgress v-if="fetching" />
+    <div class="grid" v-else>
         <div class="profile">
             <div class="cover">
-                <div class="image">
-                    <img src="/favicon.ico" alt="">
-                </div>
+                <img :src="user.photo" id="cover" alt="">
+                <i class="fa-solid fa-pen-to-square">
+                    <input type="file" accept="image/*" v-on:change="onFileChange($event)">
+                </i>
             </div>
 
             <div class="form">
                 <div class="edit">
                     <p class="label">Full Name *</p>
-                    <input :class="getInputClassForName()" type="text" v-model="name" placeholder="John Doe" maxlength="45">
+                    <input :class="getInputClassForName()" type="text" v-model="user.name" placeholder="John Doe" maxlength="45">
                     <p v-if="errorName" class="error-text">{{ errorName }}</p>
                 </div>
 
                 <div class="edit">
-                    <p class="label">Title *</p>
-                    <input :class="getInputClassForDescription()" v-model="description" type="text" placeholder="Music producer">
-                    <p class="error-text" v-if="errorDescription">{{ errorDescription }}</p>
-                </div>
-
-                <div class="edit">
                     <p class="label">Bio</p>
-                    <input :class="getInputClassForTags()" type="text" v-model="tags" placeholder="Talks about #Music #Lyrics" maxlength="45">
-                    <p v-if="errorTags" class="error-text">{{ errorTags }}</p>
+                    <input :class="getInputClassForBio()" type="text" v-model="user.bio" placeholder="Talks about #Music #Lyrics" maxlength="45">
+                    <p v-if="errorBio" class="error-text">{{ errorBio }}</p>
                 </div>
 
                 <div class="edit">
                     <p class="label">About </p>
-                    <HtmlEditor :height="300" />
+                    <HtmlEditor :height="300" :value="user.about" />
                 </div>
 
-                <div class="sign_up" v-if="!signing" v-on:click="register()">Save changes</div>
+                <div class="sign_up" v-if="!creating" v-on:click="createAccount()">Save changes</div>
                 <div class="sign_up" v-else>Please wait..</div>
             </div>
         </div>
@@ -84,29 +80,90 @@
 export default {
     data() {
         return {
-            // email
-            name: '',
+            user: {
+                name: '',
+                bio: '',
+                photo: '',
+                about: '',
+                address: ''
+            },
             errorName: null,
-            // password
-            description: '',
-            errorDescription: null,
-            // tags
-            tags: '',
-            errorTags: null,
-            // signing
-            signing: false
+            errorBio: null,
+            file: null,
+            creating: false,
+            fetching: true,
+            buidlContract: this.$contracts.buidlContract,
+            provider: this.$auth.provider
         }
     },
-    methods: {
-        register() {
+    async created() {
+        this.$contracts.initBuidlContract(this.provider)
+        $nuxt.$on('buidl-contract', (contract) => {
+            this.buidlContract = contract
+        })
 
+        const response = await this.$stream.creatorAccount(this.$auth.accounts[0])
+        if (!response || !response.data) return
+
+        const user = this.$utils.decode(['string', 'string', 'address'], response.data.data)
+        this.user = {
+            name: user[0],
+            bio: user[0],
+            photo: user[1],
+            about: user[0],
+            address: user[3]
+        }
+
+        this.fetching = false
+    },
+    methods: {
+        onFileChange: function (event) {
+            if (event.target.files && event.target.files.length > 0) {
+                const file = event.target.files[0]
+                const url = URL.createObjectURL(file)
+                this.file = file
+                document.getElementById('cover').src = url
+            }
+        },
+        createAccount: async function () {
+            if (this.creating || this.buidlContract == null) return
+            this.creating = false
+
+            if (this.errorName != null) {
+                return
+            }
+
+            if (this.user.name == '') {
+                return
+            }
+
+            if (this.file != null) {
+                const base64 = await this.$ipfs.toBase64(this.file)
+                const url = await this.$ipfs.upload(`users/${this.$auth.accounts[0]}`, base64)
+
+                if (url != null) {
+                    this.photo = url
+                }
+            }
+
+            this.creating = true
+
+            try {
+                const trx = await this.buidlContract.createAccount(this.user.name, this.user.photo, {
+                    from: this.$auth.accounts[0]
+                })
+            } catch (error) {
+
+            }
+
+            this.creating = false
         },
         getInputClassForName() {
-            if (this.name == '') {
+            if (this.user.name == '') {
                 this.errorName = null
                 return ''
             }
-            if (this.name.length < 4) {
+            if (this.user.name.length < 4) {
                 this.errorName = 'Name is too short'
                 return 'error filled'
             } else {
@@ -114,39 +171,19 @@ export default {
                 return 'filled'
             }
         },
-        getInputClassForDescription() {
-            if (this.description == '') {
-                this.errorDescription = null
+        getInputClassForBio() {
+            if (this.user.bio == '') {
+                this.errorBio = null
                 return ''
             }
-            if (this.description.length < 10) {
-                this.errorDescription = 'Description is too short'
+            if (this.user.bio.length < 2) {
+                this.errorBio = 'Bio is too short'
                 return 'error filled'
             } else {
-                this.errorDescription = null
+                this.errorBio = null
                 return 'filled'
             }
         },
-        getInputClassForTags() {
-            if (this.tags == '') {
-                this.errorTags = null
-                return ''
-            }
-            if (this.tags.length < 2) {
-                this.errorTags = 'Tags is too short'
-                return 'error filled'
-            } else {
-                this.errorTags = null
-                return 'filled'
-            }
-        },
-        // validateEmail(email) {
-        //     return String(email)
-        //         .toLowerCase()
-        //         .match(
-        //             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        //         )
-        // }
     }
 }
 </script>
@@ -174,19 +211,32 @@ export default {
 
 .cover {
     width: 100%;
-    background: #000;
-    height: 160px;
+    height: 300px;
     position: relative;
 }
 
-.cover .image {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
+.cover i {
     position: absolute;
-    bottom: -50px;
+    bottom: -30px;
     left: 30px;
+    width: 60px;
+    height: 60px;
+    background: #3451f3;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 20px;
     overflow: hidden;
+}
+
+.cover input {
+    position: absolute;
+    height: 100%;
+    cursor: pointer;
+    opacity: 0;
+    width: 100%;
 }
 
 .cover img {

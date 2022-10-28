@@ -30,5 +30,18 @@ export default ({ $axios }, inject) => {
                 return null
             }
         },
+        creatorAccount: async function(address) {
+            const options = {
+                method: 'GET',
+                url: `https://buidl-app.herokuapp.com/api/creator/${address}`,
+            }
+
+            try {
+                const response = await $axios.request(options)
+                return response.data
+            } catch (error) {
+                return null
+            }
+        },
     }))
 }

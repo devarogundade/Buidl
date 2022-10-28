@@ -4,9 +4,9 @@
         <InProgress v-if="fetching" />
         <div class="categories" v-else>
             <div class="category scaleable" v-for="(category, index) in categories" :key="index">
-                <img :src="`/images/categories/${category[2]}`" alt="">
+                <img :src="`/images/categories/${category.photo}`" alt="">
                 <div class="text">
-                    <p>{{ category[1] }}</p>
+                    <p>{{ category.name }}</p>
                 </div>
             </div>
         </div>
@@ -24,13 +24,19 @@ export default {
     },
     async created() {
         const response = await this.$stream.fetch('create-category')
+        if (!response) return
+
         const status = response.status
 
         if (status) {
             const categories = response.data.data
             categories.forEach(category => {
                 const data = this.$utils.decode(['uint256', 'string', 'string'], category.data)
-                this.categories.push(data)
+                this.categories.push({
+                    id: Number(data[0]),
+                    name: data[1],
+                    photo: data[2]
+                })
             })
 
         }

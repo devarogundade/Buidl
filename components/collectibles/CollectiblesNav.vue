@@ -9,7 +9,7 @@
         </router-link>
         <router-link to="/collectibles/stake">
             <div :class="$route.name == 'collectibles-stake' ? 'item active' : 'item'">
-                <i class="fa-solid fa-arrows-rotate"></i>
+                <i class="fa-solid fa-vault"></i>
                 <p>Stake</p>
             </div>
         </router-link>
@@ -24,7 +24,7 @@ export default {
             tab: 1,
         }
     },
-    mounted() {
+    created() {
         $nuxt.$on('dapp-tab', (tab) => {
             this.tab = tab
         })

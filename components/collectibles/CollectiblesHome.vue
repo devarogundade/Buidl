@@ -12,12 +12,25 @@
         <div class="items" v-show="tab == 1">
             <div class="balances">
                 <div class="wallet">
-                    <img src="/images/bnb_coin.png" alt="">
-                    <p>13.32 <b>BNB</b></p>
+                    <div>
+                        <img src="/images/bnb_coin.png" alt="">
+                        <p>13.32 <b>BNB</b></p>
+                    </div>
                 </div>
                 <div class="wallet">
-                    <img src="/favicon.ico" alt="">
-                    <p>1,343.02 <b>BDL</b></p>
+                    <div>
+                        <img src="/favicon.ico" alt="">
+                        <p v-if="token">{{ $utils.fromWei(token.balance) }} <b>{{ token.symbol }}</b></p>
+                        <p v-else>0.00 <b>BDL</b></p>
+                    </div>
+                </div>
+
+                <div class="wallet">
+                    <div>
+                        <img src="/favicon.ico" alt="">
+                        <p>4943.02 <b>sBDL</b></p>
+                    </div>
+                    <div>UnStake</div>
                 </div>
             </div>
         </div>
@@ -81,10 +94,12 @@ export default {
         return {
             tab: 1,
             nfts: [],
+            token: null
         };
     },
-    mounted() {
+    created() {
         this.getNfts();
+        this.getTokenBalances()
     },
     methods: {
         getNfts: async function () {
@@ -107,7 +122,14 @@ export default {
             }
             return JSON.parse(json);
         },
-    },
+        getTokenBalances: async function () {
+            const response = await this.$token.getTokenBalances(this.$auth.accounts[0])
+            const token = response.filter(_token => _token.token_address.toLowerCase() == "0xf7d28F30B4EB702fD2807080BeF1CEec0b1feDF0".toLowerCase())
+            if (token.length > 0) {
+                this.token = token[0]
+            }
+        }
+    }
 };
 </script>
 
@@ -118,7 +140,7 @@ export default {
 }
 
 .nfts {
-      width: 100%;
+    width: 100%;
 }
 
 .tabs {
@@ -260,9 +282,33 @@ export default {
     gap: 20px;
     align-items: center;
     background: #2c2d3a;
+    justify-content: space-between;
     padding: 12px;
+    padding-right: 30px;
     border-radius: 40px;
     width: 100%;
+}
+
+.wallet div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.wallet div:nth-child(2) {
+    font-size: 20px;
+    width: 180px;
+    border-radius: 20px;
+    height: 50px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #23242F !important;
+    cursor: pointer;
+    user-select: none;
+    justify-content: center;
+    background: #FFFFFF;
 }
 
 .wallet p {

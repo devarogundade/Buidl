@@ -94,7 +94,7 @@ contract BdlCourse {
     }
 
     /* create a new course */
-function createCourse(
+    function createCourse(
         uint id,
         uint category,
         uint256 price,
