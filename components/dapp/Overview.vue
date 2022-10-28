@@ -2,8 +2,8 @@
 <div class="container">
     <div class="overview">
         <div class="verify">
-            <p><i class="fa-solid fa-circle-exclamation"></i> Claim your unique @username</p>
-            <p class="scaleable" v-on:click="claimUsername()">Claim now</p>
+            <p><i class="fa-solid fa-circle-exclamation"></i> Stake 2000 BDL to become a creator</p>
+            <router-link to="/collectibles/stake"><p class="stake scaleable">Stake now</p></router-link>
         </div>
         <div class="tab">
             <div class="analytics">
@@ -268,7 +268,7 @@ export default {
     color: #FF6370;
 }
 
-.verify p:last-child {
+.verify .stake {
     font-size: 20px;
     width: 180px;
     border-radius: 20px;
@@ -277,6 +277,7 @@ export default {
     display: flex;
     align-items: center;
     font-weight: 600;
+    color: #23242F !important;
     cursor: pointer;
     user-select: none;
     justify-content: center;

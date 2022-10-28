@@ -7,10 +7,10 @@
                 <p>Wallet</p>
             </div>
         </router-link>
-        <router-link to="/collectibles/swap">
-            <div :class="$route.name == 'collectibles-swap' ? 'item active' : 'item'">
+        <router-link to="/collectibles/stake">
+            <div :class="$route.name == 'collectibles-stake' ? 'item active' : 'item'">
                 <i class="fa-solid fa-arrows-rotate"></i>
-                <p>Trade</p>
+                <p>Stake</p>
             </div>
         </router-link>
     </div>

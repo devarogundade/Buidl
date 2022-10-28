@@ -1,134 +1,136 @@
 <template>
-<Progress v-if="course == null" />
-<section v-else>
+<section>
     <div class="app-width">
-        <div class="course">
-            <div class="head">
-                <div class="wrapper">
-                    <div class="tree" v-if="category != null">
-                        <router-link to="/explore">
-                            <p>Explore</p>
-                        </router-link>
-                        <i class="fa-solid fa-chevron-right"></i>
-                        <p>{{ category.name }}</p>
+        <div class="container">
+            <InProgress v-if="course == null" />
+            <div class="course" v-else>
+                <div class="head">
+                    <div class="wrapper">
+                        <div class="tree" v-if="category != null">
+                            <router-link to="/explore">
+                                <p>Explore</p>
+                            </router-link>
+                            <i class="fa-solid fa-chevron-right"></i>
+                            <p>{{ category[1] }}</p>
+                        </div>
+                        <h3 class="title">{{ course[1] }}</h3>
+                        <p class="subtitle">{{ course[2] }}</p>
+                        <div class="stat">
+                            <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; <router-link to="">(2 ratings)</router-link>
+                            </p>
+                            <p>•</p>
+                            <p class="n_students">2 students</p>
+                        </div>
+                        <p class="instructor" v-if="creator"> <img :src="creator[2]" alt=""> {{ creator[1] }} </p>
+                        <div class="specs">
+                            <p class="last_update"><i class="fa-solid fa-calendar-days"></i> {{ 0 }}</p>
+                            <p class="languages"><i class="fa-solid fa-globe"></i> English</p>
+                        </div>
                     </div>
-                    <h3 class="title">{{ course.name }}</h3>
-                    <p class="subtitle">{{ course.description }}</p>
-                    <div class="stat">
-                        <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; <router-link to="">(2 ratings)</router-link>
-                        </p>
-                        <p>•</p>
-                        <p class="n_students">2 students</p>
-                    </div>
-                    <p class="instructor" v-if="instructor"> <img src="/images/nft2.jpg" alt=""> {{ instructor.lastName + ' ' + instructor.firstName }} </p>
-                    <div class="specs">
-                        <p class="last_update"><i class="fa-solid fa-calendar-days"></i> {{ $utils.formatToDate(course.updatedAt.toNumber()) }}</p>
-                        <p class="languages"><i class="fa-solid fa-globe"></i> English</p>
+
+                    <div class="buy">
+                        <div class="preview">
+                            <img :src="course[4]" />
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                        <div class="tag" v-if="!bought">Preview</div>
+                        <div class="tag" v-else><i class="fa-solid fa-certificate"></i> Bought</div>
+
+                        <div class="coupon" v-if="!bought">
+                            <p>Apply Coupon</p>
+
+                            <div class="options" v-show="showNfts && !bought">
+                                <div class="nft_row" v-on:click="removeCoupon()">
+                                    <div class="name">
+                                        <p>Remove coupon</p>
+                                        <p>0%</p>
+                                    </div>
+                                </div>
+                                <div class="nft_row" v-for="(nft, index) in nfts" :key="index" v-on:click="applyCoupon(index)">
+                                    <img :src="toJson(nft.metadata).image" alt="">
+                                    <div class="name">
+                                        <p>{{ toJson(nft.metadata).name }}</p>
+                                        <p>{{ toJson(nft.metadata).attributes[0].value }}% off</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="selector" v-on:click="showNfts = !showNfts">
+                                <div class="nft_row" v-if="selectedNft == null">
+                                    <div class="name">
+                                        <p>Click here to select a coupon</p>
+                                        <a href="" target="_blank">
+                                            <p>Buy coupon on Opensea</p>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="nft_row" v-else>
+                                    <img :src="toJson(nfts[selectedNft].metadata).image" alt="">
+                                    <div class="name">
+                                        <p>{{ toJson(nfts[selectedNft].metadata).name }}</p>
+                                        <p>{{ toJson(nfts[selectedNft].metadata).attributes[0].value }}% off</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pricing" v-if="!bought">
+                            <div>
+                                <p>Course price</p>
+                                <p>{{ 0 }} BDL</p>
+                            </div>
+
+                            <div>
+                                <p>Coupon discount</p>
+                                <p v-if="selectedNft != null">{{ calcDiscount(selectedNft).toFixed(2) }} BDL</p>
+                                <p v-else>0 BDL</p>
+                            </div>
+
+                            <div>
+                                <p>Total price</p>
+                                <p v-if="selectedNft != null">{{ 0 }} BDL</p>
+                                <p v-else>{{ 0 }} BDL</p>
+                            </div>
+                        </div>
+
+                        <div class="action" v-if="false">
+                            <router-link :to="`/app/course-builder/${$route.params.course}`">
+                                <div class="pay">Edit Course</div>
+                            </router-link>
+                            <i class="fa-solid fa-heart-circle-plus"></i>
+                        </div>
+
+                        <div class="action" v-else>
+                            <div class="pay" v-if="!bought" v-on:click="buyCourse()">Buy Course</div>
+                            <router-link v-else :to="`/app/courses/${$route.params.course}`">
+                                <div class="pay">Study Course</div>
+                            </router-link>
+                            <i class="fa-solid fa-heart-circle-plus"></i>
+                        </div>
                     </div>
                 </div>
 
-                <div class="buy">
-                    <div class="preview">
-                        <img :src="course.ipfsPhoto" />
-                        <i class="fa-solid fa-play"></i>
-                    </div>
-                    <div class="tag" v-if="!bought">Preview</div>
-                    <div class="tag" v-else><i class="fa-solid fa-certificate"></i> Bought</div>
+                <div class="body">
+                    <div class="content">
+                        <h3 class="title">Course content</h3>
+                        <div class="desc">{{ sections.length }} sections &nbsp; • &nbsp; {{ sections.length }} Tests &nbsp; • &nbsp; 6 hours length</div>
 
-                    <div class="coupon" v-if="!bought">
-                        <p>Apply Coupon</p>
-
-                        <div class="options" v-show="showNfts && !bought">
-                            <div class="nft_row" v-on:click="removeCoupon()">
-                                <div class="name">
-                                    <p>Remove coupon</p>
-                                    <p>0%</p>
+                        <div class="accordions">
+                            <div class="accordion" v-for="(section, index) in sections" :key="index">
+                                <div class="front" v-on:click="openAccordion(index)">
+                                    <div>
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                        <p>{{ section.title }}</p>
+                                    </div>
+                                    <p>1 test • 4min</p>
                                 </div>
-                            </div>
-                            <div class="nft_row" v-for="(nft, index) in nfts" :key="index" v-on:click="applyCoupon(index)">
-                                <img :src="toJson(nft.metadata).image" alt="">
-                                <div class="name">
-                                    <p>{{ toJson(nft.metadata).name }}</p>
-                                    <p>{{ toJson(nft.metadata).attributes[0].value }}% off</p>
+                                <div class="back" v-if="selectedSection == index">
+                                    <video src=""></video>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="selector" v-on:click="showNfts = !showNfts">
-                            <div class="nft_row" v-if="selectedNft == null">
-                                <div class="name">
-                                    <p>Click here to select a coupon</p>
-                                    <a href="" target="_blank">
-                                        <p>Buy coupon on Opensea</p>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="nft_row" v-else>
-                                <img :src="toJson(nfts[selectedNft].metadata).image" alt="">
-                                <div class="name">
-                                    <p>{{ toJson(nfts[selectedNft].metadata).name }}</p>
-                                    <p>{{ toJson(nfts[selectedNft].metadata).attributes[0].value }}% off</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-
-                    <div class="pricing" v-if="!bought">
-                        <div>
-                            <p>Course price</p>
-                            <p>{{ course.price.toNumber() }} BDL</p>
-                        </div>
-
-                        <div>
-                            <p>Coupon discount</p>
-                            <p v-if="selectedNft != null">{{ calcDiscount(selectedNft).toFixed(2) }} BDL</p>
-                            <p v-else>0 BDL</p>
-                        </div>
-
-                        <div>
-                            <p>Total price</p>
-                            <p v-if="selectedNft != null">{{ (course.price.toNumber() - calcDiscount(selectedNft)).toFixed(2) }} BDL</p>
-                            <p v-else>{{ course.price.toNumber() }} BDL</p>
-                        </div>
-                    </div>
-
-                    <div class="action" v-if="course.instructor.toLowerCase() == $auth.accounts[0].toLowerCase()">
-                        <router-link :to="`/app/course-builder/${$route.params.course}`">
-                            <div class="pay">Edit Course</div>
-                        </router-link>
-                        <i class="fa-solid fa-heart-circle-plus"></i>
-                    </div>
-
-                    <div class="action" v-else>
-                        <div class="pay" v-if="!bought" v-on:click="buyCourse()">Buy Course</div>
-                        <router-link v-else :to="`/app/courses/${$route.params.course}`">
-                            <div class="pay">Study Course</div>
-                        </router-link>
-                        <i class="fa-solid fa-heart-circle-plus"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="body">
-                <div class="content">
-                    <h3 class="title">Course content</h3>
-                    <div class="desc">{{ sections.length }} sections &nbsp; • &nbsp; {{ sections.length }} Tests &nbsp; • &nbsp; 6 hours length</div>
-
-                    <div class="accordions">
-                        <div class="accordion" v-for="(section, index) in sections" :key="index">
-                            <div class="front" v-on:click="openAccordion(index)">
-                                <div>
-                                    <i class="fa-solid fa-chevron-down"></i>
-                                    <p>{{ section.title }}</p>
-                                </div>
-                                <p>1 test • 4min</p>
-                            </div>
-                            <div class="back" v-if="selectedSection == index">
-                                <video src=""></video>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -154,7 +156,7 @@ export default {
         }
     },
     mounted() {
-        this.init()
+        this.getCourse()
         this.getNfts()
     },
     methods: {
@@ -198,7 +200,22 @@ export default {
             this.nfts = nfts.result
         },
         async getCourse() {
+            const response = await this.$stream.fetch('course-created')
+            if (!response) return
 
+            const status = response.status
+
+            if (status) {
+                const courses = response.data.data
+                courses.forEach(course => {
+                    const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
+                    if (Number(data[0] == this.courseId)) {
+                        this.course = data
+                        $nuxt.$emit(`course${this.courseId}`, data)
+                        return
+                    }
+                })
+            }
         },
         async init() {
 
@@ -206,17 +223,19 @@ export default {
         async getCourseSections() {
 
         },
-        async buyCourse() {
-        }
+        async buyCourse() {}
     }
 };
 </script>
 
 <style scoped>
+.container {
+    min-height: 100vh;
+}
+
 .course {
     padding-top: 100px;
     padding-bottom: 100px;
-    min-height: 100vh;
 }
 
 .head {

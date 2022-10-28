@@ -79,6 +79,7 @@ export default {
             this.tab = tab
         })
         $nuxt.$on(`course${this.courseId}`, (course) => {
+            console.log(course);
             this.course = course
         })
     },
@@ -92,13 +93,13 @@ export default {
             this.$refs["menu"].classList.toggle("open-menu")
         },
         getCourseName(course) {
-            if (course.name.length > 20) {
-                return (course.name.substring(0, 10) +
+            if (course[1].length > 20) {
+                return (course[1].substring(0, 10) +
                     "..." +
-                    course.name.substring(course.name.length - 10, course.name.length))
+                    course[1].substring(course[1].length - 10, course[1].length))
             }
 
-            return course.name
+            return course[1]
         }
     },
 };
@@ -122,8 +123,9 @@ section {
 
 .header {
     width: 100%;
-    display: grid;
-    grid-template-columns: 320px auto 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     column-gap: 40px;
     height: 100%;
     align-items: center;

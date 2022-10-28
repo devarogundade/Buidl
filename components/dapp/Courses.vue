@@ -2,24 +2,18 @@
 <div class="container">
     <InProgress v-if="fetching" />
 
-    <div class="courses" v-show="(courses.length > 0) && !fetching">
-        <router-link :to="`/app/courses/${course.id.toNumber()}`" v-for="(course, index) in courses" :key="index">
-            <div class="course scaleable">
-                <div class="detail">
-                    <img :src="course.ipfsPhoto" alt="">
-                    <h3>{{ course.name }}</h3>
-                    <p>{{ course.description }}</p>
-                </div>
-            </div>
-        </router-link>
+    <div class="tabs">
+        <h3 :class="tab == 1 ? 'active' : ''" v-on:click="tab = 1">All Courses</h3>
+        <h3 :class="tab == 2 ? 'active' : ''" v-on:click="tab = 2">Created</h3>
     </div>
+
     <div class="courses" v-show="(courses.length > 0) && !fetching">
-        <router-link :to="`/app/course-builder/${course.id.toNumber()}`" v-for="(course, index) in courses" :key="index">
+        <router-link :to="`/app/course-builder/${Number(course[0])}`" v-for="(course, index) in courses" :key="index">
             <div class="course scaleable">
                 <div class="detail">
-                    <img :src="course.ipfsPhoto" alt="">
-                    <h3>{{ course.name }}</h3>
-                    <p>{{ course.description }}</p>
+                    <img :src="course[4]" alt="">
+                    <h3>{{ course[1] }}</h3>
+                    <p>{{ course[2] }}</p>
                 </div>
             </div>
         </router-link>
@@ -33,17 +27,6 @@
         </p>
         <div class="action">
             Click on the <i class="fa-solid fa-plus"></i> button to create your first course.
-        </div>
-    </div>
-
-    <div class="explain" v-show="(courses.length == 0) && !fetching">
-        <h3>What's a course?</h3>
-        <p>
-            <b>Buidl Course</b> provides you an environment with the handy tools you need to learn
-            from creators. <br> <br> You are in full control of your course and data.
-        </p>
-        <div class="action">
-            Click on the <i class="fa-solid fa-search"></i> button to find your first course.
         </div>
     </div>
 
@@ -63,27 +46,53 @@ export default {
         return {
             courses: [],
             fetching: true,
+            tab: 1
         }
     },
-    mounted() {
-        this.init()
-    },
-    methods: {
-        async init() {
+    async created() {
+        const response = await this.$stream.fetch('course-created')
+        if (!response) return
 
+        const status = response.status
+
+        if (status) {
+            const courses = response.data.data
+            courses.forEach(course => {
+                const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
+                this.courses.push(data)
+            })
 
         }
-    }
+        this.fetching = false
+    },
 }
 </script>
 
 <style scoped>
 .container {
-    padding-top: 160px;
+    padding-top: 120px;
     padding-bottom: 50px;
     min-height: 100vh;
     position: relative;
     width: 100%;
+}
+
+.tabs {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.tabs h3 {
+    font-size: 40px;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.tabs .active {
+    color: rgb(255, 208, 0);
+    text-decoration: underline;
 }
 
 .courses {
@@ -91,6 +100,7 @@ export default {
     flex-wrap: wrap;
     gap: 40px;
     width: 100%;
+    margin-top: 60px;
 }
 
 .courses a {

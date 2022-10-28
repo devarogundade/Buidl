@@ -20,6 +20,12 @@
             </div>
 
             <div class="action">
+                <router-link :to="'/'">
+                    <div class="app enter" v-if="address != null">
+                        Leave App
+                    </div>
+                </router-link>
+
                 <div class="app" v-if="address == null" v-on:click="$auth.requestWalletConnection()">
                     Connect Wallet
                 </div>
@@ -109,12 +115,14 @@ section {
 
 .header {
     width: 100%;
-    display: grid;
-    grid-template-columns: 320px auto 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     column-gap: 40px;
     height: 100%;
     align-items: center;
 }
+
 
 .logo {
     height: 35px;
@@ -123,7 +131,6 @@ section {
 .logo img {
     height: 100%;
 }
-
 
 .action {
     display: flex;

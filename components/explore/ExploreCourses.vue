@@ -2,32 +2,33 @@
 <section>
     <div class="app-width">
         <div class="container">
-            <div class="category" v-for="(category, index) in categories" :key="index">
+            <InProgress v-if="fetching" />
+            <div class="category" v-else v-for="(category, index) in categories" :key="index">
                 <div class="title">
                     <div>
-                        <img :src="category.image" alt="">
-                        <h3>{{ category.name }}</h3>
+                        <img :src="`/images/categories/${category[2]}`" alt="">
+                        <h3>{{ category[1] }}</h3>
                     </div>
                     <div class="action">View all <i class="fa-solid fa-arrow-right-long"></i></div>
                 </div>
                 <div class="trending">
                     <div class="swiper trendSwiper">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide" v-for="(course, index) in getCategoryCourses(category.id.toNumber())" :key="index">
+                            <div class="swiper-slide" v-for="(course, index) in getCategoryCourses(Number(category[0]))" :key="index">
                                 <div class="image">
-                                    <img :src="course.ipfsPhoto" alt="">
+                                    <img :src="course[5]" alt="">
                                 </div>
                                 <div class="detail">
-                                    <h3 class="course_title">{{ course.name }}</h3>
+                                    <h3 class="course_title">{{ course[1] }}</h3>
                                     <p class="instructor" v-if="course.instructorData"> <img src="/images/nft2.jpg" alt=""> {{ course.instructorData.lastName + ' ' + course.instructorData.firstName }} </p>
                                     <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; • &nbsp; 235 students</p>
-                                    <p class="price">{{ course.price.toNumber() }} $BDL</p>
+                                    <p class="price">{{ 0 }} $BDL</p>
                                 </div>
 
                                 <div class="description">
                                     <div class="detail">
-                                        <p class="price">{{ course.price.toNumber() }} $BDL</p>
-                                        <h3 class="course_title">{{ course.name }}</h3>
+                                        <p class="price">{{0 }} $BDL</p>
+                                        <h3 class="course_title">{{ course[1] }}</h3>
                                         <p class="instructor" v-if="course.instructorData"> <img src="/images/nft2.jpg" alt=""> {{ course.instructorData.lastName + ' ' + course.instructorData.firstName }} </p>
                                         <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; • &nbsp; 235 students</p>
                                         <p class="sections">Sections</p>
@@ -38,7 +39,7 @@
                                             <p class="more_sections">+2 sections</p>
                                         </ul>
                                         <div class="action">
-                                            <router-link :to="`/explore/courses/${course.id.toNumber()}`">
+                                            <router-link :to="`/explore/courses/${Number(course[0])}`">
                                                 <div class="buy">View Course</div>
                                             </router-link>
                                             <i class="fa-solid fa-heart-circle-plus"></i>
@@ -61,21 +62,13 @@ export default {
     data() {
         return {
             categories: [],
-            courses: []
+            courses: [],
+            fetching: true
         }
     },
-    mounted() {
-        $nuxt.$on('contracts-ready', (buidlContract) => {
-            if (this.contract == null) {
-                this.contract = buidlContract
-
-                this.getCategories()
-                this.getCourses()
-            }
-        })
-
-        this.getCategories()
-        this.getCourses()
+    async created() {
+        await this.getCategories()
+        await this.getCourses()
     },
     updated() {
         const perView = this.$utils.slidesPerView()
@@ -91,53 +84,37 @@ export default {
     },
     methods: {
         async getCategories() {
-            if (this.contract == null) return
+            const response = await this.$stream.fetch('create-category')
+            if (!response) return
 
-            let index = 1;
-            let ended = false;
+            const status = response.status
 
-            try {
-                while (!ended) {
-                    const category = await this.contract.categories(index);
-
-                    if (category.name != '') {
-                        this.categories.push(category)
-                    } else {
-                        ended = true
-                    }
-
-                    index++
-                }
-            } catch (error) {
-                ended = true
+            if (status) {
+                const categories = response.data.data
+                categories.forEach(category => {
+                    const data = this.$utils.decode(['uint256', 'string', 'string'], category.data)
+                    this.categories.push(data)
+                })
             }
         },
         async getCourses() {
-            if (this.contract == null) return
+            const response = await this.$stream.fetch('course-created')
+            if (!response) return
 
-            let index = 1;
-            let ended = false;
+            const status = response.status
 
-            try {
-                while (!ended) {
-                    const course = await this.contract.courses(index);
+            if (status) {
+                const courses = response.data.data
+                courses.forEach(course => {
+                    const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
+                    this.courses.push(data)
+                })
 
-                    if (course.id.toNumber() != 0 && course.isPublished) {
-                        this.courses.push(course)
-                    } else {
-                        ended = true
-                    }
-
-                    index++
-                }
-            } catch (error) {
-                ended = true
             }
-
-            this.getInstructors()
+            this.fetching = false
         },
         getCategoryCourses(id) {
-            return this.courses.filter(course => course.categoryId.toNumber() == id)
+            return this.courses.filter(course => Number(course[3]) == id)
         },
         async getInstructors() {
             if (this.contract == null) return
@@ -154,6 +131,10 @@ export default {
 </script>
 
 <style scoped>
+.container {
+    min-height: 100vh;
+}
+
 .category {
     margin-bottom: 60px;
 }

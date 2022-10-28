@@ -23,7 +23,7 @@
                 <p class="label">Category *</p>
                 <select v-on:change="onCategoryChanged($event)">
                     <option selected disabled hidden>Choose category</option>
-                    <option v-for="(category, index) in categories" :key="index" :value="category.id">{{ category.name }}</option>
+                    <option v-for="(category, index) in categories" :key="index" :value="index">{{ category[1] }}</option>
                 </select>
                 <p v-if="errorCategory" class="error-text">{{ errorCategory }}</p>
             </div>
@@ -68,7 +68,7 @@ export default {
             errorCategory: null,
 
             categories: [],
-            selectedCategory: 0,
+            selectedCategory: null,
 
             levels: [
                 'Beginner',
@@ -76,15 +76,35 @@ export default {
                 'Advanced'
             ],
 
-            selectedLevel: 0
+            selectedLevel: 0,
+            courseContract: this.$contracts.courseContract,
+            provider: this.$auth.provider
         }
     },
-    mounted() {
+    async created() {
         this.getCategories()
+
+        this.$contracts.initCourseContract(this.provider)
+        $nuxt.$on('course-contract', (contract) => {
+            this.courseContract = contract
+        })
     },
     methods: {
         async getCategories() {
+            const response = await this.$stream.fetch('create-category')
+            if (!response) return
 
+            const status = response.status
+
+            if (status) {
+                const categories = response.data.data
+                categories.forEach(category => {
+                    const data = this.$utils.decode(['uint256', 'string', 'string'], category.data)
+                    this.categories.push(data)
+                })
+
+            }
+            this.fetching = false
         },
         onCategoryChanged(event) {
             this.selectedCategory = event.target.value
@@ -93,10 +113,10 @@ export default {
             this.selectedLevel = event.target.value
         },
         async createCourse() {
-            if (this.creating) return
+            if (this.creating || this.courseContract == null) return
             this.creating = false
 
-            if (this.selectedCategory == 0) {
+            if (this.selectedCategory == null) {
                 this.errorCategory = 'Select a category'
             } else {
                 this.errorCategory = null
@@ -118,7 +138,19 @@ export default {
 
             this.creating = true
 
+            try {
+                const uId = Math.floor(Math.random() * 99999999999) + 1
+                const trx = await this.courseContract.createCourse(
+                    uId, Number(this.categories[this.selectedCategory][0]), 0, this.$auth.accounts[0],
+                    this.name, this.description, "", "", {
+                        from: this.$auth.accounts[0]
+                    }
+                )
+            } catch (error) {
+                console.log(error);
+            }
 
+            this.creating = false
         },
         getInputClassForName() {
             if (this.name == '') {
