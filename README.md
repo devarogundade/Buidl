@@ -20,9 +20,9 @@ We have heavily used moralis stream and smart contract events, which has helped 
     
 - # Cryptocurrency payment and Guaranteed refund system using DEFI Staking protocol
     The Buidl Token(BDL) is the only payment method of the platform, which can be available on DEX and CEX, cryptocurrency has given us the ability to ensure a guaranteed refund policy compared to web2 where it's complex to refund back through the channel funds was charged.
-    Whenever content is purchased on the platform, the tokens are staked in the smart contract, and released to the creator after two weeks. Learners can create a refund and instantly receive back their tokens with a deduction of the sections of the content consumed already.
+    Whenever content is purchased on the platform, the tokens are staked in the smart contract, and released to the creator after two weeks. Learners can create a  refund and instantly receive back their tokens with a deduction of the sections of the content consumed already.
 
-- # On-chain certificate (ERC4973)
+- # Account Bound Certificate (ERC4973)
     Account Bound Certificate that is it cannot be transferred between addresses like normal Erc20 or Erc721. Creators can set quizzes (exams) for each content they create and also mint an Account Bound certificate for subscribers(learners).
 
 - # IPFS and On-chain encryption for premium contents
@@ -31,7 +31,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
     The Buidl Video Player is a product we have added on your roadmap, which simplify authenticates users with their wallet and s
 
 ## Supported Media Types
-  In this hackathon scope the platfoem only supports free or premium video contents.
+  In this hackathon scope the platfoem only supports video contents.
 
 ## Products
 - Buidl Token (ERC20)
