@@ -47,8 +47,6 @@ A creator with suspicious activities and high report rate will be banned and the
 
 See mode at [Buidl.netflify.app](https://buidl.netflify.app/) (better on wide sreen).
 
-## Screenshots
-
 To see demo locally, clone the repo.
 
 ```sh
@@ -58,6 +56,9 @@ truffle migrate --network=development
 npm run dev
 http://localhost:3000/
 ```
+
+## Screenshots
+
 ## Plugins
 
 | Plugin | Installation |
