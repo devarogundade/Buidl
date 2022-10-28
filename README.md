@@ -55,8 +55,8 @@ We have heavily used moralis stream and smart contract events, which had help us
 
 ## Demo
 
-See mode at [Buidl.netflify.app](https://buidl.netflify.app/).
-Buidl Token Faucet https://buidl.netlify.app/mint
+   See mode at https://buidl.netflify.app/
+   Buidl Token Faucet https://buidl.netlify.app/mint
 
 To see demo locally, clone the repo.
 
