@@ -13,7 +13,10 @@ We have heavily used moralis stream and smart contract events, which has helped 
 ## Core Features
 - # Incentives for learning
     Non-creators (i.e learners) will cover the largest base of the platform size, it's a crucial part of the platform encourage and reward learners to retain them to use and enjoy the platform. 
+   
     On each and every content (free/premium) a user purchases on the platform, given that they completed learning from the content a Buidl NFT will be minted for them based on the content price, The Buidl NFT serves as a coupon(discount) on premium contents, each nft has a weight property which ranges from 0 ~ 50, this weight property is the percentage of the nft discount.
+    
+    The NFT can be traded in exchange for cryptocurrency to other users on marketplaces like Opensea.io
     
 - # Cryptocurrency payment and Guaranteed refund system using DEFI Staking protocol
     The Buidl Token(BDL) is the only payment method of the platform, which can be available on DEX and CEX, cryptocurrency has given us the ability to ensure a guaranteed refund policy compared to web2 where it's complex to refund back through the channel funds was charged.
