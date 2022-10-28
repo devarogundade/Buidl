@@ -11,26 +11,26 @@
                                 <p>Explore</p>
                             </router-link>
                             <i class="fa-solid fa-chevron-right"></i>
-                            <p>{{ category[1] }}</p>
+                            <p>{{ category.name }}</p>
                         </div>
-                        <h3 class="title">{{ course[1] }}</h3>
-                        <p class="subtitle">{{ course[2] }}</p>
+                        <h3 class="title">{{ course.name }}</h3>
+                        <p class="subtitle">{{ course.description }}</p>
                         <div class="stat">
                             <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; <router-link to="">(2 ratings)</router-link>
                             </p>
                             <p>•</p>
                             <p class="n_students">2 students</p>
                         </div>
-                        <p class="instructor" v-if="creator"> <img :src="creator[2]" alt=""> {{ creator[1] }} </p>
+                        <p class="instructor"> <img :src="course.creator.image" alt=""> {{ course.creator.name }} </p>
                         <div class="specs">
-                            <p class="last_update"><i class="fa-solid fa-calendar-days"></i> {{ 0 }}</p>
+                            <p class="last_update"><i class="fa-solid fa-calendar-days"></i> 20 mins ago</p>
                             <p class="languages"><i class="fa-solid fa-globe"></i> English</p>
                         </div>
                     </div>
 
                     <div class="buy">
                         <div class="preview">
-                            <img :src="course[4]" />
+                            <img :src="course.photo" />
                             <i class="fa-solid fa-play"></i>
                         </div>
                         <div class="tag" v-if="!bought">Preview</div>
@@ -77,7 +77,7 @@
                         <div class="pricing" v-if="!bought">
                             <div>
                                 <p>Course price</p>
-                                <p>{{ 0 }} BDL</p>
+                                <p v-if="course.price">{{ course.price }} BDL</p>
                             </div>
 
                             <div>
@@ -93,7 +93,7 @@
                             </div>
                         </div>
 
-                        <div class="action" v-if="false">
+                        <div class="action" v-if="author">
                             <router-link :to="`/app/course-builder/${$route.params.course}`">
                                 <div class="pay">Edit Course</div>
                             </router-link>
@@ -129,7 +129,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -146,10 +145,10 @@ export default {
             courseId: this.$route.params.course,
             course: null,
             sections: [],
-            category: null,
-            instructor: null,
+            categories: [],
             notFound: false,
             bought: false,
+            author: false,
             nfts: [],
             selectedNft: null,
             showNfts: false,
@@ -209,16 +208,48 @@ export default {
                 const courses = response.data.data
                 courses.forEach(course => {
                     const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
+                    const creator = this.$utils.decode(['string', 'string', 'address'], course.creator.data)
                     if (Number(data[0] == this.courseId)) {
-                        this.course = data
-                        $nuxt.$emit(`course${this.courseId}`, data)
+                        this.course = {
+                            id: Number(data[0]),
+                            name: data[1],
+                            description: data[2],
+                            category: Number(data[3]),
+                            photo: data[4],
+                            preview: data[5],
+                            address: data[6],
+                            creator: {
+                                name: creator[0],
+                                image: creator[1],
+                                address: creator[2]
+                            }
+                        }
+
+                        this.author = this.course.creator.address.toLowerCase() == this.$auth.accounts[0].toLowerCase()
+                        $nuxt.$emit(`course${this.courseId}`, this.course)
+
                         return
                     }
                 })
             }
         },
-        async init() {
+        async getCategories() {
+            const response = await this.$stream.fetch('create-category')
+            if (!response) return
 
+            const status = response.status
+
+            if (status) {
+                const categories = response.data.data
+                categories.forEach(category => {
+                    const data = this.$utils.decode(['uint256', 'string', 'string'], category.data)
+                    this.categories.push({
+                        id: Number(data[0]),
+                        name: data[1],
+                        photo: data[2]
+                    })
+                })
+            }
         },
         async getCourseSections() {
 
