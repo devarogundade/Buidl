@@ -14,7 +14,9 @@ A creator with suspicious activities and high report rate will be banned and the
     On each every premium content a user purchase on the platform, given that they completed learning the content a Buidl NFT will be minted for them based on the content price. Click here to read more about the Buidl NFT
     
 - # Cryptocurrency payment and Guaranteed refund system using DEFI Staking protocol
+
 - # On-chain certificate (ERC4973)
+    Account Bound Certificate that is it cannot be transferred between addresses like normal Erc20 or Erc721. Creators can set quiz(exam) for each content they create and also mint a Account Bound certificate for subscribers(learners).
 
 - # IPFS ond On-chain encryption for premium contents
     Encrypting video chunks to IPFS and storing the keys on chain is how we have managed to protect premium contents on the platform, only the content subscribers account can retrieve the key to decrypt the video chunks.
