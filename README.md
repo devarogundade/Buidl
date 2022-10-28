@@ -94,9 +94,7 @@ http://localhost:3000/
 
 Want to contribute? Great!
 
-=================
-
-Open your favorite Terminal and run these commands.
+Reach out to me at https://linktree.com/devarogundade
 
 ## License
 
