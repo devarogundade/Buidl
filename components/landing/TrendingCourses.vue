@@ -10,21 +10,21 @@
         <div class="trending">
             <div class="swiper trendSwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide" v-for="course in getValidCourses()" :key="course.id.toNumber()">
+                    <div class="swiper-slide" v-for="course in getValidCourses()" :key="Number(course[0])">
                         <div class="image">
-                            <img :src="course.ipfsPhoto" alt="">
+                            <img :src="course[4]" alt="">
                         </div>
                         <div class="detail">
-                            <h3 class="course_title">{{ course.name }}</h3>
+                            <h3 class="course_title">{{ course[1] }}</h3>
                             <p class="instructor" v-if="course.instructorData"> <img src="/images/nft2.jpg" alt=""> {{ course.instructorData.lastName + ' ' + course.instructorData.firstName }} </p>
                             <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; • &nbsp; 235 students</p>
-                            <p class="price">{{ course.price.toNumber() }} $BDL</p>
+                            <p class="price">{{ 0 }} $BDL</p>
                         </div>
 
                         <div class="description">
                             <div class="detail">
-                                <p class="price">{{ course.price.toNumber() }} $BDL</p>
-                                <h3 class="course_title">{{ course.name }}</h3>
+                                <p class="price">{{ 0 }} $BDL</p>
+                                <h3 class="course_title">{{ course[1] }}</h3>
                                 <p class="instructor" v-if="course.instructorData"> <img src="/images/nft2.jpg" alt=""> {{ course.instructorData.lastName + ' ' + course.instructorData.firstName }} </p>
                                 <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; • &nbsp; 235 students</p>
                                 <p class="sections">Sections</p>
@@ -35,7 +35,7 @@
                                     <p class="more_sections">+2 sections</p>
                                 </ul>
                                 <div class="action">
-                                    <router-link :to="`/explore/courses/${course.id.toNumber()}`">
+                                    <router-link :to="`/explore/courses/${Number(course[0])}`">
                                         <div class="buy">View Course</div>
                                     </router-link>
                                     <i class="fa-solid fa-heart-circle-plus"></i>
@@ -56,11 +56,15 @@ export default {
     data() {
         return {
             courses: [],
+            instructors: [],
+            fetching: false,
+            buidlContract: this.$contracts.buidlContract
         }
     },
-    mounted() {
-        $nuxt.$on('contracts-ready', (buidlContract) => {
-            this.getCourses(buidlContract)
+    created() {
+        this.getCourses()
+        $nuxt.$on('buidl-contract', (contract) => {
+            this.buidlContract = contract
         })
     },
     updated() {
@@ -76,53 +80,26 @@ export default {
         });
     },
     methods: {
-        async getCourses(buidlContract) {
-            let index = 1;
-            let ended = false;
+        async getCourses() {
+            const response = await this.$stream.fetch('course-created')
+            if (!response) return
 
-            try {
-                while (!ended) {
-                    const course = await buidlContract.courses(index);
+            const status = response.status
 
-                    const existing = this.courses.filter(_course =>
-                        _course.id.toNumber() == course.id.toNumber()
-                    )
+            if (status) {
+                const courses = response.data.data
+                courses.forEach(course => {
+                    this.getInstructors(course.address)
+                    const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
+                    this.courses.push(data)
+                })
 
-                    if (existing.length == 0) {
-                        if (course.id.toNumber() != 0 && course.isPublished) {
-                            this.instructorData = null
-                            this.courses.push(course)
-                        } else {
-                            ended = true
-                        }
-                    }
-
-                    index++
-                }
-            } catch (error) {
-                ended = true
             }
-
-            this.getInstructors(buidlContract)
+            this.fetching = false
         },
         getValidCourses() {
-            return this.courses.filter(course => course.id.toNumber() != 0)
+            return this.courses.filter(course => Number(course[0]) != 0)
         },
-        async getInstructors(buidlContract) {
-            for (let index = 0; index < this.courses.length; index++) {
-                if (index > 20) break
-
-                const instructor = await buidlContract.instructors(this.courses[index].instructor);
-                if (instructor.id.toNumber() != 0) {
-                    this.courses[index].instructorData = instructor
-
-                    // force re rendering bug
-                    let name = this.courses[index].name
-                    this.courses[index].name = 'forcing'
-                    this.courses[index].name = name
-                }
-            }
-        }
     }
 }
 </script>

@@ -7,8 +7,20 @@
         <h3 :class="tab == 2 ? 'active' : ''" v-on:click="tab = 2">Created</h3>
     </div>
 
-    <div class="courses" v-show="(courses.length > 0) && !fetching">
-        <router-link :to="`/app/course-builder/${Number(course[0])}`" v-for="(course, index) in courses" :key="index">
+    <div class="courses" v-show="(courses.length > 0) && !fetching && tab == 1">
+        <router-link :to="`/app/courses/${Number(course[0])}`" v-for="(course, index) in courses" :key="index">
+            <div class="course scaleable">
+                <div class="detail">
+                    <img :src="course[4]" alt="">
+                    <h3>{{ course[1] }}</h3>
+                    <p>{{ course[2] }}</p>
+                </div>
+            </div>
+        </router-link>
+    </div>
+
+     <div class="courses" v-show="(courses.length > 0) && !fetching && tab == 2">
+        <router-link :to="`/app/course-builder/${Number(course[0])}`" v-for="(course, index) in createdCourses" :key="index">
             <div class="course scaleable">
                 <div class="detail">
                     <img :src="course[4]" alt="">
@@ -45,26 +57,48 @@ export default {
     data() {
         return {
             courses: [],
+            createdCourses: [],
             fetching: true,
             tab: 1
         }
     },
-    async created() {
-        const response = await this.$stream.fetch('course-created')
-        if (!response) return
-
-        const status = response.status
-
-        if (status) {
-            const courses = response.data.data
-            courses.forEach(course => {
-                const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
-                this.courses.push(data)
-            })
-
-        }
-        this.fetching = false
+    created() {
+        this.getCourses()
+        this.getCreatedCourses()
     },
+    methods: {
+        async getCourses() {
+            const response = await this.$stream.fetch('course-created')
+            if (!response) return
+
+            const status = response.status
+
+            if (status) {
+                const courses = response.data.data
+                courses.forEach(course => {
+                    const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
+                    this.courses.push(data)
+                })
+
+            }
+            this.fetching = false
+        },
+        async getCreatedCourses() {
+            const response = await this.$stream.fetchForAddress('course-created', this.$auth.accounts[0])
+            if (!response) return
+
+            const status = response.status
+
+            if (status) {
+                const courses = response.data.data
+                courses.forEach(course => {
+                    const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
+                    this.createdCourses.push(data)
+                })
+
+            }
+        },
+    }
 }
 </script>
 
