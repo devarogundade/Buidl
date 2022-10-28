@@ -14,11 +14,13 @@ A creator with suspicious activities and high report rate will be banned and the
     On each every premium content a user purchase on the platform, given that they completed learning the content a Buidl NFT will be minted for them based on the content price. Click here to read more about the Buidl NFT
     
 - # Cryptocurrency payment and Guaranteed refund system using DEFI Staking protocol
+    The Buidl Token(BDL) is the only payment method of the platform, which can be available on DEX and CEX, cryptocurrency has given us the ability to ensure a guaranteed refund policy compared to web2 where it's complex to refund back through the channel funds was charged.
+    Whenever a content is purchased on the platform, the tokens are staked in the smart contract, and released to the creator after two weeks. Learners are able to create a refund and instantly received back their tokens with deduction of the sections of the content consumed already.
 
 - # On-chain certificate (ERC4973)
     Account Bound Certificate that is it cannot be transferred between addresses like normal Erc20 or Erc721. Creators can set quiz(exam) for each content they create and also mint a Account Bound certificate for subscribers(learners).
 
-- # IPFS ond On-chain encryption for premium contents
+- # IPFS and On-chain encryption for premium contents
     Encrypting video chunks to IPFS and storing the keys on chain is how we have managed to protect premium contents on the platform, only the content subscribers account can retrieve the key to decrypt the video chunks.
     Protecting videos online is not 100% achievable, as it can still be recorded from the device's screen.
     The Buidl Video Player is a product we have added on your roadmap, which simplify authenticates users with their wallet and s
