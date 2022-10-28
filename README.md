@@ -86,7 +86,7 @@ http://localhost:3000/
 | Moralis |  |
 | Vue |  |
 
-## Development
+## Contribution
 
 Want to contribute? Great!
 
