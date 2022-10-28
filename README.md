@@ -31,13 +31,17 @@ We have heavily used moralis stream and smart contract events, which had help us
   In this hackathon scope the platfoem only supports free or premium video contents.
 
 ## Products
- - # Buidl Token
+ - Buidl Token (ERC20)
+ Use case: Payment and Staking.
   
- - # Buidl Certificate
+ - Buidl Certificate (ERC4973)
+ Use case: Certification.
      
--  # Buidl NFT
+- Buidl NFT (ERC721)
+ Use case: Rewards and Coupon.
   
--  # Buidl Video Player
+- Buidl Video Player
+Use case: .bdl file extension video player.
 
 ## Hackathon Track
   Binance Smart Chain => Social & Entertainment
@@ -77,14 +81,14 @@ http://localhost:3000/
 
 | Plugin | Installation |
 | ------ | ------ |
-| Axios |  |
-| Tiny |  |
+| Axios | npm i axios |
+| Tiny Rich Text Editor |  |
 | HD Wallet Provider |  |
 | Coinbase SDK |  |
 | Walletconnect SDK |  |
 | Truffle Contract |  |
-| Moralis |  |
-| Vue |  |
+| CryptoJs |  |
+| Openzepllin |  |
 
 ## Contribution
 
