@@ -3,17 +3,17 @@
 
 Buidl is a Social-Fi and Decentralized Autonomous Organization (DAO) for content creators (e.g instructors, YouTubers, DIY makers, etc) anyone that shares their skills with other people online either for free or at a particular cost.
 
-Today, there are various existing Web2 solutions for this particular aspect, but we are taking it further leveraging blockchain technology to provide more secure, learning incentives and ownership to the community.
+Today, there are various existing Web2 solutions for this particular aspect, but we are taking it further leveraging blockchain technology to provide more secure, learning incentives and ownership to the community pattern.
 
-To become a creator on the buidl platform requires a minimum stake of 2000 BDL tokens for a minimum duration of one year, if staking is withdrawn after one year the user is not a creator anymore unstill they restake a minimum of 2000 BDL back.
-A creator with suspicious activities and a high report rate will be banned and their stake is locked in the smart contract, this feature helps us maintain a safe community as a DAO (Decentralized Autonomous Organization).
+To become a creator on the buidl platform requires a minimum stake of 2000 BDL tokens for a minimum duration of one year, if staking is withdrawn after one year the user is not a creator anymore until they restake a minimum of 2000 BDL back in the contract.
+A creator with suspicious activities and a high report rate is subjected to ban and their staked BDL token remains locked in the smart contract, this feature helps us maintain the DAO a safe community.
 
 We have heavily used moralis stream and smart contract events, which has helped us maintain a very low gas cost on the platform.
 
 ## Core Features
 - # Incentives for learning
-    Non-creators (i.e learners) cover the largest base of the platform size, it's a crucial part of the platform to motivate and reward learners to use.....
-    On each and every premium content a user purchases on the platform, given that they completed learning the content a Buidl NFT will be minted for them based on the content price. Click here to read more about the Buidl NFT
+    Non-creators (i.e learners) will cover the largest base of the platform size, it's a crucial part of the platform encourage and reward learners to retain them to use and enjoy the platform. 
+    On each and every content (free/premium) a user purchases on the platform, given that they completed learning from the content a Buidl NFT will be minted for them based on the content price, The Buidl NFT serves as a coupon(discount) on premium contents, each nft has a weight property which ranges from 0 ~ 50, this weight property is the percentage of the nft discount.
     
 - # Cryptocurrency payment and Guaranteed refund system using DEFI Staking protocol
     The Buidl Token(BDL) is the only payment method of the platform, which can be available on DEX and CEX, cryptocurrency has given us the ability to ensure a guaranteed refund policy compared to web2 where it's complex to refund back through the channel funds was charged.
