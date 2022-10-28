@@ -69,6 +69,9 @@ http://localhost:3000/
 
 ## Screenshots
 
+## Roadmap
+   https://buidl.netlify.app/#roadmap
+
 ## Plugins
 
 | Plugin | Installation |
