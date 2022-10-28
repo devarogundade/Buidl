@@ -41,7 +41,7 @@ A creator with suspicious activities and high report rate will be banned and the
 - Binance Smart Chain (Testnet)
 - Moralis Stream and Web3 APIs
 - IPFS (File System)
-- Solidity (Smart contract)
+- Solidity (Smart Contract)
 - Nuxtjs (Frontend)
 - Laravel (Backend)
 - Truffle
@@ -49,7 +49,7 @@ A creator with suspicious activities and high report rate will be banned and the
 
 ## Demo
 
-See mode at [Buidl.netflify.app](https://buidl.netflify.app/) (better on wide sreen).
+See mode at [Buidl.netflify.app](https://buidl.netflify.app/).
 
 To see demo locally, clone the repo.
 
