@@ -15,7 +15,11 @@ A creator with suspicious activities and high report rate will be banned and the
     
 - # Cryptocurrency payment and Guaranteed refund system using DEFI Staking protocol
 - # On-chain certificate (ERC4973)
+
 - # IPFS ond On-chain encryption for premium contents
+    Encrypting video chunks to IPFS and storing the keys on chain is how we have managed to protect premium contents on the platform, only the content subscribers account can retrieve the key to decrypt the video chunks.
+    Protecting videos online is not 100% achievable, as it can still be recorded from the device's screen.
+    The Buidl Video Player is a product we have added on your roadmap, which simplify authenticates users with their wallet and s
 
 ## Supported Media Types
   In this hackathon scope the platfoem only supports free or premium video contents.
