@@ -31,17 +31,21 @@ We have heavily used moralis stream and smart contract events, which had help us
   In this hackathon scope the platfoem only supports free or premium video contents.
 
 ## Products
- - Buidl Token (ERC20)
- Use case: Payment and Staking.
+- Buidl Token (ERC20)
+
+  Use case: Payment and Staking.
   
- - Buidl Certificate (ERC4973)
- Use case: Certification.
+- Buidl Certificate (ERC4973)
+
+  Use case: Certification.
      
 - Buidl NFT (ERC721)
- Use case: Rewards and Coupon.
+
+  Use case: Rewards and Coupon.
   
 - Buidl Video Player
-Use case: .bdl file extension video player.
+
+  Use case: .bdl file extension video player.
 
 ## Hackathon Track
   Binance Smart Chain => Social & Entertainment
