@@ -17,34 +17,15 @@ const firebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebaseApp);
 
 export default ({}, inject) => {
-    inject('chat', Vue.observable({
-        path: 'messages',
+    inject('firestore', Vue.observable({
         db: getFirestore(firebaseApp),
-        writeMessage: async function(document, message) {
-            try {
-                await setDoc(doc(this.db, this.path, document), message)
-                return true
-            } catch (error) {
-                return false
-            }
+        fetchAll: async function(collection) {
+            const result = []
+            const query = getDocs(collection(this.db, collection))
+            query.forEach(document => {
+                result.push(document.data())
+            });
+            return result
         },
-        getAllMessages: async function() {
-            // TODO: do some where query filtering
-            const querySnapshot = await getDocs(collection(this.db, this.path))
-
-            querySnapshot.forEach((doc) => {
-                console.log(`${doc.id} => ${doc.data()}`)
-            })
-        },
-        getMessage: async function(document) {
-            const docRef = doc(this.db, this.path, document)
-            const docSnap = await getDoc(docRef)
-
-            if (docSnap.exists()) {
-                return docSnap.data()
-            } else {
-                return null
-            }
-        }
     }))
 }

@@ -76,5 +76,15 @@ export default {
 
     axios: {
         baseURL: 'https://deep-index.moralis.io/api/v2/', // moralis api base url
-    }
+    },
+
+    build: {
+        extend(config, { isDev, isClient }) {
+            config.node = {
+                fs: 'empty',
+                net: 'empty',
+                express: 'empty'
+            }
+        }
+    },
 }

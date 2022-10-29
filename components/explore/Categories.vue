@@ -23,24 +23,7 @@ export default {
         }
     },
     async created() {
-        const response = await this.$stream.fetch('create-category')
-        if (!response) return
-
-        const status = response.status
-
-        if (status) {
-            const categories = response.data.data
-            categories.forEach(category => {
-                const data = this.$utils.decode(['uint256', 'string', 'string'], category.data)
-                this.categories.push({
-                    id: Number(data[0]),
-                    name: data[1],
-                    photo: data[2]
-                })
-            })
-
-        }
-        this.fetching = false
+        this.categories = await this.$firestore.fetchAll('categories')
     },
 }
 </script>
