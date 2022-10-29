@@ -73,16 +73,6 @@ We have heavily used moralis stream and smart contract events, which has helped 
 - See mode at https://buidl.netflify.app/
 - Buidl Token Faucet https://buidl.netlify.app/mint
 
-To see demo locally, clone the repo.
-
-```sh
-cd buidl
-npm install
-truffle migrate --network=development
-npm run dev
-http://localhost:3000/
-```
-
 ## Screenshots
 
 ## Roadmap
