@@ -2392,18 +2392,18 @@
     "absolutePath": "project:/contracts/Staking.sol",
     "exportedSymbols": {
       "Models": [
-        4245
+        4243
       ],
       "Staking": [
-        3920
+        3918
       ]
     },
-    "id": 3921,
+    "id": 3919,
     "license": "GPL-3.0",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3794,
+        "id": 3792,
         "literals": [
           "solidity",
           ">=",
@@ -2419,20 +2419,20 @@
       {
         "absolutePath": "project:/contracts/base/Models.sol",
         "file": "./base/Models.sol",
-        "id": 3796,
+        "id": 3794,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 3921,
-        "sourceUnit": 4246,
+        "scope": 3919,
+        "sourceUnit": 4244,
         "src": "69:41:18",
         "symbolAliases": [
           {
             "foreign": {
-              "id": 3795,
+              "id": 3793,
               "name": "Models",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 4245,
+              "referencedDeclaration": 4243,
               "src": "77:6:18",
               "typeDescriptions": {}
             },
@@ -2448,9 +2448,9 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 3920,
+        "id": 3918,
         "linearizedBaseContracts": [
-          3920
+          3918
         ],
         "name": "Staking",
         "nameLocation": "121:7:18",
@@ -2459,23 +2459,23 @@
           {
             "constant": false,
             "functionSelector": "16934fc4",
-            "id": 3801,
+            "id": 3799,
             "mutability": "mutable",
             "name": "stakes",
             "nameLocation": "175:6:18",
             "nodeType": "VariableDeclaration",
-            "scope": 3920,
+            "scope": 3918,
             "src": "135:46:18",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Stake_$4244_storage_$",
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Stake_$4242_storage_$",
               "typeString": "mapping(address => struct Models.Stake)"
             },
             "typeName": {
-              "id": 3800,
+              "id": 3798,
               "keyType": {
-                "id": 3797,
+                "id": 3795,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "143:7:18",
@@ -2487,27 +2487,27 @@
               "nodeType": "Mapping",
               "src": "135:32:18",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Stake_$4244_storage_$",
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Stake_$4242_storage_$",
                 "typeString": "mapping(address => struct Models.Stake)"
               },
               "valueType": {
-                "id": 3799,
+                "id": 3797,
                 "nodeType": "UserDefinedTypeName",
                 "pathNode": {
-                  "id": 3798,
+                  "id": 3796,
                   "name": "Models.Stake",
                   "nameLocations": [
                     "154:6:18",
                     "161:5:18"
                   ],
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 4244,
+                  "referencedDeclaration": 4242,
                   "src": "154:12:18"
                 },
-                "referencedDeclaration": 4244,
+                "referencedDeclaration": 4242,
                 "src": "154:12:18",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Stake_$4244_storage_ptr",
+                  "typeIdentifier": "t_struct$_Stake_$4242_storage_ptr",
                   "typeString": "struct Models.Stake"
                 }
               }
@@ -2516,7 +2516,7 @@
           },
           {
             "body": {
-              "id": 3817,
+              "id": 3815,
               "nodeType": "Block",
               "src": "259:53:18",
               "statements": [
@@ -2526,7 +2526,7 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-                    "id": 3815,
+                    "id": 3813,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2534,24 +2534,24 @@
                     "leftExpression": {
                       "expression": {
                         "baseExpression": {
-                          "id": 3810,
+                          "id": 3808,
                           "name": "stakes",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 3801,
+                          "referencedDeclaration": 3799,
                           "src": "276:6:18",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Stake_$4244_storage_$",
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Stake_$4242_storage_$",
                             "typeString": "mapping(address => struct Models.Stake storage ref)"
                           }
                         },
-                        "id": 3812,
+                        "id": 3810,
                         "indexExpression": {
-                          "id": 3811,
+                          "id": 3809,
                           "name": "user",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 3805,
+                          "referencedDeclaration": 3803,
                           "src": "283:4:18",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -2565,11 +2565,11 @@
                         "nodeType": "IndexAccess",
                         "src": "276:12:18",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Stake_$4244_storage",
+                          "typeIdentifier": "t_struct$_Stake_$4242_storage",
                           "typeString": "struct Models.Stake storage ref"
                         }
                       },
-                      "id": 3813,
+                      "id": 3811,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -2577,7 +2577,7 @@
                       "memberLocation": "289:6:18",
                       "memberName": "amount",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4237,
+                      "referencedDeclaration": 4235,
                       "src": "276:19:18",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -2587,11 +2587,11 @@
                     "nodeType": "BinaryOperation",
                     "operator": ">=",
                     "rightExpression": {
-                      "id": 3814,
+                      "id": 3812,
                       "name": "amount",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3803,
+                      "referencedDeclaration": 3801,
                       "src": "299:6:18",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -2604,15 +2604,15 @@
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 3809,
-                  "id": 3816,
+                  "functionReturnParameters": 3807,
+                  "id": 3814,
                   "nodeType": "Return",
                   "src": "269:36:18"
                 }
               ]
             },
             "functionSelector": "de360715",
-            "id": 3818,
+            "id": 3816,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -2620,17 +2620,17 @@
             "nameLocation": "197:9:18",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3806,
+              "id": 3804,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3803,
+                  "id": 3801,
                   "mutability": "mutable",
                   "name": "amount",
                   "nameLocation": "215:6:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3818,
+                  "scope": 3816,
                   "src": "207:14:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2639,7 +2639,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3802,
+                    "id": 3800,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "207:7:18",
@@ -2652,12 +2652,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3805,
+                  "id": 3803,
                   "mutability": "mutable",
                   "name": "user",
                   "nameLocation": "231:4:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3818,
+                  "scope": 3816,
                   "src": "223:12:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2666,7 +2666,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3804,
+                    "id": 3802,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "223:7:18",
@@ -2682,17 +2682,17 @@
               "src": "206:30:18"
             },
             "returnParameters": {
-              "id": 3809,
+              "id": 3807,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3808,
+                  "id": 3806,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3818,
+                  "scope": 3816,
                   "src": "253:4:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2701,7 +2701,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3807,
+                    "id": 3805,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "253:4:18",
@@ -2715,7 +2715,7 @@
               ],
               "src": "252:6:18"
             },
-            "scope": 3920,
+            "scope": 3918,
             "src": "188:124:18",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -2723,7 +2723,7 @@
           },
           {
             "body": {
-              "id": 3859,
+              "id": 3857,
               "nodeType": "Block",
               "src": "447:270:18",
               "statements": [
@@ -2735,17 +2735,17 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 3832,
+                        "id": 3830,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
-                          "id": 3830,
+                          "id": 3828,
                           "name": "amount",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 3822,
+                          "referencedDeclaration": 3820,
                           "src": "465:6:18",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -2756,7 +2756,7 @@
                         "operator": ">",
                         "rightExpression": {
                           "hexValue": "30",
-                          "id": 3831,
+                          "id": 3829,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -2778,7 +2778,7 @@
                       },
                       {
                         "hexValue": "217374616b655f7a65726f5f746f6b656e73",
-                        "id": 3833,
+                        "id": 3831,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -2804,7 +2804,7 @@
                           "typeString": "literal_string \"!stake_zero_tokens\""
                         }
                       ],
-                      "id": 3829,
+                      "id": 3827,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -2818,7 +2818,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 3834,
+                    "id": 3832,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2834,37 +2834,37 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3835,
+                  "id": 3833,
                   "nodeType": "ExpressionStatement",
                   "src": "457:41:18"
                 },
                 {
                   "expression": {
-                    "id": 3852,
+                    "id": 3850,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "baseExpression": {
-                        "id": 3836,
+                        "id": 3834,
                         "name": "stakes",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3801,
+                        "referencedDeclaration": 3799,
                         "src": "509:6:18",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Stake_$4244_storage_$",
+                          "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Stake_$4242_storage_$",
                           "typeString": "mapping(address => struct Models.Stake storage ref)"
                         }
                       },
-                      "id": 3838,
+                      "id": 3836,
                       "indexExpression": {
-                        "id": 3837,
+                        "id": 3835,
                         "name": "from",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3820,
+                        "referencedDeclaration": 3818,
                         "src": "516:4:18",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -2878,7 +2878,7 @@
                       "nodeType": "IndexAccess",
                       "src": "509:12:18",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Stake_$4244_storage",
+                        "typeIdentifier": "t_struct$_Stake_$4242_storage",
                         "typeString": "struct Models.Stake storage ref"
                       }
                     },
@@ -2891,7 +2891,7 @@
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 3846,
+                          "id": 3844,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2899,24 +2899,24 @@
                           "leftExpression": {
                             "expression": {
                               "baseExpression": {
-                                "id": 3841,
+                                "id": 3839,
                                 "name": "stakes",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 3801,
+                                "referencedDeclaration": 3799,
                                 "src": "550:6:18",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Stake_$4244_storage_$",
+                                  "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Stake_$4242_storage_$",
                                   "typeString": "mapping(address => struct Models.Stake storage ref)"
                                 }
                               },
-                              "id": 3843,
+                              "id": 3841,
                               "indexExpression": {
-                                "id": 3842,
+                                "id": 3840,
                                 "name": "from",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 3820,
+                                "referencedDeclaration": 3818,
                                 "src": "557:4:18",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_address",
@@ -2930,11 +2930,11 @@
                               "nodeType": "IndexAccess",
                               "src": "550:12:18",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Stake_$4244_storage",
+                                "typeIdentifier": "t_struct$_Stake_$4242_storage",
                                 "typeString": "struct Models.Stake storage ref"
                               }
                             },
-                            "id": 3844,
+                            "id": 3842,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
@@ -2942,7 +2942,7 @@
                             "memberLocation": "563:6:18",
                             "memberName": "amount",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 4237,
+                            "referencedDeclaration": 4235,
                             "src": "550:19:18",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -2952,11 +2952,11 @@
                           "nodeType": "BinaryOperation",
                           "operator": "+",
                           "rightExpression": {
-                            "id": 3845,
+                            "id": 3843,
                             "name": "amount",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 3822,
+                            "referencedDeclaration": 3820,
                             "src": "572:6:18",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -2971,7 +2971,7 @@
                         },
                         {
                           "expression": {
-                            "id": 3847,
+                            "id": 3845,
                             "name": "block",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -2982,7 +2982,7 @@
                               "typeString": "block"
                             }
                           },
-                          "id": 3848,
+                          "id": 3846,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2997,11 +2997,11 @@
                           }
                         },
                         {
-                          "id": 3849,
+                          "id": 3847,
                           "name": "duration",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 3824,
+                          "referencedDeclaration": 3822,
                           "src": "621:8:18",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -3009,11 +3009,11 @@
                           }
                         },
                         {
-                          "id": 3850,
+                          "id": 3848,
                           "name": "rewardFlowRate",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 3826,
+                          "referencedDeclaration": 3824,
                           "src": "643:14:18",
                           "typeDescriptions": {
                             "typeIdentifier": "t_int96",
@@ -3041,18 +3041,18 @@
                           }
                         ],
                         "expression": {
-                          "id": 3839,
+                          "id": 3837,
                           "name": "Models",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 4245,
+                          "referencedDeclaration": 4243,
                           "src": "524:6:18",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_contract$_Models_$4245_$",
+                            "typeIdentifier": "t_type$_t_contract$_Models_$4243_$",
                             "typeString": "type(contract Models)"
                           }
                         },
-                        "id": 3840,
+                        "id": 3838,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -3060,14 +3060,14 @@
                         "memberLocation": "531:5:18",
                         "memberName": "Stake",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 4244,
+                        "referencedDeclaration": 4242,
                         "src": "524:12:18",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_struct$_Stake_$4244_storage_ptr_$",
+                          "typeIdentifier": "t_type$_t_struct$_Stake_$4242_storage_ptr_$",
                           "typeString": "type(struct Models.Stake storage pointer)"
                         }
                       },
-                      "id": 3851,
+                      "id": 3849,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -3079,17 +3079,17 @@
                       "src": "524:143:18",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Stake_$4244_memory_ptr",
+                        "typeIdentifier": "t_struct$_Stake_$4242_memory_ptr",
                         "typeString": "struct Models.Stake memory"
                       }
                     },
                     "src": "509:158:18",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Stake_$4244_storage",
+                      "typeIdentifier": "t_struct$_Stake_$4242_storage",
                       "typeString": "struct Models.Stake storage ref"
                     }
                   },
-                  "id": 3853,
+                  "id": 3851,
                   "nodeType": "ExpressionStatement",
                   "src": "509:158:18"
                 },
@@ -3097,11 +3097,11 @@
                   "eventCall": {
                     "arguments": [
                       {
-                        "id": 3855,
+                        "id": 3853,
                         "name": "from",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3820,
+                        "referencedDeclaration": 3818,
                         "src": "697:4:18",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -3109,11 +3109,11 @@
                         }
                       },
                       {
-                        "id": 3856,
+                        "id": 3854,
                         "name": "amount",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3822,
+                        "referencedDeclaration": 3820,
                         "src": "703:6:18",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -3132,18 +3132,18 @@
                           "typeString": "uint256"
                         }
                       ],
-                      "id": 3854,
+                      "id": 3852,
                       "name": "StakingStaked",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3915,
+                      "referencedDeclaration": 3913,
                       "src": "683:13:18",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_uint256_$returns$__$",
                         "typeString": "function (address,uint256)"
                       }
                     },
-                    "id": 3857,
+                    "id": 3855,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3159,14 +3159,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3858,
+                  "id": 3856,
                   "nodeType": "EmitStatement",
                   "src": "678:32:18"
                 }
               ]
             },
             "functionSelector": "ab84bb78",
-            "id": 3860,
+            "id": 3858,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -3174,17 +3174,17 @@
             "nameLocation": "327:5:18",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3827,
+              "id": 3825,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3820,
+                  "id": 3818,
                   "mutability": "mutable",
                   "name": "from",
                   "nameLocation": "350:4:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3860,
+                  "scope": 3858,
                   "src": "342:12:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3193,7 +3193,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3819,
+                    "id": 3817,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "342:7:18",
@@ -3207,12 +3207,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3822,
+                  "id": 3820,
                   "mutability": "mutable",
                   "name": "amount",
                   "nameLocation": "372:6:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3860,
+                  "scope": 3858,
                   "src": "364:14:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3221,7 +3221,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3821,
+                    "id": 3819,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "364:7:18",
@@ -3234,12 +3234,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3824,
+                  "id": 3822,
                   "mutability": "mutable",
                   "name": "duration",
                   "nameLocation": "393:8:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3860,
+                  "scope": 3858,
                   "src": "388:13:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3248,7 +3248,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3823,
+                    "id": 3821,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "388:4:18",
@@ -3261,12 +3261,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3826,
+                  "id": 3824,
                   "mutability": "mutable",
                   "name": "rewardFlowRate",
                   "nameLocation": "417:14:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3860,
+                  "scope": 3858,
                   "src": "411:20:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3275,7 +3275,7 @@
                     "typeString": "int96"
                   },
                   "typeName": {
-                    "id": 3825,
+                    "id": 3823,
                     "name": "int96",
                     "nodeType": "ElementaryTypeName",
                     "src": "411:5:18",
@@ -3290,12 +3290,12 @@
               "src": "332:105:18"
             },
             "returnParameters": {
-              "id": 3828,
+              "id": 3826,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "447:0:18"
             },
-            "scope": 3920,
+            "scope": 3918,
             "src": "318:399:18",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -3303,75 +3303,75 @@
           },
           {
             "body": {
-              "id": 3908,
+              "id": 3906,
               "nodeType": "Block",
               "src": "761:292:18",
               "statements": [
                 {
                   "assignments": [
-                    3869
+                    3867
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 3869,
+                      "id": 3867,
                       "mutability": "mutable",
                       "name": "_stake",
                       "nameLocation": "791:6:18",
                       "nodeType": "VariableDeclaration",
-                      "scope": 3908,
+                      "scope": 3906,
                       "src": "771:26:18",
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Stake_$4244_memory_ptr",
+                        "typeIdentifier": "t_struct$_Stake_$4242_memory_ptr",
                         "typeString": "struct Models.Stake"
                       },
                       "typeName": {
-                        "id": 3868,
+                        "id": 3866,
                         "nodeType": "UserDefinedTypeName",
                         "pathNode": {
-                          "id": 3867,
+                          "id": 3865,
                           "name": "Models.Stake",
                           "nameLocations": [
                             "771:6:18",
                             "778:5:18"
                           ],
                           "nodeType": "IdentifierPath",
-                          "referencedDeclaration": 4244,
+                          "referencedDeclaration": 4242,
                           "src": "771:12:18"
                         },
-                        "referencedDeclaration": 4244,
+                        "referencedDeclaration": 4242,
                         "src": "771:12:18",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Stake_$4244_storage_ptr",
+                          "typeIdentifier": "t_struct$_Stake_$4242_storage_ptr",
                           "typeString": "struct Models.Stake"
                         }
                       },
                       "visibility": "internal"
                     }
                   ],
-                  "id": 3873,
+                  "id": 3871,
                   "initialValue": {
                     "baseExpression": {
-                      "id": 3870,
+                      "id": 3868,
                       "name": "stakes",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3801,
+                      "referencedDeclaration": 3799,
                       "src": "800:6:18",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Stake_$4244_storage_$",
+                        "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Stake_$4242_storage_$",
                         "typeString": "mapping(address => struct Models.Stake storage ref)"
                       }
                     },
-                    "id": 3872,
+                    "id": 3870,
                     "indexExpression": {
-                      "id": 3871,
+                      "id": 3869,
                       "name": "from",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3862,
+                      "referencedDeclaration": 3860,
                       "src": "807:4:18",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -3385,7 +3385,7 @@
                     "nodeType": "IndexAccess",
                     "src": "800:12:18",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Stake_$4244_storage",
+                      "typeIdentifier": "t_struct$_Stake_$4242_storage",
                       "typeString": "struct Models.Stake storage ref"
                     }
                   },
@@ -3400,25 +3400,25 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 3878,
+                        "id": 3876,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "expression": {
-                            "id": 3875,
+                            "id": 3873,
                             "name": "_stake",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 3869,
+                            "referencedDeclaration": 3867,
                             "src": "830:6:18",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Stake_$4244_memory_ptr",
+                              "typeIdentifier": "t_struct$_Stake_$4242_memory_ptr",
                               "typeString": "struct Models.Stake memory"
                             }
                           },
-                          "id": 3876,
+                          "id": 3874,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
@@ -3426,7 +3426,7 @@
                           "memberLocation": "837:6:18",
                           "memberName": "amount",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 4237,
+                          "referencedDeclaration": 4235,
                           "src": "830:13:18",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -3437,7 +3437,7 @@
                         "operator": "!=",
                         "rightExpression": {
                           "hexValue": "30",
-                          "id": 3877,
+                          "id": 3875,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -3459,7 +3459,7 @@
                       },
                       {
                         "hexValue": "21657869737473",
-                        "id": 3879,
+                        "id": 3877,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -3485,7 +3485,7 @@
                           "typeString": "literal_string \"!exists\""
                         }
                       ],
-                      "id": 3874,
+                      "id": 3872,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -3499,7 +3499,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 3880,
+                    "id": 3878,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3515,23 +3515,23 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3881,
+                  "id": 3879,
                   "nodeType": "ExpressionStatement",
                   "src": "822:38:18"
                 },
                 {
                   "assignments": [
-                    3883
+                    3881
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 3883,
+                      "id": 3881,
                       "mutability": "mutable",
                       "name": "unlockTime",
                       "nameLocation": "876:10:18",
                       "nodeType": "VariableDeclaration",
-                      "scope": 3908,
+                      "scope": 3906,
                       "src": "871:15:18",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -3540,7 +3540,7 @@
                         "typeString": "uint256"
                       },
                       "typeName": {
-                        "id": 3882,
+                        "id": 3880,
                         "name": "uint",
                         "nodeType": "ElementaryTypeName",
                         "src": "871:4:18",
@@ -3552,7 +3552,7 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 3890,
+                  "id": 3888,
                   "initialValue": {
                     "components": [
                       {
@@ -3560,25 +3560,25 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 3888,
+                        "id": 3886,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "expression": {
-                            "id": 3884,
+                            "id": 3882,
                             "name": "_stake",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 3869,
+                            "referencedDeclaration": 3867,
                             "src": "890:6:18",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Stake_$4244_memory_ptr",
+                              "typeIdentifier": "t_struct$_Stake_$4242_memory_ptr",
                               "typeString": "struct Models.Stake memory"
                             }
                           },
-                          "id": 3885,
+                          "id": 3883,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
@@ -3586,7 +3586,7 @@
                           "memberLocation": "897:4:18",
                           "memberName": "time",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 4239,
+                          "referencedDeclaration": 4237,
                           "src": "890:11:18",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -3597,18 +3597,18 @@
                         "operator": "+",
                         "rightExpression": {
                           "expression": {
-                            "id": 3886,
+                            "id": 3884,
                             "name": "_stake",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 3869,
+                            "referencedDeclaration": 3867,
                             "src": "904:6:18",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Stake_$4244_memory_ptr",
+                              "typeIdentifier": "t_struct$_Stake_$4242_memory_ptr",
                               "typeString": "struct Models.Stake memory"
                             }
                           },
-                          "id": 3887,
+                          "id": 3885,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
@@ -3616,7 +3616,7 @@
                           "memberLocation": "911:8:18",
                           "memberName": "duration",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 4241,
+                          "referencedDeclaration": 4239,
                           "src": "904:15:18",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -3630,7 +3630,7 @@
                         }
                       }
                     ],
-                    "id": 3889,
+                    "id": 3887,
                     "isConstant": false,
                     "isInlineArray": false,
                     "isLValue": false,
@@ -3654,14 +3654,14 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 3895,
+                        "id": 3893,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "expression": {
-                            "id": 3892,
+                            "id": 3890,
                             "name": "block",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -3672,7 +3672,7 @@
                               "typeString": "block"
                             }
                           },
-                          "id": 3893,
+                          "id": 3891,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -3689,11 +3689,11 @@
                         "nodeType": "BinaryOperation",
                         "operator": ">=",
                         "rightExpression": {
-                          "id": 3894,
+                          "id": 3892,
                           "name": "unlockTime",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 3883,
+                          "referencedDeclaration": 3881,
                           "src": "957:10:18",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -3708,7 +3708,7 @@
                       },
                       {
                         "hexValue": "746f6f65617279",
-                        "id": 3896,
+                        "id": 3894,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -3734,7 +3734,7 @@
                           "typeString": "literal_string \"tooeary\""
                         }
                       ],
-                      "id": 3891,
+                      "id": 3889,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -3748,7 +3748,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 3897,
+                    "id": 3895,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3764,13 +3764,13 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3898,
+                  "id": 3896,
                   "nodeType": "ExpressionStatement",
                   "src": "930:49:18"
                 },
                 {
                   "expression": {
-                    "id": 3902,
+                    "id": 3900,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3781,24 +3781,24 @@
                     "src": "990:19:18",
                     "subExpression": {
                       "baseExpression": {
-                        "id": 3899,
+                        "id": 3897,
                         "name": "stakes",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3801,
+                        "referencedDeclaration": 3799,
                         "src": "997:6:18",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Stake_$4244_storage_$",
+                          "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Stake_$4242_storage_$",
                           "typeString": "mapping(address => struct Models.Stake storage ref)"
                         }
                       },
-                      "id": 3901,
+                      "id": 3899,
                       "indexExpression": {
-                        "id": 3900,
+                        "id": 3898,
                         "name": "from",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3862,
+                        "referencedDeclaration": 3860,
                         "src": "1004:4:18",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -3812,7 +3812,7 @@
                       "nodeType": "IndexAccess",
                       "src": "997:12:18",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Stake_$4244_storage",
+                        "typeIdentifier": "t_struct$_Stake_$4242_storage",
                         "typeString": "struct Models.Stake storage ref"
                       }
                     },
@@ -3821,7 +3821,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3903,
+                  "id": 3901,
                   "nodeType": "ExpressionStatement",
                   "src": "990:19:18"
                 },
@@ -3829,11 +3829,11 @@
                   "eventCall": {
                     "arguments": [
                       {
-                        "id": 3905,
+                        "id": 3903,
                         "name": "from",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3862,
+                        "referencedDeclaration": 3860,
                         "src": "1041:4:18",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -3848,18 +3848,18 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 3904,
+                      "id": 3902,
                       "name": "StakingUnStaked",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3919,
+                      "referencedDeclaration": 3917,
                       "src": "1025:15:18",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 3906,
+                    "id": 3904,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3875,14 +3875,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3907,
+                  "id": 3905,
                   "nodeType": "EmitStatement",
                   "src": "1020:26:18"
                 }
               ]
             },
             "functionSelector": "1e83409a",
-            "id": 3909,
+            "id": 3907,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -3890,17 +3890,17 @@
             "nameLocation": "732:5:18",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3863,
+              "id": 3861,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3862,
+                  "id": 3860,
                   "mutability": "mutable",
                   "name": "from",
                   "nameLocation": "746:4:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3909,
+                  "scope": 3907,
                   "src": "738:12:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3909,7 +3909,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3861,
+                    "id": 3859,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "738:7:18",
@@ -3925,12 +3925,12 @@
               "src": "737:14:18"
             },
             "returnParameters": {
-              "id": 3864,
+              "id": 3862,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "761:0:18"
             },
-            "scope": 3920,
+            "scope": 3918,
             "src": "723:330:18",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -3939,23 +3939,23 @@
           {
             "anonymous": false,
             "eventSelector": "e5d972642b14bd3ecf400bd751200d8af1e587e1725c8bd5d96564b9f664958b",
-            "id": 3915,
+            "id": 3913,
             "name": "StakingStaked",
             "nameLocation": "1088:13:18",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3914,
+              "id": 3912,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3911,
+                  "id": 3909,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "from",
                   "nameLocation": "1110:4:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3915,
+                  "scope": 3913,
                   "src": "1102:12:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3964,7 +3964,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3910,
+                    "id": 3908,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1102:7:18",
@@ -3978,13 +3978,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3913,
+                  "id": 3911,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "amount",
                   "nameLocation": "1124:6:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3915,
+                  "scope": 3913,
                   "src": "1116:14:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3993,7 +3993,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3912,
+                    "id": 3910,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1116:7:18",
@@ -4012,23 +4012,23 @@
           {
             "anonymous": false,
             "eventSelector": "ef16b1759834bc37bcd5ea73d5d84eb422053cce333dfbec59c881b5f8a4ed55",
-            "id": 3919,
+            "id": 3917,
             "name": "StakingUnStaked",
             "nameLocation": "1143:15:18",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3918,
+              "id": 3916,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3917,
+                  "id": 3915,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "from",
                   "nameLocation": "1167:4:18",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3919,
+                  "scope": 3917,
                   "src": "1159:12:18",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4037,7 +4037,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3916,
+                    "id": 3914,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1159:7:18",
@@ -4055,7 +4055,7 @@
             "src": "1137:36:18"
           }
         ],
-        "scope": 3921,
+        "scope": 3919,
         "src": "112:1063:18",
         "usedErrors": []
       }
@@ -4075,7 +4075,7 @@
     }
   },
   "schemaVersion": "3.4.10",
-  "updatedAt": "2022-10-29T20:51:45.271Z",
+  "updatedAt": "2022-10-29T20:52:41.033Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
