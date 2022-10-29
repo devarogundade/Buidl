@@ -63,6 +63,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
 - Laravel (Backend)
 - Truffle
 - Covalent APIs
+- Google Cloud Firebase
 
 ## Demo
 
