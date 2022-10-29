@@ -23,7 +23,7 @@
                         </div>
                         <p class="instructor"> <img :src="course.creator.image" alt=""> {{ course.creator.name }} </p>
                         <div class="specs">
-                            <p class="last_update"><i class="fa-solid fa-calendar-days"></i> 20 mins ago</p>
+                            <p class="last_update" v-if="course.createdAt"><i class="fa-solid fa-calendar-days"></i> {{ $utils.formatToDate(course.createdAt) }}</p>
                             <p class="languages"><i class="fa-solid fa-globe"></i> English</p>
                         </div>
                     </div>
@@ -86,10 +86,10 @@
                                 <p v-else>0 BDL</p>
                             </div>
 
-                            <div>
+                            <div v-if="course.price">
                                 <p>Total price</p>
                                 <p v-if="selectedNft != null">{{ 0 }} BDL</p>
-                                <p v-else>{{ 0 }} BDL</p>
+                                <p v-else>{{ course.price }} BDL</p>
                             </div>
                         </div>
 
@@ -152,11 +152,21 @@ export default {
             nfts: [],
             selectedNft: null,
             showNfts: false,
+            courseContract: this.$contracts.courseContract,
+            provider: this.$auth.provider
         }
     },
-    mounted() {
+    created() {
         this.getCourse()
         this.getNfts()
+        this.$contracts.initCourseContract(this.provider)
+        $nuxt.$on('course-contract', (contract) => {
+            if (this.courseContract == null && this.course) {
+                this.courseContract = contract
+                this.getCourseContractData()
+            }
+            this.courseContract = contract
+        })
     },
     methods: {
         openAccordion(index) {
@@ -227,6 +237,7 @@ export default {
 
                         this.author = this.course.creator.address.toLowerCase() == this.$auth.accounts[0].toLowerCase()
                         $nuxt.$emit(`course${this.courseId}`, this.course)
+                        this.getCourseContractData()
 
                         return
                     }
@@ -250,6 +261,17 @@ export default {
                     })
                 })
             }
+        },
+        getCourseContractData: async function () {
+            if (this.courseContract == null) return
+            const data = await this.courseContract.courses(this.course.id)
+            this.course.price = Number(data.price)
+            this.course.createdAt = Number(data.createdAt)
+
+            // force re rendering
+            const name = this.course.name
+            this.course.name = ''
+            this.course.name = name
         },
         async getCourseSections() {
 

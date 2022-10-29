@@ -7,7 +7,7 @@
             </div>
             <div class="text">
                 <h3>Get your courses to reach over 3000 learners around the world.</h3>
-                <router-link to="/register">
+                <router-link to="/app/profile">
                     <div class="action">Become a Creator</div>
                 </router-link>
             </div>

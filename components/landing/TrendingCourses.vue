@@ -10,13 +10,13 @@
         <div class="trending">
             <div class="swiper trendSwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide" v-for="course in getValidCourses()" :key="Number(course[0])">
+                    <div class="swiper-slide" v-for="course in courses" :key="course.id">
                         <div class="image">
-                            <img :src="course[4]" alt="">
+                            <img :src="course.photo" alt="">
                         </div>
                         <div class="detail">
-                            <h3 class="course_title">{{ course[1] }}</h3>
-                            <p class="instructor" v-if="course.instructorData"> <img src="/images/nft2.jpg" alt=""> {{ course.instructorData.lastName + ' ' + course.instructorData.firstName }} </p>
+                            <h3 class="course_title">{{ course.name }}</h3>
+                            <p class="instructor" v-if="course.creator"> <img src="/images/nft2.jpg" alt=""> {{ course.creator.name }} </p>
                             <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; • &nbsp; 235 students</p>
                             <p class="price">{{ 0 }} $BDL</p>
                         </div>
@@ -24,8 +24,8 @@
                         <div class="description">
                             <div class="detail">
                                 <p class="price">{{ 0 }} $BDL</p>
-                                <h3 class="course_title">{{ course[1] }}</h3>
-                                <p class="instructor" v-if="course.instructorData"> <img src="/images/nft2.jpg" alt=""> {{ course.instructorData.lastName + ' ' + course.instructorData.firstName }} </p>
+                                <h3 class="course_title">{{ course.name }}</h3>
+                                <p class="instructor" v-if="course.creator"> <img src="/images/nft2.jpg" alt=""> {{ course.creator.name }} </p>
                                 <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; • &nbsp; 235 students</p>
                                 <p class="sections">Sections</p>
                                 <ul>
@@ -35,7 +35,7 @@
                                     <p class="more_sections">+2 sections</p>
                                 </ul>
                                 <div class="action">
-                                    <router-link :to="`/explore/courses/${Number(course[0])}`">
+                                    <router-link :to="`/explore/courses/${course.id}`">
                                         <div class="buy">View Course</div>
                                     </router-link>
                                     <i class="fa-solid fa-heart-circle-plus"></i>
@@ -58,13 +58,21 @@ export default {
             courses: [],
             instructors: [],
             fetching: false,
-            buidlContract: this.$contracts.buidlContract
+            buidlContract: this.$contracts.buidlContract,
+            courseContract: this.$contracts.courseContract,
         }
     },
     created() {
         this.getCourses()
         $nuxt.$on('buidl-contract', (contract) => {
             this.buidlContract = contract
+        })
+        $nuxt.$on('course-contract', (contract) => {
+            if (this.courseContract == null) {
+                this.courseContract = contract
+                this.getCourseContractData()
+            }
+            this.courseContract = contract
         })
     },
     updated() {
@@ -80,7 +88,7 @@ export default {
         });
     },
     methods: {
-        async getCourses() {
+        getCourses: async function () {
             const response = await this.$stream.fetch('course-created')
             if (!response) return
 
@@ -89,16 +97,39 @@ export default {
             if (status) {
                 const courses = response.data.data
                 courses.forEach(course => {
-                    this.getInstructors(course.address)
                     const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
-                    this.courses.push(data)
+                    const creator = this.$utils.decode(['string', 'string', 'address'], course.creator.data)
+                    this.courses.push({
+                        id: Number(data[0]),
+                        name: data[1],
+                        description: data[2],
+                        category: Number(data[3]),
+                        photo: data[4],
+                        preview: data[5],
+                        address: data[6],
+                        creator: {
+                            name: creator[0],
+                            image: creator[1],
+                            address: creator[2]
+                        }
+                    })
+                    this.getCourseContractData()
                 })
-
             }
             this.fetching = false
         },
-        getValidCourses() {
-            return this.courses.filter(course => Number(course[0]) != 0)
+        getCourseContractData: async function () {
+            // this.courses.forEach(course => {
+            //     if (this.courseContract == null) return
+            //     const data = await this.courseContract.courses(course.id)
+            //     course.price = Number(data.price)
+            //     course.createdAt = Number(data.createdAt)
+
+            //     // force re rendering
+            //     const name = course.name
+            //     course.name = ''
+            //     course.name = name
+            // })
         },
     }
 }

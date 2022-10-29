@@ -1,14 +1,12 @@
 <template>
-<section id="bdl-token">
+<section id="bdl-nft">
     <div class="app-width">
         <div class="token">
-            <h3>Tokenomics</h3>
-            <p class="desc">The total supply of BDL is 10,000,000,000 tokens, all minted at once. BDL Tokens will be distributed among 4 main groups:</p>
+            <h3>Buidl Monkey NFT</h3>
+            <p class="desc">The Buidl Monkey NFT serves as a coupon(discount) on premium contents, each nft has a weight property which ranges from 0 ~ 50, this weight property is the percentage of the nft discount.</p>
 
-            <div class="action">
-                <router-link to="/mint">
-                    <div class="mint">$BDL Faucet</div>
-                </router-link>
+            <div class="images">
+                <img v-for="index in 4" :key="index" :src="`/images/nft${index}.jpg`" class="scaleable" alt="">
             </div>
         </div>
     </div>
@@ -44,23 +42,20 @@ section h3 {
     line-height: 26px;
 }
 
-.action {
+.images {
     display: flex;
     justify-content: center;
-    margin-top: 60px;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+    flex-wrap: wrap;
 }
 
-.mint {
-    height: 50px;
-    width: 180px;
+.images img {
+    width: 100px;
+    height: 140px;
     border-radius: 10px;
-    background: #0177fb;
-    font-size: 16px;
-    color: #FFFFFF;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    object-fit: cover;
 }
 
 @media screen and (max-width: 700px) {

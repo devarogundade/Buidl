@@ -2,7 +2,7 @@
 <section id="bdl-token">
     <div class="app-width">
         <div class="token">
-            <h3>Tokenomics</h3>
+            <h3>Buidl Tokenomics</h3>
             <p class="desc">The total supply of BDL is 10,000,000,000 tokens, all minted at once. BDL Tokens will be distributed among 4 main groups:</p>
 
             <div class="action">

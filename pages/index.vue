@@ -4,7 +4,8 @@
     <TrendingCourses />
     <Features />
     <Faq />
-    <BecomeInstructor />
+    <BdlNft />
+    <BecomeCreator />
     <BdlToken />
     <BuidlRoadmap />
 </div>
