@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
-const fireStore = require('firestore.js')
-const decoder = require('decode.js')
+const fireStore = require('./firestore.js')
+const decoder = require('./decode.js')
 
 app.use(express.json())
 

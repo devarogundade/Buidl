@@ -1,6 +1,6 @@
 const { initializeApp, cert } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
-const serviceAccount = require('buidl-a1411-4baccd805ed5.json');
+const serviceAccount = require('./buidl-a1411-4baccd805ed5.json');
 
 initializeApp({ credential: cert(serviceAccount) });
 
