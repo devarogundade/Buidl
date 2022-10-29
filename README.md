@@ -63,7 +63,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
 - IPFS (File System)
 - Solidity (Smart Contract)
 - Nuxtjs (Frontend)
-- Laravel (Backend)
+- Nodejs (Backend)
 - Truffle
 - Covalent APIs
 - Google Cloud Firebase
