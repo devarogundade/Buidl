@@ -1,1 +1,1 @@
-web: node moralis-stream-api/index.js
+web: npm start
