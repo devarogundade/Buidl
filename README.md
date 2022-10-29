@@ -78,19 +78,6 @@ We have heavily used moralis stream and smart contract events, which has helped 
 ## Roadmap
    https://buidl.netlify.app/#roadmap
 
-## Plugins
-
-| Plugin | Installation |
-| ------ | ------ |
-| Axios | npm i axios |
-| Tiny Rich Text Editor |  |
-| HD Wallet Provider |  |
-| Coinbase SDK |  |
-| Walletconnect SDK |  |
-| Truffle Contract |  |
-| CryptoJs |  |
-| Openzepllin |  |
-
 ## Contribution
 
 Want to contribute? Great!
