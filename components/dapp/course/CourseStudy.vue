@@ -48,12 +48,12 @@ export default {
             sections: [],
             swiper: null,
             user: this.$contracts.user,
-            nfts: []
+            nfts: [],
         };
     },
     mounted() {
-        this.getCourse()
-        this.getCourseSections()
+        this.getCourse();
+        this.getCourseSections();
 
         $nuxt.$on("user", (user) => {
             this.user = user;
@@ -77,34 +77,14 @@ export default {
             if (this.swiper == null) return;
             this.swiper.slideNext();
         },
-        onComplete: async function () {
-
-        },
+        onComplete: async function () {},
         async getCourse() {
-            const response = await this.$stream.fetch('course-created')
-            if (!response) return
-
-            const status = response.status
-
-            if (status) {
-                const courses = response.data.data
-                courses.forEach(course => {
-                    const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
-                    if (Number(data[0] == this.courseId)) {
-                        this.course = data
-                        $nuxt.$emit(`course${this.courseId}`, data)
-                        return
-                    }
-                })
-            }
-
-            this.fetching = false
+            this.course = await this.$firestore.fetch("courses", this.courseId);
+            $nuxt.$emit(`course${this.courseId}`, this.course);
+            this.fetching = false;
         },
         async getCourseSections() {
-            this.sections = [{
-              title: 'Introduction',
-              content: '<b>Hello</b>'
-            }]
+            this.sections = await this.$firestore.fetch("course-sections", this.courseId);
         },
     },
 };

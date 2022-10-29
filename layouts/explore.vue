@@ -16,7 +16,8 @@ export default {
     data() {
         return {
             wcState: 'hide',
-            cpState: 'hide'
+            cpState: 'hide',
+            provider: this.$auth.provider
         }
     },
     async mounted() {
@@ -36,7 +37,9 @@ export default {
             this.cpState = 'hide'
         })
 
-        await this.$auth.checkAuth()
+        this.$auth.checkAuth()
+        this.$contracts.initCourseContract(this.provider)
+        this.$contracts.initBuidlContract(this.provider)
     }
 }
 </script>

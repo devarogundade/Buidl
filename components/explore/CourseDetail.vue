@@ -145,38 +145,35 @@ export default {
             courseId: this.$route.params.course,
             course: null,
             sections: [],
-            categories: [],
-            notFound: false,
-            bought: false,
+            category: null,
+            subscription: null,
             author: false,
             nfts: [],
             selectedNft: null,
             showNfts: false,
             courseContract: this.$contracts.courseContract,
-            buidlContract: this.$contracts.buidlContract,
-            provider: this.$auth.provider
+            buidlContract: this.$contracts.buidlContract
         }
     },
     created() {
-        this.getCourse()
         this.getNfts()
+        this.course = await this.$firestore.fetch("courses", this.courseId);
+        $nuxt.$emit(`course${this.courseId}`, this.course);
+        this.fetching = false;
 
-        this.$contracts.initCourseContract(this.provider)
-        this.$contracts.initBuidlContract(this.provider)
+        this.subscription = await this.$firestore.fetchFromPath(`subscription/${this.$auth.accounts[0]}/${this.courseId})`);
+        this.category = await this.$firestore.fetch("categories", this.course.category);
+        this.sections = await this.$firestore.fetch("course-sections", this.courseId);
 
         $nuxt.$on('course-contract', (contract) => {
             this.buidlContract = contract
         })
         $nuxt.$on('course-contract', (contract) => {
-            if (this.courseContract == null && this.course) {
-                this.courseContract = contract
-                this.getCourseContractData()
-            }
             this.courseContract = contract
         })
     },
     methods: {
-        openAccordion(index) {
+        openAccordion: function (index) {
             if (this.selectedSection == index) {
                 this.selectedSection = -1
             } else {
@@ -198,7 +195,7 @@ export default {
             }
             return JSON.parse(json);
         },
-        calcDiscount(index) {
+        calcDiscount: function (index) {
             const weight = this.toJson(this.nfts[index].metadata).attributes[0].value
             return (weight / 100) * this.course.price.toNumber()
         },
@@ -215,74 +212,6 @@ export default {
             const nfts = await this.$nft.getUserNfts(this.$auth.accounts[0])
             this.nfts = nfts.result
         },
-        async getCourse() {
-            const response = await this.$stream.fetch('course-created')
-            if (!response) return
-
-            const status = response.status
-
-            if (status) {
-                const courses = response.data.data
-                courses.forEach(course => {
-                    const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
-                    const creator = this.$utils.decode(['string', 'string', 'address'], course.creator.data)
-                    if (Number(data[0] == this.courseId)) {
-                        this.course = {
-                            id: Number(data[0]),
-                            name: data[1],
-                            description: data[2],
-                            category: Number(data[3]),
-                            photo: data[4],
-                            preview: data[5],
-                            address: data[6],
-                            creator: {
-                                name: creator[0],
-                                image: creator[1],
-                                address: creator[2]
-                            }
-                        }
-
-                        this.author = this.course.creator.address.toLowerCase() == this.$auth.accounts[0].toLowerCase()
-                        $nuxt.$emit(`course${this.courseId}`, this.course)
-                        this.getCourseContractData()
-
-                        return
-                    }
-                })
-            }
-        },
-        async getCategories() {
-            const response = await this.$stream.fetch('create-category')
-            if (!response) return
-
-            const status = response.status
-
-            if (status) {
-                const categories = response.data.data
-                categories.forEach(category => {
-                    const data = this.$utils.decode(['uint256', 'string', 'string'], category.data)
-                    this.categories.push({
-                        id: Number(data[0]),
-                        name: data[1],
-                        photo: data[2]
-                    })
-                })
-            }
-        },
-        getCourseContractData: async function () {
-            if (this.courseContract == null) return
-            const data = await this.courseContract.courses(this.course.id)
-            this.course.price = Number(data.price)
-            this.course.createdAt = Number(data.createdAt)
-
-            // force re rendering
-            const name = this.course.name
-            this.course.name = ''
-            this.course.name = name
-        },
-        async getCourseSections() {
-
-        },
         buyCourse: async function () {
             if (this.buidlContract == null) return
 
@@ -293,7 +222,7 @@ export default {
                     from: this.$auth.accounts[0]
                 })
             } catch (error) {
-              console.log(error);
+                console.log(error);
             }
         }
     }

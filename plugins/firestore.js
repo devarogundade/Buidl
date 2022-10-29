@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, getDocs, doc, setDoc, getDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAN_Oc0Wz5TXJFdZK__bs5sVUAm6WBzJhY",
@@ -21,14 +21,37 @@ export default ({}, inject) => {
         db: getFirestore(firebaseApp),
         fetchAll: async function(_collection) {
             const result = []
-            const query = await getDocs(collection(this.db, _collection))
-            query.forEach(document => {
+            const snapshot = await getDocs(collection(this.db, _collection))
+
+            snapshot.forEach(document => {
                 result.push(document.data())
             });
+
+            return result
+        },
+        fetchAllWhere: async function(_collection, key, sign, value) {
+            const result = []
+            const _query = query(collection(this.db, _collection), where(key, sign, value));
+            const snapshot = await getDocs(_query)
+
+            snapshot.forEach(document => {
+                result.push(document.data())
+            });
+
             return result
         },
         fetch: async function(_collection, _document) {
             const reference = doc(this.db, _collection, _document);
+            const data = await getDoc(reference);
+
+            if (data.exists()) {
+                return data.data()
+            } else {
+                return null
+            }
+        },
+        fetchFromPath: async function(_path) {
+            const reference = doc(this.db, _path);
             const data = await getDoc(reference);
 
             if (data.exists()) {

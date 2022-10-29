@@ -8,9 +8,9 @@ export default ({ app }, inject) => {
         accounts: [],
         lastProviderName: '',
 
-        checkAuth: async function() {
+        checkAuth: async function(prompt = true) {
             this.lastProviderName = this.getLastProviderName()
-            if (this.lastProviderName != '') {
+            if (this.lastProviderName != '' && prompt) {
                 await this.connectWallet(this.lastProviderName)
             }
         },
