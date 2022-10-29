@@ -1,1 +1,1 @@
-web: node stream/index.js
+web: node moralis-stream-api/index.js
