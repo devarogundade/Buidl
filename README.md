@@ -30,6 +30,9 @@ We have heavily used moralis stream and smart contract events, which has helped 
     Protecting videos online is not 100% achievable, as it can still be recorded from the device's screen.
     The Buidl Video Player is a product we have added on your roadmap, which simplify authenticates users with their wallet and s
 
+## Revenue Model
+- We charge a 5% commission from every earnings from the creators.
+
 ## Supported Media Types
   In this hackathon scope the platfoem only supports video contents.
 
@@ -63,39 +66,17 @@ We have heavily used moralis stream and smart contract events, which has helped 
 - Laravel (Backend)
 - Truffle
 - Covalent APIs
+- Google Cloud Firebase
 
 ## Demo
 
 - See mode at https://buidl.netflify.app/
 - Buidl Token Faucet https://buidl.netlify.app/mint
 
-To see demo locally, clone the repo.
-
-```sh
-cd buidl
-npm install
-truffle migrate --network=development
-npm run dev
-http://localhost:3000/
-```
-
 ## Screenshots
 
 ## Roadmap
    https://buidl.netlify.app/#roadmap
-
-## Plugins
-
-| Plugin | Installation |
-| ------ | ------ |
-| Axios | npm i axios |
-| Tiny Rich Text Editor |  |
-| HD Wallet Provider |  |
-| Coinbase SDK |  |
-| Walletconnect SDK |  |
-| Truffle Contract |  |
-| CryptoJs |  |
-| Openzepllin |  |
 
 ## Contribution
 
