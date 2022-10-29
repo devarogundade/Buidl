@@ -153,13 +153,20 @@ export default {
             selectedNft: null,
             showNfts: false,
             courseContract: this.$contracts.courseContract,
+            buidlContract: this.$contracts.buidlContract,
             provider: this.$auth.provider
         }
     },
     created() {
         this.getCourse()
         this.getNfts()
+
         this.$contracts.initCourseContract(this.provider)
+        this.$contracts.initBuidlContract(this.provider)
+
+        $nuxt.$on('course-contract', (contract) => {
+            this.buidlContract = contract
+        })
         $nuxt.$on('course-contract', (contract) => {
             if (this.courseContract == null && this.course) {
                 this.courseContract = contract
@@ -276,7 +283,19 @@ export default {
         async getCourseSections() {
 
         },
-        async buyCourse() {}
+        buyCourse: async function () {
+            if (this.buidlContract == null) return
+
+            console.log(this.buidlContract);
+
+            try {
+                const trx = await this.buidlContract.subscribe(this.courseId, this.$auth.accounts[0], {
+                    from: this.$auth.accounts[0]
+                })
+            } catch (error) {
+              console.log(error);
+            }
+        }
     }
 };
 </script>

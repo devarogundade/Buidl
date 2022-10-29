@@ -1,40 +1,42 @@
 <template>
-<div class="nav" v-if="user">
+<div class="nav">
     <div class="items">
-        <router-link :to="`/app/course-builder/${$route.params.course}`">
+        <router-link v-show="$route.name.includes('app-course-builder')" :to="`/app/course-builder/${$route.params.course}`">
             <div :class="$route.name == 'app-course-builder-course' ? 'item active' : 'item'">
                 <i class="fa-solid fa-pen-to-square"></i>
                 <p>Edit Course</p>
             </div>
         </router-link>
-        <router-link :to="`/app/courses/${$route.params.course}`">
+
+        <router-link v-show="$route.name.includes('app-courses-course')" :to="`/app/courses/${$route.params.course}`">
             <div :class="$route.name == 'app-courses-course' ? 'item active' : 'item'">
                 <i class="fa-solid fa-chart-pie"></i>
                 <p>Study</p>
             </div>
         </router-link>
 
-        <router-link :to="`/app/course-builder/${$route.params.course}/chat`">
+        <router-link v-show="$route.name.includes('app-course-builder')" :to="`/app/course-builder/${$route.params.course}/chat`">
             <div :class="$route.name == 'app-course-builder-course-chat' ? 'item active' : 'item'">
                 <i class="fa-solid fa-comments"></i>
-                <p>Students</p>
+                <p>Subscribers</p>
             </div>
         </router-link>
-        <router-link :to="`/app/courses/${$route.params.course}/chat`">
+
+        <router-link v-show="$route.name.includes('app-courses-course')"  :to="`/app/courses/${$route.params.course}/chat`">
             <div :class="$route.name == 'app-courses-course-chat' ? 'item active' : 'item'">
                 <i class="fa-solid fa-comments"></i>
                 <p>Chat Instructor</p>
             </div>
         </router-link>
 
-        <router-link :to="`/app/courses/${$route.params.course}/goals`">
+        <router-link v-show="$route.name.includes('app-courses-course')" :to="`/app/courses/${$route.params.course}/goals`">
             <div :class="$route.name == 'app-courses-course-goals' ? 'item active' : 'item'">
                 <i class="fa-solid fa-road"></i>
                 <p>Timeline</p>
             </div>
         </router-link>
 
-        <router-link :to=" `/app/course-builder/${$route.params.course}/settings`">
+        <router-link v-show="$route.name.includes('app-course-builder')" :to=" `/app/course-builder/${$route.params.course}/settings`">
             <div :class="$route.name == 'app-course-builder-course-settings' ? 'item active' : 'item'">
                 <i class="fa-solid fa-gear"></i>
                 <p>Settings</p>
@@ -49,16 +51,13 @@ export default {
     data() {
         return {
             tab: 1,
-            user: this.$contracts.user
         }
     },
     mounted() {
         $nuxt.$on('dapp-tab', (tab) => {
             this.tab = tab
         })
-        $nuxt.$on('user', (user) => {
-            this.user = user
-        })
+        console.log(this.$route);
     }
 }
 </script>

@@ -81,10 +81,30 @@ export default {
 
         },
         async getCourse() {
+            const response = await this.$stream.fetch('course-created')
+            if (!response) return
 
+            const status = response.status
+
+            if (status) {
+                const courses = response.data.data
+                courses.forEach(course => {
+                    const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
+                    if (Number(data[0] == this.courseId)) {
+                        this.course = data
+                        $nuxt.$emit(`course${this.courseId}`, data)
+                        return
+                    }
+                })
+            }
+
+            this.fetching = false
         },
         async getCourseSections() {
-           
+            this.sections = [{
+              title: 'Introduction',
+              content: '<b>Hello</b>'
+            }]
         },
     },
 };

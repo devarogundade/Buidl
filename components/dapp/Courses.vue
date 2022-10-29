@@ -8,12 +8,12 @@
     </div>
 
     <div class="courses" v-show="(courses.length > 0) && !fetching && tab == 1">
-        <router-link :to="`/app/courses/${Number(course[0])}`" v-for="(course, index) in courses" :key="index">
+        <router-link :to="`/app/courses/${course.id}`" v-for="(course, index) in courses" :key="index">
             <div class="course scaleable">
                 <div class="detail">
-                    <img :src="course[4]" alt="">
-                    <h3>{{ course[1] }}</h3>
-                    <p>{{ course[2] }}</p>
+                    <img :src="course.photo" alt="">
+                    <h3>{{ course.name }}</h3>
+                    <p>{{ course.description }}</p>
                 </div>
             </div>
         </router-link>
@@ -84,17 +84,26 @@ export default {
             tab: 1,
             user: null,
             buidlContract: this.$contracts.buidlContract,
+            courseContract: this.$contracts.courseContract,
             provider: this.$auth.provider,
         }
     },
     created() {
         this.$contracts.initBuidlContract(this.provider)
         this.$contracts.initCourseContract(this.provider)
+
         $nuxt.$on('buidl-contract', (contract) => {
             if (this.buidlContract == null) {
                 this.buidlContract = contract
                 this.getUser()
             }
+            this.buidlContract = contract
+        })
+        $nuxt.$on('course-contract', (contract) => {
+            if (this.courseContract == null) {
+                this.courseContract = contract
+            }
+            this.courseContract = contract
         })
 
         this.getCourses()
@@ -103,6 +112,33 @@ export default {
     },
     methods: {
         getCourses: async function () {
+            const response = await this.$stream.fetch('course-created')
+            if (!response) return
+
+            const status = response.status
+
+            if (status) {
+                const courses = response.data.data
+                courses.forEach(course => {
+                    const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
+                    const creator = this.$utils.decode(['string', 'string', 'address'], course.creator.data)
+
+                    this.courses.push({
+                        id: Number(data[0]),
+                        name: data[1],
+                        description: data[2],
+                        category: Number(data[3]),
+                        photo: data[4],
+                        preview: data[5],
+                        address: data[6],
+                        creator: {
+                            name: creator[0],
+                            image: creator[1],
+                        }
+                    })
+                })
+
+            }
             this.fetching = false
         },
         getCreatedCourses: async function () {

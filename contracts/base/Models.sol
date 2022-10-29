@@ -24,6 +24,7 @@ contract Models {
         uint time; // time of subscription
         uint price; // price of subscription at the time of subscription
         address owner; // owner of subscription (learner)
+        uint[] viewed; // sections of the course consumed
     }
 
     struct Revenue {

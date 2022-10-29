@@ -25,18 +25,6 @@ contract BdlCourse {
 
     constructor() {
         deployer = msg.sender;
-
-        // initial categories
-        createCategory("Web Developent", "web-development.webp");
-        createCategory("Gaming", "gaming.webp");
-        createCategory("Cooking", "cooking.webp");
-        createCategory("Animation", "animation.webp");
-        createCategory("Marketing", "marketing.webp");
-        createCategory("Data Science", "data-science.webp");
-        createCategory("Photography", "photography.webp");
-        createCategory("Music", "music.webp");
-        createCategory("Speaking", "speaking.webp");
-        createCategory("UI/UX Designing", "ui-ux.webp");
     }
 
     // == learner related functions == //
@@ -84,6 +72,20 @@ contract BdlCourse {
     }
 
     // == creator related functions == //
+
+    // testing purpose
+    function mintCategories() public onlyOwner {
+        createCategory("Web Developent", "web-development.webp");
+        createCategory("Gaming", "gaming.webp");
+        createCategory("Cooking", "cooking.webp");
+        createCategory("Animation", "animation.webp");
+        createCategory("Marketing", "marketing.webp");
+        createCategory("Data Science", "data-science.webp");
+        createCategory("Photography", "photography.webp");
+        createCategory("Music", "music.webp");
+        createCategory("Speaking", "speaking.webp");
+        createCategory("UI/UX Designing", "ui-ux.webp");
+    }
 
     function createCategory(string memory name, string memory image)
         public

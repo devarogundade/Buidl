@@ -63,6 +63,7 @@ export default {
     mounted() {
         this.getCourse()
         this.getCourseSections()
+        this.addSection()
     },
     methods: {
         addSection() {

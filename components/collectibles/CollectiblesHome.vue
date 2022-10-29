@@ -38,29 +38,34 @@
         <div class="items" v-show="tab == 2">
             <div class="item" v-for="index in 4" :key="index">
                 <div class="image">
-                    <img :src="`/images/nft${index}.jpg`" alt="" />
+                    <embed src="/documents/certificate.pdf" alt="" class="embed" />
                 </div>
-                <div class="creator">
-                    <div class="profile">
-                        <img src="/images/nft1.jpg" alt="" />
-                        <div class="name">
-                            <p>Laura</p>
-                            <p>0.32 BDL</p>
-                        </div>
-                    </div>
-                    <div class="stat">
-                        <p>MarketCap</p>
-                        <p class="price">$3,490 <span>+0.5%</span></p>
-                    </div>
-                </div>
-                <div class="action">
-                    <div class="stake">Save <i class="fa-solid fa-download"></i></div>
+                <div class="certificate">
+                    <ul>
+                        <li>
+                            <i class="fa-solid fa-hashtag"></i>
+                            <a href="" target="_blank">
+                                <p>0x94884730909482...</p>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
 
         <div class="items" v-show="tab == 3">
-            <div class="item" v-for="(nft, index) in nfts" :key="index">
+            <div class="explain" v-show="(nfts.length == 0) && !fetching3">
+                <h3>What's Buidl NFT?</h3>
+                <p>
+                    <b>Buidl Monkey NFT</b> serves as a coupon(discount) on premium contents, each nft has a weight property which ranges
+                    from 0 ~ 50, this weight property is the percentage of the nft discount.
+                </p>
+                <div class="action">
+                    Click on the <i class="fa-solid fa-plus"></i> button to create your first course.
+                </div>
+            </div>
+
+            <div class="item" v-show="nfts.length > 0" v-for="(nft, index) in nfts" :key="index">
                 <div class="image">
                     <img :src="toJson(nft.metadata).image" alt="" />
                 </div>
@@ -94,7 +99,10 @@ export default {
         return {
             tab: 1,
             nfts: [],
-            token: null
+            token: null,
+            fetching1: true,
+            fetching2: true,
+            fetching3: true
         };
     },
     created() {
@@ -106,6 +114,7 @@ export default {
             if (this.$auth.accounts == null) return
             const nfts = await this.$nft.getUserNfts(this.$auth.accounts[0]);
             this.nfts = nfts.result;
+            this.fetching3 = false
         },
         toJson: function (json) {
             if (json == null) {
@@ -128,6 +137,7 @@ export default {
             if (token.length > 0) {
                 this.token = token[0]
             }
+            this.fetching1 = false
         }
     }
 };
@@ -137,6 +147,50 @@ export default {
 .container {
     padding-top: 120px;
     padding-bottom: 50px;
+}
+
+.explain {
+    border-radius: 30px;
+    max-width: 90%;
+    width: 400px;
+    background: #23242F;
+    position: absolute;
+    left: 60%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 24px;
+    color: #FFFFFF;
+    padding: 30px;
+    position: absolute;
+}
+
+.explain h3 {
+    font-size: 30px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.explain p {
+    margin-top: 20px;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.explain .action {
+    margin-top: 40px;
+    background: #0177fb;
+    padding: 8px 10px;
+    border-radius: 16px;
+    line-height: 24px;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.action i {
+    padding: 4px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    color: #0177fb;
 }
 
 .nfts {
@@ -321,6 +375,30 @@ export default {
     height: 70px;
     border-radius: 40px;
     object-fit: cover;
+}
+
+.embed {
+    height: 100%;
+    width: 100%;
+}
+
+.certificate {
+    padding: 20px;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+li i {
+    color: #FFFFFF;
+}
+
+li a {
+    color: #0177fb;
+    text-decoration: underline;
 }
 
 @media screen and (max-width: 700px) {

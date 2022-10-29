@@ -41,7 +41,8 @@
             <p>1 BDL = 1 sBDL</p>
         </div>
 
-        <div class="confirm" v-on:click="stake()">Stake</div>
+        <div class="confirm enabled" v-if="to.balance != '' && to.balance > 0" v-on:click="stake()">{{ staking ? 'Staking..' : 'Stake' }}</div>
+        <div class="confirm" v-else>Stake</div>
         <p class="confirm_desc">Enter an amount to stake and click "Stake"</p>
     </div>
 </div>
@@ -65,7 +66,8 @@ export default {
             },
             token: null,
             buidlContract: this.$contracts.buidlContract,
-            provider: this.$auth.provider
+            provider: this.$auth.provider,
+            staking: false
         }
     },
     created() {
@@ -90,6 +92,8 @@ export default {
         stake: async function () {
             if (this.buidlContract == null) return
 
+            this.staking = true
+
             try {
                 const trx = await this.buidlContract.unlockCreator({
                     from: this.$auth.accounts[0]
@@ -98,6 +102,7 @@ export default {
 
             }
 
+            this.staking = false
         }
     }
 }
@@ -251,5 +256,11 @@ input[type=number] {
     font-size: 16px;
     color: #8B8CA7;
     margin-top: 10px;
+}
+
+.enabled {
+    background: #0177fb;
+    cursor: pointer;
+    color: #FFFFFF;
 }
 </style>

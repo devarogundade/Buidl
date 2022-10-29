@@ -48,7 +48,7 @@ export default {
     plugins: [
         '@/plugins/utils.js',
         '@/plugins/auth.js',
-        '@/plugins/chat.js',
+        '@/plugins/firestore.js',
         '@/plugins/contracts.js',
         '@/plugins/moralis-apis/ipfs.js',
         '@/plugins/moralis-apis/nft.js',
