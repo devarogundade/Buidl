@@ -17,6 +17,7 @@ contract Models {
         uint256 price;
         uint createdAt;
         uint updatedAt;
+        uint sections;
     }
 
     struct Subscription {
@@ -25,6 +26,7 @@ contract Models {
         uint price; // price of subscription at the time of subscription
         address owner; // owner of subscription (learner)
         uint[] viewed; // sections of the course consumed
+        uint sections; // sections of the course at the time of purchase
     }
 
     struct Revenue {

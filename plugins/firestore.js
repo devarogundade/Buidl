@@ -19,13 +19,23 @@ const analytics = getAnalytics(firebaseApp);
 export default ({}, inject) => {
     inject('firestore', Vue.observable({
         db: getFirestore(firebaseApp),
-        fetchAll: async function(collection) {
+        fetchAll: async function(_collection) {
             const result = []
-            const query = getDocs(collection(this.db, collection))
+            const query = await getDocs(collection(this.db, _collection))
             query.forEach(document => {
                 result.push(document.data())
             });
             return result
+        },
+        fetch: async function(_collection, _document) {
+            const reference = doc(this.db, _collection, _document);
+            const data = await getDoc(reference);
+
+            if (data.exists()) {
+                return data.data()
+            } else {
+                return null
+            }
         },
     }))
 }

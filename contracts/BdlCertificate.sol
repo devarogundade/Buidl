@@ -35,10 +35,10 @@ contract BdlCertificate is ERC4973 {
         emit Revoke(address(0), certificateId);
     }
 
-    function issue(address student, string calldata uri) external {
-        _mint(student, certificateID, uri);
+    function issue(address learner, string calldata uri) external {
+        _mint(learner, certificateID, uri);
 
-        emit Attest(student, certificateID);
+        emit Attest(learner, certificateID);
         certificateID++;
     }
 

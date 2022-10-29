@@ -39,13 +39,22 @@ contract BdlCourse {
         require(course.id != 0, "!exists");
         require(course.creator != learner, "!can_subscribe_to_own_course");
 
+        uint[] memory viewed;
+
         subscriptions[id].push(
-            Models.Subscription(id, block.timestamp, course.price, learner)
+            Models.Subscription(
+                id,
+                block.timestamp,
+                course.price,
+                learner,
+                viewed,
+                course.sections
+            )
         );
 
         subscribeds[learner].push(id);
 
-        emit CourseSubscribe(id, course.creator, learner);
+        emit Subscription(id, learner, true);
         return (course.price, course.creator);
     }
 
@@ -54,7 +63,7 @@ contract BdlCourse {
         uint id,
         uint sId,
         address learner
-    ) external returns (uint256, address) {
+    ) external returns (uint256, address, uint) {
         Models.Subscription memory subscription = subscriptions[id][sId];
         Models.Course memory course = courses[id];
 
@@ -64,11 +73,13 @@ contract BdlCourse {
         uint dueTime = (block.timestamp + refundableDuration);
         require(subscription.time < dueTime, ">2weeks");
 
+        uint weight = (subscription.viewed.length / subscription.sections);
+
         delete subscriptions[id][sId];
         delete subscribeds[learner][id];
 
-        emit CourseUnSubscribe(id, sId, learner);
-        return (subscription.price, course.creator);
+        emit Subscription(id, learner, false);
+        return (subscription.price, course.creator, weight);
     }
 
     // == creator related functions == //
@@ -92,7 +103,7 @@ contract BdlCourse {
         onlyOwner
     {
         categoryCount++;
-        emit CourseCategoryCreated(categoryCount, name, image);
+        emit Category(categoryCount, name, image);
     }
 
     /* create a new course */
@@ -100,7 +111,6 @@ contract BdlCourse {
         uint id,
         uint category,
         uint256 price,
-        address creator,
         /* course metadata */
         string memory name,
         string memory description,
@@ -112,43 +122,60 @@ contract BdlCourse {
         courses[id] = Models.Course(
             id,
             category,
-            creator,
+            msg.sender,
             price,
             block.timestamp,
-            block.timestamp
+            block.timestamp,
+            courses[id].sections
         );
 
-        createdCourses[creator].push(id);
+        createdCourses[msg.sender].push(id);
 
-        emit CourseCreated(
+        emit Course(
             id,
             name,
             description,
             category,
             thumbnail,
             previewSrc,
-            creator
+            msg.sender,
+            price,
+            block.timestamp
         );
     }
 
-    /* updates an existing course */
+    /* updates existing course */
     function updateCourse(
         uint id,
         uint category,
-        address creator,
-        uint256 price
+        uint256 price,
+        /* course metadata */
+        string memory name,
+        string memory description,
+        string memory thumbnail,
+        string memory previewSrc
     ) external {
-        Models.Course memory course = courses[id];
-
-        require(course.id != 0, "!exists");
-        require(course.creator == creator, "!authorized");
+        require(courses[id].creator == msg.sender, "!unathorized");
 
         courses[id] = Models.Course(
             id,
             category,
-            creator,
+            msg.sender,
             price,
-            course.createdAt,
+            courses[id].createdAt,
+            block.timestamp,
+            courses[id].sections
+        );
+
+        emit Course(
+            id,
+            name,
+            description,
+            category,
+            thumbnail,
+            previewSrc,
+            msg.sender,
+            price,
             block.timestamp
         );
     }
@@ -160,7 +187,9 @@ contract BdlCourse {
         string memory content,
         string memory src
     ) public {
-        emit CourseSectionCreates(id, title, content, src);
+        require(courses[id].creator == msg.sender, "!unathorized");
+        courses[id].sections++;
+        emit CourseSection(id, title, content, src);
     }
 
     /* transfer course onwership */
@@ -179,25 +208,21 @@ contract BdlCourse {
     }
 
     // == events == //
-    event CourseSubscribe(uint id, address creator, address learner);
-    event CourseUnSubscribe(uint id, uint sId, address learner);
+    event Subscription(uint courseId, address learner, bool status);
     event CourseTransfer(uint id, address creator, address receiver);
-    event CourseCategoryCreated(uint id, string name, string image);
-    event CourseCreated(
+    event Category(uint id, string name, string image);
+    event Course(
         uint id,
         string name,
         string description,
         uint category,
         string thumbnail,
         string previewSrc,
-        address creator
+        address creator,
+        uint256 price,
+        uint updatedAt
     );
-    event CourseSectionCreates(
-        uint id,
-        string title,
-        string content,
-        string src
-    );
+    event CourseSection(uint id, string title, string content, string src);
 
     // == modifiers == //
     modifier onlyOwner() {

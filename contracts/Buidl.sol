@@ -48,21 +48,33 @@ contract Buidl {
     }
 
     /* creates user metadata */
-    function createAccount(string memory name, string memory photo) public {
-        emit CreateAccount(name, photo, msg.sender);
+    function setAccount(string memory name, string memory photo) public {
+        emit User(msg.sender, name, photo, users[msg.sender].verified);
+    }
+
+    /* stake in the smart contract */
+    function stake(uint256 amount) public {
+        _bdlToken.approve(msg.sender, address(this), amount);
+        _bdlToken.transferFrom(msg.sender, address(this), amount);
+        _staking.stake(msg.sender, amount, creatorStakingDuration, 0);
     }
 
     /* unlock creator */
     function unlockCreator() public notVerified {
-        _bdlToken.approve(msg.sender, address(this), creatorStakingFee);
-        _bdlToken.transferFrom(msg.sender, address(this), creatorStakingFee);
-        _staking.stake(
-            msg.sender,
-            creatorStakingFee,
-            creatorStakingDuration,
-            0 /* no reward for creator's account staking */
+        // check if user has staked min requirement
+        require(
+            _staking.hasStaked(creatorStakingFee, msg.sender),
+            "!stake_requirement_first"
         );
+
         users[msg.sender].verified = true;
+        emit Creator(msg.sender, true);
+    }
+
+    /* remove creator */
+    function removeCreator() public notVerified {
+        users[msg.sender].verified = false;
+        emit Creator(msg.sender, false);
     }
 
     /* subscribe to a course */
@@ -85,10 +97,9 @@ contract Buidl {
     /* params course id, subscription id, refundable percentage */
     function unSubscribe(
         uint id,
-        uint sId,
-        uint weight
+        uint sId
     ) public {
-        (uint256 price, address creator) = _bdlCourse.unSubscribe(
+        (uint256 price, address creator, uint weight) = _bdlCourse.unSubscribe(
             id,
             sId,
             msg.sender
@@ -120,5 +131,6 @@ contract Buidl {
     }
 
     // == events == //
-    event CreateAccount(string name, string photo, address owner);
+    event User(address owner, string name, string photo, bool verified);
+    event Creator(address owner, bool verified);
 }

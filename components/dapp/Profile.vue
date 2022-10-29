@@ -97,23 +97,19 @@ export default {
         }
     },
     async created() {
-        this.$contracts.initBuidlContract(this.provider)
+        this.$contracts.initBuidlContract()
         $nuxt.$on('buidl-contract', (contract) => {
             this.buidlContract = contract
         })
-
-        const response = await this.$stream.creatorAccount(this.$auth.accounts[0])
-        if (!response || !response.data) return
-
-        const user = this.$utils.decode(['string', 'string', 'address'], response.data.data)
-        this.user = {
-            name: user[0],
-            bio: user[0],
-            photo: user[1],
-            about: user[0],
-            address: user[3]
+        if (this.$auth.accounts.length == 0) {
+            this.fetching = false
+            return
         }
 
+        const user = await this.$firestore.fetch("users", this.$auth.accounts[0])
+        if (user != null) {
+            this.user = user
+        }
         this.fetching = false
     },
     methods: {
@@ -126,7 +122,7 @@ export default {
             }
         },
         createAccount: async function () {
-            if (this.creating || this.buidlContract == null) return
+            if (this.creating || this.buidlContract == null || this.$auth.accounts.length == 0) return
             this.creating = false
 
             if (this.errorName != null) {

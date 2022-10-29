@@ -6,7 +6,7 @@
             <div class="category" v-else v-for="(category, index) in categories" :key="index">
                 <div class="title">
                     <div>
-                        <img :src="`/images/categories/${category.photo}`" alt="">
+                        <img :src="`/images/categories/${category.image}`" alt="">
                         <h3>{{ category.name }}</h3>
                     </div>
                     <div class="action">View all <i class="fa-solid fa-arrow-right-long"></i></div>
@@ -14,7 +14,7 @@
                 <div class="trending">
                     <div class="swiper trendSwiper">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide" v-for="(course, index) in getCategoryCourses(category.id)" :key="index">
+                            <div class="swiper-slide" v-for="(course, index) in filterCourses(category.id)" :key="index">
                                 <div class="image">
                                     <img :src="course.photo" alt="">
                                 </div>
@@ -63,21 +63,12 @@ export default {
         return {
             categories: [],
             courses: [],
-            fetching: true,
-            courseContract: this.$contracts.courseContract
+            fetching: true
         }
     },
     async created() {
         await this.getCategories()
         await this.getCourses()
-        this.$contracts.initCourseContract(this.provider)
-        $nuxt.$on('course-contract', (contract) => {
-            if (this.courseContract == null) {
-                this.courseContract = contract
-                this.getCourseContractData()
-            }
-            this.courseContract = contract
-        })
     },
     updated() {
         const perView = this.$utils.slidesPerView()
@@ -93,71 +84,15 @@ export default {
     },
     methods: {
         async getCategories() {
-            const response = await this.$stream.fetch('create-category')
-            if (!response) return
-
-            const status = response.status
-
-            if (status) {
-                const categories = response.data.data
-                categories.forEach(category => {
-                    const data = this.$utils.decode(['uint256', 'string', 'string'], category.data)
-                    this.categories.push({
-                        id: Number(data[0]),
-                        name: data[1],
-                        photo: data[2]
-                    })
-                })
-            }
+            this.categories = await this.$firestore.fetchAll('categories')
         },
         async getCourses() {
-            const response = await this.$stream.fetch('course-created')
-            if (!response) return
-
-            const status = response.status
-
-            if (status) {
-                const courses = response.data.data
-                courses.forEach(course => {
-                    const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
-                    const creator = this.$utils.decode(['string', 'string', 'address'], course.creator.data)
-
-                    this.courses.push({
-                        id: Number(data[0]),
-                        name: data[1],
-                        description: data[2],
-                        category: Number(data[3]),
-                        photo: data[4],
-                        preview: data[5],
-                        address: data[6],
-                        creator: {
-                            name: creator[0],
-                            image: creator[1],
-                        }
-                    })
-
-                    this.getCourseContractData()
-                })
-
-            }
+            this.courses = await this.$firestore.fetchAll('courses')
             this.fetching = false
         },
-        getCategoryCourses(id) {
+        filterCourses(id) {
             return this.courses.filter(course => course.category == id)
-        },
-        getCourseContractData: async function () {
-            if (this.courseContract == null) return
-            for (const course of this.courses) {
-                const data = await this.courseContract.courses(course.id)
-                course.price = Number(data.price)
-                course.createdAt = Number(data.createdAt)
-
-                // force re rendering
-                const name = course.name
-                course.name = ''
-                course.name = name
-            }
-        },
+        }
     }
 }
 </script>

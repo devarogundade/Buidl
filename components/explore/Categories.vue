@@ -4,7 +4,7 @@
         <InProgress v-if="fetching" />
         <div class="categories" v-else>
             <div class="category scaleable" v-for="(category, index) in categories" :key="index">
-                <img :src="`/images/categories/${category.photo}`" alt="">
+                <img :src="`/images/categories/${category.image}`" alt="">
                 <div class="text">
                     <p>{{ category.name }}</p>
                 </div>
@@ -24,6 +24,7 @@ export default {
     },
     async created() {
         this.categories = await this.$firestore.fetchAll('categories')
+        this.fetching = false
     },
 }
 </script>

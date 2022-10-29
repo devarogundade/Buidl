@@ -1,14 +1,14 @@
 <template>
 <div class="container">
     <div class="overview">
-        <div class="verify" v-if="user && !user.verified">
+        <div class="verify" v-if="!fetching && (user == null || !user.verified)">
             <p><i class="fa-solid fa-circle-exclamation"></i> Stake 2000 BDL to become a creator</p>
             <router-link to="/collectibles/stake">
                 <p class="stake scaleable">Stake now</p>
             </router-link>
         </div>
 
-        <div class="verify" v-if="user && user.verified">
+        <div class="verify" v-if="!fetching && (user && user.verified)">
             <p><i class="fa-solid fa-circle-exclamation"></i> Hi!, create a new course</p>
             <router-link to="/app/courses/create">
                 <p class="stake scaleable">Create now</p>
@@ -224,27 +224,13 @@ export default {
             provider: this.$auth.provider,
         }
     },
-    created() {
-        this.$contracts.initBuidlContract(this.provider)
-        $nuxt.$on('buidl-contract', (contract) => {
-            if (this.buidlContract == null) {
-                this.buidlContract = contract
-                this.getUser()
-            }
-        })
-        this.getUser()
-    },
-    methods: {
-        getUser: async function () {
-            const address = this.$auth.accounts[0]
-            if (!address || !this.buidlContract) return
-
-            const user = await this.buidlContract.users(address)
-            this.user = {
-                verified: user.verified,
-                createdAt: Number(user.createdAt)
-            }
+    async created() {
+        if (this.$auth.accounts.length == 0) {
+            this.fetching = false
+            return
         }
+        this.user = await this.$firestore.fetch("users", this.$auth.accounts[0])
+        this.fetching = false
     }
 }
 </script>

@@ -6,6 +6,10 @@ import {Models} from "./base/Models.sol";
 contract Staking {
     mapping(address => Models.Stake) public stakes;
 
+    function hasStaked(uint256 amount, address user) public view returns (bool) {
+        return stakes[user].amount >= amount;
+    }
+
     function stake(
         address from,
         uint256 amount,
@@ -15,7 +19,7 @@ contract Staking {
         require(amount > 0, "!stake_zero_tokens");
 
         stakes[from] = Models.Stake(
-            amount,
+            stakes[from].amount + amount,
             block.timestamp,
             duration,
             rewardFlowRate
