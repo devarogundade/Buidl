@@ -30,6 +30,9 @@ We have heavily used moralis stream and smart contract events, which has helped 
     Protecting videos online is not 100% achievable, as it can still be recorded from the device's screen.
     The Buidl Video Player is a product we have added on your roadmap, which simplify authenticates users with their wallet and s
 
+## Revenue Model
+- We charge a 5% commission from every earnings from the creators.
+
 ## Supported Media Types
   In this hackathon scope the platfoem only supports video contents.
 
