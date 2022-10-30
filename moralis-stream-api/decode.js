@@ -33,7 +33,7 @@ module.exports = {
                 }
             case 'courses':
                 return {
-                    id: Number(data[0]),
+                    id: data[0],
                     name: data[1],
                     description: data[2],
                     category: Number(data[3]),

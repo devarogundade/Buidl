@@ -5,6 +5,8 @@
         <input type="text" placeholder="name" v-model="name">
         <input type="text" placeholder="name" v-model="image">
         <button v-on:click="addCategory()">Add Category</button>
+
+        {{ this.test }}
     </div>
 </section>
 </template>
@@ -22,21 +24,25 @@ div {
 </style>
 
 <script>
+import Web3 from 'web3'
 export default {
     layout: 'landing',
     data() {
         return {
             name: '',
             image: '',
-            courseContract: this.$contracts.courseContract,
-            provider: this.$auth.provider
+            courseContract: null,
+            test: null
         }
     },
     mounted() {
-        this.$contracts.initCourseContract(this.provider)
+        this.$contracts.initCourseContract(this.$auth.provider)
         $nuxt.$on('course-contract', (contract) => {
             this.courseContract = contract
         })
+
+        const web3 = new Web3()
+
     },
     methods: {
         addCategory: async function () {
