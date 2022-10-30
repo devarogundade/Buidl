@@ -59,9 +59,9 @@ module.exports = {
                 }
             case 'subscriptions':
                 return {
-                    id: `${data[1]}-${data[0]}`, // unique yet constructable id
+                    id: `${data[1].toUpperCase()}-${data[0]}`, // unique yet constructable id
                     courseId: data[0],
-                    address: data[1],
+                    address: data[1].toUpperCase(),
                     active: data[2]
                 }
             default:

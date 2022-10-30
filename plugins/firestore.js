@@ -65,15 +65,14 @@ export default ({}, inject) => {
                 return null
             }
         },
-        fetchFromPath: async function(_path) {
-            const reference = doc(this.db, _path);
-            const data = await getDoc(reference);
+        fetchAllSubscribedCourses: async function(_address) {
+            const subscriptions = await this.fetchAllWhere('subscriptions', 'address', '==', _address)
 
-            if (data.exists()) {
-                return data.data()
-            } else {
-                return null
+            for (let index = 0; index < subscriptions.length; index++) {
+                subscriptions[index].course = await this.fetch('courses', subscriptions[index].courseId)
             }
+
+            return subscriptions
         },
     }))
 }

@@ -7,19 +7,19 @@
         <h3 v-show="(createdCourses.length > 0) || (user && user.verified)" :class="tab == 2 ? 'active' : ''" v-on:click="tab = 2">Created</h3>
     </div>
 
-    <div class="courses" v-show="(courses.length > 0) && !fetching && tab == 1">
-        <router-link :to="`/app/courses/${course.id}`" v-for="(course, index) in courses" :key="index">
+    <div class="courses" v-show="(subscriptions.length > 0) && !fetching && tab == 1">
+        <router-link v-for="(subscription, index) in subscriptions" :key="index"  :to="`/app/courses/${subscription.course.id}`">
             <div class="course scaleable">
                 <div class="detail">
-                    <img :src="course.photo" alt="">
-                    <h3>{{ course.name }}</h3>
-                    <p>{{ course.description }}</p>
+                    <img :src="subscription.course.photo" alt="">
+                    <h3>{{ subscription.course.name }}</h3>
+                    <p>{{ subscription.course.description }}</p>
                 </div>
             </div>
         </router-link>
     </div>
 
-    <div class="explain" v-show="(courses.length == 0) && !fetching && tab == 1">
+    <div class="explain" v-show="(subscriptions.length == 0) && !fetching && tab == 1">
         <h3>What's a course?</h3>
         <p>
             <b>Buidl Course</b> provides you an environment with the handy tools you need to teach
@@ -78,7 +78,7 @@
 export default {
     data() {
         return {
-            courses: [],
+            subscriptions: [],
             createdCourses: [],
             fetching: true,
             tab: 1,
@@ -96,7 +96,8 @@ export default {
     methods: {
         getSubscribedCourses: async function () {
             if (this.$auth.accounts.length == 0) return
-            // const course =
+            this.subscriptions = await this.$firestore.fetchAllSubscribedCourses(this.$auth.accounts[0].toUpperCase())
+            console.log('subscriptions', this.subscriptions);
             this.fetching = false
         },
         getCreatedCourses: async function () {
