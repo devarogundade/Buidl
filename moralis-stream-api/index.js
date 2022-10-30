@@ -13,15 +13,18 @@ app.post('/webhook', (req, res) => {
     console.log(webhook)
 
     for (const log of webhook.logs) {
+        console.log(log)
         const format = decoder.formats(collection)
-
-        // abi format does not exists for event data
+        console.log(format)
+            // abi format does not exists for event data
         if (format == null || typeof format === 'undefined') {
             return res.status(400).json();
         }
 
         const data = decoder.decode(format, log.data)
+        console.log(data)
         const object = decoder.toObject(collection, data)
+        console.log(object)
 
         // event data to object mapping failed
         if (object == null || typeof object === 'undefined') {
@@ -32,6 +35,7 @@ app.post('/webhook', (req, res) => {
         if (collection == 'creators') {
             collection = 'users'
             _merge = true
+            console.log(`switched to ${collection}`);
         }
 
         // write data to firebase
