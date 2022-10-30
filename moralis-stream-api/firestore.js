@@ -9,7 +9,11 @@ module.exports = {
     write: async function(collection, document, data, _merge = false) {
         try {
             const reference = this.db.collection(collection).doc(document);
-            await reference.set(data, { merge: _merge })
+            if (_merge) {
+                await reference.set(data, { merge: _merge })
+            } else {
+                await reference.set(data)
+            }
             return true
         } catch (error) {
             console.log(error);
