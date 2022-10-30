@@ -75,6 +75,10 @@ We have heavily used moralis stream and smart contract events, which has helped 
 
 ## Screenshots
 
+## Other Services
+- Netlify
+- Heroku
+
 ## Roadmap
    https://buidl.netlify.app/#roadmap
 
