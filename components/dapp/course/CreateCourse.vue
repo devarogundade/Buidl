@@ -149,6 +149,7 @@ export default {
                     this.course.name, this.course.description, this.course.photo, this.course.preview, {
                         from: this.$auth.accounts[0]
                     })
+                this.$router.push('/app/courses')
             } catch (error) {
                 console.log(error);
             }

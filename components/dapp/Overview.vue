@@ -78,7 +78,7 @@
                         <img src="/images/linkedin-buidl.png" />
                     </div>
 
-                    <div class="sign_up" v-if="!saving" v-on:click="save()">Connect</div>
+                    <div class="sign_up" v-if="!connecting" v-on:click="save()">Connect</div>
                     <div class="sign_up" v-else>Connecting..</div>
                 </div>
             </div>
@@ -230,6 +230,7 @@ export default {
             staked: null,
             buidlContract: this.$contracts.buidlContract,
             provider: this.$auth.provider,
+            connecting: false
         }
     },
     async created() {

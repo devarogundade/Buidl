@@ -8,6 +8,7 @@ app.use(express.json())
 app.post('/webhook', (req, res) => {
     const webhook = req.body;
     let collection = webhook.tag;
+    let _merge = false;
 
     console.log(webhook);
 
@@ -30,10 +31,11 @@ app.post('/webhook', (req, res) => {
         // override collection if needed
         if (collection == 'creators') {
             collection = 'users'
+            _merge = true
         }
 
         // write data to firebase
-        fireStore.write(collection, object.id, object)
+        fireStore.write(collection, object.id, object, _merge)
     }
 
     return res.status(200).json();
