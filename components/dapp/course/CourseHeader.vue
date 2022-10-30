@@ -93,13 +93,14 @@ export default {
             this.$refs["menu"].classList.toggle("open-menu")
         },
         getCourseName(course) {
-            if (course[1].length > 20) {
-                return (course[1].substring(0, 10) +
-                    "..." +
-                    course[1].substring(course[1].length - 10, course[1].length))
+            if (course.name.length > 20) {
+                return (
+                    course.name.substring(0, 10) + "..." +
+                    course.name.substring(course.name.length - 10, course.name.length)
+                )
             }
 
-            return course[1]
+            return course.name
         }
     },
 };

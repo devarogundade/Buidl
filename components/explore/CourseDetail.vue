@@ -21,25 +21,25 @@
                             <p>•</p>
                             <p class="n_students">2 students</p>
                         </div>
-                        <p class="instructor"> <img :src="course.creator.image" alt=""> {{ course.creator.name }} </p>
+                        <p class="instructor" v-if="creator"> <img :src="creator.photo" alt=""> {{ creator.name }} </p>
                         <div class="specs">
-                            <p class="last_update" v-if="course.createdAt"><i class="fa-solid fa-calendar-days"></i> {{ $utils.formatToDate(course.createdAt) }}</p>
+                            <p class="last_update"><i class="fa-solid fa-calendar-days"></i> {{ $utils.formatToDate(Number(course.updatedAt)) }}</p>
                             <p class="languages"><i class="fa-solid fa-globe"></i> English</p>
                         </div>
                     </div>
 
-                    <div class="buy">
+                    <div class="buy" v-if="subscription">
                         <div class="preview">
-                            <img :src="course.photo" />
+                            <video :src="course.preview" :poster="course.photo" />
                             <i class="fa-solid fa-play"></i>
                         </div>
-                        <div class="tag" v-if="!bought">Preview</div>
+                        <div class="tag" v-if="!subscription.active">Preview</div>
                         <div class="tag" v-else><i class="fa-solid fa-certificate"></i> Bought</div>
 
-                        <div class="coupon" v-if="!bought">
+                        <div class="coupon" v-if="!subscription.active">
                             <p>Apply Coupon</p>
 
-                            <div class="options" v-show="showNfts && !bought">
+                            <div class="options" v-show="showNfts && !subscription.active">
                                 <div class="nft_row" v-on:click="removeCoupon()">
                                     <div class="name">
                                         <p>Remove coupon</p>
@@ -74,7 +74,7 @@
                             </div>
                         </div>
 
-                        <div class="pricing" v-if="!bought">
+                        <div class="pricing" v-if="!subscription.active">
                             <div>
                                 <p>Course price</p>
                                 <p v-if="course.price">{{ course.price }} BDL</p>
@@ -93,7 +93,7 @@
                             </div>
                         </div>
 
-                        <div class="action" v-if="author">
+                        <div class="action" v-if="course.address == $auth.accounts[0].toUpperCase()">
                             <router-link :to="`/app/course-builder/${$route.params.course}`">
                                 <div class="pay">Edit Course</div>
                             </router-link>
@@ -101,7 +101,7 @@
                         </div>
 
                         <div class="action" v-else>
-                            <div class="pay" v-if="!bought" v-on:click="buyCourse()">Buy Course</div>
+                            <div class="pay" v-if="!subscription.active" v-on:click="buyCourse()">Buy Course</div>
                             <router-link v-else :to="`/app/courses/${$route.params.course}`">
                                 <div class="pay">Study Course</div>
                             </router-link>
@@ -141,35 +141,34 @@
 export default {
     data() {
         return {
-            selectedSection: 0,
             courseId: this.$route.params.course,
             course: null,
-            sections: [],
             category: null,
-            subscription: null,
-            author: false,
+            subscription: {
+                active: false
+            },
+            creator: null,
             nfts: [],
+            sections: [],
+            selectedSection: 0,
             selectedNft: null,
             showNfts: false,
-            courseContract: this.$contracts.courseContract,
-            buidlContract: this.$contracts.buidlContract
+            buidlContract: null
         }
     },
     async created() {
+        this.course = await this.$firestore.fetch("courses", this.courseId)
+        this.fetching = false
+
+        this.creator = await this.$firestore.fetch('users', this.course.address)
+        // this.subscription = await this.$firestore.fetch('subscriptions', `${this.$auth.accounts[0].toUpperCase()}-${this.courseId}`)
+        this.category = await this.$firestore.fetch("categories", `${this.course.category}`)
+        this.sections = await this.$firestore.fetchAll("course-sections", this.courseId)
         this.getNfts()
-        this.course = await this.$firestore.fetch("courses", this.courseId);
-        $nuxt.$emit(`course${this.courseId}`, this.course);
-        this.fetching = false;
 
-        this.subscription = await this.$firestore.fetchFromPath(`subscription/${this.$auth.accounts[0]}/${this.courseId})`);
-        this.category = await this.$firestore.fetch("categories", this.course.category);
-        this.sections = await this.$firestore.fetch("course-sections", this.courseId);
-
-        $nuxt.$on('course-contract', (contract) => {
+        this.$contracts.initBuidlContract(this.$auth.provider)
+        $nuxt.$on('buidl-contract', (contract) => {
             this.buidlContract = contract
-        })
-        $nuxt.$on('course-contract', (contract) => {
-            this.courseContract = contract
         })
     },
     methods: {
@@ -214,11 +213,8 @@ export default {
         },
         buyCourse: async function () {
             if (this.buidlContract == null) return
-
-            console.log(this.buidlContract);
-
             try {
-                const trx = await this.buidlContract.subscribe(this.courseId, this.$auth.accounts[0], {
+                const trx = await this.buidlContract.subscribe(this.courseId, {
                     from: this.$auth.accounts[0]
                 })
             } catch (error) {
@@ -327,7 +323,7 @@ export default {
     border-radius: 50%;
 }
 
-.preview img {
+.preview video {
     width: 100%;
     height: 100%;
     object-fit: cover;

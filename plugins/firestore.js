@@ -29,6 +29,20 @@ export default ({}, inject) => {
 
             return result
         },
+        fetchAllWithCreator: async function(_collection) {
+            const result = []
+            const snapshot = await getDocs(collection(this.db, _collection))
+
+            snapshot.forEach(document => {
+                result.push(document.data())
+            });
+
+            for (let index = 0; index < result.length; index++) {
+                result[index].creator = await this.fetch('users', result[index].address)
+            }
+
+            return result
+        },
         fetchAllWhere: async function(_collection, key, sign, value) {
             const result = []
 

@@ -16,7 +16,7 @@
                         </div>
                         <div class="detail">
                             <h3 class="course_title">{{ course.name }}</h3>
-                            <p class="instructor" v-if="course.creator"> <img :src="course.creator.image" alt=""> {{ course.creator.name }} </p>
+                            <p class="instructor" v-if="course.creator"> <img :src="course.creator.photo" alt=""> {{ course.creator.name }} </p>
                             <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; • &nbsp; 235 students</p>
                             <p class="price">{{ course.price ? course.price : '..' }} $BDL</p>
                         </div>
@@ -25,7 +25,7 @@
                             <div class="detail">
                                 <p class="price">{{ course.price ? course.price : '..' }} $BDL</p>
                                 <h3 class="course_title">{{ course.name }}</h3>
-                                <p class="instructor" v-if="course.creator"> <img :src="course.creator.image" alt=""> {{ course.creator.name }} </p>
+                                <p class="instructor" v-if="course.creator"> <img :src="course.creator.photo" alt=""> {{ course.creator.name }} </p>
                                 <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; • &nbsp; 235 students</p>
                                 <p class="sections">Sections</p>
                                 <ul>
@@ -56,26 +56,12 @@ export default {
     data() {
         return {
             courses: [],
-            instructors: [],
-            fetching: false,
-            buidlContract: this.$contracts.buidlContract,
-            courseContract: this.$contracts.courseContract,
-            provider: this.$auth.provider
+            fetching: false
         }
     },
-    created() {
-        this.getCourses()
-        this.$contracts.initCourseContract(this.provider)
-        $nuxt.$on('buidl-contract', (contract) => {
-            this.buidlContract = contract
-        })
-        $nuxt.$on('course-contract', (contract) => {
-            if (this.courseContract == null) {
-                this.courseContract = contract
-                this.getCourseContractData()
-            }
-            this.courseContract = contract
-        })
+    async created() {
+        this.courses = await this.$firestore.fetchAllWithCreator('courses')
+        this.fetching = false
     },
     updated() {
         const perView = this.$utils.slidesPerView()
@@ -88,51 +74,6 @@ export default {
                 clickable: true,
             },
         });
-    },
-    methods: {
-        getCourses: async function () {
-            const response = await this.$stream.fetch('course-created')
-            if (!response) return
-
-            const status = response.status
-
-            if (status) {
-                const courses = response.data.data
-                courses.forEach(course => {
-                    const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
-                    const creator = this.$utils.decode(['string', 'string', 'address'], course.creator.data)
-                    this.courses.push({
-                        id: Number(data[0]),
-                        name: data[1],
-                        description: data[2],
-                        category: Number(data[3]),
-                        photo: data[4],
-                        preview: data[5],
-                        address: data[6],
-                        creator: {
-                            name: creator[0],
-                            image: creator[1],
-                            address: creator[2]
-                        }
-                    })
-                    this.getCourseContractData()
-                })
-            }
-            this.fetching = false
-        },
-        getCourseContractData: async function () {
-            if (this.courseContract == null) return
-            for (const course of this.courses) {
-                const data = await this.courseContract.courses(course.id)
-                course.price = Number(data.price)
-                course.createdAt = Number(data.createdAt)
-
-                // force re rendering
-                const name = course.name
-                course.name = ''
-                course.name = name
-            }
-        },
     }
 }
 </script>

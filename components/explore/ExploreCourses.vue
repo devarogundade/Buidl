@@ -20,7 +20,7 @@
                                 </div>
                                 <div class="detail">
                                     <h3 class="course_title">{{ course.name }}</h3>
-                                    <p class="instructor"> <img :src="course.creator.image" alt=""> {{ course.creator.name }} </p>
+                                    <p class="instructor"> <img :src="course.creator.photo" alt=""> {{ course.creator.name }} </p>
                                     <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; • &nbsp; 235 students</p>
                                     <p class="price">{{ course.price ? course.price : '..' }} $BDL</p>
                                 </div>
@@ -29,7 +29,7 @@
                                     <div class="detail">
                                         <p class="price">{{ course.price ? course.price : '..' }} $BDL</p>
                                         <h3 class="course_title">{{ course.name }}</h3>
-                                        <p class="instructor"> <img :src="course.creator.image" alt=""> {{ course.creator.name }} </p>
+                                        <p class="instructor"> <img :src="course.creator.photo" alt=""> {{ course.creator.name }} </p>
                                         <p class="ratings"><i class="fa-solid fa-star"></i> 4.7 of 5.0 &nbsp; • &nbsp; 235 students</p>
                                         <p class="sections">Sections</p>
                                         <ul>
@@ -87,7 +87,7 @@ export default {
             this.categories = await this.$firestore.fetchAll('categories')
         },
         async getCourses() {
-            this.courses = await this.$firestore.fetchAll('courses')
+            this.courses = await this.$firestore.fetchAllWithCreator('courses')
             this.fetching = false
         },
         filterCourses(id) {

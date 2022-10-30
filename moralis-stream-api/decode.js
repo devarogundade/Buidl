@@ -18,6 +18,8 @@ module.exports = {
                 return ['address', 'string', 'string', 'bool']
             case 'creators':
                 return ['address', 'bool']
+            case 'subscriptions':
+                return ['uint256', 'address', 'bool']
             default:
                 return null
         }
@@ -54,6 +56,13 @@ module.exports = {
                 return {
                     id: data[0].toUpperCase(), // avoid case sensitive
                     verified: data[1],
+                }
+            case 'subscriptions':
+                return {
+                    id: `${data[1]}-${data[0]}`, // unique yet constructable id
+                    courseId: data[0],
+                    address: data[1],
+                    active: data[2]
                 }
             default:
                 return null

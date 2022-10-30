@@ -13,18 +13,20 @@ app.post('/webhook', (req, res) => {
     console.log(webhook)
 
     for (const log of webhook.logs) {
-        console.log(log)
+        // console.log(log)
         const format = decoder.formats(collection)
-        console.log(format)
-            // abi format does not exists for event data
+            // console.log(format)
+
+        // abi format does not exists for event data
         if (format == null || typeof format === 'undefined') {
             return res.status(400).json();
         }
 
         const data = decoder.decode(format, log.data)
-        console.log(data)
+            // console.log(data)
+
         const object = decoder.toObject(collection, data)
-        console.log(object)
+            // console.log(object)
 
         // event data to object mapping failed
         if (object == null || typeof object === 'undefined') {
