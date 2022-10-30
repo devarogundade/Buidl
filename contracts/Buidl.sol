@@ -72,7 +72,7 @@ contract Buidl {
     }
 
     /* remove creator */
-    function removeCreator() public notVerified {
+    function removeCreator() public onlyVerified {
         users[msg.sender].verified = false;
         emit Creator(msg.sender, false);
     }

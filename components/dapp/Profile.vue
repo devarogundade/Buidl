@@ -91,7 +91,8 @@ export default {
             creating: false,
             fetching: true,
             buidlContract: null,
-            staked: 0
+            staked: 0,
+            _showPromptVerify: false
         }
     },
     async created() {
@@ -114,6 +115,10 @@ export default {
     watch: {
         user: {
             handler(_user) {
+                if (!this._showPromptVerify) {
+                    this._showPromptVerify = true
+                    return
+                }
                 if (this.buidlContract == null) return
                 if (_user.verified) {
                     try {
@@ -141,7 +146,6 @@ export default {
         getUser: async function () {
             if (this.$auth.accounts.length == 0) return
             this.user = await this.$firestore.fetch("users", this.$auth.accounts[0].toUpperCase())
-            console.log(this.user);
             this.fetching = false
         },
         onFileChange: function (event) {

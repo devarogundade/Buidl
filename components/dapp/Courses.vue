@@ -4,7 +4,7 @@
 
     <div class="tabs">
         <h3 :class="tab == 1 ? 'active' : ''" v-on:click="tab = 1">Subscribed</h3>
-        <h3 v-show="createdCourses.length > 0" :class="tab == 2 ? 'active' : ''" v-on:click="tab = 2">Created</h3>
+        <h3 v-show="(createdCourses.length > 0) || (user && user.verified)" :class="tab == 2 ? 'active' : ''" v-on:click="tab = 2">Created</h3>
     </div>
 
     <div class="courses" v-show="(courses.length > 0) && !fetching && tab == 1">
@@ -97,6 +97,7 @@ export default {
         getSubscribedCourses: async function () {
             if (this.$auth.accounts.length == 0) return
             // const course =
+            this.fetching = false
         },
         getCreatedCourses: async function () {
             this.createdCourses = await this.$firestore.fetchAllWhere('courses', 'address', '==', `${this.$auth.accounts[0].toUpperCase()}`)

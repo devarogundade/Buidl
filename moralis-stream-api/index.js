@@ -9,6 +9,8 @@ app.post('/webhook', (req, res) => {
     const webhook = req.body;
     let collection = webhook.tag;
 
+    console.log(webhook);
+
     for (const log of webhook.logs) {
         const format = decoder.formats(collection)
 

@@ -89,14 +89,12 @@ export default {
             notFound: false,
             selectedCategory: 0,
             categories: [],
-            courseContract: this.$contracts.courseContract,
-            provider: this.$auth.provider
+            courseContract: null
         }
     },
     created() {
-        this.getCourse()
         this.getCategories()
-        this.$contracts.initCourseContract(this.provider)
+        this.$contracts.initCourseContract(this.$auth.provider)
         $nuxt.$on('course-contract', (contract) => {
             this.courseContract = contract
         })
@@ -147,7 +145,7 @@ export default {
             try {
                 const id = Math.floor(Math.random() * 999999999999) + 1;
                 const trx = await this.courseContract.createCourse(
-                    id, this.categories[this.selectedCategory].id, this.course.price, this.$auth.accounts[0],
+                    id, this.categories[this.selectedCategory].id, this.course.price,
                     this.course.name, this.course.description, this.course.photo, this.course.preview, {
                         from: this.$auth.accounts[0]
                     })
@@ -157,26 +155,8 @@ export default {
 
             this.creating = false
         },
-        async getCourse() {
-
-        },
-        async getCategories() {
-            const response = await this.$stream.fetch('create-category')
-            if (!response) return
-
-            const status = response.status
-
-            if (status) {
-                const categories = response.data.data
-                categories.forEach(category => {
-                    const data = this.$utils.decode(['uint256', 'string', 'string'], category.data)
-                    this.categories.push({
-                        id: Number(data[0]),
-                        name: data[1],
-                        photo: data[2]
-                    })
-                })
-            }
+        getCategories: async function () {
+            this.categories = await this.$firestore.fetchAll('categories')
         },
         onCategoryChanged(event) {
             this.selectedCategory = event.target.value

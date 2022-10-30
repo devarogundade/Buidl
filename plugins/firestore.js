@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query } from "firebase/firestore";
+import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAN_Oc0Wz5TXJFdZK__bs5sVUAm6WBzJhY",
