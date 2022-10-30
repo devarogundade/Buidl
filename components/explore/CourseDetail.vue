@@ -77,7 +77,7 @@
                         <div class="pricing">
                             <div>
                                 <p>Course price</p>
-                                <p v-if="course.price">{{ course.price }} BDL</p>
+                                <p>{{ $utils.fromWei(course.price)}} BDL</p>
                             </div>
 
                             <div>
@@ -86,10 +86,10 @@
                                 <p v-else>0 BDL</p>
                             </div>
 
-                            <div v-if="course.price">
+                            <div>
                                 <p>Total price</p>
                                 <p v-if="selectedNft != null">{{ 0 }} BDL</p>
-                                <p v-else>{{ course.price }} BDL</p>
+                                <p v-else>{{ $utils.fromWei(course.price) }} BDL</p>
                             </div>
                         </div>
 
@@ -200,7 +200,7 @@ export default {
         },
         calcDiscount: function (index) {
             const weight = this.toJson(this.nfts[index].metadata).attributes[0].value
-            return (weight / 100) * this.course.price.toNumber()
+            return (weight / 100) * this.$utils.fromWei(course.price)
         },
         removeCoupon: function () {
             this.selectedNft = null

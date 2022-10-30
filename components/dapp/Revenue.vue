@@ -10,7 +10,7 @@
                 <div class="from">
                     <div class="label">
                         <p>Unclaimed</p>
-                        <p>Available: {{ revenue.unclaimed }}</p>
+                        <p>Available: {{ Number(revenue.unclaimed) }}</p>
                     </div>
                     <div class="input">
                         <div class="token">
@@ -19,7 +19,7 @@
                                 <p>BDL</p>
                             </div>
                         </div>
-                        <input type="number" disabled v-model="revenue.unclaimed">
+                        <input type="number" disabled :value="Number(revenue.unclaimed)">
                     </div>
                 </div>
 
@@ -30,7 +30,7 @@
                 <div class="from">
                     <div class="label">
                         <p>Claimable</p>
-                        <p>Available: {{ revenue.claimable }}</p>
+                        <p>Available: {{ Number(revenue.claimable) }}</p>
                     </div>
                     <div class="input">
                         <div class="token">
@@ -61,14 +61,31 @@ export default {
         return {
             claim: '',
             revenue: {
-                unclaimed: 344424,
-                claimable: 34234
+                claimable: 0,
+                claimed: 0,
+                unclaimed: 0
             }
         }
+    },
+    created() {
+        this.$contracts.initBuidlContract(this.$auth.provider)
+        $nuxt.$once('buidl-contract', (contract) => {
+            this.getRevenue(contract)
+        })
     },
     methods: {
         useMax: function () {
             this.claim = this.revenue.claimable
+        },
+        getRevenue: async function (contract) {
+            if (this.$auth.accounts.length == 0) return
+            const revenue = await contract.revenues(this.$auth.accounts[0])
+            this.revenue = {
+                claimable: this.$utils.fromWei(revenue.claimable),
+                claimed: this.$utils.fromWei(revenue.claimed),
+                unclaimed: this.$utils.fromWei(revenue.unclaimed)
+            }
+            console.log(this.revenue);
         }
     }
 }
@@ -188,14 +205,12 @@ export default {
     font-weight: 600;
 }
 
-/* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-/* Firefox */
 input[type=number] {
     -moz-appearance: textfield;
 }

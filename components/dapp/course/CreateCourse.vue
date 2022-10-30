@@ -145,7 +145,7 @@ export default {
             try {
                 const id = Math.floor(Math.random() * 999999999999) + 1;
                 const trx = await this.courseContract.createCourse(
-                    id, this.categories[this.selectedCategory].id, this.course.price,
+                    id, this.categories[this.selectedCategory].id, this.$utils.toWei(this.course.price),
                     this.course.name, this.course.description, this.course.photo, this.course.preview, {
                         from: this.$auth.accounts[0]
                     })
