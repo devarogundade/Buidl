@@ -8,6 +8,13 @@
             </router-link>
         </div>
 
+         <div class="verify" v-if="!fetching && (user == null || !user.verified)">
+            <p><i class="fa-solid fa-circle-exclamation"></i> Stake 2000 BDL to become a creator</p>
+            <router-link to="/collectibles/stake">
+                <p class="stake scaleable">Stake now</p>
+            </router-link>
+        </div>
+
         <div class="verify" v-if="!fetching && (user && user.verified)">
             <p><i class="fa-solid fa-circle-exclamation"></i> Hi!, create a new course</p>
             <router-link to="/app/courses/create">
@@ -220,17 +227,30 @@ export default {
         return {
             fetching: true,
             user: null,
+            staked: null,
             buidlContract: this.$contracts.buidlContract,
             provider: this.$auth.provider,
         }
     },
     async created() {
-        if (this.$auth.accounts.length == 0) {
+        this.getUser()
+
+        this.$contracts.initStakingContract(this.$auth.provider)
+        $nuxt.$on('staking-contract', (contract) => {
+            this.getStakeBalance(contract)
+        })
+    },
+    methods: {
+        getStakedBalance: async function () {
+            if (this.$auth.accounts.length == 0) return
+            const stake = await contract.stakes(this.$auth.accounts[0])
+            this.staked = stake.amount
+        },
+        getUser: async function () {
+            if (this.$auth.accounts.length == 0) return
+            this.user = await this.$firestore.fetch("users", this.$auth.accounts[0])
             this.fetching = false
-            return
         }
-        this.user = await this.$firestore.fetch("users", this.$auth.accounts[0])
-        this.fetching = false
     }
 }
 </script>

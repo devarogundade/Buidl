@@ -15,7 +15,7 @@ module.exports = {
             case 'courses':
                 return ['uint256', 'string', 'string', 'uint256', 'string', 'string', 'address', 'uint256', 'uint256']
             case 'users':
-                return ['string', 'string', 'address', 'bool']
+                return ['address', 'string', 'string', 'bool']
             default:
                 return null
         }
@@ -44,10 +44,10 @@ module.exports = {
                 }
             case 'users':
                 return {
-                    id: data[2],
-                    name: data[0],
-                    photo: data[1],
-                    address: data[2],
+                    id: data[0],
+                    name: data[1],
+                    photo: data[2],
+                    verified: data[3],
                 }
             default:
                 return null
