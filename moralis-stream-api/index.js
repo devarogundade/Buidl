@@ -7,7 +7,7 @@ app.use(express.json())
 
 app.post('/webhook', (req, res) => {
     const webhook = req.body;
-    const collection = webhook.tag;
+    let collection = webhook.tag;
 
     for (const log of webhook.logs) {
         const format = decoder.formats(collection)
