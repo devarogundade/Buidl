@@ -39,10 +39,6 @@ app.post('/webhook', (req, res) => {
                 collection = 'users'
                 _merge = true
                 break
-            case 'course-sections':
-                collection = `courses/${object.courseId}/sections`
-                _merge = true
-                break
             default:
                 break
         }
