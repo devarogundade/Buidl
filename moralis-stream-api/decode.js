@@ -20,6 +20,8 @@ module.exports = {
                 return ['address', 'bool']
             case 'subscriptions':
                 return ['uint256', 'address', 'bool']
+            case 'course-sections':
+                return ['uint256', 'string', 'string', 'string']
             default:
                 return null
         }
@@ -63,6 +65,14 @@ module.exports = {
                     courseId: data[0],
                     address: data[1].toUpperCase(),
                     active: data[2]
+                }
+            case 'course-sections':
+                return {
+                    id: data[0], // todo unique yet constructable id
+                    courseId: data[0],
+                    title: data[1],
+                    content: data[2],
+                    src: data[3]
                 }
             default:
                 return null
