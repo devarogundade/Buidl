@@ -112,7 +112,7 @@ export default {
         this.getTokenBalances()
         this.$contracts.initStakingContract(this.$auth.provider)
         $nuxt.$on('staking-contract', (contract) => {
-            this.getStakeBalance(contract)
+            this.getStakedBalance(contract)
         })
     },
     methods: {
@@ -146,7 +146,7 @@ export default {
             }
             this.fetching1 = false
         },
-        getStakeBalance: async function (contract) {
+        getStakedBalance: async function (contract) {
             if (this.$auth.accounts.length == 0) return
             const stake = await contract.stakes(this.$auth.accounts[0])
             this.staked = stake.amount

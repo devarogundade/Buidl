@@ -44,7 +44,7 @@ module.exports = {
                 }
             case 'users':
                 return {
-                    id: data[0],
+                    id: data[0].toUpperCase(),
                     name: data[1],
                     photo: data[2],
                     verified: data[3],

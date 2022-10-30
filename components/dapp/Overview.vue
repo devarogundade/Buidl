@@ -1,17 +1,17 @@
 <template>
 <div class="container">
     <div class="overview">
-        <div class="verify" v-if="!fetching && (user == null || !user.verified)">
-            <p><i class="fa-solid fa-circle-exclamation"></i> Stake 2000 BDL to become a creator</p>
+        <div class="verify" v-if="!fetching && ($utils.fromWei(staked) < 2000)">
+            <p><i class="fa-solid fa-circle-exclamation"></i> Stake {{ 2000 - $utils.fromWei(staked) }} BDL to become a creator</p>
             <router-link to="/collectibles/stake">
                 <p class="stake scaleable">Stake now</p>
             </router-link>
         </div>
 
-         <div class="verify" v-if="!fetching && (user == null || !user.verified)">
-            <p><i class="fa-solid fa-circle-exclamation"></i> Stake 2000 BDL to become a creator</p>
+        <div class="verify" v-if="!fetching && user == null">
+            <p><i class="fa-solid fa-circle-exclamation"></i> Set up your profile</p>
             <router-link to="/collectibles/stake">
-                <p class="stake scaleable">Stake now</p>
+                <p class="stake scaleable">Set Profile</p>
             </router-link>
         </div>
 
@@ -237,18 +237,19 @@ export default {
 
         this.$contracts.initStakingContract(this.$auth.provider)
         $nuxt.$on('staking-contract', (contract) => {
-            this.getStakeBalance(contract)
+            this.getStakedBalance(contract)
         })
     },
     methods: {
-        getStakedBalance: async function () {
+        getStakedBalance: async function (contract) {
             if (this.$auth.accounts.length == 0) return
             const stake = await contract.stakes(this.$auth.accounts[0])
             this.staked = stake.amount
         },
         getUser: async function () {
             if (this.$auth.accounts.length == 0) return
-            this.user = await this.$firestore.fetch("users", this.$auth.accounts[0])
+            this.user = await this.$firestore.fetch("users", this.$auth.accounts[0].toUpperCase())
+            console.log(this.user);
             this.fetching = false
         }
     }
