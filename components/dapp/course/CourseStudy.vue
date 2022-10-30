@@ -84,7 +84,7 @@ export default {
             this.fetching = false;
         },
         async getCourseSections() {
-            this.sections = await this.$firestore.fetch("course-sections", this.courseId);
+            this.sections = await this.$firestore.fetchAll("course-sections", this.courseId);
         },
     },
 };

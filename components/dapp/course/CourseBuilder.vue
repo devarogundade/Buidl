@@ -52,7 +52,9 @@ export default {
             category: null,
             fetching: true,
             sections: [],
-            saving: false
+            courseContract: null,
+            saving: false,
+            files: []
         }
     },
     watch: {
@@ -60,10 +62,14 @@ export default {
             this.sections[this.selectedIndex].title = _title
         }
     },
-    mounted() {
+    created() {
         this.getCourse()
         this.getCourseSections()
         this.addSection()
+        this.$contracts.initCourseContract(this.$auth.provider)
+        $nuxt.$on('course-contract', (contract) => {
+            this.courseContract = contract
+        })
     },
     methods: {
         addSection() {
@@ -71,36 +77,53 @@ export default {
                 id: 0,
                 title: '',
                 src: '',
-                content: '',
-                file: null
+                content: ''
             })
         },
         chooseFile(event) {
             const file = event.target.files[0]
-            this.sections[this.selectedIndex].file = file
+            this.files.push(file)
         },
         async saveChanges() {
-            if (this.saving) return
+            if (this.saving || this.courseContract == null || this.$auth.accounts == 0) return
 
             this.saving = true
-            const file = this.sections[this.selectedIndex].file
+
+            let file = null
+
+            if (this.files.length > this.selectedIndex) {
+                file = this.files[this.selectedIndex]
+            }
+
             let src = this.sections[this.selectedIndex].src
 
             if (file == null && src == '') {
+                $nuxt.$emit('warning', 'You haven\'t selected a video file')
+                this.saving = false
                 return
             }
 
             if (file != null) {
                 const data = await this.$ipfs.toBase64(file)
                 src = await this.$ipfs.upload(`courses/${this.courseId}/${this.selectedIndex}`, data)
+                console.log('src', src);
             }
 
-            if (src == null) return
+            if (src == null) {
+                $nuxt.$emit('warning', 'Failed to upload video file')
+                this.saving = false
+                return
+            }
 
             const encryptedSrc = this.$encryption.encrypt(src, "key")
 
             try {
-
+                const trx = await this.courseContract.createCourseSection(
+                    this.courseId, this.sections[this.selectedIndex].title,
+                    this.sections[this.selectedIndex].content, encryptedSrc, {
+                        from: this.$auth.accounts[0]
+                    }
+                )
             } catch (error) {
 
             }
@@ -114,6 +137,9 @@ export default {
         },
         async getCourseSections() {
             this.sections = await this.$firestore.fetchAll("course-sections", this.courseId);
+            if (this.sections.length == 0) {
+                this.addSection()
+            }
         },
     }
 }

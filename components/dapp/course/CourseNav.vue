@@ -57,7 +57,6 @@ export default {
         $nuxt.$on('dapp-tab', (tab) => {
             this.tab = tab
         })
-        console.log(this.$route);
     }
 }
 </script>

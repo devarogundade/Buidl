@@ -79,7 +79,6 @@ export default {
             this.tab = tab
         })
         $nuxt.$on(`course${this.courseId}`, (course) => {
-            console.log(course);
             this.course = course
         })
     },

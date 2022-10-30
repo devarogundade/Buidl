@@ -97,7 +97,6 @@ export default {
         getSubscribedCourses: async function () {
             if (this.$auth.accounts.length == 0) return
             this.subscriptions = await this.$firestore.fetchAllSubscribedCourses(this.$auth.accounts[0].toUpperCase())
-            console.log('subscriptions', this.subscriptions);
             this.fetching = false
         },
         getCreatedCourses: async function () {

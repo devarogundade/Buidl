@@ -250,7 +250,6 @@ export default {
         getUser: async function () {
             if (this.$auth.accounts.length == 0) return
             this.user = await this.$firestore.fetch("users", this.$auth.accounts[0].toUpperCase())
-            console.log(this.user);
             this.fetching = false
         }
     }
