@@ -16,6 +16,8 @@ module.exports = {
                 return ['uint256', 'string', 'string', 'uint256', 'string', 'string', 'address', 'uint256', 'uint256']
             case 'users':
                 return ['address', 'string', 'string', 'bool']
+            case 'creators':
+                return ['address', 'bool']
             default:
                 return null
         }
@@ -38,16 +40,21 @@ module.exports = {
                     category: Number(data[3]),
                     photo: data[4],
                     preview: data[5],
-                    address: data[6],
+                    address: data[6].toUpperCase(), // creator
                     price: data[7],
                     updatedAt: data[8]
                 }
             case 'users':
                 return {
-                    id: data[0].toUpperCase(),
+                    id: data[0].toUpperCase(), // avoid case sensitive
                     name: data[1],
                     photo: data[2],
                     verified: data[3],
+                }
+            case 'creators':
+                return {
+                    id: data[0].toUpperCase(), // avoid case sensitive
+                    verified: data[1],
                 }
             default:
                 return null

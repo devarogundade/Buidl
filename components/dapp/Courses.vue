@@ -4,7 +4,7 @@
 
     <div class="tabs">
         <h3 :class="tab == 1 ? 'active' : ''" v-on:click="tab = 1">Subscribed</h3>
-        <h3 v-if="user && user.verified" :class="tab == 2 ? 'active' : ''" v-on:click="tab = 2">Created</h3>
+        <h3 v-show="createdCourses.length > 0" :class="tab == 2 ? 'active' : ''" v-on:click="tab = 2">Created</h3>
     </div>
 
     <div class="courses" v-show="(courses.length > 0) && !fetching && tab == 1">
@@ -83,95 +83,28 @@ export default {
             fetching: true,
             tab: 1,
             user: null,
-            buidlContract: this.$contracts.buidlContract,
-            courseContract: this.$contracts.courseContract,
+            buidlContract: null,
+            courseContract: null,
             provider: this.$auth.provider,
         }
     },
     created() {
-        this.$contracts.initBuidlContract(this.provider)
-        this.$contracts.initCourseContract(this.provider)
-
-        $nuxt.$on('buidl-contract', (contract) => {
-            if (this.buidlContract == null) {
-                this.buidlContract = contract
-                this.getUser()
-            }
-            this.buidlContract = contract
-        })
-        $nuxt.$on('course-contract', (contract) => {
-            if (this.courseContract == null) {
-                this.courseContract = contract
-            }
-            this.courseContract = contract
-        })
-
-        this.getCourses()
+        this.getSubscribedCourses()
         this.getCreatedCourses()
         this.getUser()
     },
     methods: {
-        getCourses: async function () {
-            const response = await this.$stream.fetch('course-created')
-            if (!response) return
-
-            const status = response.status
-
-            if (status) {
-                const courses = response.data.data
-                courses.forEach(course => {
-                    const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
-                    const creator = this.$utils.decode(['string', 'string', 'address'], course.creator.data)
-
-                    this.courses.push({
-                        id: Number(data[0]),
-                        name: data[1],
-                        description: data[2],
-                        category: Number(data[3]),
-                        photo: data[4],
-                        preview: data[5],
-                        address: data[6],
-                        creator: {
-                            name: creator[0],
-                            image: creator[1],
-                        }
-                    })
-                })
-
-            }
-            this.fetching = false
+        getSubscribedCourses: async function () {
+            if (this.$auth.accounts.length == 0) return
+            // const course =
         },
         getCreatedCourses: async function () {
-            const response = await this.$stream.fetchForAddress('course-created', this.$auth.accounts[0])
-            if (!response) return
-
-            const status = response.status
-
-            if (status) {
-                const courses = response.data.data
-                courses.forEach(course => {
-                    const data = this.$utils.decode(['uint', 'string', 'string', 'uint', 'string', 'string', 'address'], course.data)
-                    this.createdCourses.push({
-                        id: Number(data[0]),
-                        name: data[1],
-                        description: data[2],
-                        category: data[3],
-                        photo: data[4],
-                        preview: data[5],
-                        address: data[6]
-                    })
-                })
-            }
+            this.createdCourses = await this.$firestore.fetchAllWhere('courses', 'address', '==', `${this.$auth.accounts[0].toUpperCase()}`)
         },
         getUser: async function () {
-            const address = this.$auth.accounts[0]
-            if (!address || !this.buidlContract) return
-
-            const user = await this.buidlContract.users(address)
-            this.user = {
-                verified: user.verified,
-                createdAt: Number(user.createdAt)
-            }
+            if (this.$auth.accounts.length == 0) return
+            const user = await this.$firestore.fetch("users", this.$auth.accounts[0].toUpperCase())
+            this.user = user
         }
     }
 }

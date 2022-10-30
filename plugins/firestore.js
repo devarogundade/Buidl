@@ -31,6 +31,7 @@ export default ({}, inject) => {
         },
         fetchAllWhere: async function(_collection, key, sign, value) {
             const result = []
+
             const _query = query(collection(this.db, _collection), where(key, sign, value));
             const snapshot = await getDocs(_query)
 

@@ -25,6 +25,11 @@ app.post('/webhook', (req, res) => {
             return res.status(400).json();
         }
 
+        // override collection if needed
+        if (collection == 'creators') {
+            collection = 'users'
+        }
+
         // write data to firebase
         fireStore.write(collection, object.id, object)
     }

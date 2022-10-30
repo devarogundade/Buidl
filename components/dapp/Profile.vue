@@ -17,17 +17,6 @@
                     <p v-if="errorName" class="error-text">{{ errorName }}</p>
                 </div>
 
-                <div class="edit">
-                    <p class="label">Bio</p>
-                    <input :class="getInputClassForBio()" type="text" v-model="user.bio" placeholder="Talks about #Music #Lyrics" maxlength="45">
-                    <p v-if="errorBio" class="error-text">{{ errorBio }}</p>
-                </div>
-
-                <div class="edit">
-                    <p class="label">About </p>
-                    <HtmlEditor :height="300" :value="user.about" />
-                </div>
-
                 <div class="sign_up" v-if="!creating" v-on:click="createAccount()">Save changes</div>
                 <div class="sign_up" v-else>Please wait..</div>
             </div>
@@ -82,10 +71,8 @@ export default {
         return {
             user: {
                 name: '',
-                bio: '',
                 photo: '',
-                about: '',
-                address: ''
+                verified: false
             },
             errorName: null,
             errorBio: null,
@@ -106,10 +93,11 @@ export default {
             return
         }
 
-        const user = await this.$firestore.fetch("users", this.$auth.accounts[0])
+        const user = await this.$firestore.fetch("users", this.$auth.accounts[0].toUpperCase())
         if (user != null) {
             this.user = user
         }
+
         this.fetching = false
     },
     methods: {
@@ -138,7 +126,7 @@ export default {
                 const url = await this.$ipfs.upload(`users/${this.$auth.accounts[0]}`, base64)
 
                 if (url != null) {
-                    this.photo = url
+                    this.user.photo = url
                 }
             }
 
@@ -166,20 +154,7 @@ export default {
                 this.errorName = null
                 return 'filled'
             }
-        },
-        getInputClassForBio() {
-            if (this.user.bio == '') {
-                this.errorBio = null
-                return ''
-            }
-            if (this.user.bio.length < 2) {
-                this.errorBio = 'Bio is too short'
-                return 'error filled'
-            } else {
-                this.errorBio = null
-                return 'filled'
-            }
-        },
+        }
     }
 }
 </script>

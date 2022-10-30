@@ -6,10 +6,11 @@ initializeApp({ credential: cert(serviceAccount) });
 
 module.exports = {
     db: getFirestore(),
-    write: async function(collection, document, data) {
+    write: async function(collection, document, data, _merge = true) {
         try {
             const reference = this.db.collection(collection).doc(document);
-            await reference.set(data)
+            await reference.set(data, { merge: _merge })
+            return true
         } catch (error) {
             console.log(error);
             return false
