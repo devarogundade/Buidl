@@ -17,6 +17,17 @@
                     <p v-if="errorName" class="error-text">{{ errorName }}</p>
                 </div>
 
+                <div class="edit" v-if="($utils.fromWei(staked) >= 2000)">
+                    <p class="label">Creator Mode</p>
+                    <div class="switch-con">
+                        <p>Switch between creator mode?</p>
+                        <label class="switch">
+                            <input type="checkbox" v-model="user.verified">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="sign_up" v-if="!creating" v-on:click="createAccount()">Save changes</div>
                 <div class="sign_up" v-else>Please wait..</div>
             </div>
@@ -79,28 +90,60 @@ export default {
             file: null,
             creating: false,
             fetching: true,
-            buidlContract: this.$contracts.buidlContract,
-            provider: this.$auth.provider
+            buidlContract: null,
+            staked: 0
         }
     },
     async created() {
-        this.$contracts.initBuidlContract()
+        this.$contracts.initBuidlContract(this.$auth.provider)
         $nuxt.$on('buidl-contract', (contract) => {
             this.buidlContract = contract
         })
+
         if (this.$auth.accounts.length == 0) {
             this.fetching = false
             return
         }
 
-        const user = await this.$firestore.fetch("users", this.$auth.accounts[0].toUpperCase())
-        if (user != null) {
-            this.user = user
+        this.getUser()
+        this.$contracts.initStakingContract(this.$auth.provider)
+        $nuxt.$on('staking-contract', (contract) => {
+            this.getStakedBalance(contract)
+        })
+    },
+    watch: {
+        user: {
+            handler(_user) {
+                if (this.buidlContract == null) return
+                if (_user.verified) {
+                    try {
+                        this.buidlContract.unlockCreator({
+                            from: this.$auth.accounts[0]
+                        })
+                    } catch (error) {}
+                } else {
+                    try {
+                        this.buidlContract.removeCreator({
+                            from: this.$auth.accounts[0]
+                        })
+                    } catch (error) {}
+                }
+            },
+            deep: true
         }
-
-        this.fetching = false
     },
     methods: {
+        getStakedBalance: async function (contract) {
+            if (this.$auth.accounts.length == 0) return
+            const stake = await contract.stakes(this.$auth.accounts[0])
+            this.staked = stake.amount
+        },
+        getUser: async function () {
+            if (this.$auth.accounts.length == 0) return
+            this.user = await this.$firestore.fetch("users", this.$auth.accounts[0].toUpperCase())
+            console.log(this.user);
+            this.fetching = false
+        },
         onFileChange: function (event) {
             if (event.target.files && event.target.files.length > 0) {
                 const file = event.target.files[0]
