@@ -4,12 +4,9 @@ import contract from 'truffle-contract'
 import buidlJson from "../build/contracts/Buidl.json"
 import courseJson from "../build/contracts/BdlCourse.json"
 import tokenJson from "../build/contracts/BdlToken.json"
+import stakingJson from "../build/contracts/Staking.json"
 
 const Contracts = {
-    buidlContract: null,
-    courseContract: null,
-    tokenContract: null,
-
     initBuidlContract: async function(provider) {
         const buidlContract = contract(buidlJson)
         if (!provider) {
@@ -24,7 +21,6 @@ const Contracts = {
 
         try {
             buidlContract.deployed().then(instance => {
-                Contracts.buidlContract = instance
                 $nuxt.$emit('buidl-contract', instance)
             })
         } catch (error) {}
@@ -44,7 +40,6 @@ const Contracts = {
 
         try {
             courseContract.deployed().then(instance => {
-                Contracts.courseContract = instance
                 $nuxt.$emit('course-contract', instance)
             })
         } catch (error) {}
@@ -64,8 +59,26 @@ const Contracts = {
 
         try {
             tokenContract.deployed().then(instance => {
-                Contracts.tokenContract = instance
                 $nuxt.$emit('token-contract', instance)
+            })
+        } catch (error) {}
+    },
+
+    initStakingContract: async function(provider) {
+        const stakingContract = contract(stakingJson)
+        if (!provider) {
+            if (typeof ethereum === 'undefined') {
+                $nuxt.$emit('request-connect-wallet')
+            } else {
+                stakingContract.setProvider(ethereum)
+            }
+        } else {
+            stakingContract.setProvider(provider)
+        }
+
+        try {
+            stakingContract.deployed().then(instance => {
+                $nuxt.$emit('staking-contract', instance)
             })
         } catch (error) {}
     }
@@ -73,10 +86,6 @@ const Contracts = {
 
 export default ({}, inject) => {
     inject('contracts', Vue.observable({
-        buidlContract: Contracts.buidlContract,
-        courseContract: Contracts.courseContract,
-        tokenContract: Contracts.tokenContract,
-
         initBuidlContract: async function(provider) {
             await Contracts.initBuidlContract(provider)
         },
@@ -85,6 +94,9 @@ export default ({}, inject) => {
         },
         initTokenContract: async function(provider) {
             await Contracts.initTokenContract(provider)
+        },
+        initStakingContract: async function(provider) {
+            await Contracts.initStakingContract(provider)
         }
     }))
 }

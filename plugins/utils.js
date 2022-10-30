@@ -10,6 +10,12 @@ export default ({}, inject) => {
                 return web3.utils.fromWei(value, 'ether')
             } catch (error) {}
         },
+        toWei: function(value) {
+            try {
+                const web3 = new Web3()
+                return web3.utils.toWei(value, 'ether')
+            } catch (error) {}
+        },
         decode: function(format, data) {
             try {
                 const web3 = new Web3()

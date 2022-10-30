@@ -28,7 +28,8 @@
                 <div class="wallet">
                     <div>
                         <img src="/favicon.ico" alt="">
-                        <p>4943.02 <b>sBDL</b></p>
+                        <p v-if="staked">{{ $utils.fromWei(staked) }} <b>sBDL</b></p>
+                        <p v-else>0.00 <b>sBDL</b></p>
                     </div>
                     <div>UnStake</div>
                 </div>
@@ -100,14 +101,19 @@ export default {
             tab: 1,
             nfts: [],
             token: null,
+            staked: null,
             fetching1: true,
             fetching2: true,
             fetching3: true
         };
     },
     created() {
-        this.getNfts();
+        this.getNfts()
         this.getTokenBalances()
+        this.$contracts.initStakingContract(this.$auth.provider)
+        $nuxt.$on('staking-contract', (contract) => {
+            this.getStakeBalance(contract)
+        })
     },
     methods: {
         getNfts: async function () {
@@ -132,12 +138,18 @@ export default {
             return JSON.parse(json);
         },
         getTokenBalances: async function () {
+            if (this.$auth.accounts.length == 0) return
             const response = await this.$token.getTokenBalances(this.$auth.accounts[0])
-            const token = response.filter(_token => _token.token_address.toLowerCase() == "0xf7d28F30B4EB702fD2807080BeF1CEec0b1feDF0".toLowerCase())
+            const token = response.filter(_token => _token.token_address.toLowerCase() == "0x07F2566e3D15D5B3769D98ae35a5fc8A0688Ea71".toLowerCase())
             if (token.length > 0) {
                 this.token = token[0]
             }
             this.fetching1 = false
+        },
+        getStakeBalance: async function (contract) {
+            if (this.$auth.accounts.length == 0) return
+            const stake = await contract.stakes(this.$auth.accounts[0])
+            this.staked = stake.amount
         }
     }
 };

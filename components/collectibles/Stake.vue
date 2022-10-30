@@ -65,22 +65,23 @@ export default {
                 image: '/favicon.ico'
             },
             token: null,
-            buidlContract: this.$contracts.buidlContract,
-            provider: this.$auth.provider,
-            staking: false
+            staking: false,
+            buidlContract: null
         }
     },
     created() {
         this.getTokenBalances()
-        this.$contracts.initBuidlContract(this.provider)
+
+        this.$contracts.initBuidlContract(this.$auth.provider)
         $nuxt.$on('buidl-contract', (contract) => {
             this.buidlContract = contract
         })
     },
     methods: {
         getTokenBalances: async function () {
+            if (this.$auth.accounts.length == 0) return
             const response = await this.$token.getTokenBalances(this.$auth.accounts[0])
-            const token = response.filter(_token => _token.token_address.toLowerCase() == "0xf7d28F30B4EB702fD2807080BeF1CEec0b1feDF0".toLowerCase())
+            const token = response.filter(_token => _token.token_address.toLowerCase() == "0x07F2566e3D15D5B3769D98ae35a5fc8A0688Ea71".toLowerCase())
             if (token.length > 0) {
                 this.token = token[0]
                 this.from.balance = this.token.balance
@@ -95,14 +96,15 @@ export default {
             this.staking = true
 
             try {
-                const trx = await this.buidlContract.unlockCreator({
-                    from: this.$auth.accounts[0]
-                })
+                const trx = await this.buidlContract.stake(
+                    this.$utils.toWei(this.to.balance), {
+                        from: this.$auth.accounts[0]
+                    }
+                )
             } catch (error) {
 
+                this.staking = false
             }
-
-            this.staking = false
         }
     }
 }

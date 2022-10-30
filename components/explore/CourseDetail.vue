@@ -155,7 +155,7 @@ export default {
             buidlContract: this.$contracts.buidlContract
         }
     },
-    created() {
+    async created() {
         this.getNfts()
         this.course = await this.$firestore.fetch("courses", this.courseId);
         $nuxt.$emit(`course${this.courseId}`, this.course);

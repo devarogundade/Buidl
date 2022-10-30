@@ -13,9 +13,9 @@ module.exports = {
             case 'categories':
                 return ['uint', 'string', 'string']
             case 'courses':
-                return ['uint', 'string', 'string', 'uint', 'string', 'string', 'address']
+                return ['uint256', 'string', 'string', 'uint256', 'string', 'string', 'address', 'uint256', 'uint256']
             case 'users':
-                return ['string', 'string', 'address']
+                return ['string', 'string', 'address', 'bool']
             default:
                 return null
         }
@@ -27,7 +27,8 @@ module.exports = {
                 return {
                     id: data[0],
                     name: data[1],
-                    image: data[2]
+                    image: data[2],
+                    verified: data[3]
                 }
             case 'courses':
                 return {
@@ -37,7 +38,9 @@ module.exports = {
                     category: Number(data[3]),
                     photo: data[4],
                     preview: data[5],
-                    address: data[6]
+                    address: data[6],
+                    price: data[7],
+                    updatedAt: data[8]
                 }
             case 'users':
                 return {

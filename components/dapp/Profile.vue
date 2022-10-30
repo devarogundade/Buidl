@@ -145,7 +145,7 @@ export default {
             this.creating = true
 
             try {
-                const trx = await this.buidlContract.createAccount(this.user.name, this.user.photo, {
+                const trx = await this.buidlContract.setAccount(this.user.name, this.user.photo, {
                     from: this.$auth.accounts[0]
                 })
             } catch (error) {
