@@ -30,16 +30,16 @@
 
                     <div class="buy" v-if="subscription">
                         <div class="preview">
-                            <video :src="course.preview" :poster="course.photo" />
-                            <i class="fa-solid fa-play"></i>
+                            <video controls :src="course.preview" :poster="course.photo" />
+                            <!-- <i class="fa-solid fa-play"></i> -->
                         </div>
                         <div class="tag" v-if="!subscription.active">Preview</div>
                         <div class="tag" v-else><i class="fa-solid fa-certificate"></i> Bought</div>
 
-                        <div class="coupon" v-if="!subscription.active">
+                        <div class="coupon">
                             <p>Apply Coupon</p>
 
-                            <div class="options" v-show="showNfts && !subscription.active">
+                            <div class="options" v-show="showNfts">
                                 <div class="nft_row" v-on:click="removeCoupon()">
                                     <div class="name">
                                         <p>Remove coupon</p>
@@ -59,9 +59,9 @@
                                 <div class="nft_row" v-if="selectedNft == null">
                                     <div class="name">
                                         <p>Click here to select a coupon</p>
-                                        <a href="" target="_blank">
-                                            <p>Buy coupon on Opensea</p>
-                                        </a>
+                                        <!-- <a href="" target="_blank"> -->
+                                        <p>Buy coupon on Opensea</p>
+                                        <!-- </a> -->
                                     </div>
                                 </div>
                                 <div class="nft_row" v-else>
@@ -74,7 +74,7 @@
                             </div>
                         </div>
 
-                        <div class="pricing" v-if="!subscription.active">
+                        <div class="pricing">
                             <div>
                                 <p>Course price</p>
                                 <p v-if="course.price">{{ course.price }} BDL</p>
@@ -113,7 +113,7 @@
                 <div class="body">
                     <div class="content">
                         <h3 class="title">Course content</h3>
-                        <div class="desc">{{ sections.length }} sections &nbsp; • &nbsp; {{ sections.length }} Tests &nbsp; • &nbsp; 6 hours length</div>
+                        <div class="desc">{{ sections.length }} sections &nbsp; • &nbsp; 6 hours length</div>
 
                         <div class="accordions">
                             <div class="accordion" v-for="(section, index) in sections" :key="index">
@@ -125,7 +125,8 @@
                                     <p>1 test • 4min</p>
                                 </div>
                                 <div class="back" v-if="selectedSection == index">
-                                    <video src=""></video>
+                                    <video src="/videos/sample.mp4"></video>
+                                    <div class="text" v-html="section.content"></div>
                                 </div>
                             </div>
                         </div>
@@ -163,7 +164,7 @@ export default {
         this.creator = await this.$firestore.fetch('users', this.course.address)
         const subscription = await this.$firestore.fetch('subscriptions', `${this.$auth.accounts[0].toUpperCase()}-${this.courseId}`)
         if (subscription != null) {
-          this.subscription = subscription
+            this.subscription = subscription
         }
         this.category = await this.$firestore.fetch("categories", `${this.course.category}`)
         this.sections = await this.$firestore.fetchAll("course-sections", this.courseId)
@@ -439,15 +440,22 @@ export default {
 }
 
 .back {
-    padding: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     position: relative;
 }
 
+.back .text {
+    width: 100%;
+    color: #FFFFFF;
+    padding: 40px;
+}
+
 .back video {
-    width: 400px;
+    width: 100%;
+    object-fit: cover;
     height: 400px;
 }
 

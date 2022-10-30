@@ -34,10 +34,17 @@ app.post('/webhook', (req, res) => {
         }
 
         // override collection if needed
-        if (collection == 'creators') {
-            collection = 'users'
-            _merge = true
-            console.log(`switched to ${collection}`);
+        switch (collection) {
+            case 'creators':
+                collection = 'users'
+                _merge = true
+                break
+            case 'course-sections':
+                collection = `courses/${object.courseId}/sections`
+                _merge = true
+                break
+            default:
+                break
         }
 
         // write data to firebase
