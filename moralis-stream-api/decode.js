@@ -29,8 +29,7 @@ module.exports = {
                 return {
                     id: data[0],
                     name: data[1],
-                    image: data[2],
-                    verified: data[3]
+                    image: data[2]
                 }
             case 'courses':
                 return {
