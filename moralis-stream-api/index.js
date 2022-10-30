@@ -6,17 +6,17 @@ const decoder = require('./decode.js')
 app.use(express.json())
 
 app.post('/webhook', (req, res) => {
-    const webhook = req.body;
-    let collection = webhook.tag;
-    let _merge = false;
+    const webhook = req.body
+    let collection = webhook.tag
+    let _merge = false
 
-    console.log(webhook);
+    console.log(webhook)
 
     for (const log of webhook.logs) {
         const format = decoder.formats(collection)
 
         // abi format does not exists for event data
-        if (format == null) {
+        if (format == null || typeof format === 'undefined') {
             return res.status(400).json();
         }
 
@@ -24,7 +24,7 @@ app.post('/webhook', (req, res) => {
         const object = decoder.toObject(collection, data)
 
         // event data to object mapping failed
-        if (object == null) {
+        if (object == null || typeof object === 'undefined') {
             return res.status(400).json();
         }
 
@@ -38,7 +38,7 @@ app.post('/webhook', (req, res) => {
         fireStore.write(collection, object.id, object, _merge)
     }
 
-    return res.status(200).json();
+    return res.status(200).json()
 })
 
 const PORT = process.env.PORT || 8080;
