@@ -46,6 +46,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
   Use case: Certification.
      
 - Buidl NFT (ERC721)
+![Screenshot 2022-10-31 155800](https://user-images.githubusercontent.com/81397790/199039025-80a5e274-222c-4a10-90f0-0b655973033a.png)
 
   Use case: Rewards and Coupon.
   
