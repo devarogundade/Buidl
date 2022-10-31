@@ -124,7 +124,8 @@ contract BdlCourse {
         string memory name,
         string memory description,
         string memory thumbnail,
-        string memory previewSrc
+        string memory previewSrc,
+        bool publish
     ) external {
         require(courses[id].id == 0, "exists");
 
@@ -149,6 +150,7 @@ contract BdlCourse {
             previewSrc,
             msg.sender,
             price,
+            publish,
             block.timestamp
         );
     }
@@ -162,7 +164,8 @@ contract BdlCourse {
         string memory name,
         string memory description,
         string memory thumbnail,
-        string memory previewSrc
+        string memory previewSrc,
+        bool publish
     ) external {
         require(courses[id].creator == msg.sender, "!unathorized");
 
@@ -185,6 +188,7 @@ contract BdlCourse {
             previewSrc,
             msg.sender,
             price,
+            publish,
             block.timestamp
         );
     }
@@ -224,7 +228,8 @@ contract BdlCourse {
     }
 
     function refund(uint id, address owner)
-        external view
+        external
+        view
         returns (
             uint256,
             uint256,
@@ -234,7 +239,9 @@ contract BdlCourse {
     {
         int index = getSubscriptionIndex(id, owner);
 
-        Models.Subscription memory subscription = subscriptions[id][uint(index)];
+        Models.Subscription memory subscription = subscriptions[id][
+            uint(index)
+        ];
 
         uint payableSections = (subscription.sections -
             subscription.viewed.length);
@@ -254,7 +261,8 @@ contract BdlCourse {
     }
 
     function getSubscriptionIndex(uint courseId, address owner)
-        private view
+        private
+        view
         returns (int)
     {
         Models.Subscription[] memory _subscriptions = subscriptions[courseId];
@@ -284,6 +292,7 @@ contract BdlCourse {
         string previewSrc,
         address creator,
         uint256 price,
+        bool publish,
         uint updatedAt
     );
     event CourseSection(uint id, string title, string content, string src);

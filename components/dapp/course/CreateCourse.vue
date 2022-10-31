@@ -2,7 +2,7 @@
 <div class="container">
     <div class="settings">
         <div class="cover">
-            <img :src="''" id="cover" alt="">
+            <img :src="course.photo" id="cover" alt="">
             <i class="fa-solid fa-pen-to-square">
                 <input type="file" accept="image/*" v-on:change="onFileChange($event)">
             </i>
@@ -69,7 +69,7 @@ export default {
             course: {
                 name: '',
                 description: '',
-                photo: '',
+                photo: '/images/placeholder.png',
                 price: '',
                 level: '',
                 preview: ''
