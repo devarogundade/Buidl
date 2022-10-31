@@ -1,8 +1,9 @@
 <template>
-<div class="container">
+<InProgress v-if="fetching" />
+<div class="container" v-else>
     <div class="settings">
         <div class="cover">
-            <img :src="''" id="cover" alt="">
+            <img :src="course.photo" id="cover" alt="">
             <i class="fa-solid fa-pen-to-square">
                 <input type="file" accept="image/*" v-on:change="onFileChange($event)">
             </i>
@@ -72,7 +73,8 @@ export default {
                 photo: '',
                 price: '',
                 level: '',
-                preview: ''
+                preview: '',
+                publish: false
             },
             errorName: null,
             errorDescription: null,
@@ -99,9 +101,9 @@ export default {
         $nuxt.$on('course-contract', (contract) => {
             this.courseContract = contract
         })
-        console.log(this.courseId);
         this.course = await this.$firestore.fetch('courses', this.courseId)
         this.course.price = this.$utils.fromWei(this.course.price)
+        this.fetching = false
     },
     methods: {
         onFileChange: function (event) {

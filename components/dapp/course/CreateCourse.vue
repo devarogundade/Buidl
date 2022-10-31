@@ -72,7 +72,8 @@ export default {
                 photo: '/images/placeholder.png',
                 price: '',
                 level: '',
-                preview: ''
+                preview: '',
+                         publish: false
             },
             errorName: null,
             errorDescription: null,
