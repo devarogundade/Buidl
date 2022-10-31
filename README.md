@@ -50,6 +50,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
   Use case: Rewards and Coupon.
   
 - Buidl Video Player
+![Group 133 (1)](https://user-images.githubusercontent.com/81397790/199037899-58e283ac-d249-4da8-9800-dcb1d32c0bfd.png)
 
   Use case: .bdl file extension video player.
 
