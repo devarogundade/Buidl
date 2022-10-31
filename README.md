@@ -47,10 +47,12 @@ We have heavily used moralis stream and smart contract events, which has helped 
      
 - # Buidl NFT (ERC721)
 - Use case: Rewards and Coupon.
+- 
 ![Screenshot 2022-10-31 155800](https://user-images.githubusercontent.com/81397790/199039025-80a5e274-222c-4a10-90f0-0b655973033a.png)
   
 - # Buidl Video Player
 - Use case: .bdl file extension video player.
+- 
 ![Group 133 (2)](https://user-images.githubusercontent.com/81397790/199038576-06daf10b-f865-44c6-84c2-b64c8a160c0f.png)
 
 ## Hackathon Track
