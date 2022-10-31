@@ -14,13 +14,13 @@
                 <div class="wallet">
                     <div>
                         <img src="/images/bnb_coin.png" alt="">
-                        <p>13.32 <b>BNB</b></p>
+                        <p>{{ Number($utils.fromWei(balance)).toFixed(4) }} <b>BNB</b></p>
                     </div>
                 </div>
                 <div class="wallet">
                     <div>
                         <img src="/favicon.ico" alt="">
-                        <p v-if="token">{{ $utils.fromWei(token.balance) }} <b>{{ token.symbol }}</b></p>
+                        <p v-if="token">{{ Number($utils.fromWei(token.balance))}} <b>{{ token.symbol }}</b></p>
                         <p v-else>0.00 <b>BDL</b></p>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                 <div class="wallet">
                     <div>
                         <img src="/favicon.ico" alt="">
-                        <p v-if="staked">{{ $utils.fromWei(staked) }} <b>sBDL</b></p>
+                        <p v-if="staked">{{ Number($utils.fromWei(staked)) }} <b>sBDL</b></p>
                         <p v-else>0.00 <b>sBDL</b></p>
                     </div>
                     <div>UnStake</div>
@@ -104,11 +104,13 @@ export default {
             staked: null,
             fetching1: true,
             fetching2: true,
-            fetching3: true
+            fetching3: true,
+            balance: 0
         };
     },
     created() {
         this.getNfts()
+        this.getNativeBalance()
         this.getTokenBalances()
         this.$contracts.initStakingContract(this.$auth.provider)
         $nuxt.$on('staking-contract', (contract) => {
@@ -136,6 +138,12 @@ export default {
                 };
             }
             return JSON.parse(json);
+        },
+        getNativeBalance: async function () {
+            if (this.$auth.accounts.length == 0) return
+            const response = await this.$token.getNativeBalance(this.$auth.accounts[0])
+            if (!response) return
+            this.balance = response.balance
         },
         getTokenBalances: async function () {
             if (this.$auth.accounts.length == 0) return

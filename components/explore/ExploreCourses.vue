@@ -175,7 +175,13 @@ export default {
     font-weight: 600;
     color: #e9e9e9;
     margin-bottom: 20px;
+    min-height: 50px;
     font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .detail .instructor {

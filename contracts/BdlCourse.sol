@@ -21,6 +21,8 @@ contract BdlCourse {
 
     uint private categoryCount = 0;
 
+    uint private salesFee = 8; // eight percent
+
     address private deployer;
 
     constructor() {
@@ -63,7 +65,14 @@ contract BdlCourse {
         uint id,
         uint sId,
         address learner
-    ) external returns (uint256, address, uint) {
+    )
+        external
+        returns (
+            uint256,
+            address,
+            uint
+        )
+    {
         Models.Subscription memory subscription = subscriptions[id][sId];
         Models.Course memory course = courses[id];
 
@@ -207,6 +216,61 @@ contract BdlCourse {
         emit CourseTransfer(id, creator, receiver);
     }
 
+    /* view section */
+    function viewSection(uint id, uint sectionIndex) public {
+        int index = getSubscriptionIndex(id, msg.sender);
+        subscriptions[id][uint(index)].viewed.push(sectionIndex);
+        emit SectionViewed(id, sectionIndex);
+    }
+
+    function refund(uint id, address owner)
+        external view
+        returns (
+            uint256,
+            uint256,
+            address,
+            uint256
+        )
+    {
+        int index = getSubscriptionIndex(id, owner);
+
+        Models.Subscription memory subscription = subscriptions[id][uint(index)];
+
+        uint payableSections = (subscription.sections -
+            subscription.viewed.length);
+        require(payableSections > 0, "!you_cant_refund_this_course");
+
+        uint256 payableAmount = ((payableSections / subscription.sections) *
+            subscription.price);
+        uint256 netEarnings = (payableAmount - subscription.price);
+        uint256 earnings = (netEarnings * (salesFee / 100));
+
+        return (
+            payableAmount,
+            earnings,
+            courses[id].creator,
+            subscription.price
+        );
+    }
+
+    function getSubscriptionIndex(uint courseId, address owner)
+        private view
+        returns (int)
+    {
+        Models.Subscription[] memory _subscriptions = subscriptions[courseId];
+        int _index = -1;
+
+        for (int index = 0; uint(index) < _subscriptions.length; index++) {
+            if (_subscriptions[uint(index)].owner == owner) {
+                _index = index;
+                break;
+            }
+        }
+
+        require(_index >= 0, "!you_are_not_subscribed_to_this_course");
+        return _index;
+    }
+
     // == events == //
     event Subscription(uint courseId, address learner, bool status);
     event CourseTransfer(uint id, address creator, address receiver);
@@ -223,6 +287,7 @@ contract BdlCourse {
         uint updatedAt
     );
     event CourseSection(uint id, string title, string content, string src);
+    event SectionViewed(uint id, uint sectionIndex);
 
     // == modifiers == //
     modifier onlyOwner() {

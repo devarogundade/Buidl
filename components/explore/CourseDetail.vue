@@ -93,7 +93,7 @@
                             </div>
                         </div>
 
-                        <div class="action" v-if="course.address == $auth.accounts[0].toUpperCase()">
+                        <div class="action" v-if="($auth.accounts.length > 0) && (course.address == $auth.accounts[0].toUpperCase())">
                             <router-link :to="`/app/course-builder/${$route.params.course}`">
                                 <div class="pay">Edit Course</div>
                             </router-link>
@@ -162,9 +162,11 @@ export default {
         this.fetching = false
 
         this.creator = await this.$firestore.fetch('users', this.course.address)
-        const subscription = await this.$firestore.fetch('subscriptions', `${this.$auth.accounts[0].toUpperCase()}-${this.courseId}`)
-        if (subscription != null) {
-            this.subscription = subscription
+        if (this.$auth.accounts.length > 0) {
+            const subscription = await this.$firestore.fetch('subscriptions', `${this.$auth.accounts[0].toUpperCase()}-${this.courseId}`)
+            if (subscription != null) {
+                this.subscription = subscription
+            }
         }
         this.category = await this.$firestore.fetch("categories", `${this.course.category}`)
         this.sections = await this.$firestore.fetchAll("course-sections", this.courseId)

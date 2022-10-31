@@ -95,10 +95,7 @@ contract Buidl {
 
     /* subscribe to a course */
     /* params course id, subscription id, refundable percentage */
-    function unSubscribe(
-        uint id,
-        uint sId
-    ) public {
+    function unSubscribe(uint id, uint sId) public {
         (uint256 price, address creator, uint weight) = _bdlCourse.unSubscribe(
             id,
             sId,
@@ -116,6 +113,21 @@ contract Buidl {
 
         _bdlToken.approve(address(this), msg.sender, refundable);
         _bdlToken.transferFrom(address(this), msg.sender, refundable);
+    }
+
+    /* refund a course */
+    function refund(uint id) public {
+        (
+            uint256 payableAmount,
+            uint256 earnings,
+            address creator,
+            uint256 price
+        ) = _bdlCourse.refund(id, msg.sender);
+
+        _bdlToken.approve(msg.sender, address(this), payableAmount);
+        _bdlToken.transferFrom(msg.sender, address(this), payableAmount);
+        revenues[creator].unclaimed -= price;
+        revenues[creator].claimable += earnings;
     }
 
     modifier onlyVerified() {

@@ -1,9 +1,8 @@
 <template>
-<Progress v-if="!course" />
-<div class="container" v-else>
+<div class="container">
     <div class="settings">
         <div class="cover">
-            <img :src="course.ipfsPhoto" id="cover" alt="">
+            <img :src="''" id="cover" alt="">
             <i class="fa-solid fa-pen-to-square">
                 <input type="file" accept="image/*" v-on:change="onFileChange($event)">
             </i>
@@ -12,7 +11,7 @@
         <div class="form">
             <div class="edit">
                 <p class="label">Course name *</p>
-                <input :class="getInputClassForName()" type="text" v-model="course.name" placeholder="Music producer" maxlength="45">
+                <input :class="getInputClassForName()" type="text" v-model="course.name" placeholder="Music producer" maxlength="60">
                 <p v-if="errorName" class="error-text">{{ errorName }}</p>
             </div>
 
@@ -26,7 +25,7 @@
                 <p class="label">Category *</p>
                 <select v-on:change="onCategoryChanged($event)">
                     <option disabled hidden>Choose category</option>
-                    <option v-for="(category, index) in categories" :key="index" :selected="course.categoryId.toNumber() == category.id.toNumber()" :value="category.id.toNumber()">{{ category.name }}</option>
+                    <option v-for="(category, index) in categories" :key="index" :value="index">{{ category.name }}</option>
                 </select>
                 <p v-if="errorCategory" class="error-text">{{ errorCategory }}</p>
             </div>
@@ -56,7 +55,7 @@
                 <p class="error-text" v-if="errorPrice">{{ errorPrice }}</p>
             </div>
 
-            <div class="sign_up" v-if="!saving" v-on:click="saveChanges()">Save changes</div>
+            <div class="sign_up" v-if="!updating" v-on:click="updateCourse()">Save changes</div>
             <div class="sign_up" v-else>Please wait..</div>
         </div>
     </div>
@@ -67,6 +66,14 @@
 export default {
     data() {
         return {
+            course: {
+                name: '',
+                description: '',
+                photo: '',
+                price: '',
+                level: '',
+                preview: ''
+            },
             errorName: null,
             errorDescription: null,
             errorPrice: null,
@@ -76,21 +83,25 @@ export default {
                 'Intermediate',
                 'Advanced'
             ],
-
-            saving: false,
+            updating: false,
             file: null,
-
-            course: null,
             fetching: true,
             notFound: false,
-            courseId: this.$route.params.course,
             selectedCategory: 0,
-            categories: []
+            categories: [],
+            courseContract: null,
+            courseId: this.$route.params.course
         }
     },
-    mounted() {
-        this.getCourse()
+    async created() {
         this.getCategories()
+        this.$contracts.initCourseContract(this.$auth.provider)
+        $nuxt.$on('course-contract', (contract) => {
+            this.courseContract = contract
+        })
+        console.log(this.courseId);
+        this.course = await this.$firestore.fetch('courses', this.courseId)
+        this.course.price = this.$utils.fromWei(this.course.price)
     },
     methods: {
         onFileChange: function (event) {
@@ -99,11 +110,11 @@ export default {
             this.file = file
             document.getElementById('cover').src = url
         },
-        saveChanges: async function () {
-            if (this.saving) return
-            this.saving = false
+        updateCourse: async function () {
+            if (this.updating || !this.courseContract) return
+            this.updating = false
 
-            if (this.selectedCategory == 0) {
+            if (this.selectedCategory == null) {
                 this.errorCategory = 'Select a category'
                 return
             } else {
@@ -124,32 +135,32 @@ export default {
                 return
             }
 
-            this.saving = true
+            this.updating = true
 
             if (this.file != null) {
                 const base64 = await this.$ipfs.toBase64(this.file)
                 const url = await this.$ipfs.upload(`courses/${this.courseId}`, base64)
 
-                console.log(url);
-
                 if (url != null) {
-                    this.course.ipfsPhoto = url
+                    this.course.photo = url
                 }
             }
 
             try {
-
+                const trx = await this.courseContract.updateCourse(
+                    this.courseId, this.categories[this.selectedCategory].id, this.$utils.toWei(this.course.price),
+                    this.course.name, this.course.description, this.course.photo, this.course.preview, {
+                        from: this.$auth.accounts[0]
+                    })
+                this.$router.push('/app/courses')
             } catch (error) {
-
+                console.log(error);
             }
 
-            this.saving = false
+            this.updating = false
         },
-        async getCourse() {
-
-        },
-        async getCategories() {
-
+        getCategories: async function () {
+            this.categories = await this.$firestore.fetchAll('categories')
         },
         onCategoryChanged(event) {
             this.selectedCategory = event.target.value
