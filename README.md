@@ -76,6 +76,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
 - Buidl Token Faucet https://buidl.netlify.app/mint
 
 ## Screenshots
+![Screenshot 2022-11-01 064225](https://user-images.githubusercontent.com/81397790/199166950-fc271011-4f1b-4228-a68e-5662bdd3e5e7.png)
 
 ## Other Services
 - Netlify
