@@ -61,7 +61,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
 ## Tech Stacks
 
 - Binance Smart Chain (Testnet)
-- Moralis Stream and Web3 APIs
+- Moralis Stream (#)[https://github.com/devarogundade/Buidl/tree/master/moralis-stream-api] and Web3 APIs
 - IPFS (File System)
 - Solidity (Smart Contract)
 - Nuxtjs (Frontend)
