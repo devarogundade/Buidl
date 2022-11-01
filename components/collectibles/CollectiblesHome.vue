@@ -148,7 +148,7 @@ export default {
         getTokenBalances: async function () {
             if (this.$auth.accounts.length == 0) return
             const response = await this.$token.getTokenBalances(this.$auth.accounts[0])
-            const token = response.filter(_token => _token.token_address.toLowerCase() == "0x2cB711A6dC8482948CCbBB2Fe3F0767D09C632ec".toLowerCase())
+            const token = response.filter(_token => _token.token_address.toLowerCase() == process.env.TOKEN_CONTRACT_ADDRESS.toLowerCase())
             if (token.length > 0) {
                 this.token = token[0]
             }

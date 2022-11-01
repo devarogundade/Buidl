@@ -216,6 +216,7 @@ export default {
             if (this.$auth.accounts == null) return
             const nfts = await this.$nft.getUserNfts(this.$auth.accounts[0])
             this.nfts = nfts.result
+            console.log(this.nfts);
         },
         buyCourse: async function () {
             if (this.buidlContract == null) return
