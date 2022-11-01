@@ -105,6 +105,9 @@ Want to contribute? Great!
 
 Reach out to me at https://linktr.ee/devarogundade
 
+## Team
+- Arogundade Ibrahim
+
 ## License
 
 MIT
