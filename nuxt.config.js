@@ -7,7 +7,9 @@ export default {
         MNEMONIC: process.env.MNEMONIC,
         MORALIS_KEY: process.env.MORALIS_KEY,
         TINY_KEY: process.env.TINY_KEY,
-        COVALENT_KEY: process.env.COVALENT_KEY
+        COVALENT_KEY: process.env.COVALENT_KEY,
+        NFT_CONTRACT_ADDRESS: process.env.NFT_CONTRACT_ADDRESS,
+        TOKEN_CONTRACT_ADDRESS: process.env.TOKEN_CONTRACT_ADDRESS
     },
 
     head: {

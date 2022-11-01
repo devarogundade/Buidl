@@ -1,10 +1,11 @@
 <template>
 <div class="study">
     <div class="refund">
-        <div class="action" v-on:click="refund()">Refund this course</div>
+        <div class="action" v-if="!refunding" v-on:click="refund()">Refund this course</div>
+        <div class="action" v-else>Processing...</div>
     </div>
     <div class="sections">
-        <div class="section" v-for="(section, index) in sections" :key="index">
+        <div class="section" v-for="(section, index) in sections" :key="index" :class="activeSection && activeSection == (index + 1) ? 'active' : ''">
             <p class="nomba">{{ index + 1 }}.</p>
             <h3 class="title">{{ section.title }}</h3>
             <p class="length"><i class="fa-solid fa-clock"></i> 00.53 min</p>
@@ -12,39 +13,9 @@
             <!-- <p class="lock play"> <i class="fa-solid fa-play"></i> Play</p> -->
         </div>
     </div>
+
     <div class="screen">
-
-        <!-- <div class="swiper-section">
-            <div class="swiper-wrapper" v-if="sections.length > 0">
-                <div class="swiper-slide" v-for="(section, index) in sections" :key="index">
-                    <div class="section">
-                        <div class="video">
-                            <div class="title">{{ section.title }}</div>
-                            <video src="/videos/sample.mp4"></video>
-                            <i class="fa-solid fa-play"></i>
-                        </div>
-                        <div class="text" v-html="section.content"></div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="section">
-                      <div class="video">dsds</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="pager">
-            <div class="prev scaleable" v-on:click="prev()">
-                <i class="fa-solid fa-angle-left"></i> Previous Section
-            </div>
-            <div class="next scaleable" v-if="swiper && swiper.isEnd" v-on:click="onComplete()">
-                Check Result <i class="fa-solid fa-angle-right"></i>
-            </div>
-            <div class="next scaleable" v-else v-on:click="next()">
-                Next Section <i class="fa-solid fa-angle-right"></i>
-            </div>
-        </div> -->
+        <video src="" class="player" controls></video>
     </div>
 </div>
 </template>
@@ -62,16 +33,18 @@ export default {
             swiper: null,
             user: this.$contracts.user,
             nfts: [],
-            courseContract: null
+            buidlContract: null,
+            refunding: false,
+            activeSection: 1
         };
     },
     created() {
         this.getCourse();
         this.getCourseSections();
 
-        this.$contracts.initCourseContract(this.$auth.provider)
-        $nuxt.$on('course-contract', (contract) => {
-            this.courseContract = contract
+        this.$contracts.initBuidlContract(this.$auth.provider)
+        $nuxt.$on('buidl-contract', (contract) => {
+            this.buidlContract = contract
         })
     },
     updated() {
@@ -102,7 +75,18 @@ export default {
             this.sections = await this.$firestore.fetchAll("course-sections", this.courseId);
         },
         refund: async function () {
+            if (this.buidlContract == null || this.$auth.accounts.length == 0) return
+            this.refunding = true
 
+            try {
+                const trx = await this.buidlContract.refund(this.courseId, {
+                    from: this.$auth.accounts[0]
+                })
+            } catch (error) {
+                $nuxt.$emit('error', 'You can\'t refund this course')
+            }
+
+            this.refunding = false
         }
     },
 };
@@ -167,6 +151,7 @@ export default {
     gap: 30px;
     align-items: center;
     color: #ffffff;
+    padding: 0 20px;
     border-bottom: 1px solid #fff;
 }
 
@@ -196,6 +181,10 @@ export default {
 
 .section .nomba {
     font-size: 20px;
+}
+
+.active {
+    background: #007bff34;
 }
 
 .section .title {
@@ -275,6 +264,18 @@ export default {
     user-select: none;
     padding: 0 20px;
     gap: 10px;
+}
+
+.screen {
+    width: 100%;
+    margin-top: 50px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.player {
+    height: 600px;
+    width: 100%;
 }
 
 @media screen and (max-width: 800px) {

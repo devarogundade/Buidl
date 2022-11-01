@@ -13,13 +13,11 @@ contract BdlCourse {
     /* holds all course subscriptions */
     mapping(uint => Models.Subscription[]) public subscriptions;
 
-    /* learner => course id */
-    mapping(address => uint[]) public subscribeds;
-
     /* 2 weeks */
     uint private refundableDuration = 10000;
 
     uint private categoryCount = 0;
+    uint private sectionsCount = 0;
 
     uint private salesFee = 8; // eight percent
 
@@ -54,41 +52,8 @@ contract BdlCourse {
             )
         );
 
-        subscribeds[learner].push(id);
-
         emit Subscription(id, learner, true);
         return (course.price, course.creator);
-    }
-
-    /* function to unsubscribe from a course */
-    function unSubscribe(
-        uint id,
-        uint sId,
-        address learner
-    )
-        external
-        returns (
-            uint256,
-            address,
-            uint
-        )
-    {
-        Models.Subscription memory subscription = subscriptions[id][sId];
-        Models.Course memory course = courses[id];
-
-        require(course.id != 0, "!exists");
-        require(subscription.owner == learner, "!authorized");
-
-        uint dueTime = (block.timestamp + refundableDuration);
-        require(subscription.time < dueTime, ">2weeks");
-
-        uint weight = (subscription.viewed.length / subscription.sections);
-
-        delete subscriptions[id][sId];
-        delete subscribeds[learner][id];
-
-        emit Subscription(id, learner, false);
-        return (subscription.price, course.creator, weight);
     }
 
     // == creator related functions == //
@@ -198,11 +163,26 @@ contract BdlCourse {
         uint id,
         string memory title,
         string memory content,
-        string memory src
+        string memory src,
+        uint duration
     ) public {
         require(courses[id].creator == msg.sender, "!unathorized");
         courses[id].sections++;
-        emit CourseSection(id, title, content, src);
+        sectionsCount++;
+        emit CourseSection(id, title, content, src, duration, sectionsCount);
+    }
+
+    /* updates a course section */
+    function updateCourseSection(
+        uint id,
+        string memory title,
+        string memory content,
+        string memory src,
+        uint duration,
+        uint sectionId
+    ) public {
+        require(courses[id].creator == msg.sender, "!unathorized");
+        emit CourseSection(id, title, content, src, duration, sectionId);
     }
 
     /* transfer course onwership */
@@ -221,15 +201,14 @@ contract BdlCourse {
     }
 
     /* view section */
-    function viewSection(uint id, uint sectionIndex) public {
+    function viewSection(uint id, uint sectionId) public {
         int index = getSubscriptionIndex(id, msg.sender);
-        subscriptions[id][uint(index)].viewed.push(sectionIndex);
-        emit SectionViewed(id, sectionIndex);
+        subscriptions[id][uint(index)].viewed.push(sectionId);
+        emit SectionViewed(id, sectionId);
     }
 
-    function refund(uint id, address owner)
+    function unSubscribe(uint id, address owner)
         external
-        view
         returns (
             uint256,
             uint256,
@@ -242,20 +221,34 @@ contract BdlCourse {
         Models.Subscription memory subscription = subscriptions[id][
             uint(index)
         ];
+        Models.Course memory course = courses[id];
+
+        uint dueTime = (block.timestamp + 2 weeks);
+        require(subscription.time < dueTime, ">2weeks");
 
         uint payableSections = (subscription.sections -
             subscription.viewed.length);
+
         require(payableSections > 0, "!you_cant_refund_this_course");
 
         uint256 payableAmount = ((payableSections / subscription.sections) *
             subscription.price);
+
         uint256 netEarnings = (payableAmount - subscription.price);
-        uint256 earnings = (netEarnings * (salesFee / 100));
+        uint256 earnings;
+        if (netEarnings > 0) {
+            earnings = (netEarnings * (salesFee / 100));
+        }
+
+        /* user has unsubscribe */
+        delete subscriptions[id][uint(index)];
+
+        emit Subscription(id, owner, false);
 
         return (
             payableAmount,
             earnings,
-            courses[id].creator,
+            course.creator,
             subscription.price
         );
     }
@@ -295,8 +288,8 @@ contract BdlCourse {
         bool publish,
         uint updatedAt
     );
-    event CourseSection(uint id, string title, string content, string src);
-    event SectionViewed(uint id, uint sectionIndex);
+    event CourseSection(uint id, string title, string content, string src, uint duration, uint sectionId);
+    event SectionViewed(uint id, uint sectionId);
 
     // == modifiers == //
     modifier onlyOwner() {
