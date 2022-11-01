@@ -2,9 +2,7 @@
 <section>
     <div>
         <h3>Category</h3>
-        <input type="text" placeholder="name" v-model="name">
-        <input type="text" placeholder="name" v-model="image">
-        <button v-on:click="addCategory()">Add Category</button>
+        <button v-on:click="mintCategories()">Mint Categories</button>
 
         {{ this.test }}
     </div>
@@ -29,26 +27,20 @@ export default {
     layout: 'landing',
     data() {
         return {
-            name: '',
-            image: '',
             courseContract: null,
-            test: null
         }
     },
-    mounted() {
+    created() {
         this.$contracts.initCourseContract(this.$auth.provider)
         $nuxt.$on('course-contract', (contract) => {
             this.courseContract = contract
         })
-
-        const web3 = new Web3()
-
     },
     methods: {
-        addCategory: async function () {
+        mintCategories: async function () {
             if (this.courseContract == null) return
 
-            await this.courseContract.createCategory(this.name, this.image, {
+            await this.courseContract.mintCategories({
                 from: this.$auth.accounts[0]
             })
         }

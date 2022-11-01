@@ -81,7 +81,7 @@ export default {
         getTokenBalances: async function () {
             if (this.$auth.accounts.length == 0) return
             const response = await this.$token.getTokenBalances(this.$auth.accounts[0])
-            const token = response.filter(_token => _token.token_address.toLowerCase() == "0x07F2566e3D15D5B3769D98ae35a5fc8A0688Ea71".toLowerCase())
+            const token = response.filter(_token => _token.token_address.toLowerCase() == "0x2cB711A6dC8482948CCbBB2Fe3F0767D09C632ec".toLowerCase())
             if (token.length > 0) {
                 this.token = token[0]
                 this.from.balance = this.token.balance
@@ -101,10 +101,8 @@ export default {
                         from: this.$auth.accounts[0]
                     }
                 )
-            } catch (error) {
-
-                this.staking = false
-            }
+            } catch (error) {}
+            this.staking = false
         }
     }
 }

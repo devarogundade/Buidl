@@ -103,6 +103,7 @@ export default ({ app }, inject) => {
                     method: 'eth_requestAccounts'
                 });
                 this.provider = ethereum
+                await this.switchToBinanceTestnet()
 
                 this.setUpAccountListeners(ethereum)
 
@@ -120,8 +121,8 @@ export default ({ app }, inject) => {
             try {
                 const coinbaseWallet = new CoinbaseWalletSDK({
                     appName: "Buidl",
-                    appLogoUrl: "https://example.com/logo.png",
-                    darkMode: false
+                    appLogoUrl: "/favicon.ico",
+                    darkMode: true
                 })
 
                 this.provider = coinbaseWallet.makeWeb3Provider(
@@ -201,6 +202,36 @@ export default ({ app }, inject) => {
             provider.on("chainChanged", (chainId) => {
                 $nuxt.$emit('chain-changed', chainId)
             });
+        },
+
+        switchToBinanceTestnet: async function() {
+            try {
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x61' }],
+                });
+            } catch (error) {
+                if (error.code === 4902) {
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [{
+                                chainId: '0x61',
+                                chainName: 'Smart Chain - Testnet',
+                                nativeCurrency: {
+                                    name: 'Binance',
+                                    symbol: 'BNB', // 2-6 characters long
+                                    decimals: 18
+                                },
+                                blockExplorerUrls: ['https://testnet.bscscan.com'],
+                                rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+                            }, ],
+                        });
+                    } catch (addError) {
+                        console.error(addError);
+                    }
+                }
+            }
         }
     }))
 }

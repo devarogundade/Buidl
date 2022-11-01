@@ -4,12 +4,12 @@
     <div class="screen" v-if="sections.length > 0">
         <div class="course">
             <div class="edit">
-                <p class="label">Section Title *</p>
+                <p class="label">Section title *</p>
                 <input type="text" v-model="sections[selectedIndex].title" placeholder="Introduction, Conclusion.." maxlength="45">
             </div>
 
             <div class="edit">
-                <p class="label">Choose Video *</p>
+                <p class="label">Choose video *</p>
                 <div class="video">
                     <video v-if="sections[selectedIndex].src != ''" :src="sections[selectedIndex].src"></video>
                     <i v-if="sections[selectedIndex].src != ''" class="fa-solid fa-play"></i>

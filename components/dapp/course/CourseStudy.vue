@@ -1,7 +1,20 @@
 <template>
 <div class="study">
+    <div class="refund">
+        <div class="action" v-on:click="refund()">Refund this course</div>
+    </div>
+    <div class="sections">
+        <div class="section" v-for="(section, index) in sections" :key="index">
+            <p class="nomba">{{ index + 1 }}.</p>
+            <h3 class="title">{{ section.title }}</h3>
+            <p class="length"><i class="fa-solid fa-clock"></i> 00.53 min</p>
+            <p class="lock unlock"><i class="fa-solid fa-unlock"></i> Unlock</p>
+            <!-- <p class="lock play"> <i class="fa-solid fa-play"></i> Play</p> -->
+        </div>
+    </div>
     <div class="screen">
-        <div class="swiper-section">
+
+        <!-- <div class="swiper-section">
             <div class="swiper-wrapper" v-if="sections.length > 0">
                 <div class="swiper-slide" v-for="(section, index) in sections" :key="index">
                     <div class="section">
@@ -15,7 +28,7 @@
                 </div>
                 <div class="swiper-slide">
                     <div class="section">
-                        <!-- <div class="video">dsds</div> -->
+                      <div class="video">dsds</div>
                     </div>
                 </div>
             </div>
@@ -31,7 +44,7 @@
             <div class="next scaleable" v-else v-on:click="next()">
                 Next Section <i class="fa-solid fa-angle-right"></i>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 </template>
@@ -49,43 +62,48 @@ export default {
             swiper: null,
             user: this.$contracts.user,
             nfts: [],
+            courseContract: null
         };
     },
-    mounted() {
+    created() {
         this.getCourse();
         this.getCourseSections();
 
-        $nuxt.$on("user", (user) => {
-            this.user = user;
-        });
+        this.$contracts.initCourseContract(this.$auth.provider)
+        $nuxt.$on('course-contract', (contract) => {
+            this.courseContract = contract
+        })
     },
     updated() {
         if (this.swiper == null) {
-            new Swiper(".swiper-section", {
-                slidesPerView: 1,
-                spaceBetween: 30,
-            });
-            this.swiper = document.querySelector(".swiper-section").swiper;
+            // new Swiper(".swiper-section", {
+            //     slidesPerView: 1,
+            //     spaceBetween: 30,
+            // });
+            // this.swiper = document.querySelector(".swiper-section").swiper;
         }
     },
     methods: {
-        prev() {
-            if (this.swiper == null) return;
-            this.swiper.slidePrev();
+        prev: function () {
+            // if (this.swiper == null) return;
+            // this.swiper.slidePrev();
         },
-        next() {
-            if (this.swiper == null) return;
-            this.swiper.slideNext();
+        next: function () {
+            // if (this.swiper == null) return;
+            // this.swiper.slideNext();
         },
         onComplete: async function () {},
-        async getCourse() {
+        getCourse: async function () {
             this.course = await this.$firestore.fetch("courses", this.courseId);
             $nuxt.$emit(`course${this.courseId}`, this.course);
             this.fetching = false;
         },
-        async getCourseSections() {
+        getCourseSections: async function () {
             this.sections = await this.$firestore.fetchAll("course-sections", this.courseId);
         },
+        refund: async function () {
+
+        }
     },
 };
 </script>
@@ -137,13 +155,73 @@ export default {
     background: #007aff;
 }
 
+.sections,
+.section {
+    width: 100%;
+}
+
+.section {
+    display: grid;
+    grid-template-columns: 20px auto 120px 120px;
+    height: 80px;
+    gap: 30px;
+    align-items: center;
+    color: #ffffff;
+    border-bottom: 1px solid #fff;
+}
+
+.lock {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 10px;
+    background: #007aff;
+    cursor: pointer;
+    user-select: none;
+    height: 40px;
+}
+
+.length {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.unlock {
+    color: #FF6370;
+    background: #ffdee1;
+}
+
+.section .nomba {
+    font-size: 20px;
+}
+
 .section .title {
-    padding: 20px 30px;
-    padding-bottom: 16px;
-    font-size: 18px;
-    color: #fff;
+    font-size: 24px;
     font-weight: 600;
-    background: #3b3c4e;
+}
+
+.refund {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.refund .action {
+    width: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid #FF6370;
+    color: #FF6370;
+    font-size: 20px;
+    cursor: pointer;
+    user-select: none;
 }
 
 .video {
@@ -174,14 +252,6 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-}
-
-.section .text {
-    margin-top: 50px;
-    font-size: 17px;
-    color: #fff;
-    line-height: 22px;
-    padding: 0 20px;
 }
 
 .pager {

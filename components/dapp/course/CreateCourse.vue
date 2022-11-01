@@ -4,7 +4,7 @@
         <div class="cover">
             <img :src="course.photo" id="cover" alt="">
             <i class="fa-solid fa-pen-to-square">
-                <input type="file" accept="image/*" v-on:change="onFileChange($event)">
+                <input type="file" accept="image/*" v-on:change="choosePhoto($event)">
             </i>
         </div>
 
@@ -39,11 +39,18 @@
             </div>
 
             <div class="edit">
+                <p class="label">Preview video *</p>
+                <div class="video">
+                    <input v-on:change="choosePreview($event)" type="file">
+                </div>
+            </div>
+
+            <div class="edit">
                 <p class="label">Course visibility</p>
                 <div class="switch-con">
                     <p>Publish this course?</p>
                     <label class="switch">
-                        <input type="checkbox" v-model="course.isPublished">
+                        <input type="checkbox" v-model="course.publish">
                         <span class="slider round"></span>
                     </label>
                 </div>
@@ -73,7 +80,7 @@ export default {
                 price: '',
                 level: '',
                 preview: '',
-                         publish: false
+                publish: false
             },
             errorName: null,
             errorDescription: null,
@@ -85,7 +92,8 @@ export default {
                 'Advanced'
             ],
             creating: false,
-            file: null,
+            photoFile: null,
+            previewFile: null,
             fetching: true,
             notFound: false,
             selectedCategory: 0,
@@ -101,10 +109,14 @@ export default {
         })
     },
     methods: {
-        onFileChange: function (event) {
+        choosePreview: function (event) {
+            const file = event.target.files[0]
+            this.previewFile = file
+        },
+        choosePhoto: function (event) {
             const file = event.target.files[0]
             const url = URL.createObjectURL(file)
-            this.file = file
+            this.photoFile = file
             document.getElementById('cover').src = url
         },
         createCourse: async function () {
@@ -134,12 +146,21 @@ export default {
 
             this.creating = true
 
-            if (this.file != null) {
-                const base64 = await this.$ipfs.toBase64(this.file)
-                const url = await this.$ipfs.upload(`courses/${this.courseId}`, base64)
+            if (this.photoFile != null) {
+                const base64 = await this.$ipfs.toBase64(this.photoFile)
+                const url = await this.$ipfs.upload(`courses/photos/${this.courseId}`, base64)
 
                 if (url != null) {
                     this.course.photo = url
+                }
+            }
+
+            if (this.previewFile != null) {
+                const base64 = await this.$ipfs.toBase64(this.previewFile)
+                const url = await this.$ipfs.upload(`courses/previews/${this.courseId}`, base64)
+
+                if (url != null) {
+                    this.course.preview = url
                 }
             }
 
@@ -147,7 +168,7 @@ export default {
                 const id = Math.floor(Math.random() * 999999999999) + 1;
                 const trx = await this.courseContract.createCourse(
                     id, this.categories[this.selectedCategory].id, this.$utils.toWei(this.course.price),
-                    this.course.name, this.course.description, this.course.photo, this.course.preview, {
+                    this.course.name, this.course.description, this.course.photo, this.course.preview, this.course.publish, {
                         from: this.$auth.accounts[0]
                     })
                 this.$router.push('/app/courses')

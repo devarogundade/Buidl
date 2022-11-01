@@ -30,16 +30,16 @@
                 </div>
                 <div class="stats">
                     <div class="stat">
-                        <h3>2.2k+</h3>
+                        <h3>5+</h3>
                         <p>Active creators</p>
                     </div>
                     <div class="stat">
-                        <h3>1,937,392 $BDL</h3>
-                        <p>Trusted to the community</p>
+                        <h3>1,392 $BDL</h3>
+                        <p>Earned by the community</p>
                     </div>
                     <div class="stat">
-                        <h3>32.8k+</h3>
-                        <p>Active learners</p>
+                        <h3>26+</h3>
+                        <p>Uploaded courses</p>
                     </div>
                 </div>
             </div>

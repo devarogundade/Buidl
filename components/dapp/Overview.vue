@@ -10,7 +10,7 @@
 
         <div class="verify" v-if="!fetching && user == null">
             <p><i class="fa-solid fa-circle-exclamation"></i> Set up your profile</p>
-            <router-link to="/collectibles/stake">
+            <router-link to="/app/profile">
                 <p class="stake scaleable">Set Profile</p>
             </router-link>
         </div>

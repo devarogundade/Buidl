@@ -22,7 +22,7 @@
                     <div class="switch-con">
                         <p>Switch between creator mode?</p>
                         <label class="switch">
-                            <input type="checkbox" v-model="user.verified">
+                            <input type="checkbox" v-model="verified">
                             <span class="slider round"></span>
                         </label>
                     </div>
@@ -82,9 +82,10 @@ export default {
         return {
             user: {
                 name: '',
-                photo: '',
+                photo: '/images/placeholder.png',
                 verified: false
             },
+            verified: false,
             errorName: null,
             errorBio: null,
             file: null,
@@ -93,6 +94,24 @@ export default {
             buidlContract: null,
             staked: 0,
             _showPromptVerify: false
+        }
+    },
+    watch: {
+        verified: function (_verified) {
+            if (this.buidlContract == null || this.$auth.accounts.length == 0) return
+            if (_verified) {
+                try {
+                    this.buidlContract.unlockCreator({
+                        from: this.$auth.accounts[0]
+                    })
+                } catch (error) {}
+            } else {
+                try {
+                    this.buidlContract.removeCreator({
+                        from: this.$auth.accounts[0]
+                    })
+                } catch (error) {}
+            }
         }
     },
     async created() {
@@ -112,31 +131,6 @@ export default {
             this.getStakedBalance(contract)
         })
     },
-    watch: {
-        user: {
-            handler(_user) {
-                if (!this._showPromptVerify) {
-                    this._showPromptVerify = true
-                    return
-                }
-                if (this.buidlContract == null) return
-                if (_user.verified) {
-                    try {
-                        this.buidlContract.unlockCreator({
-                            from: this.$auth.accounts[0]
-                        })
-                    } catch (error) {}
-                } else {
-                    try {
-                        this.buidlContract.removeCreator({
-                            from: this.$auth.accounts[0]
-                        })
-                    } catch (error) {}
-                }
-            },
-            deep: true
-        }
-    },
     methods: {
         getStakedBalance: async function (contract) {
             if (this.$auth.accounts.length == 0) return
@@ -145,7 +139,11 @@ export default {
         },
         getUser: async function () {
             if (this.$auth.accounts.length == 0) return
-            this.user = await this.$firestore.fetch("users", this.$auth.accounts[0].toUpperCase())
+            const user = await this.$firestore.fetch("users", this.$auth.accounts[0].toUpperCase())
+            if (user != null) {
+                this.user = user
+                this.verified = user.verified
+            }
             this.fetching = false
         },
         onFileChange: function (event) {
