@@ -28,7 +28,10 @@ contract Buidl is AxelarExecutable {
     // these requirement helps us to filter fuds
     // and abuse of the ecosystem
     uint256 private creatorStakingFee = 2000 * 10**18;
-    uint256 private creatorStakingDuration = 365 * 0;
+    uint256 private creatorStakingDuration = 365 days;
+
+    // earnings made on the platform so far
+    uint256 private platformEarnings = 0;
 
     // ecosystem users
     mapping(address => Models.User) public users;
@@ -61,7 +64,7 @@ contract Buidl is AxelarExecutable {
     function stake(uint256 amount) public {
         _bdlToken.approve(msg.sender, address(this), amount);
         _bdlToken.transferFrom(msg.sender, address(this), amount);
-        _staking.stake(msg.sender, amount, creatorStakingDuration, 0);
+        _staking.stake(msg.sender, amount, block.timestamp + creatorStakingDuration, 0);
     }
 
     /* unlock creator */
@@ -105,13 +108,30 @@ contract Buidl is AxelarExecutable {
             uint256 payableAmount,
             uint256 earnings,
             address creator,
-            uint256 price
+            uint256 price,
+            uint256 _platformEarnings
         ) = _bdlCourse.unSubscribe(id, msg.sender);
 
-        _bdlToken.approve(msg.sender, address(this), payableAmount);
-        _bdlToken.transferFrom(msg.sender, address(this), payableAmount);
+        // refund the user from the contract
+        _bdlToken.approve(address(this), msg.sender, payableAmount);
+        _bdlToken.transferFrom(address(this), msg.sender, payableAmount);
+
+        // deduct creator's unclaimed revenue
         revenues[creator].unclaimed -= price;
+
+        // credit creator earnings from the refunded course
         revenues[creator].claimable += earnings;
+
+        // credit platform from the refunded course
+        platformEarnings += _platformEarnings;
+    }
+
+    /* deployer to cashout earnings */
+    function withdrawPlatformFee(uint256 amount) public onlyDeployer {
+        require(platformEarnings >= amount, "insuficcient tokens");
+        platformEarnings -= amount;
+        _bdlToken.approve(address(this), deployer, amount);
+        _bdlToken.transferFrom(address(this), deployer, amount);
     }
 
     function _execute(
@@ -119,9 +139,10 @@ contract Buidl is AxelarExecutable {
         string calldata sourceAddress_,
         bytes calldata payload_
     ) internal override {
-        (uint id) = abi.decode(payload_, (uint));
+        uint id = abi.decode(payload_, (uint));
         // sourceChain = sourceChain_;
         // sourceAddress = sourceAddress_;
+        this.subscribe(id);
     }
 
     modifier onlyVerified() {
@@ -133,6 +154,12 @@ contract Buidl is AxelarExecutable {
     modifier notVerified() {
         /* only account that hasn't staked atleast 2000 BDL token */
         require(!users[msg.sender].verified, "!authorized");
+        _;
+    }
+
+    modifier onlyDeployer() {
+        /* only account that deployed the contract */
+        require(msg.sender == deployer, "!authorized");
         _;
     }
 

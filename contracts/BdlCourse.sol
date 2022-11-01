@@ -213,6 +213,7 @@ contract BdlCourse {
             uint256,
             uint256,
             address,
+            uint256,
             uint256
         )
     {
@@ -223,25 +224,27 @@ contract BdlCourse {
         ];
         Models.Course memory course = courses[id];
 
-        uint dueTime = (block.timestamp + 2 weeks);
-        require(subscription.time < dueTime, ">2weeks");
+        require(subscription.time < (block.timestamp + 2 weeks), ">2weeks");
 
         uint payableSections = (subscription.sections -
             subscription.viewed.length);
 
         require(payableSections > 0, "!you_cant_refund_this_course");
 
+        /* user has unsubscribe */
+        delete subscriptions[id][uint(index)];
+
         uint256 payableAmount = ((payableSections / subscription.sections) *
             subscription.price);
 
         uint256 netEarnings = (payableAmount - subscription.price);
+
         uint256 earnings;
+        uint256 platformEarnings;
         if (netEarnings > 0) {
             earnings = (netEarnings * (salesFee / 100));
+            platformEarnings = netEarnings - earnings;
         }
-
-        /* user has unsubscribe */
-        delete subscriptions[id][uint(index)];
 
         emit Subscription(id, owner, false);
 
@@ -249,7 +252,8 @@ contract BdlCourse {
             payableAmount,
             earnings,
             course.creator,
-            subscription.price
+            subscription.price,
+            platformEarnings
         );
     }
 
@@ -288,7 +292,14 @@ contract BdlCourse {
         bool publish,
         uint updatedAt
     );
-    event CourseSection(uint id, string title, string content, string src, uint duration, uint sectionId);
+    event CourseSection(
+        uint id,
+        string title,
+        string content,
+        string src,
+        uint duration,
+        uint sectionId
+    );
     event SectionViewed(uint id, uint sectionId);
 
     // == modifiers == //
