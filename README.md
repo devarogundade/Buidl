@@ -77,6 +77,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
 
 ## Screenshots
 ![Screenshot 2022-11-01 064225](https://user-images.githubusercontent.com/81397790/199166950-fc271011-4f1b-4228-a68e-5662bdd3e5e7.png)
+![Screenshot 2022-11-01 064520](https://user-images.githubusercontent.com/81397790/199167156-b1843670-e5a9-4c3e-a3a2-623ad833c2c5.png)
 
 ## Other Services
 - Netlify
