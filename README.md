@@ -61,14 +61,14 @@ We have heavily used moralis stream and smart contract events, which has helped 
 ## Tech Stacks
 
 - Binance Smart Chain (Testnet)
-- Moralis Stream [#](https://github.com/devarogundade/Buidl/tree/master/moralis-stream-api) and Web3 APIs
-- IPFS (File System)
-- Solidity (Smart Contract)
+- Moralis Stream [#](https://github.com/devarogundade/Buidl/tree/master/moralis-stream-api) and Web3 APIs [#](https://github.com/devarogundade/Buidl/tree/master/moralis-stream-api)
+- IPFS (File System) [#](https://github.com/devarogundade/Buidl/tree/master/moralis-stream-api)
+- Solidity (Smart Contract) [#](https://github.com/devarogundade/Buidl/tree/master/moralis-stream-api)
 - Nuxtjs (Frontend)
-- Nodejs (Backend)
+- Nodejs (Backend) 
 - Truffle
-- Covalent APIs
-- Google Cloud Firebase
+- Covalent APIs [#](https://github.com/devarogundade/Buidl/tree/master/moralis-stream-api)
+- Google Cloud Firebase [#](https://github.com/devarogundade/Buidl/tree/master/moralis-stream-api)
 
 ## Demo
 
