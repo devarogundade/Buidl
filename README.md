@@ -34,7 +34,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
 - We charge a 8% service fee from every earnings from the creators.
 
 ## Supported Media Types
-  In this hackathon scope the platfoem only supports video contents.
+  In this hackathon scope the platform only supports video contents.
 
 ## Products
 - # Buidl Token (ERC20)
@@ -61,7 +61,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
 ## Tech Stacks
 
 - Binance Smart Chain (Testnet)
-- Moralis Stream (#)[https://github.com/devarogundade/Buidl/tree/master/moralis-stream-api] and Web3 APIs
+- Moralis Stream [#](https://github.com/devarogundade/Buidl/tree/master/moralis-stream-api) and Web3 APIs
 - IPFS (File System)
 - Solidity (Smart Contract)
 - Nuxtjs (Frontend)
