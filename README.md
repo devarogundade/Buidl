@@ -31,7 +31,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
     The Buidl Video Player is a product we have added on your roadmap, which simplify authenticates users with their wallet and s
 
 ## Revenue Model
-- We charge a 8% commission from every earnings from the creators.
+- We charge a 8% service fee from every earnings from the creators.
 
 ## Supported Media Types
   In this hackathon scope the platfoem only supports video contents.
@@ -39,14 +39,14 @@ We have heavily used moralis stream and smart contract events, which has helped 
 ## Products
 - # Buidl Token (ERC20)
 
-  Use case: Payment and Staking.
+  Use case: Payment, Refund and Staking.
   
 - # Buidl Certificate (ERC4973)
 
-  Use case: Certification.
+  Use case: On-Chain Course Certification.
      
 - # Buidl NFT (ERC721)
-- Use case: Rewards and Coupon.
+- Use case: Rewards and Coupon (discount).
 
 ![Screenshot 2022-10-31 155800](https://user-images.githubusercontent.com/81397790/199039025-80a5e274-222c-4a10-90f0-0b655973033a.png)
   
