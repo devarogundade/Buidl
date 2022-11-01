@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.7.0 <0.9.0;
 
+import {AxelarExecutable} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/executables/AxelarExecutable.sol";
+import {IAxelarGateway} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol";
+import {IAxelarGasService} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGasService.sol";
+
 import {BdlNft} from "./BdlNft.sol";
 import {BdlCertificate} from "./BdlCertificate.sol";
 import {Models} from "./base/Models.sol";
@@ -8,7 +12,7 @@ import {BdlToken} from "./BdlToken.sol";
 import {BdlCourse} from "./BdlCourse.sol";
 import {Staking} from "./Staking.sol";
 
-contract Buidl {
+contract Buidl is AxelarExecutable {
     address private immutable deployer;
 
     /* fee charged on every succesful subscription made */
@@ -36,8 +40,9 @@ contract Buidl {
         address bdlNft,
         address bdlCertificate,
         address bdlCourse,
-        address staking
-    ) {
+        address staking,
+        address gateway_
+    ) AxelarExecutable(gateway_) {
         deployer = msg.sender;
 
         _bdlNft = BdlNft(bdlNft);
@@ -107,6 +112,16 @@ contract Buidl {
         _bdlToken.transferFrom(msg.sender, address(this), payableAmount);
         revenues[creator].unclaimed -= price;
         revenues[creator].claimable += earnings;
+    }
+
+    function _execute(
+        string calldata sourceChain_,
+        string calldata sourceAddress_,
+        bytes calldata payload_
+    ) internal override {
+        (uint id) = abi.decode(payload_, (uint));
+        // sourceChain = sourceChain_;
+        // sourceAddress = sourceAddress_;
     }
 
     modifier onlyVerified() {
