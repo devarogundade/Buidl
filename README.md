@@ -86,11 +86,14 @@ We have heavily used moralis stream and smart contract events, which has helped 
 ## Roadmap
    https://buidl.netlify.app/#roadmap
 
+## Tokenomics
+   https://buidl.netlify.app/#bdl-token
+
 ## Contribution
 
 Want to contribute? Great!
 
-Reach out to me at https://linktree.com/devarogundade
+Reach out to me at https://linktr.ee/devarogundade
 
 ## License
 
