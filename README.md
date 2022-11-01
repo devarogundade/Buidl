@@ -31,22 +31,22 @@ We have heavily used moralis stream and smart contract events, which has helped 
     The Buidl Video Player is a product we have added on your roadmap, which simplify authenticates users with their wallet and s
 
 ## Revenue Model
-- We charge a 5% commission from every earnings from the creators.
+- We charge a 8% service fee from every earnings from the creators.
 
 ## Supported Media Types
-  In this hackathon scope the platfoem only supports video contents.
+  In this hackathon scope the platform only supports video contents.
 
 ## Products
 - # Buidl Token (ERC20)
 
-  Use case: Payment and Staking.
+  Use case: Payment, Refund and Staking.
   
 - # Buidl Certificate (ERC4973)
 
-  Use case: Certification.
+  Use case: On-Chain Course Certification.
      
 - # Buidl NFT (ERC721)
-- Use case: Rewards and Coupon.
+- Use case: Rewards and Coupon (discount).
 
 ![Screenshot 2022-10-31 155800](https://user-images.githubusercontent.com/81397790/199039025-80a5e274-222c-4a10-90f0-0b655973033a.png)
   
@@ -61,14 +61,14 @@ We have heavily used moralis stream and smart contract events, which has helped 
 ## Tech Stacks
 
 - Binance Smart Chain (Testnet)
-- Moralis Stream and Web3 APIs
-- IPFS (File System)
-- Solidity (Smart Contract)
+- Moralis Stream [#](https://github.com/devarogundade/Buidl/tree/master/plugins/moralis-api) and Web3 APIs [#](https://github.com/devarogundade/Buidl/tree/master/moralis-stream-api)
+- IPFS (File System) [#](https://github.com/devarogundade/Buidl/tree/master/plugins/moralis-apis/ipfs.js)
+- Solidity (Smart Contract) [#](https://github.com/devarogundade/Buidl/tree/master/contracts)
 - Nuxtjs (Frontend)
-- Nodejs (Backend)
+- Nodejs (Backend) 
 - Truffle
-- Covalent APIs
-- Google Cloud Firebase
+- Covalent APIs [#](https://github.com/devarogundade/Buidl/tree/master/plugins/covalent-apis)
+- Google Cloud Firebase [#](https://github.com/devarogundade/Buidl/tree/master/plugins/firestore.js)
 
 ## Demo
 
@@ -76,6 +76,8 @@ We have heavily used moralis stream and smart contract events, which has helped 
 - Buidl Token Faucet https://buidl.netlify.app/mint
 
 ## Screenshots
+![Screenshot 2022-11-01 064225](https://user-images.githubusercontent.com/81397790/199166950-fc271011-4f1b-4228-a68e-5662bdd3e5e7.png)
+![Screenshot 2022-11-01 064520](https://user-images.githubusercontent.com/81397790/199167156-b1843670-e5a9-4c3e-a3a2-623ad833c2c5.png)
 
 ## Other Services
 - Netlify
@@ -84,11 +86,14 @@ We have heavily used moralis stream and smart contract events, which has helped 
 ## Roadmap
    https://buidl.netlify.app/#roadmap
 
+## Tokenomics
+   https://buidl.netlify.app/#bdl-token
+
 ## Contribution
 
 Want to contribute? Great!
 
-Reach out to me at https://linktree.com/devarogundade
+Reach out to me at https://linktr.ee/devarogundade
 
 ## License
 
