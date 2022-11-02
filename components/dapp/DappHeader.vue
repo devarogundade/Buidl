@@ -20,6 +20,11 @@
             </div>
 
             <div class="action">
+                <div class="app networks" v-if="address != null" v-on:click="$nuxt.$emit('switch-network')">
+                    <img :src="networkImage" alt="">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+
                 <router-link :to="'/'">
                     <div class="app enter" v-if="address != null">
                         Leave App
@@ -70,10 +75,11 @@ export default {
             showBuild: false,
             showProfile: false,
             address: this.$auth.accounts[0],
-            tab: 1
+            tab: 1,
+            networkImage: '/images/bnb.png'
         };
     },
-    mounted() {
+    created() {
         $nuxt.$on("connected-to-account", (address) => {
             this.address = address;
         });
@@ -83,6 +89,19 @@ export default {
         $nuxt.$on('explore-tab', (tab) => {
             this.tab = tab
         })
+        $nuxt.$on("switch-network-to", (network) => {
+            switch (network) {
+                case 'polygon':
+                    this.networkImage = '/images/polygon.png'
+                    break
+                case 'fantom':
+                    this.networkImage = '/images/fantom.png'
+                    break
+                default:
+                    this.networkImage = '/images/bnb.png'
+                    break
+            }
+        });
     },
     methods: {
         toggleProfile() {
@@ -123,7 +142,6 @@ section {
     align-items: center;
 }
 
-
 .logo {
     height: 35px;
 }
@@ -163,6 +181,20 @@ section {
     backdrop-filter: blur(20px);
     padding: 0 20px;
     min-width: 160px;
+}
+
+.networks {
+    background: transparent;
+    border: #ffffff 2px solid;
+    backdrop-filter: blur(20px);
+    padding: 0 20px;
+    gap: 10px;
+    width: 60px;
+    min-width: fit-content;
+}
+
+.networks img {
+    width: 30px;
 }
 
 .app:hover {

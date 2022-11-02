@@ -18,7 +18,6 @@
     </section>
     <DappFooter />
     <WalletConnect :state="wcState" />
-    <CreateNewPost :state="cpState" />
     <Error />
 </div>
 </template>
@@ -39,19 +38,8 @@ export default {
         $nuxt.$on('release-connect-wallet', () => {
             this.wcState = 'hide'
         })
-        $nuxt.$on('create-new-post', () => {
-            this.cpState = 'show'
-        })
-        $nuxt.$on('discard-new-post', () => {
-            this.cpState = 'hide'
-        })
-        $nuxt.$on('create-new-post-for', (data) => {
-            this.cpState = 'hide'
-        })
 
         this.$auth.checkAuth()
-        this.$contracts.initCourseContract(this.provider)
-        this.$contracts.initBuidlContract(this.provider)
     }
 }
 </script>

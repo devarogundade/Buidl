@@ -16,6 +16,7 @@
     <DappFooter />
     <WalletConnect :state="wcState" />
     <CreateNewPost :state="cpState" />
+    <SwitchNetwork :state="snState" />
     <Username :state="unState" />
     <Error />
 </div>
@@ -28,6 +29,7 @@ export default {
             wcState: 'hide',
             cpState: 'hide',
             unState: 'hide',
+            snState: 'hide',
             provider: this.$auth.provider
         }
     },
@@ -38,15 +40,14 @@ export default {
         $nuxt.$on('release-connect-wallet', () => {
             this.wcState = 'hide'
         })
-        $nuxt.$on('create-new-post', () => {
-            this.cpState = 'show'
+
+        $nuxt.$on('switch-network', () => {
+            this.snState = 'show'
         })
-        $nuxt.$on('discard-new-post', () => {
-            this.cpState = 'hide'
+        $nuxt.$on('release-switch-network', () => {
+            this.snState = 'hide'
         })
-        $nuxt.$on('create-new-post-for', (data) => {
-            this.cpState = 'hide'
-        })
+
         $nuxt.$on('username', () => {
             this.unState = 'show'
         })
@@ -55,8 +56,6 @@ export default {
         })
 
         this.$auth.checkAuth()
-        this.$contracts.initCourseContract(this.provider)
-        this.$contracts.initBuidlContract(this.provider)
     }
 }
 </script>

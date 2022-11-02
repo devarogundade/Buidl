@@ -2,34 +2,28 @@
 <div :class="`container ${state}`">
     <div class="box">
         <div class="title">
-            <p>Create new post</p>
-            <i v-on:click="$nuxt.$emit('discard-new-post')" class="fa-solid fa-xmark"></i>
+            <p>Switch Network</p>
+            <i v-on:click="$nuxt.$emit('release-switch-network')" class="fa-solid fa-xmark"></i>
         </div>
 
         <div class="agree">
-            <p>Posts are immutable from the network.</p>
+            <p>Gas will be charge from the native token of selected network.</p>
         </div>
 
-        <router-link to="/app/create-post/feed">
-            <div class="post" v-on:click="$nuxt.$emit('create-new-post-for', 'feeds')">
-                <i class="fa-solid fa-newspaper"></i>
-                <p>Feeds</p>
-            </div>
-        </router-link>
+        <div class="post scaleable" v-on:click="selectNetwork('bsc')">
+            <img src="/images/bnb.png" alt="">
+            <p>Binance Testnet</p>
+        </div>
 
-        <router-link to="/app/create-post/job">
-            <div class="post" v-on:click="$nuxt.$emit('create-new-post-for', 'jobs')">
-                <i class="fa-solid fa-briefcase"></i>
-                <p>Jobs</p>
-            </div>
-        </router-link>
+        <div class="post scaleable" v-on:click="selectNetwork('polygon')">
+            <img src="/images/polygon.png" alt="">
+            <p>Polygon Mumbai</p>
+        </div>
 
-        <router-link to="/app/projects">
-            <div class="post" v-on:click="$nuxt.$emit('create-new-post-for', 'projects')">
-                <i class="fa-solid fa-hammer"></i>
-                <p>Share a project</p>
-            </div>
-        </router-link>
+        <div class="post scaleable" v-on:click="selectNetwork('fantom')">
+            <img src="/images/fantom.png" alt="">
+            <p>Fantom Testnet</p>
+        </div>
     </div>
 </div>
 </template>
@@ -37,10 +31,18 @@
 <script>
 export default {
     props: ['state'],
-    mounted() {
-        $nuxt.$on('create-new-post-for', (data) => {
+    methods: {
+        selectNetwork: function (network) {
+            $nuxt.$emit('release-switch-network')
+            $nuxt.$emit('switch-network-to', network)
+            this.saveLastNetworkName(network)
+        },
 
-        })
+        saveLastNetworkName: function (name) {
+            if (typeof (Storage) !== "undefined") {
+                localStorage.setItem('last-network-name', name)
+            }
+        },
     }
 }
 </script>
@@ -136,7 +138,7 @@ export default {
     font-weight: 600;
 }
 
-.post:hover {
-    color: #0177FB;
+.post img {
+    height: 30px;
 }
 </style>

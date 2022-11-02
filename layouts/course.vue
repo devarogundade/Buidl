@@ -20,6 +20,7 @@
     <WalletConnect :state="wcState" />
     <CreateNewTask :state="tkState" />
     <DrawBoard :state="dbState" />
+    <SwitchNetwork :state="snState" />
     <Error />
 </div>
 </template>
@@ -31,6 +32,7 @@ export default {
             wcState: 'hide',
             tkState: 'hide',
             dbState: 'hide',
+            snState: 'hide',
             provider: this.$auth.provider
         }
     },
@@ -55,8 +57,6 @@ export default {
         })
 
         this.$auth.checkAuth()
-        this.$contracts.initCourseContract(this.provider)
-        this.$contracts.initBuidlContract(this.provider)
     }
 }
 </script>

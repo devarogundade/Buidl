@@ -4,6 +4,7 @@
     <Nuxt />
     <LandingFooter />
     <WalletConnect :state="wcState" />
+    <SwitchNetwork :state="snState" />
     <Error />
 </div>
 </template>
@@ -13,6 +14,7 @@ export default {
     data() {
         return {
             wcState: 'hide',
+            snState: 'hide',
             address: null,
             provider: this.$auth.provider
         }
@@ -25,19 +27,14 @@ export default {
             this.wcState = 'hide'
         })
 
-        $nuxt.$on('user-status', (status) => {
-            if (status == 'loading') {
-                this.loading = true
-            }
-
-            if (status == 'available') {
-                this.loading = false
-            }
+        $nuxt.$on('switch-network', () => {
+            this.snState = 'show'
+        })
+        $nuxt.$on('release-switch-network', () => {
+            this.snState = 'hide'
         })
 
         this.$auth.checkAuth(false)
-        this.$contracts.initCourseContract(this.provider)
-        this.$contracts.initBuidlContract(this.provider)
     },
 }
 </script>

@@ -39,6 +39,11 @@
             </div>
 
             <div class="action">
+                <div class="app networks" v-if="address != null" v-on:click="$nuxt.$emit('switch-network')">
+                    <img :src="networkImage" alt="">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+
                 <router-link :to="'/app'">
                     <div class="app enter" v-if="address != null">
                         Enter App
@@ -100,14 +105,28 @@ export default {
             showBuild: false,
             showProfile: false,
             address: null,
+            networkImage: '/images/bnb.png'
         };
     },
-    mounted() {
+    created() {
         $nuxt.$on("connected-to-account", (address) => {
             this.address = address;
         });
         $nuxt.$on("disconnected", () => {
             this.address = null;
+        });
+        $nuxt.$on("switch-network-to", (network) => {
+            switch (network) {
+                case 'polygon':
+                    this.networkImage = '/images/polygon.png'
+                    break
+                case 'fantom':
+                    this.networkImage = '/images/fantom.png'
+                    break
+                default:
+                    this.networkImage = '/images/bnb.png'
+                    break
+            }
         });
     },
     methods: {
@@ -189,6 +208,20 @@ section {
     backdrop-filter: blur(20px);
     padding: 0 20px;
     min-width: 160px;
+}
+
+.networks {
+    background: transparent;
+    border: #ffffff 2px solid;
+    backdrop-filter: blur(20px);
+    padding: 0 20px;
+    gap: 10px;
+    width: 60px;
+    min-width: fit-content;
+}
+
+.networks img {
+    width: 30px;
 }
 
 .app:hover {

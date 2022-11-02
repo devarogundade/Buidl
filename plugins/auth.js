@@ -7,17 +7,27 @@ export default ({ app }, inject) => {
         provider: null,
         accounts: [],
         lastProviderName: '',
+        lastNetworkName: '',
 
         checkAuth: async function(prompt = true) {
             this.lastProviderName = this.getLastProviderName()
+            this.lastNetworkName = this.getLastNetworkName()
             if (this.lastProviderName != '' && prompt) {
                 await this.connectWallet(this.lastProviderName)
             }
+            $nuxt.$emit('switch-network-to', this.lastNetworkName)
         },
 
         getLastProviderName: function() {
             if (typeof(Storage) !== "undefined") {
                 return localStorage.getItem('last-provider-name') ? localStorage.getItem('last-provider-name') : ''
+            }
+            return ''
+        },
+
+        getLastNetworkName: function() {
+            if (typeof(Storage) !== "undefined") {
+                return localStorage.getItem('last-network-name') ? localStorage.getItem('last-network-name') : 'bsc'
             }
             return ''
         },
