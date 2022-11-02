@@ -45,6 +45,7 @@ export default {
         this.$contracts.initBuidlContract(this.$auth.provider)
         $nuxt.$on('buidl-contract', (contract) => {
             this.buidlContract = contract
+            console.log(contract);
         })
     },
     updated() {
@@ -79,11 +80,12 @@ export default {
             this.refunding = true
 
             try {
-                const trx = await this.buidlContract.refund(this.courseId, {
+                const trx = await this.buidlContract.unSubscribe(this.courseId, {
                     from: this.$auth.accounts[0]
                 })
             } catch (error) {
                 $nuxt.$emit('error', 'You can\'t refund this course')
+                console.log(error);
             }
 
             this.refunding = false

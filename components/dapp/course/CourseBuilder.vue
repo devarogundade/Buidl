@@ -118,9 +118,10 @@ export default {
             const encryptedSrc = this.$encryption.encrypt(src, "key")
 
             try {
+                const duration = 6000
                 const trx = await this.courseContract.createCourseSection(
                     this.courseId, this.sections[this.selectedIndex].title,
-                    this.sections[this.selectedIndex].content, encryptedSrc, {
+                    this.sections[this.selectedIndex].content, encryptedSrc, duration, {
                         from: this.$auth.accounts[0]
                     }
                 )

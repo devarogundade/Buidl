@@ -21,7 +21,7 @@ module.exports = {
             case 'subscriptions':
                 return ['uint256', 'address', 'bool']
             case 'course-sections':
-                return ['uint256', 'string', 'string', 'string']
+                return ['uint256', 'string', 'string', 'string', 'uint256', 'uint256']
             default:
                 return null
         }
@@ -73,7 +73,9 @@ module.exports = {
                     courseId: data[0],
                     title: data[1],
                     content: data[2],
-                    src: data[3]
+                    src: data[3],
+                    duration: data[4],
+                    sectionId: data[5]
                 }
             default:
                 return null
