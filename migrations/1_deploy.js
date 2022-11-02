@@ -7,8 +7,8 @@ const BdlCourse = artifacts.require("BdlCourse");
 
 module.exports = async function(deployer) {
     await deployer.deploy(Staking);
-    await deployer.deploy(BdlCourse);
     await deployer.deploy(BdlToken, "Buidl Token", "BDL");
+    await deployer.deploy(BdlCourse);
     await deployer.deploy(BdlNft, "Buidl Monkeys", "BMON");
     await deployer.deploy(BdlCertificate, "Buidl Certificate", "BCRT");
     await deployer.deploy(Buidl,
@@ -16,6 +16,7 @@ module.exports = async function(deployer) {
         BdlNft.address,
         BdlCertificate.address,
         BdlCourse.address,
-        Staking.address
+        Staking.address,
+        "0x4D147dCb984e6affEEC47e44293DA442580A3Ec0"
     );
 };

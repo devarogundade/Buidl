@@ -3,8 +3,6 @@
     <div>
         <h3>Category</h3>
         <button v-on:click="mintCategories()">Mint Categories</button>
-
-        {{ this.test }}
     </div>
 </section>
 </template>
@@ -33,6 +31,7 @@ export default {
     created() {
         this.$contracts.initCourseContract(this.$auth.provider)
         $nuxt.$on('course-contract', (contract) => {
+          console.log(contract);
             this.courseContract = contract
         })
     },

@@ -40,6 +40,7 @@ const Contracts = {
 
         try {
             courseContract.deployed().then(instance => {
+                console.log(instance);
                 $nuxt.$emit('course-contract', instance)
             })
         } catch (error) {}
