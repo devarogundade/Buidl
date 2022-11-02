@@ -41,6 +41,7 @@ export default {
         saveLastNetworkName: function (name) {
             if (typeof (Storage) !== "undefined") {
                 localStorage.setItem('last-network-name', name)
+                this.$auth.switchToNetwork(name)
             }
         },
     }

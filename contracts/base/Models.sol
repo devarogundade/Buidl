@@ -18,6 +18,7 @@ contract Models {
         uint createdAt;
         uint updatedAt;
         uint sections;
+        bool certificate;
     }
 
     struct Subscription {

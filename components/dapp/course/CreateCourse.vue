@@ -98,7 +98,8 @@ export default {
             notFound: false,
             selectedCategory: 0,
             categories: [],
-            courseContract: null
+            courseContract: null,
+            encryptionKey: ''
         }
     },
     created() {
@@ -168,7 +169,8 @@ export default {
                 const id = Math.floor(Math.random() * 999999999999) + 1;
                 const trx = await this.courseContract.createCourse(
                     id, this.categories[this.selectedCategory].id, this.$utils.toWei(this.course.price),
-                    this.course.name, this.course.description, this.course.photo, this.course.preview, this.course.publish, {
+                    this.course.name, this.course.description, this.course.photo, this.course.preview, this.course.publish,
+                    this.encryptionKey, {
                         from: this.$auth.accounts[0]
                     })
                 this.$router.push('/app/courses')

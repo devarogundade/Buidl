@@ -29,7 +29,7 @@ export default ({ app }, inject) => {
             if (typeof(Storage) !== "undefined") {
                 return localStorage.getItem('last-network-name') ? localStorage.getItem('last-network-name') : 'bsc'
             }
-            return ''
+            return 'bsc'
         },
 
         saveLastProviderName: function(name) {
@@ -113,7 +113,7 @@ export default ({ app }, inject) => {
                     method: 'eth_requestAccounts'
                 });
                 this.provider = ethereum
-                await this.switchToBinanceTestnet()
+                await this.switchToNetwork(this.getLastNetworkName())
 
                 this.setUpAccountListeners(ethereum)
 
@@ -241,6 +241,80 @@ export default ({ app }, inject) => {
                         console.error(addError);
                     }
                 }
+            }
+        },
+
+        switchToPolygonMumbai: async function() {
+            try {
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x13881' }],
+                });
+            } catch (error) {
+                if (error.code === 4902) {
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [{
+                                chainId: '0x13881',
+                                chainName: 'Polygon - Mumbai',
+                                nativeCurrency: {
+                                    name: 'Matic',
+                                    symbol: 'MATIC', // 2-6 characters long
+                                    decimals: 18
+                                },
+                                blockExplorerUrls: ['https://mumbai.polygonscan.com'],
+                                rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
+                            }, ],
+                        });
+                    } catch (addError) {
+                        console.error(addError);
+                    }
+                }
+            }
+        },
+
+        switchToFantomTestnet: async function() {
+            try {
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x61' }],
+                });
+            } catch (error) {
+                if (error.code === 4902) {
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [{
+                                chainId: '0x61',
+                                chainName: 'Fantom - Testnet',
+                                nativeCurrency: {
+                                    name: 'Fantom',
+                                    symbol: 'FTM', // 2-6 characters long
+                                    decimals: 18
+                                },
+                                blockExplorerUrls: ['https://testnet.ftmscan.com'],
+                                rpcUrls: ['https://fantom-testnet.public.blastapi.io'],
+                            }, ],
+                        });
+                    } catch (addError) {
+                        console.error(addError);
+                    }
+                }
+            }
+        },
+
+        switchToNetwork: async function(name) {
+            switch (name) {
+                case 'polygon':
+                    this.switchToPolygonMumbai()
+                    break
+                case 'fantom':
+                    this.switchToFantomTestnet()
+                    break
+                default:
+                    this.switchToBinanceTestnet()
+                    break
             }
         }
     }))

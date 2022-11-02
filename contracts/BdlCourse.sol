@@ -88,13 +88,14 @@ contract BdlCourse {
         uint id,
         uint category,
         uint256 price,
+        string memory key,
         /* course metadata */
         string memory name,
         string memory description,
         string memory thumbnail,
         string memory previewSrc,
-        bool publish,
-        string memory key
+        bool certificate,
+        bool publish
     ) external {
         require(courses[id].id == 0, "exists");
 
@@ -105,11 +106,14 @@ contract BdlCourse {
             price,
             block.timestamp,
             block.timestamp,
-            courses[id].sections
+            courses[id].sections,
+            certificate
         );
 
+        // creates course encryption key
         encryptionKeys[id] = key;
 
+        // assign course to creator
         createdCourses[msg.sender].push(id);
 
         emit Course(
@@ -121,6 +125,7 @@ contract BdlCourse {
             previewSrc,
             msg.sender,
             price,
+            certificate,
             publish,
             block.timestamp
         );
@@ -136,6 +141,7 @@ contract BdlCourse {
         string memory description,
         string memory thumbnail,
         string memory previewSrc,
+        bool certificate,
         bool publish
     ) external {
         require(courses[id].creator == msg.sender, "!unathorized");
@@ -147,7 +153,8 @@ contract BdlCourse {
             price,
             courses[id].createdAt,
             block.timestamp,
-            courses[id].sections
+            courses[id].sections,
+            certificate
         );
 
         emit Course(
@@ -159,6 +166,7 @@ contract BdlCourse {
             previewSrc,
             msg.sender,
             price,
+            certificate,
             publish,
             block.timestamp
         );
@@ -208,7 +216,8 @@ contract BdlCourse {
 
     /* get encryption key as subscriber */
     function getEncryptionKeyAsSubscriber(uint id)
-        public view
+        public
+        view
         returns (string memory)
     {
         // verifies user has a active subscription to course
@@ -217,7 +226,11 @@ contract BdlCourse {
     }
 
     /* get encryption key as creator */
-    function getEncryptionKeyAsCreator(uint id) public view returns (string memory) {
+    function getEncryptionKeyAsCreator(uint id)
+        public
+        view
+        returns (string memory)
+    {
         require(courses[id].creator == msg.sender, "!unathorized");
         return encryptionKeys[id];
     }
@@ -281,7 +294,11 @@ contract BdlCourse {
     }
 
     /* mint reward and certificate for user */
-    function onCourseComplete(uint id, address owner) external view returns (bool, uint256) {
+    function onCourseComplete(uint id, address owner)
+        external
+        view
+        returns (bool, uint256)
+    {
         // verifies user has subscribe to course
         int index = getSubscriptionIndex(id, owner);
 
@@ -332,6 +349,7 @@ contract BdlCourse {
         string previewSrc,
         address creator,
         uint256 price,
+        bool certificate,
         bool publish,
         uint updatedAt
     );

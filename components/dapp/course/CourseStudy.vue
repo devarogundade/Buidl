@@ -9,8 +9,8 @@
             <p class="nomba">{{ index + 1 }}.</p>
             <h3 class="title">{{ section.title }}</h3>
             <p class="length"><i class="fa-solid fa-clock"></i> 00.53 min</p>
-            <p class="lock unlock"><i class="fa-solid fa-unlock"></i> Unlock</p>
-            <!-- <p class="lock play"> <i class="fa-solid fa-play"></i> Play</p> -->
+            <p class="lock unlock" v-if="!unlockedSections.includes(Number(section.sectionId))" v-on:click="viewSection(section.sectionId)"><i class="fa-solid fa-unlock"></i> Unlock</p>
+            <p class="lock play" v-else> <i class="fa-solid fa-play"></i> Play</p>
         </div>
     </div>
 
@@ -37,7 +37,8 @@ export default {
             courseContract: null,
             refunding: false,
             activeSection: 1,
-            encryptionKey: null
+            encryptionKey: null,
+            unlockedSections: []
         };
     },
     created() {
@@ -52,6 +53,7 @@ export default {
         this.$contracts.initCourseContract(this.$auth.provider)
         $nuxt.$on('course-contract', (contract) => {
             this.courseContract = contract
+            this.getUnlockedSections(contract)
             this.getCourseEncryptionKey(contract)
         })
     },
@@ -81,35 +83,46 @@ export default {
                 })
             } catch (error) {
                 $nuxt.$emit('error', 'You can\'t refund this course')
-                console.log(error);
             }
 
             this.refunding = false
         },
 
         loadSectionFile: async function (section) {
-            if (section.src == '' || this.encryptionKey == null) return
-            const linkArray = section.src.split('-')
-            if (linkArray.length == 0) return
+            // if (section.src == '' || this.encryptionKey == null) return
+            // const linkArray = section.src.split('-')
+            // if (linkArray.length == 0) return
 
-            console.log(linkArray);
+            // console.log(linkArray);
 
-            const dataArray = []
-            for (let index = 0; index < linkArray.length; index++) {
-                const link = linkArray[index];
-                const data = await this.$axios.get(link)
-                dataArray.push(this.$encryption.decrypt(data.data, this.encryptionKey))
-            }
+            // const dataArray = []
+            // for (let index = 0; index < linkArray.length; index++) {
+            //     const link = linkArray[index];
+            //     const data = await this.$axios.get(link)
+            //     dataArray.push(this.$encryption.decrypt(data.data, this.encryptionKey))
+            // }
 
-            console.log(dataArray);
+            // console.log(dataArray);
         },
 
         getCourseEncryptionKey: async function (contract) {
             this.encryptionKey = 'password'
         },
 
+        getUnlockedSections: async function (contract) {
+            this.unlockedSections.push(5)
+        },
+
         viewSection: async function (sectionId) {
-            if (this.courseContract == null) return
+            if (this.courseContract == null || this.$auth.accounts.length == 0) return
+
+            try {
+                const trx = await this.courseContract.viewSection(this.courseId, sectionId, {
+                    from: this.$auth.accounts[0]
+                })
+
+                this.unlockedSections.push(sectionId)
+            } catch (error) {}
         }
     },
 };

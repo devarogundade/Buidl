@@ -13,7 +13,7 @@ module.exports = {
             case 'categories':
                 return ['uint', 'string', 'string']
             case 'courses':
-                return ['uint256', 'string', 'string', 'uint256', 'string', 'string', 'address', 'uint256', 'bool', 'uint256']
+                return ['uint256', 'string', 'string', 'uint256', 'string', 'string', 'address', 'uint256', 'bool', 'bool', 'uint256']
             case 'users':
                 return ['address', 'string', 'string', 'bool']
             case 'creators':
@@ -45,8 +45,9 @@ module.exports = {
                     preview: data[5],
                     address: data[6].toUpperCase(), // creator
                     price: data[7],
-                    publish: data[8],
-                    updatedAt: data[9]
+                    certificate: data[8],
+                    publish: data[9],
+                    updatedAt: data[10]
                 }
             case 'users':
                 return {

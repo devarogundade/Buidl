@@ -14,7 +14,7 @@
                 <div class="wallet">
                     <div>
                         <img src="/images/bnb_coin.png" alt="">
-                        <p>{{ Number($utils.fromWei(balance)).toFixed(4) }} <b>BNB</b></p>
+                        <p>{{ Number($utils.fromWei(balance)).toFixed(4) }} <b>tBNB</b></p>
                     </div>
                 </div>
                 <div class="wallet">

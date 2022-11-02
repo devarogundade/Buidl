@@ -225,7 +225,6 @@ export default {
                     from: this.$auth.accounts[0]
                 })
             } catch (error) {
-                console.log(error);
             }
         }
     }

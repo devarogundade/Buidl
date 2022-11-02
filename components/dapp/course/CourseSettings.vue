@@ -162,9 +162,7 @@ export default {
 
             if (this.previewFile != null) {
                 const base64 = await this.$ipfs.toBase64(this.previewFile)
-                console.log(base64);
                 const url = await this.$ipfs.upload(`courses/previews/${this.courseId}`, base64)
-                console.log(url);
                 if (url != null) {
                     this.course.preview = url
                 }
@@ -178,7 +176,6 @@ export default {
                     })
                 this.$router.push('/app/courses')
             } catch (error) {
-                console.log(error);
             }
 
             this.updating = false

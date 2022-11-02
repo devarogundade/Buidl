@@ -85,7 +85,6 @@ export default {
                 claimed: this.$utils.fromWei(revenue.claimed),
                 unclaimed: this.$utils.fromWei(revenue.unclaimed)
             }
-            console.log(this.revenue);
         }
     }
 }
