@@ -85,7 +85,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
 - See mode at https://buidl.netflify.app/
 - Buidl Token Faucet https://buidl.netlify.app/mint
 
-## Screenshots
+## Sneak peaks
 ![Screenshot 2022-11-01 064225](https://user-images.githubusercontent.com/81397790/199166950-fc271011-4f1b-4228-a68e-5662bdd3e5e7.png)
 ![Screenshot 2022-11-01 064520](https://user-images.githubusercontent.com/81397790/199167156-b1843670-e5a9-4c3e-a3a2-623ad833c2c5.png)
 
@@ -105,6 +105,5 @@ Want to contribute? Great!
 
 Reach out to me at https://linktr.ee/devarogundade
 
-## License
-
-MIT
+## Team
+- Arogundade Ibrahim
