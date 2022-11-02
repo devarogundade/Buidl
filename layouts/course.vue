@@ -20,6 +20,7 @@
     <WalletConnect :state="wcState" />
     <CreateNewTask :state="tkState" />
     <DrawBoard :state="dbState" />
+    <Error />
 </div>
 </template>
 

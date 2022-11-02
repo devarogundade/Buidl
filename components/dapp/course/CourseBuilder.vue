@@ -54,7 +54,9 @@ export default {
             sections: [],
             courseContract: null,
             saving: false,
-            files: []
+            currentFile: null,
+            currentSlices: [],
+            encryptionKey: null
         }
     },
     watch: {
@@ -66,13 +68,15 @@ export default {
         this.getCourse()
         this.getCourseSections()
         this.addSection()
+
         this.$contracts.initCourseContract(this.$auth.provider)
         $nuxt.$on('course-contract', (contract) => {
             this.courseContract = contract
+            this.getCourseEncryptionKey(contract)
         })
     },
     methods: {
-        addSection() {
+        addSection: function () {
             this.sections.push({
                 id: 0,
                 title: '',
@@ -80,48 +84,70 @@ export default {
                 content: ''
             })
         },
-        chooseFile(event) {
+
+        chooseFile: function (event) {
             const file = event.target.files[0]
-            this.files.push(file)
+            this.currentFile = file
+            this.sliceFile(file)
         },
-        async saveChanges() {
+
+        sliceFile: async function (file) {
+            if (this.encryptionKey == null) return
+
+            // clean up array
+            this.currentSlices = []
+
+            const chunkSize = 1024 * 1024
+            const chunks = Math.ceil(file.size / chunkSize, chunkSize)
+
+            let chunk = 0
+            while (chunk <= chunks) {
+                const offset = chunk * chunkSize
+                const slice = file.slice(offset, offset + chunkSize)
+                if (slice.size > 0) {
+                    const base64 = await this.$ipfs.toBase64(slice)
+                    const encryptedBase64 = this.$encryption.encrypt(base64, this.encryptionKey)
+                    this.currentSlices.push(encryptedBase64)
+                }
+                chunk++;
+            }
+
+        },
+
+        getCourseEncryptionKey: async function (contract) {
+            this.encryptionKey = 'password'
+        },
+
+        saveChanges: async function () {
             if (this.saving || this.courseContract == null || this.$auth.accounts == 0) return
 
             this.saving = true
 
-            let file = null
-
-            if (this.files.length > this.selectedIndex) {
-                file = this.files[this.selectedIndex]
-            }
-
             let src = this.sections[this.selectedIndex].src
 
-            if (file == null && src == '') {
+            if (this.currentFile.length == 0 && src == '') {
                 $nuxt.$emit('warning', 'You haven\'t selected a video file')
                 this.saving = false
                 return
             }
 
-            if (file != null) {
-                const data = await this.$ipfs.toBase64(file)
-                src = await this.$ipfs.upload(`courses/${this.courseId}/${this.selectedIndex}`, data)
-                console.log('src', src);
-            }
+            const uploadedSrc = [];
 
-            if (src == null) {
-                $nuxt.$emit('warning', 'Failed to upload video file')
-                this.saving = false
-                return
+            for (let index = 0; index < this.currentSlices.length; index++) {
+                const slice = this.currentSlices[index];
+                const _src = await this.$ipfs.upload(`courses/${this.courseId}/${this.selectedIndex}/${index}`, slice)
+                if (_src == null) {
+                    $nuxt.$emit('warning', 'Failed to upload video file')
+                    break
+                }
+                uploadedSrc.push(_src)
             }
-
-            const encryptedSrc = this.$encryption.encrypt(src, "key")
 
             try {
                 const duration = 6000
                 const trx = await this.courseContract.createCourseSection(
                     this.courseId, this.sections[this.selectedIndex].title,
-                    this.sections[this.selectedIndex].content, encryptedSrc, duration, {
+                    this.sections[this.selectedIndex].content, uploadedSrc.join('-'), duration, {
                         from: this.$auth.accounts[0]
                     }
                 )
@@ -137,7 +163,7 @@ export default {
             this.fetching = false;
         },
         async getCourseSections() {
-            this.sections = await this.$firestore.fetchAll("course-sections", this.courseId);
+            this.sections = await this.$firestore.fetchAllWhere('course-sections', 'courseId', '==', this.courseId);
             if (this.sections.length == 0) {
                 this.addSection()
             }

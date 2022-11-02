@@ -16,6 +16,9 @@ contract BdlCourse {
     /* 2 weeks */
     uint private refundableDuration = 10000;
 
+    /* encryptions keys to premium contents */
+    mapping(uint => string) private encryptionKeys;
+
     uint private categoryCount = 0;
     uint private sectionsCount = 0;
 
@@ -90,7 +93,8 @@ contract BdlCourse {
         string memory description,
         string memory thumbnail,
         string memory previewSrc,
-        bool publish
+        bool publish,
+        string memory key
     ) external {
         require(courses[id].id == 0, "exists");
 
@@ -103,6 +107,8 @@ contract BdlCourse {
             block.timestamp,
             courses[id].sections
         );
+
+        encryptionKeys[id] = key;
 
         createdCourses[msg.sender].push(id);
 
@@ -200,6 +206,22 @@ contract BdlCourse {
         emit CourseTransfer(id, creator, receiver);
     }
 
+    /* get encryption key as subscriber */
+    function getEncryptionKeyAsSubscriber(uint id)
+        public view
+        returns (string memory)
+    {
+        // verifies user has a active subscription to course
+        getSubscriptionIndex(id, msg.sender);
+        return encryptionKeys[id];
+    }
+
+    /* get encryption key as creator */
+    function getEncryptionKeyAsCreator(uint id) public view returns (string memory) {
+        require(courses[id].creator == msg.sender, "!unathorized");
+        return encryptionKeys[id];
+    }
+
     /* view section */
     function viewSection(uint id, uint sectionId) public {
         int index = getSubscriptionIndex(id, msg.sender);
@@ -207,6 +229,7 @@ contract BdlCourse {
         emit SectionViewed(id, sectionId);
     }
 
+    /* unsubscribe/refund from a course */
     function unSubscribe(uint id, address owner)
         external
         returns (
@@ -255,6 +278,26 @@ contract BdlCourse {
             subscription.price,
             platformEarnings
         );
+    }
+
+    /* mint reward and certificate for user */
+    function onCourseComplete(uint id, address owner) external view returns (bool, uint256) {
+        // verifies user has subscribe to course
+        int index = getSubscriptionIndex(id, owner);
+
+        Models.Subscription memory subscription = subscriptions[id][
+            uint(index)
+        ];
+
+        require(
+            subscription.viewed.length >= subscription.sections,
+            "You haven't completed this course"
+        );
+
+        Models.Course memory course = courses[id];
+
+        /* returns course is premium or free */
+        return ((course.price > 0), subscription.price);
     }
 
     function getSubscriptionIndex(uint courseId, address owner)

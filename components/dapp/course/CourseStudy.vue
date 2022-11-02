@@ -34,8 +34,10 @@ export default {
             user: this.$contracts.user,
             nfts: [],
             buidlContract: null,
+            courseContract: null,
             refunding: false,
-            activeSection: 1
+            activeSection: 1,
+            encryptionKey: null
         };
     },
     created() {
@@ -45,36 +47,30 @@ export default {
         this.$contracts.initBuidlContract(this.$auth.provider)
         $nuxt.$on('buidl-contract', (contract) => {
             this.buidlContract = contract
-            console.log(contract);
+        })
+
+        this.$contracts.initCourseContract(this.$auth.provider)
+        $nuxt.$on('course-contract', (contract) => {
+            this.courseContract = contract
+            this.getCourseEncryptionKey(contract)
         })
     },
-    updated() {
-        if (this.swiper == null) {
-            // new Swiper(".swiper-section", {
-            //     slidesPerView: 1,
-            //     spaceBetween: 30,
-            // });
-            // this.swiper = document.querySelector(".swiper-section").swiper;
-        }
-    },
     methods: {
-        prev: function () {
-            // if (this.swiper == null) return;
-            // this.swiper.slidePrev();
-        },
-        next: function () {
-            // if (this.swiper == null) return;
-            // this.swiper.slideNext();
-        },
         onComplete: async function () {},
+
         getCourse: async function () {
             this.course = await this.$firestore.fetch("courses", this.courseId);
             $nuxt.$emit(`course${this.courseId}`, this.course);
             this.fetching = false;
         },
+
         getCourseSections: async function () {
             this.sections = await this.$firestore.fetchAll("course-sections", this.courseId);
+            if (this.sections.length > 0) {
+                this.loadSectionFile(this.sections[0])
+            }
         },
+
         refund: async function () {
             if (this.buidlContract == null || this.$auth.accounts.length == 0) return
             this.refunding = true
@@ -89,6 +85,31 @@ export default {
             }
 
             this.refunding = false
+        },
+
+        loadSectionFile: async function (section) {
+            if (section.src == '' || this.encryptionKey == null) return
+            const linkArray = section.src.split('-')
+            if (linkArray.length == 0) return
+
+            console.log(linkArray);
+
+            const dataArray = []
+            for (let index = 0; index < linkArray.length; index++) {
+                const link = linkArray[index];
+                const data = await this.$axios.get(link)
+                dataArray.push(this.$encryption.decrypt(data.data, this.encryptionKey))
+            }
+
+            console.log(dataArray);
+        },
+
+        getCourseEncryptionKey: async function (contract) {
+            this.encryptionKey = 'password'
+        },
+
+        viewSection: async function (sectionId) {
+            if (this.courseContract == null) return
         }
     },
 };

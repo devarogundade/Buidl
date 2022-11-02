@@ -169,7 +169,7 @@ export default {
             }
         }
         this.category = await this.$firestore.fetch("categories", `${this.course.category}`)
-        this.sections = await this.$firestore.fetchAll("course-sections", this.courseId)
+        this.sections = await this.$firestore.fetchAllWhere('course-sections', 'courseId', '==', this.courseId);
         this.getNfts()
 
         this.$contracts.initBuidlContract(this.$auth.provider)

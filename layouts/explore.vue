@@ -8,6 +8,7 @@
     <LandingFooter />
     <WalletConnect :state="wcState" />
     <CreateNewPost :state="cpState" />
+    <Error />
 </div>
 </template>
 

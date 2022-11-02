@@ -17,6 +17,7 @@
     <WalletConnect :state="wcState" />
     <CreateNewPost :state="cpState" />
     <Username :state="unState" />
+    <Error />
 </div>
 </template>
 

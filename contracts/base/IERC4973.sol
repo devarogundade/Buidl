@@ -2,7 +2,7 @@
 pragma solidity >=0.7.0 <0.9.0;
 
 interface IERC4973 {
-    event Attest(address indexed _to, uint256 indexed _tokenId);
+    event Attest(address indexed _to, uint256 indexed _tokenId, string _uri);
 
     event Revoke(address indexed _to, uint256 indexed _tokenId);
 

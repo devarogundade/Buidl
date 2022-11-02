@@ -38,7 +38,7 @@ contract BdlCertificate is ERC4973 {
     function issue(address learner, string calldata uri) external {
         _mint(learner, certificateID, uri);
 
-        emit Attest(learner, certificateID);
+        emit Attest(learner, certificateID, uri);
         certificateID++;
     }
 

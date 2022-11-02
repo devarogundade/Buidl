@@ -5,6 +5,7 @@ const Buidl = artifacts.require("Buidl");
 const Staking = artifacts.require("Staking");
 const BdlCourse = artifacts.require("BdlCourse");
 
+/* binance smart chain testnet */
 module.exports = async function(deployer) {
     await deployer.deploy(Staking);
     await deployer.deploy(BdlToken, "Buidl Token", "BDL");

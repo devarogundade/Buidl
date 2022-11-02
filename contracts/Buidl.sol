@@ -64,7 +64,12 @@ contract Buidl is AxelarExecutable {
     function stake(uint256 amount) public {
         _bdlToken.approve(msg.sender, address(this), amount);
         _bdlToken.transferFrom(msg.sender, address(this), amount);
-        _staking.stake(msg.sender, amount, block.timestamp + creatorStakingDuration, 0);
+        _staking.stake(
+            msg.sender,
+            amount,
+            block.timestamp + creatorStakingDuration,
+            0
+        );
     }
 
     /* unlock creator */
@@ -134,14 +139,29 @@ contract Buidl is AxelarExecutable {
         _bdlToken.transferFrom(address(this), deployer, amount);
     }
 
+    function onCourseComplete(
+        uint id,
+        string memory certificateUri,
+        string memory nftUri
+    ) public {
+        (bool isPremium, uint256 coursePrice) = _bdlCourse.onCourseComplete(
+            id,
+            msg.sender
+        );
+
+        if (isPremium) {
+            _bdlCertificate.issue(msg.sender, certificateUri);
+        }
+
+        _bdlNft.mint(msg.sender, nftUri);
+    }
+
     function _execute(
         string calldata sourceChain_,
         string calldata sourceAddress_,
         bytes calldata payload_
     ) internal override {
         uint id = abi.decode(payload_, (uint));
-        // sourceChain = sourceChain_;
-        // sourceAddress = sourceAddress_;
         this.subscribe(id);
     }
 
