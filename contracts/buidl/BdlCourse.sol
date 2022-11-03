@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.7.0 <0.9.0;
 
-import {Models} from "./base/Models.sol";
+import {Models} from "./../base/Models.sol";
 
 contract BdlCourse {
     /* all ecosystem courses */
@@ -314,7 +314,7 @@ contract BdlCourse {
         Models.Course memory course = courses[id];
 
         /* returns course is premium or free */
-        return ((course.price > 0), subscription.price);
+        return (course.certificate, subscription.price);
     }
 
     function getSubscriptionIndex(uint courseId, address owner)

@@ -7,10 +7,13 @@ import {IAxelarGasService} from "@axelar-network/axelar-gmp-sdk-solidity/contrac
 
 import {BdlNft} from "./BdlNft.sol";
 import {BdlCertificate} from "./BdlCertificate.sol";
-import {Models} from "./base/Models.sol";
 import {BdlToken} from "./BdlToken.sol";
 import {BdlCourse} from "./BdlCourse.sol";
 import {Staking} from "./Staking.sol";
+
+import {Models} from "./../base/Models.sol";
+import {Base64} from "./../base/Base64.sol";
+import {Message} from "./../axelar/Message.sol";
 
 contract Buidl is AxelarExecutable {
     address private immutable deployer;
@@ -97,6 +100,17 @@ contract Buidl is AxelarExecutable {
         uint nftId,
         uint256 discount
     ) public {
+        _subscribe(id, nftId, discount, msg.sender);
+    }
+
+    /* subscribe to a course */
+    /* params course id */
+    function _subscribe(
+        uint id,
+        uint nftId,
+        uint256 discount,
+        address subscriber
+    ) private {
         (uint256 price, address creator) = _bdlCourse.subscribe(id, msg.sender);
 
         /* payment are locked in the smart contract */
@@ -151,30 +165,65 @@ contract Buidl is AxelarExecutable {
         _bdlToken.transferFrom(address(this), deployer, amount);
     }
 
-    function onCourseComplete(
-        uint id,
-        string memory certificateUri,
-        string memory nftUri
-    ) public {
-        (bool isPremium, uint256 coursePrice) = _bdlCourse.onCourseComplete(
+    function onCourseComplete(uint id, string memory certificateUri) public {
+        (bool isCertificate, uint256 coursePrice) = _bdlCourse.onCourseComplete(
             id,
             msg.sender
         );
 
-        if (isPremium) {
+        if (isCertificate) {
+            /* issue certificate to subscriber */
             _bdlCertificate.issue(msg.sender, certificateUri);
         }
 
+        /* generate a random nft based on price as reward to subscriber */
+        string memory nftUri = generateNftMetadata(coursePrice);
+
+        /* mint the nft */
         _bdlNft.mint(msg.sender, nftUri);
     }
 
+    function generateNftMetadata(uint coursePrice)
+        private
+        pure
+        returns (string memory)
+    {
+        string memory metadata = string(
+            abi.encodePacked(
+                '{"name": "Mr Monkey',
+                '", "description": "This is NFT is a monkey NFT for Buidl coupon", "attributes":',
+                '[{"display_type":"boost_number","trait_type":"Percentage","value":"4"}]',
+                "}"
+            )
+        );
+
+        return
+            string(
+                abi.encodePacked(
+                    "data:application/json;base64,",
+                    Base64.base64(bytes(metadata))
+                )
+            );
+    }
+
+    /* Axelar message reciever function */
     function _execute(
         string calldata sourceChain_,
         string calldata sourceAddress_,
         bytes calldata payload_
     ) internal override {
-        uint id = abi.decode(payload_, (uint));
-        this.subscribe(id, 0, 0);
+        (Message.Title messageTitle, bytes memory payload) = Message
+            .unPackMessage(payload_);
+
+        /* message is a subscribe call */
+        if (messageTitle == Message.Title.SUBSCRIBE) {
+            (uint courseId, address subscriber) = abi.decode(
+                payload,
+                (uint, address)
+            );
+
+            _subscribe(courseId, 0, 0, subscriber);
+        }
     }
 
     modifier onlyVerified() {

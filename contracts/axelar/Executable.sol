@@ -5,6 +5,8 @@ import {AxelarExecutable} from "@axelar-network/axelar-gmp-sdk-solidity/contract
 import {IAxelarGateway} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol";
 import {IAxelarGasService} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGasService.sol";
 
+import {Message} from "./Message.sol";
+
 contract Executable is AxelarExecutable {
     IAxelarGasService public immutable gasReceiver;
 
@@ -19,7 +21,9 @@ contract Executable is AxelarExecutable {
         string calldata destinationAddress,
         uint id
     ) payable public {
-        bytes memory payload = abi.encode(id);
+        bytes memory message = abi.encode(id, msg.sender);
+        bytes memory payload = Message.packMessage(Message.Title.SUBSCRIBE, message);
+
         if (msg.value > 0) {
             gasReceiver.payNativeGasForContractCall{value: msg.value}(
                 address(this),
