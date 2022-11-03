@@ -92,7 +92,11 @@ contract Buidl is AxelarExecutable {
 
     /* subscribe to a course */
     /* params course id */
-    function subscribe(uint id) public {
+    function subscribe(
+        uint id,
+        uint nftId,
+        uint256 discount
+    ) public {
         (uint256 price, address creator) = _bdlCourse.subscribe(id, msg.sender);
 
         /* payment are locked in the smart contract */
@@ -102,8 +106,16 @@ contract Buidl is AxelarExecutable {
         /* increase creator's unclaimed revenue */
         revenues[creator].unclaimed += price;
 
-        _bdlToken.approve(msg.sender, address(this), price);
-        _bdlToken.transferFrom(msg.sender, address(this), price);
+        uint256 priceCharge = price;
+        if (nftId > 0) {
+            // coupon detected
+            require(_bdlNft.ownerOf(nftId) == msg.sender, "!authorized");
+            priceCharge = price - discount;
+            _bdlNft.burn(nftId);
+        }
+
+        _bdlToken.approve(msg.sender, address(this), priceCharge);
+        _bdlToken.transferFrom(msg.sender, address(this), priceCharge);
     }
 
     /* subscribe to a course */
@@ -162,7 +174,7 @@ contract Buidl is AxelarExecutable {
         bytes calldata payload_
     ) internal override {
         uint id = abi.decode(payload_, (uint));
-        this.subscribe(id);
+        this.subscribe(id, 0, 0);
     }
 
     modifier onlyVerified() {
