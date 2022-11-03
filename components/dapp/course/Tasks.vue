@@ -336,7 +336,7 @@ export default {
     padding: 16px;
     border-radius: 10px;
     background: rgb(34, 114, 200);
-    background-image: url("https://app.idle.finance/images/bg-noise.png");
+    background-image: url("/images/bg-noise.png");
 }
 
 .members .member {

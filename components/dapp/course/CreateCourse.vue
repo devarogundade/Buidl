@@ -57,6 +57,17 @@
             </div>
 
             <div class="edit">
+                <p class="label">Course certification</p>
+                <div class="switch-con">
+                    <p>Want to issue certificate?</p>
+                    <label class="switch">
+                        <input type="checkbox" v-model="course.certificate">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="edit">
                 <p class="label">Course price in BDL*</p>
                 <input :class="getInputClassForPrice()" v-model="course.price" type="number" min="0" placeholder="0">
                 <p class="error-text" v-if="errorPrice">{{ errorPrice }}</p>
@@ -80,6 +91,7 @@ export default {
                 price: '',
                 level: '',
                 preview: '',
+                certificate: false,
                 publish: false
             },
             errorName: null,
@@ -168,9 +180,9 @@ export default {
             try {
                 const id = Math.floor(Math.random() * 999999999999) + 1;
                 const trx = await this.courseContract.createCourse(
-                    id, this.categories[this.selectedCategory].id, this.$utils.toWei(this.course.price),
-                    this.course.name, this.course.description, this.course.photo, this.course.preview, this.course.publish,
-                    this.encryptionKey, {
+                    id, this.categories[this.selectedCategory].id, this.$utils.toWei(this.course.price), this.encryptionKey,
+                    this.course.name, this.course.description, this.course.photo, this.course.preview, this.course.certificate,
+                    this.course.publish, {
                         from: this.$auth.accounts[0]
                     })
                 this.$router.push('/app/courses')

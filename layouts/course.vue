@@ -1,10 +1,7 @@
 <template>
 <div class="app">
-    <!-- <div class="bg"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
-    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-bottomright.svg" alt=""></div> -->
-
-    <div class="bg"><img src="https://idle.finance/assets/img/Ellipse1.ee547e.png" alt=""></div>
-    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
+    <div class="bg"><img src="/images/Ellipse1.ee547e.png" alt=""></div>
+    <div class="bg2"><img src="/images/ellipse-topleft.svg" alt=""></div>
     <CourseHeader />
     <section>
         <div class="app-width">
@@ -18,9 +15,8 @@
     </section>
     <DappFooter />
     <WalletConnect :state="wcState" />
-    <CreateNewTask :state="tkState" />
-    <DrawBoard :state="dbState" />
     <SwitchNetwork :state="snState" />
+    <DrawBoard :state="dbState" />
     <Error />
 </div>
 </template>
@@ -30,10 +26,8 @@ export default {
     data() {
         return {
             wcState: 'hide',
-            tkState: 'hide',
             dbState: 'hide',
-            snState: 'hide',
-            provider: this.$auth.provider
+            snState: 'hide'
         }
     },
     async mounted() {
@@ -43,12 +37,7 @@ export default {
         $nuxt.$on('release-connect-wallet', () => {
             this.wcState = 'hide'
         })
-        $nuxt.$on('create-new-task', () => {
-            this.tkState = 'show'
-        })
-        $nuxt.$on('discard-new-task', () => {
-            this.tkState = 'hide'
-        })
+
         $nuxt.$on('draw-board', (username) => {
             this.dbState = 'show'
         })

@@ -227,8 +227,7 @@ export default {
                 const trx = await this.buidlContract.subscribe(this.courseId, nftId, discount, {
                     from: this.$auth.accounts[0]
                 })
-            } catch (error) {
-            }
+            } catch (error) {}
         }
     }
 };

@@ -56,7 +56,7 @@ export default {
     padding: 40px;
     border-radius: 10px;
     background: rgb(34, 114, 200);
-    background-image: url("https://app.idle.finance/images/bg-noise.png");
+    background-image: url("/images/bg-noise.png");
     z-index: 1;
     display: flex;
     gap: 20px;

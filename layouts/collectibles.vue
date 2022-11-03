@@ -1,10 +1,7 @@
 <template>
 <div class="app">
-    <!-- <div class="bg"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
-    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-bottomright.svg" alt=""></div> -->
-
-    <div class="bg"><img src="https://idle.finance/assets/img/Ellipse1.ee547e.png" alt=""></div>
-    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
+    <div class="bg"><img src="/images/Ellipse1.ee547e.png" alt=""></div>
+    <div class="bg2"><img src="/images/ellipse-topleft.svg" alt=""></div>
     <DappHeader />
     <section>
         <div class="app-width">
@@ -26,9 +23,7 @@
 export default {
     data() {
         return {
-            wcState: 'hide',
-            cpState: 'hide',
-            provider: this.$auth.provider
+            wcState: 'hide'
         }
     },
     async mounted() {

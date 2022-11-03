@@ -54,9 +54,11 @@ export default {
             console.log(this.executableContract);
             if (this.executableContract == null) return
 
-            await this.executableContract.subscribe("binance", "0xfde133d7c88f724e88a8ca0ca77b76df42066f15", 93593177001, {
+            const trx = await this.executableContract.subscribe("binance", "0x3407714B59fD7f5A3535bD51177e1f709cA08ba5", 93593177001, {
                 from: this.$auth.accounts[0]
             })
+
+            console.log(trx);
         }
     }
 }

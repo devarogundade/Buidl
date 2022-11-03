@@ -1,7 +1,7 @@
 <template>
 <div class="explore">
-    <div class="bg"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
-    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-bottomright.svg" alt=""></div>
+    <div class="bg"><img src="/images/ellipse-topleft.svg" alt=""></div>
+    <div class="bg2"><img src="/images/ellipse-bottomright.svg" alt=""></div>
     <ExploreHeader />
     <Nuxt />
     <LandingFooter />
@@ -16,8 +16,7 @@ export default {
     data() {
         return {
             wcState: 'hide',
-            snState: 'hide',
-            provider: this.$auth.provider
+            snState: 'hide'
         }
     },
     async created() {

@@ -1,7 +1,7 @@
 <template>
 <section>
-    <div class="bg"><img src="https://idle.finance/assets/img/Ellipse1.ee547e.png" alt=""></div>
-    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
+    <div class="bg"><img src="/images/Ellipse1.ee547e.png" alt=""></div>
+    <div class="bg2"><img src="/images/ellipse-topleft.svg" alt=""></div>
     <div class="app-width">
         <div class="hero">
             <div class="grid">

@@ -53,7 +53,7 @@
 section {
     padding: 160px 0;
     position: relative;
-    background-image: url('https://idle.finance/assets/img/bgCircles-desktop1.813090.svg');
+    background-image: url('/images/bgCircles-desktop1.813090.svg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;

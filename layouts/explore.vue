@@ -1,13 +1,12 @@
 <template>
 <div class="explore">
-    <div class="bg"><img src="https://app.idle.finance/images/ellipse-topleft.svg" alt=""></div>
-    <div class="bg2"><img src="https://app.idle.finance/images/ellipse-bottomright.svg" alt=""></div>
+    <div class="bg"><img src="images/ellipse-topleft.svg" alt=""></div>
+    <div class="bg2"><img src="/images/ellipse-bottomright.svg" alt=""></div>
     <ExploreHeader />
     <ExploreHero />
     <Nuxt />
     <LandingFooter />
     <WalletConnect :state="wcState" />
-    <CreateNewPost :state="cpState" />
     <SwitchNetwork :state="snState" />
     <Error />
 </div>
@@ -18,9 +17,7 @@ export default {
     data() {
         return {
             wcState: 'hide',
-            cpState: 'hide',
             snState: 'hide',
-            provider: this.$auth.provider
         }
     },
     async mounted() {
