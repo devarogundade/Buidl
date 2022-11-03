@@ -1,6 +1,6 @@
 <template>
 <div class="projects">
-  <ChatInstructor />
+  <ChatSubscribers />
 </div>
 </template>
 

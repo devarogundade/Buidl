@@ -48,14 +48,14 @@
         </div>
         <div class="tools">
             <div class="title">
-                <h3>Instructor</h3>
+                <h3>Subscribers</h3>
             </div>
             <div class="members">
-                <div class="member" v-if="creator">
-                    <img :src="creator.photo" alt="">
+                <div class="member" v-for="(subscriber, index) in subscribers" :class="currentSubscriber == subscriber.address ? 'active' : ''" :key="index">
+                    <img src="/images/placeholder.png" alt="">
                     <div class="profile">
-                        <h3>{{ creator.name }}</h3>
-                        <p class="tag">Instructor</p>
+                        <h3>{{ subscriber.address.substring(0, 12) + '...' }}</h3>
+                        <p class="tag">{{ subscriber.active }}</p>
                     </div>
                 </div>
             </div>
@@ -70,10 +70,11 @@ export default {
         return {
             textMessage: '',
             messages: [],
-            creator: null,
+            subscribers: null,
             courseId: this.$route.params.course,
             course: null,
-            fetching: true
+            fetching: true,
+            currentSubscriber: null
         }
     },
     async created() {
@@ -81,28 +82,32 @@ export default {
         $nuxt.$emit(`course${this.courseId}`, this.course);
         this.fetching = false
 
-        this.creator = await this.$firestore.fetch('users', this.course.address.toUpperCase())
+        this.subscribers = await this.$firestore.fetchAllWhere('subscriptions', 'courseId', '==', this.courseId)
+
+        if (this.subscribers.length > 0) {
+            this.currentSubscriber = this.subscribers[0].address
+        }
 
         this.getAllMessages()
     },
     methods: {
         getAllMessages: async function () {
-            if (this.$auth.accounts.length == 0 || this.course == null) return
+            if (this.$auth.accounts.length == 0 || this.currentSubscriber == null) return
 
             this.messages = await this.$firestore.fetchAllWhere(
-                'chats', 'roomId', '==', this.getRoomId(this.$auth.accounts[0], this.course.address)
+                'chats', 'roomId', '==', this.getRoomId(this.$auth.accounts[0], this.currentSubscriber)
             )
         },
 
         writeMessage: function () {
-            if (this.textMessage == '' || this.$auth.accounts.length == 0 || this.course == null) return
+            if (this.textMessage == '' || this.$auth.accounts.length == 0 || this.currentSubscriber == null) return
 
             this.$firestore.write('chats', 'weewe', {
                 text: this.textMessage,
                 timestamp: Date(),
                 type: 'text',
                 sender: this.$auth.accounts[0].toUpperCase(),
-                roomId: this.getRoomId(this.$auth.accounts[0], this.course.address)
+                roomId: this.getRoomId(this.$auth.accounts[0], this.currentSubscriber)
             })
 
             // clear input
@@ -258,7 +263,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    gap: 20px;
+    width: 100%;
 }
 
 .message {
@@ -377,5 +382,11 @@ export default {
     object-fit: cover;
     border-radius: 20px;
     cursor: pointer;
+}
+
+.active {
+    background: #0176fb3b;
+    padding: 10px;
+    border-radius: 10px;
 }
 </style>
