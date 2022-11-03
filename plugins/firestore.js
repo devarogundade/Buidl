@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where } from "firebase/firestore";
+import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where, onSnapshot } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAN_Oc0Wz5TXJFdZK__bs5sVUAm6WBzJhY",
@@ -74,5 +74,17 @@ export default ({}, inject) => {
 
             return subscriptions
         },
+        write: async function(_collection, _document, _object) {
+            const reference = doc(this.db, _collection, _document)
+            await setDoc(reference, _object)
+        },
+        callback: function(_collection, _document) {
+            const reference = doc(this.db, _collection, _document)
+
+            onSnapshot(reference, (doc) => {
+                const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+                console.log(source, " data: ", doc.data());
+            });
+        }
     }))
 }

@@ -14,7 +14,9 @@ export default ({}, inject) => {
             try {
                 const web3 = new Web3()
                 return web3.utils.toWei(value, 'ether')
-            } catch (error) {}
+            } catch (error) {
+                console.log(error);
+            }
         },
         decode: function(format, data) {
             try {

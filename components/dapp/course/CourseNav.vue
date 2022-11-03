@@ -10,7 +10,7 @@
 
         <router-link v-show="$route.name.includes('app-courses-course')" :to="`/app/courses/${$route.params.course}`">
             <div :class="$route.name == 'app-courses-course' ? 'item active' : 'item'">
-                <i class="fa-solid fa-chart-pie"></i>
+                <i class="fa-solid fa-book"></i>
                 <p>Study</p>
             </div>
         </router-link>

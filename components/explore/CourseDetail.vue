@@ -25,6 +25,7 @@
                         <div class="specs">
                             <p class="last_update"><i class="fa-solid fa-calendar-days"></i> {{ $utils.formatToDate(Number(course.updatedAt)) }}</p>
                             <p class="languages"><i class="fa-solid fa-globe"></i> English</p>
+                            <p class="certificate"><i class="fa-solid fa-id-badge"></i> {{ course.certificate ? 'Yes' : 'No' }}</p>
                         </div>
                     </div>
 
@@ -185,6 +186,7 @@ export default {
                 this.selectedSection = index
             }
         },
+
         toJson: function (json) {
             if (json == null) {
                 return {
@@ -200,34 +202,45 @@ export default {
             }
             return JSON.parse(json);
         },
+
         calcDiscount: function (index) {
             const weight = this.toJson(this.nfts[index].metadata).attributes[0].value
             return (weight / 100) * this.$utils.fromWei(this.course.price)
         },
+
         removeCoupon: function () {
             this.selectedNft = null
             this.showNfts = false
         },
+
         applyCoupon: function (index) {
             this.selectedNft = index
             this.showNfts = false
         },
+
         getNfts: async function () {
             if (this.$auth.accounts == null) return
             const nfts = await this.$nft.getUserNfts(this.$auth.accounts[0])
             this.nfts = nfts.result
-            console.log(this.nfts);
         },
+
         buyCourse: async function () {
             if (this.buidlContract == null) return
             try {
-                const nftId = this.selectedNft.token_id != null ? this.selectedNft : 0
-                const discount = this.calcDiscount(this.selectedNft)
+                let nftId = 0
+                let discount = 0
+
+                if (this.selectedNft != null) {
+                    nftId = this.nfts[this.selectedNft].token_id
+                    discount = this.$utils.toWei(this.calcDiscount(this.selectedNft).toString())
+                }
 
                 const trx = await this.buidlContract.subscribe(this.courseId, nftId, discount, {
                     from: this.$auth.accounts[0]
                 })
-            } catch (error) {}
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 };

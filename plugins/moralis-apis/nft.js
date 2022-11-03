@@ -1,4 +1,4 @@
-import Vue from "vue";
+import Vue from "vue"
 
 export default ({ $axios }, inject) => {
     inject('nft', Vue.observable({
@@ -15,7 +15,7 @@ export default ({ $axios }, inject) => {
 
             try {
                 const response = await $axios.request(options)
-                return response.data
+                return response.data.filter(nft => nft.token_address == process.env.NFT_CONTRACT_ADDRESS)
             } catch (error) {
                 return null
             }
