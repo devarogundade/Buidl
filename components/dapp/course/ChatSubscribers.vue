@@ -42,7 +42,7 @@
                 <input type="text" v-model="textMessage" v-on:keyup.enter="writeMessage()" placeholder="Write your message here.." />
                 <div class="files">
                     <i class="fa-regular fa-image scaleable"></i>
-                    <i class="fa-solid fa-file scaleable"></i>
+                    <i class="fa-solid fa-file scaleable" v-on:click="$emit('error', 'Coming soon')"></i>
                 </div>
             </div>
         </div>
@@ -74,7 +74,13 @@ export default {
             courseId: this.$route.params.course,
             course: null,
             fetching: true,
+            fetchingMsgs: true,
             currentSubscriber: null
+        }
+    },
+    watch: {
+        currentSubscriber: function (_subscriber) {
+            this.getAllMessages()
         }
     },
     async created() {
@@ -94,9 +100,13 @@ export default {
         getAllMessages: async function () {
             if (this.$auth.accounts.length == 0 || this.currentSubscriber == null) return
 
+            this.fetchingMsgs = true
+
             this.messages = await this.$firestore.fetchAllWhere(
                 'chats', 'roomId', '==', this.getRoomId(this.$auth.accounts[0], this.currentSubscriber)
             )
+
+            this.fetchingMsgs = false
         },
 
         writeMessage: function () {
