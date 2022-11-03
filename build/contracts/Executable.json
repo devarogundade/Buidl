@@ -104,7 +104,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -117,7 +118,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -140,7 +142,8 @@
       "name": "subscribe",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function"
+      "type": "function",
+      "payable": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"gateway_\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"gasReceiver_\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"InvalidAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotApprovedByGateway\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"commandId\",\"type\":\"bytes32\"},{\"internalType\":\"string\",\"name\":\"sourceChain\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"sourceAddress\",\"type\":\"string\"},{\"internalType\":\"bytes\",\"name\":\"payload\",\"type\":\"bytes\"}],\"name\":\"execute\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"commandId\",\"type\":\"bytes32\"},{\"internalType\":\"string\",\"name\":\"sourceChain\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"sourceAddress\",\"type\":\"string\"},{\"internalType\":\"bytes\",\"name\":\"payload\",\"type\":\"bytes\"},{\"internalType\":\"string\",\"name\":\"tokenSymbol\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"executeWithToken\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"gasReceiver\",\"outputs\":[{\"internalType\":\"contract IAxelarGasService\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"gateway\",\"outputs\":[{\"internalType\":\"contract IAxelarGateway\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"destinationChain\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"destinationAddress\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"subscribe\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/axelar/Executable.sol\":\"Executable\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1500},\"remappings\":[]},\"sources\":{\"@axelar-network/axelar-gmp-sdk-solidity/contracts/executables/AxelarExecutable.sol\":{\"keccak256\":\"0x37f5cbdc641ca8f0dc24991af6038d4db55b0740f4383fbd4c443bd2a98abb95\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://095cacc16611928d2b06dfb7306ebb947108b00dc944584bdee6276c13fc1bfc\",\"dweb:/ipfs/QmXabeKnhh6SPW8EGezKi6PQmP2YQiMujJPWSRvU3J6NoN\"]},\"@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarExecutable.sol\":{\"keccak256\":\"0x7175f7bfe798e46032ad40bd87666c6ef3f03c0397c875cf3465510a9fc75237\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6eccc1ca07707b20fc77ff3c46d10ba438fe074ed1a5f95f095a22ffc7a1d8da\",\"dweb:/ipfs/QmQjue7gUFzjtT1BQrLM3h9TycjMJGPJTZLcRNTcseNJaH\"]},\"@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGasService.sol\":{\"keccak256\":\"0x0ab1f104fcf57de6a8fef1a6526bda7b362f9bfc6c05e0c5c768444d6cff6f5f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9b1f452f470a26a390d5bb0af5f53ee21a3eabff8effdd7039815c9bf2dbe2a1\",\"dweb:/ipfs/Qme9LTk9Z9sB1sbyucHXRnV6eBm8Adnvbuqc9WSHZHBqUX\"]},\"@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol\":{\"keccak256\":\"0xae3d4598622e927639e3cba383618476562631bc8afafe68b16dfbd1db21fd78\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://672c3b9284bbc02fd6692df94190f5fb76766a879cf826148e52cba921859b08\",\"dweb:/ipfs/Qmbatsf6gW6GJsyuoah7Yuw3iQNGmhpm39i21eKXQURHD9\"]},\"project:/contracts/axelar/Executable.sol\":{\"keccak256\":\"0x04af59488a3e71b341064d2c574f146f6255e2c66b2e99b5604d81fe91bd6cc7\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://1eeebc96eb74944647b7cf7fc06e22fe95b825804927746bb1e6e9f390e4d31a\",\"dweb:/ipfs/Qmdj4kJe85C2oTGYbDvM94u5kHfYjbkntFaAnnf7Jvug3Q\"]}},\"version\":1}",
@@ -7399,9 +7402,17 @@
     "name": "solc",
     "version": "0.8.16+commit.07a7930e.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "80001": {
+      "events": {},
+      "links": {},
+      "address": "0x521b5dcDAd4B5512E9EC05B18f96473b3c76D4E9",
+      "transactionHash": "0xcf40989982ee68b8d4bc578861407c2aa58e53820b7761a146d69eecfcc83f66"
+    }
+  },
   "schemaVersion": "3.4.10",
-  "updatedAt": "2022-11-03T04:00:07.860Z",
+  "updatedAt": "2022-11-03T04:04:16.365Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},
