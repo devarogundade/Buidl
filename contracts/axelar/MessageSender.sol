@@ -1,28 +1,38 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.7.0 <0.9.0;
 
-import {AxelarExecutable} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/executables/AxelarExecutable.sol";
 import {IAxelarGateway} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol";
 import {IAxelarGasService} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGasService.sol";
 
 import {Message} from "./Message.sol";
 
-contract Executable is AxelarExecutable {
-    IAxelarGasService public immutable gasReceiver;
+contract MessageSender {
+    /* axelar */
+    IAxelarGasService gasReceiver;
+    IAxelarGateway gateway;
 
-    constructor(address gateway_, address gasReceiver_)
-        AxelarExecutable(gateway_)
-    {
+    /* destination */
+    string destinationChain;
+    string destinationAddress;
+
+    constructor(
+        address gateway_,
+        address gasReceiver_,
+        string memory destinationChain_,
+        string memory destinationAddress_
+    ) {
+        gateway = IAxelarGateway(gateway_);
         gasReceiver = IAxelarGasService(gasReceiver_);
+        destinationChain = destinationChain_;
+        destinationAddress = destinationAddress_;
     }
 
-    function subscribe(
-        string calldata destinationChain,
-        string calldata destinationAddress,
-        uint id
-    ) payable public {
+    function subscribe(uint id) public payable {
         bytes memory message = abi.encode(id, msg.sender);
-        bytes memory payload = Message.packMessage(Message.Title.SUBSCRIBE, message);
+        bytes memory payload = Message.packMessage(
+            Message.Title.SUBSCRIBE,
+            message
+        );
 
         if (msg.value > 0) {
             gasReceiver.payNativeGasForContractCall{value: msg.value}(
@@ -32,7 +42,13 @@ contract Executable is AxelarExecutable {
                 payload,
                 msg.sender
             );
+
+            call(payload);
         }
+    }
+
+    /* sends message */
+    function call(bytes memory payload) private {
         gateway.callContract(destinationChain, destinationAddress, payload);
     }
 }

@@ -26,7 +26,7 @@ library Message {
     /* create a new message */
     function packMessage(Title _messageTitle, bytes memory _data)
         public
-        view
+        pure
         returns (bytes memory)
     {
         return abi.encodePacked(_messageTitle, _data);
@@ -35,7 +35,7 @@ library Message {
     /* reveal a message */
     function unPackMessage(bytes memory _data)
         public
-        view
+        pure
         returns (Title, bytes memory)
     {
         (Title messageTitle, bytes memory data) = abi.decode(

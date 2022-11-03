@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.7.0 <0.9.0;
 
-import {AxelarExecutable} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/executables/AxelarExecutable.sol";
-import {IAxelarGateway} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol";
-import {IAxelarGasService} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGasService.sol";
-
 import {BdlNft} from "./BdlNft.sol";
 import {BdlCertificate} from "./BdlCertificate.sol";
 import {BdlToken} from "./BdlToken.sol";
@@ -14,6 +10,8 @@ import {Staking} from "./Staking.sol";
 import {Models} from "./../base/Models.sol";
 import {Base64} from "./../base/Base64.sol";
 import {Message} from "./../axelar/Message.sol";
+
+import {AxelarExecutable} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/executables/AxelarExecutable.sol";
 
 contract Buidl is AxelarExecutable {
     address private immutable deployer;
@@ -105,35 +103,6 @@ contract Buidl is AxelarExecutable {
 
     /* subscribe to a course */
     /* params course id */
-    function _subscribe(
-        uint id,
-        uint nftId,
-        uint256 discount,
-        address subscriber
-    ) private {
-        (uint256 price, address creator) = _bdlCourse.subscribe(id, msg.sender);
-
-        /* payment are locked in the smart contract */
-        /* the course creator will be able to claim it after two weeks */
-        /* if the course wasn't refunded by the subscriber */
-
-        /* increase creator's unclaimed revenue */
-        revenues[creator].unclaimed += price;
-
-        uint256 priceCharge = price;
-        if (nftId > 0) {
-            // coupon detected
-            require(_bdlNft.ownerOf(nftId) == msg.sender, "!authorized");
-            priceCharge = price - discount;
-            _bdlNft.burn(nftId);
-        }
-
-        _bdlToken.approve(msg.sender, address(this), priceCharge);
-        _bdlToken.transferFrom(msg.sender, address(this), priceCharge);
-    }
-
-    /* subscribe to a course */
-    /* params course id */
     function unSubscribe(uint id) public {
         (
             uint256 payableAmount,
@@ -205,6 +174,39 @@ contract Buidl is AxelarExecutable {
                 )
             );
     }
+
+    // ========== CORE IMPLEMENTIONS
+
+    /* subscribe to a course */
+    /* params course id */
+    function _subscribe(
+        uint id,
+        uint nftId,
+        uint256 discount,
+        address subscriber
+    ) private {
+        (uint256 price, address creator) = _bdlCourse.subscribe(id, subscriber);
+
+        /* payment are locked in the smart contract */
+        /* the course creator will be able to claim it after two weeks */
+        /* if the course wasn't refunded by the subscriber */
+
+        /* increase creator's unclaimed revenue */
+        revenues[creator].unclaimed += price;
+
+        uint256 priceCharge = price;
+        if (nftId > 0) {
+            // coupon detected
+            require(_bdlNft.ownerOf(nftId) == msg.sender, "!authorized");
+            priceCharge = price - discount;
+            _bdlNft.burn(nftId);
+        }
+
+        _bdlToken.approve(msg.sender, address(this), priceCharge);
+        _bdlToken.transferFrom(msg.sender, address(this), priceCharge);
+    }
+
+    // ========== AXELAR
 
     /* Axelar message reciever function */
     function _execute(
