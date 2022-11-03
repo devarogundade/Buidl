@@ -77,7 +77,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
 - Nuxtjs (Frontend)
 - Nodejs (Backend) 
 - Truffle
-- Axelar (Cross Chain Messaging) [#](https://github.com/devarogundade/Buidl/tree/master/contracts/axelar)
+- Axelar (Cross Chain Messaging) [#](https://github.com/devarogundade/Buidl/tree/master/contracts)
 - Google Cloud Firebase [#](https://github.com/devarogundade/Buidl/tree/master/plugins/firestore.js)
 
 ## Demo
