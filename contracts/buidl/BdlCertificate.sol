@@ -2,7 +2,6 @@
 pragma solidity >=0.7.0 <0.9.0;
 
 import "./../base/ERC4973.sol";
-// import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract BdlCertificate is ERC4973 {
     address deployer;

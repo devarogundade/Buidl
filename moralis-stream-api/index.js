@@ -33,18 +33,26 @@ app.post('/webhook', (req, res) => {
             return res.status(400).json();
         }
 
+        let shouldWrite = true
+
         // override collection if needed
         switch (collection) {
             case 'creators':
                 collection = 'users'
                 _merge = true
                 break
+            case 'section-views':
+                collection = 'subscriptions'
+                fireStore.updateArray(collection, object.id, 'viewed', object.sectionId)
+                shouldWrite = false
+                break
             default:
                 break
         }
 
-        // write data to firebase
-        fireStore.write(collection, object.id, object, _merge)
+        if (shouldWrite) { // write data to firebase
+            fireStore.write(collection, object.id, object, _merge)
+        }
     }
 
     return res.status(200).json()

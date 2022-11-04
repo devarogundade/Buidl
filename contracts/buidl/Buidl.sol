@@ -160,7 +160,7 @@ contract Buidl is AxelarExecutable {
         string memory metadata = string(
             abi.encodePacked(
                 '{"name": "Mr Monkey',
-                '", "description": "This is NFT is a monkey NFT for Buidl coupon", "attributes":',
+                '", "image": "/images/nft2.jpg", "description": "This is NFT is a monkey NFT for Buidl coupon", "attributes":',
                 '[{"display_type":"boost_number","trait_type":"Percentage","value":"4"}]',
                 "}"
             )

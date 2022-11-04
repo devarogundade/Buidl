@@ -15,7 +15,7 @@ export default ({ $axios }, inject) => {
 
             try {
                 const response = await $axios.request(options)
-                return response.data.filter(nft => nft.token_address == process.env.NFT_CONTRACT_ADDRESS)
+                return response.data.result.filter(nft => nft.token_address.toUpperCase() == "0x424c5be33c6e3185f1022a13c4a31c9641c323dd".toUpperCase())
             } catch (error) {
                 return null
             }

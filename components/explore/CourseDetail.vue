@@ -123,7 +123,7 @@
                                         <i class="fa-solid fa-chevron-down"></i>
                                         <p>{{ section.title }}</p>
                                     </div>
-                                    <p>1 test • 4min</p>
+                                    <p>{{ (section.duration / 1000) }} seconds</p>
                                 </div>
                                 <div class="back" v-if="selectedSection == index">
                                     <video src="/videos/sample.mp4"></video>
@@ -221,7 +221,9 @@ export default {
         getNfts: async function () {
             if (this.$auth.accounts == null) return
             const nfts = await this.$nft.getUserNfts(this.$auth.accounts[0])
-            this.nfts = nfts.result
+            if (nfts != null) {
+                this.nfts = nfts
+            }
         },
 
         buyCourse: async function () {
@@ -320,6 +322,7 @@ export default {
     top: 40px;
     border-radius: 10px;
     overflow: hidden;
+    z-index: 2;
 }
 
 .preview {

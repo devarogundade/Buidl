@@ -239,7 +239,7 @@ contract BdlCourse {
     function viewSection(uint id, uint sectionId) public {
         int index = getSubscriptionIndex(id, msg.sender);
         subscriptions[id][uint(index)].viewed.push(sectionId);
-        emit SectionViewed(id, sectionId);
+        emit SectionViewed(id, sectionId, msg.sender);
     }
 
     /* unsubscribe/refund from a course */
@@ -361,7 +361,7 @@ contract BdlCourse {
         uint duration,
         uint sectionId
     );
-    event SectionViewed(uint id, uint sectionId);
+    event SectionViewed(uint id, uint sectionId, address subscriber);
 
     // == modifiers == //
     modifier onlyOwner() {

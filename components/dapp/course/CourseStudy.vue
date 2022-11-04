@@ -10,7 +10,7 @@
         <div class="section" v-for="(section, index) in sections" :key="index" :class="activeSection && activeSection == (index + 1) ? 'active' : ''">
             <p class="nomba">{{ index + 1 }}.</p>
             <h3 class="title">{{ section.title }}</h3>
-            <p class="length"><i class="fa-solid fa-clock"></i> 00.53 min</p>
+            <p class="length"><i class="fa-solid fa-clock"></i>{{ (section.duration / 1000) }} seconds</p>
             <p class="lock unlock" v-if="!unlockedSections.includes(Number(section.sectionId))" v-on:click="viewSection(section.sectionId)"><i class="fa-solid fa-unlock"></i> Unlock</p>
             <p class="lock play" v-else> <i class="fa-solid fa-play"></i> Play</p>
         </div>
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import contract from 'truffle-contract';
 import Certificate from "/plugins/certificate.js";
 export default {
     data() {
@@ -46,8 +45,9 @@ export default {
         };
     },
     created() {
-        this.getCourse();
-        this.getCourseSections();
+        this.getCourse()
+        this.getCourseSections()
+        this.getUnlockedSections()
 
         this.$contracts.initBuidlContract(this.$auth.provider)
         $nuxt.$on('buidl-contract', (contract) => {
@@ -92,29 +92,17 @@ export default {
             this.refunding = false
         },
 
-        loadSectionFile: async function (section) {
-            // if (section.src == '' || this.encryptionKey == null) return
-            // const linkArray = section.src.split('-')
-            // if (linkArray.length == 0) return
-
-            // console.log(linkArray);
-
-            // const dataArray = []
-            // for (let index = 0; index < linkArray.length; index++) {
-            //     const link = linkArray[index];
-            //     const data = await this.$axios.get(link)
-            //     dataArray.push(this.$encryption.decrypt(data.data, this.encryptionKey))
-            // }
-
-            // console.log(dataArray);
+        getUnlockedSections: async function () {
+            if (this.$auth.accounts.length == 0) return
+            const subscription = await this.$firestore.fetch('subscriptions', `${this.$auth.accounts[0].toUpperCase()}-${this.courseId.toUpperCase()}`)
+            console.log(subscription);
+            if (subscription != null) {
+                this.unlockedSections = subscription.viewed
+            }
         },
 
         getCourseEncryptionKey: async function (contract) {
             this.encryptionKey = 'password'
-        },
-
-        getUnlockedSections: async function (contract) {
-            this.unlockedSections.push(5)
         },
 
         viewSection: async function (sectionId) {
@@ -125,7 +113,7 @@ export default {
                     from: this.$auth.accounts[0]
                 })
 
-                this.unlockedSections.push(sectionId)
+                this.getCourseSections()
             } catch (error) {}
         },
 

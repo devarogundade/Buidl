@@ -37,7 +37,7 @@
         </div>
 
         <div class="items" v-show="tab == 2">
-            <div class="item" v-for="index in 4" :key="index">
+            <div class="item" v-for="(certificate, index) in certificates" :key="index">
                 <div class="image">
                     <embed src="/documents/certificate.pdf" alt="" class="embed" />
                 </div>
@@ -100,6 +100,7 @@ export default {
         return {
             tab: 1,
             nfts: [],
+            certificates: [],
             token: null,
             staked: null,
             fetching1: true,
@@ -110,6 +111,7 @@ export default {
     },
     created() {
         this.getNfts()
+        this.getCertificates()
         this.getNativeBalance()
         this.getTokenBalances()
         this.$contracts.initStakingContract(this.$auth.provider)
@@ -121,9 +123,17 @@ export default {
         getNfts: async function () {
             if (this.$auth.accounts == null) return
             const nfts = await this.$nft.getUserNfts(this.$auth.accounts[0]);
-            this.nfts = nfts.result;
+            if (nfts != null) {
+                this.nfts = nfts;
+            }
             this.fetching3 = false
         },
+
+        getCertificates: async function () {
+            if (this.$auth.accounts == null) return
+            this.certificates = await this.$firestore.fetchAllWhere('certificates', 'address', '==', this.$auth.accounts[0].toUpperCase())
+        },
+
         toJson: function (json) {
             if (json == null) {
                 return {
@@ -139,12 +149,14 @@ export default {
             }
             return JSON.parse(json);
         },
+
         getNativeBalance: async function () {
             if (this.$auth.accounts.length == 0) return
             const response = await this.$token.getNativeBalance(this.$auth.accounts[0])
             if (!response) return
             this.balance = response.balance
         },
+
         getTokenBalances: async function () {
             if (this.$auth.accounts.length == 0) return
             const response = await this.$token.getTokenBalances(this.$auth.accounts[0])
@@ -154,6 +166,7 @@ export default {
             }
             this.fetching1 = false
         },
+
         getStakedBalance: async function (contract) {
             if (this.$auth.accounts.length == 0) return
             const stake = await contract.stakes(this.$auth.accounts[0])

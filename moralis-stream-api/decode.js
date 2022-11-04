@@ -24,6 +24,8 @@ module.exports = {
                 return ['uint256', 'string', 'string', 'string', 'uint256', 'uint256']
             case 'certificates':
                 return ['address', 'uint256', 'string']
+            case 'section-views':
+                return ['uint', 'uint', 'address']
             default:
                 return null
         }
@@ -68,7 +70,8 @@ module.exports = {
                     id: `${data[1].toUpperCase()}-${data[0]}`, // unique yet constructable id
                     courseId: data[0],
                     address: data[1].toUpperCase(),
-                    active: data[2]
+                    active: data[2],
+                    viewed: []
                 }
             case 'course-sections':
                 return {
@@ -85,6 +88,12 @@ module.exports = {
                     id: data[1],
                     address: data[0].toUpperCase(),
                     uri: data[2]
+                }
+            case 'section-views':
+                return {
+                    id: `${data[2].toUpperCase()}-${data[0]}`, // unique yet constructable id
+                    sectionId: data[1],
+                    address: data[2].toUpperCase()
                 }
             default:
                 return null
