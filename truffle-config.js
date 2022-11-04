@@ -19,7 +19,7 @@ module.exports = {
             timeoutBlocks: 9999999,
             skipDryRun: true,
             networkCheckTimeout: 999999999,
-            from: '0xe2F06e559cDcB2E73cA6F8299E35ccE8B1FbD813'
+            // from: '0xe2F06e559cDcB2E73cA6F8299E35ccE8B1FbD813'
         },
         mumbai: {
             provider: () => new HDWalletProvider(mnemonic, `https://rpc-mumbai.maticvigil.com/v1/${rpc_id}`),

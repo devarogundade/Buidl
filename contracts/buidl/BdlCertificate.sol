@@ -8,25 +8,12 @@ contract BdlCertificate is ERC4973 {
     address deployer;
     uint256 certificateID = 1;
 
-    mapping(uint256 => string) private tokenURIs;
-    string private baseURIextended;
+    mapping(uint256 => string) private certificateURIs;
 
     constructor(string memory name, string memory symbol)
         ERC4973(name, symbol)
     {
         deployer = msg.sender;
-    }
-
-    function setBaseURI(string memory baseURI) external onlyOwner {
-        baseURIextended = baseURI;
-    }
-
-    function _setTokenURI(uint256 tokenId, string memory _tokenURI)
-        internal
-        virtual
-    {
-        require(_exists(tokenId), "!exist");
-        tokenURIs[tokenId] = _tokenURI;
     }
 
     function burn(uint256 certificateId) external override onlyOwner {
@@ -37,6 +24,7 @@ contract BdlCertificate is ERC4973 {
 
     function issue(address learner, string calldata uri) external {
         _mint(learner, certificateID, uri);
+        certificateURIs[certificateID] = uri;
 
         emit Attest(learner, certificateID, uri);
         certificateID++;

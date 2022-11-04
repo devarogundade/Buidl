@@ -1,5 +1,6 @@
 /* contracts */
 const MessageSender = artifacts.require("MessageSender");
+const Message = artifacts.require("Message")
 
 /* AXELAR */
 const fantomGateWay = "0x97837985Ec0494E7b9C71f5D3f9250188477ae14";

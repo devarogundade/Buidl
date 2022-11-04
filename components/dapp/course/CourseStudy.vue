@@ -3,6 +3,8 @@
     <div class="refund">
         <div class="action" v-if="!refunding" v-on:click="refund()">Refund this course</div>
         <div class="action" v-else>Processing...</div>
+        <div class="action" v-if="!minting" v-on:click="mintCertificate()">Certificate</div>
+        <div class="action" v-else>Processing...</div>
     </div>
     <div class="sections">
         <div class="section" v-for="(section, index) in sections" :key="index" :class="activeSection && activeSection == (index + 1) ? 'active' : ''">
@@ -21,6 +23,7 @@
 </template>
 
 <script>
+import contract from 'truffle-contract';
 import Certificate from "/plugins/certificate.js";
 export default {
     data() {
@@ -36,6 +39,7 @@ export default {
             buidlContract: null,
             courseContract: null,
             refunding: false,
+            minting: false,
             activeSection: 1,
             encryptionKey: null,
             unlockedSections: []
@@ -123,6 +127,49 @@ export default {
 
                 this.unlockedSections.push(sectionId)
             } catch (error) {}
+        },
+
+        mintCertificate: async function () {
+            if (this.$auth.accounts.length == 0 || this.buidlContract == null) return
+            this.minting = true
+
+            const user = await this.$firestore.fetch('users', this.$auth.accounts[0].toUpperCase())
+            if (user == null) {
+                $nuxt.$emit('error', 'Set up your profile name first')
+                this.minting = false
+                return
+            }
+
+            const certificate = await Certificate.generateDocument(user.name)
+            const certificateUrl = await this.$ipfs.upload('certificates', certificate);
+
+            if (certificateUrl == null) {
+                $nuxt.$emit('error', 'Failed to upload')
+                return
+            }
+
+            const metadataCertificate = {
+                name: this.course.name + " Certificate",
+                description: "This certificate was issued on " + Date(),
+                image: certificateUrl
+            }
+
+            const metadataUrl = await this.$ipfs.upload('certificates-metadata', metadataCertificate)
+            if (metadataUrl == null) {
+                $nuxt.$emit('error', 'Failed to upload')
+                return
+            }
+
+            try {
+                const trx = await this.buidlContract.onCourseComplete(this.courseId, metadataUrl, {
+                    from: this.$auth.accounts[0]
+                })
+
+            } catch (error) {
+                $nuxt.$emit('error', 'Failed')
+            }
+
+            this.minting = false
         }
     },
 };

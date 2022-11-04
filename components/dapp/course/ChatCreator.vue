@@ -48,7 +48,7 @@
         </div>
         <div class="tools">
             <div class="title">
-                <h3>Instructor</h3>
+                <h3>Creator</h3>
             </div>
             <div class="members">
                 <div class="member" v-if="creator">

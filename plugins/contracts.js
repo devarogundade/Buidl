@@ -6,7 +6,7 @@ import courseJson from "../build/contracts/BdlCourse.json"
 import tokenJson from "../build/contracts/BdlToken.json"
 import stakingJson from "../build/contracts/Staking.json"
 
-import executableJson from "../build/contracts/Executable.json"
+import polygonJson from "../build/contracts/MessageSender.json"
 
 const Contracts = {
     initBuidlContract: async function(provider) {
@@ -93,23 +93,23 @@ const Contracts = {
         } catch (error) {}
     },
 
-    initExecutableContract: async function(provider) {
-        // if (this.getLastNetworkName() == 'bsc') return
+    initPolygonContract: async function(provider) {
+        if (this.getLastNetworkName() == 'bsc') return
 
-        const executableContract = contract(executableJson)
+        const polygonContract = contract(polygonJson)
         if (!provider) {
             if (typeof ethereum === 'undefined') {
                 $nuxt.$emit('request-connect-wallet')
             } else {
-                executableContract.setProvider(ethereum)
+                polygonContract.setProvider(ethereum)
             }
         } else {
-            executableContract.setProvider(provider)
+            polygonContract.setProvider(provider)
         }
 
         try {
-            executableContract.deployed().then(instance => {
-                $nuxt.$emit('executable-contract', instance)
+            polygonContract.deployed().then(instance => {
+                $nuxt.$emit('polygon-contract', instance)
             })
         } catch (error) {
             console.log(error);
@@ -138,8 +138,8 @@ export default ({}, inject) => {
         initStakingContract: async function(provider) {
             await Contracts.initStakingContract(provider)
         },
-        initExecutableContract: async function(provider) {
-            await Contracts.initExecutableContract(provider)
+        initPolygonContract: async function(provider) {
+            await Contracts.initPolygonContract(provider)
         }
     }))
 }

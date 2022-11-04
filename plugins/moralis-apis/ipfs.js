@@ -21,7 +21,7 @@ export default ({ $axios }, inject) => {
                 return null
             }
         },
-        uploadMuitlple: async function(array) {
+        uploadMultiple: async function(array) {
             try {
                 const options = {
                     method: 'POST',

@@ -27,19 +27,19 @@ export default {
     data() {
         return {
             courseContract: null,
-            executableContract: null
+            polygonContract: null
         }
     },
     created() {
         this.$contracts.initCourseContract(this.$auth.provider)
-        this.$contracts.initExecutableContract(this.$auth.provider)
+        this.$contracts.initPolygonContract(this.$auth.provider)
 
         $nuxt.$on('course-contract', (contract) => {
             this.courseContract = contract
         })
-        $nuxt.$on('executable-contract', (contract) => {
+        $nuxt.$on('polygon-contract', (contract) => {
             console.log(contract);
-            this.executableContract = contract
+            this.polygonContract = contract
         })
     },
     methods: {
@@ -51,10 +51,10 @@ export default {
             })
         },
         testAxelar: async function () {
-            console.log(this.executableContract);
-            if (this.executableContract == null) return
+            console.log(this.polygonContract);
+            if (this.polygonContract == null) return
 
-            const trx = await this.executableContract.subscribe("binance", "0x3407714B59fD7f5A3535bD51177e1f709cA08ba5", 93593177001, {
+            const trx = await this.polygonContract.subscribe(678054451960, {
                 from: this.$auth.accounts[0]
             })
 

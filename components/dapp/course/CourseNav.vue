@@ -25,7 +25,7 @@
         <router-link v-show="$route.name.includes('app-courses-course')"  :to="`/app/courses/${$route.params.course}/chat`">
             <div :class="$route.name == 'app-courses-course-chat' ? 'item active' : 'item'">
                 <i class="fa-solid fa-comments"></i>
-                <p>Chat Instructor</p>
+                <p>Chat Creator</p>
             </div>
         </router-link>
 

@@ -22,6 +22,8 @@ module.exports = {
                 return ['uint256', 'address', 'bool']
             case 'course-sections':
                 return ['uint256', 'string', 'string', 'string', 'uint256', 'uint256']
+            case 'certificates':
+                return ['address', 'uint256', 'string']
             default:
                 return null
         }
@@ -77,6 +79,12 @@ module.exports = {
                     src: data[3],
                     duration: data[4],
                     sectionId: data[5]
+                }
+            case 'certificates':
+                return {
+                    id: data[1],
+                    address: data[0].toUpperCase(),
+                    uri: data[2]
                 }
             default:
                 return null
