@@ -22,11 +22,6 @@
             </div>
         </router-link>
 
-        <div :class="($route.name == 'app-create-post-feed' || $route.name == 'app-create-post-job') ? 'item active' : 'item'" v-on:click="$nuxt.$emit('create-new-post')">
-            <i class="fa-solid fa-plus"></i>
-            <p>Broadcast</p>
-        </div>
-
         <router-link to="/app/notifications">
             <div :class="$route.name == 'app-notifications' ? 'item active' : 'item'">
                 <i class="fa-solid fa-bell"></i>

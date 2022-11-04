@@ -63,7 +63,6 @@ contract Buidl is AxelarExecutable {
 
     /* stake in the smart contract */
     function stake(uint256 amount) public {
-        _bdlToken.approve(msg.sender, address(this), amount);
         _bdlToken.transferFrom(msg.sender, address(this), amount);
         _staking.stake(
             msg.sender,
@@ -113,8 +112,7 @@ contract Buidl is AxelarExecutable {
         ) = _bdlCourse.unSubscribe(id, msg.sender);
 
         // refund the user from the contract
-        _bdlToken.approve(address(this), msg.sender, payableAmount);
-        _bdlToken.transferFrom(address(this), msg.sender, payableAmount);
+        _bdlToken.transfer(msg.sender, payableAmount);
 
         // deduct creator's unclaimed revenue
         revenues[creator].unclaimed -= price;
@@ -130,8 +128,7 @@ contract Buidl is AxelarExecutable {
     function withdrawPlatformFee(uint256 amount) public onlyDeployer {
         require(platformEarnings >= amount, "insuficcient tokens");
         platformEarnings -= amount;
-        _bdlToken.approve(address(this), deployer, amount);
-        _bdlToken.transferFrom(address(this), deployer, amount);
+        _bdlToken.transfer(deployer, amount);
     }
 
     function onCourseComplete(uint id, string memory certificateUri) public {
@@ -202,7 +199,6 @@ contract Buidl is AxelarExecutable {
             _bdlNft.burn(nftId);
         }
 
-        _bdlToken.approve(msg.sender, address(this), priceCharge);
         _bdlToken.transferFrom(msg.sender, address(this), priceCharge);
     }
 
