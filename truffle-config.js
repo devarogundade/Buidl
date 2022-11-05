@@ -13,7 +13,7 @@ module.exports = {
             network_id: "*",
         },
         bsc: {
-            provider: () => new HDWalletProvider(mnemonic, `https://data-seed-prebsc-1-s3.binance.org:8545`),
+            provider: () => new HDWalletProvider(mnemonic, `https://bsc-testnet.public.blastapi.io`),
             network_id: 97, // Smart chain testnet id
             confirmations: 2,
             timeoutBlocks: 9999999,

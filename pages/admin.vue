@@ -38,7 +38,6 @@ export default {
             this.courseContract = contract
         })
         $nuxt.$on('polygon-contract', (contract) => {
-            console.log(contract);
             this.polygonContract = contract
         })
     },
@@ -51,10 +50,9 @@ export default {
             })
         },
         testAxelar: async function () {
-            console.log(this.polygonContract);
             if (this.polygonContract == null) return
 
-            const trx = await this.polygonContract.subscribe(678054451960, {
+            const trx = await this.polygonContract.subscribe(8648337449, {
                 from: this.$auth.accounts[0]
             })
 

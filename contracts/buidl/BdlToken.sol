@@ -13,6 +13,14 @@ contract BdlToken is ERC20 {
         _mint(deployer, 1000000000000 * 10**decimals());
     }
 
+    function approve(
+        address owner,
+        address spender,
+        uint256 amount
+    ) public {
+        _approve(owner, spender, amount);
+    }
+
     function faucetMint() public {
         require(allocations[msg.sender] < allocation, "!cant_mint_more_tokens");
         allocations[msg.sender] = allocation;

@@ -3,10 +3,15 @@ pragma solidity >=0.7.0 <0.9.0;
 
 import {IAxelarGateway} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol";
 import {IAxelarGasService} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGasService.sol";
+import {StringToAddress, AddressToString} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/StringAddressUtils.sol";
 
 import {Message} from "./Message.sol";
 
+// message receiver @Buidl.sol
+
 contract MessageSender {
+    using StringToAddress for string;
+    using AddressToString for address;
     /* axelar */
     IAxelarGasService gasReceiver;
     IAxelarGateway gateway;
@@ -34,21 +39,14 @@ contract MessageSender {
             message
         );
 
-        if (msg.value > 0) {
-            gasReceiver.payNativeGasForContractCall{value: msg.value}(
-                address(this),
-                destinationChain,
-                destinationAddress,
-                payload,
-                msg.sender
-            );
+        gasReceiver.payNativeGasForContractCall{value: msg.value}(
+            address(this),
+            destinationChain,
+            destinationAddress,
+            payload,
+            msg.sender
+        );
 
-            call(payload);
-        }
-    }
-
-    /* sends message */
-    function call(bytes memory payload) private {
         gateway.callContract(destinationChain, destinationAddress, payload);
     }
 }

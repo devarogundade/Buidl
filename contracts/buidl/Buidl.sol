@@ -14,6 +14,8 @@ import {Message} from "./../axelar/Message.sol";
 import {AxelarExecutable} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/executables/AxelarExecutable.sol";
 
 contract Buidl is AxelarExecutable {
+    uint testCount = 0;
+
     address private immutable deployer;
 
     /* fee charged on every succesful subscription made */
@@ -63,6 +65,7 @@ contract Buidl is AxelarExecutable {
 
     /* stake in the smart contract */
     function stake(uint256 amount) public {
+        _bdlToken.approve(msg.sender, address(this), amount);
         _bdlToken.transferFrom(msg.sender, address(this), amount);
         _staking.stake(
             msg.sender,
@@ -199,6 +202,7 @@ contract Buidl is AxelarExecutable {
             _bdlNft.burn(nftId);
         }
 
+        _bdlToken.approve(msg.sender, address(this), priceCharge);
         _bdlToken.transferFrom(msg.sender, address(this), priceCharge);
     }
 
@@ -206,17 +210,21 @@ contract Buidl is AxelarExecutable {
 
     /* Axelar message reciever function */
     function _execute(
-        string calldata sourceChain_,
-        string calldata sourceAddress_,
-        bytes calldata payload_
+        string calldata, /* sourceChain */
+        string calldata, /* sourceAddress */
+        bytes calldata payload
     ) internal override {
-        (Message.Title messageTitle, bytes memory payload) = Message
-            .unPackMessage(payload_);
+        //  require(sourceAddress.toAddress() == _sourceAddress, '!unathorized');
+
+        testCount++;
+
+        (Message.Title messageTitle, bytes memory _payload) = Message
+            .unPackMessage(payload);
 
         /* message is a subscribe call */
         if (messageTitle == Message.Title.SUBSCRIBE) {
             (uint courseId, address subscriber) = abi.decode(
-                payload,
+                _payload,
                 (uint, address)
             );
 
