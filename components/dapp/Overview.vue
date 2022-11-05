@@ -22,21 +22,21 @@
             </router-link>
         </div>
 
-        <div class="tab">
+        <div class="tab" v-if="(user && user.verified)">
             <div class="analytics">
                 <div class="title">
                     <i class="fa-solid fa-chart-pie"></i>
                     <p>Analytics</p>
                 </div>
-                <div class="desc">Measure your growth and supporters.</div>
+                <div class="desc">Measure your growth and subscribers.</div>
                 <div class="list">
                     <div class="analytic">
                         <div>
                             <i class="fa-solid fa-user-graduate"></i>
-                            <p>Active Students</p>
+                            <p>Active Subscribers</p>
                         </div>
                         <div>
-                            <h3>732</h3>
+                            <h3>2</h3>
                             <router-link to="">View all <i class="fa-solid fa-arrow-right"></i></router-link>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                             <p>Course Impressions</p>
                         </div>
                         <div>
-                            <h3>9.8k</h3>
+                            <h3>9</h3>
                             <router-link to="">View all <i class="fa-solid fa-arrow-right"></i></router-link>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                             <p>Search Appearances</p>
                         </div>
                         <div>
-                            <h3>2.1k</h3>
+                            <h3>2</h3>
                             <router-link to="">View all <i class="fa-solid fa-arrow-right"></i></router-link>
                         </div>
                     </div>
@@ -66,13 +66,13 @@
             </div>
         </div>
 
-        <div class="tab">
+        <div class="tab" v-if="(user && user.verified)">
             <div class="linkedin">
                 <div class="title">
                     <img src="/images/linkedin.png" alt="">
                     <p>Connect to LinkedIn</p>
                 </div>
-                <div class="desc">Import your LinkedIn Account information on a decentralized web storage.</div>
+                <div class="desc">Attach your professional LinkedIn account to your profile.</div>
                 <div class="connect">
                     <div class="image">
                         <img src="/images/linkedin-buidl.png" />
@@ -88,7 +88,7 @@
             <div class="supporters">
                 <div class="title">
                     <i class="fa-solid fa-heart-circle-bolt"></i>
-                    <p>Students</p>
+                    <p>Subscribed Courses</p>
                 </div>
                 <p class="desc">Trades from your supporter. <a href="">Click here</a> to learn how you can grow your supporters.</p>
                 <div class="trades">
@@ -145,8 +145,8 @@
                         </div>
                     </div>
                 </div>
-                <router-link to="">
-                    <p class="all-trades">All transactions <i class="fa-solid fa-arrow-right"></i></p>
+                <router-link to="/app/courses">
+                    <p class="all-trades">All courses <i class="fa-solid fa-arrow-right"></i></p>
                 </router-link>
             </div>
         </div>
@@ -155,7 +155,7 @@
             <div class="supporters">
                 <div class="title">
                     <i class="fa-solid fa-graduation-cap"></i>
-                    <p>Courses</p>
+                    <p>NTFs</p>
                 </div>
                 <p class="desc">Trades from your supporter. <a href="">Click here</a> to learn how you can grow your supporters.</p>
                 <div class="trades">
@@ -212,8 +212,8 @@
                         </div>
                     </div>
                 </div>
-                <router-link to="/app/courses">
-                    <p class="all-trades">All courses <i class="fa-solid fa-arrow-right"></i></p>
+                <router-link to="/collectibles">
+                    <p class="all-trades">All NTFs <i class="fa-solid fa-arrow-right"></i></p>
                 </router-link>
             </div>
         </div>

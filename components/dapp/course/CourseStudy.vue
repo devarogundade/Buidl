@@ -83,8 +83,10 @@ export default {
         },
 
         getCourseSections: async function () {
-            this.sections = await this.$firestore.fetchAll(
+            this.sections = await this.$firestore.fetchAllWhere(
                 "course-sections",
+                'courseId',
+                '==',
                 this.courseId
             );
             console.log(this.sections);
@@ -101,6 +103,8 @@ export default {
                 const trx = await this.buidlContract.unSubscribe(this.courseId, {
                     from: this.$auth.accounts[0],
                 });
+
+                this.$router.push('/app/courses')
             } catch (error) {
                 $nuxt.$emit("error", "You can't refund this course");
             }

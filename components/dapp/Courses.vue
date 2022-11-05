@@ -8,9 +8,10 @@
     </div>
 
     <div class="courses" v-show="(subscriptions.length > 0) && !fetching && tab == 1">
-        <router-link v-for="(subscription, index) in subscriptions" :key="index"  :to="`/app/courses/${subscription.course.id}`">
+        <router-link v-for="(subscription, index) in subscriptions" :key="index" :to="subscription.active ? `/app/courses/${subscription.course.id}` : `/explore/courses/${subscription.course.id}`">
             <div class="course scaleable">
                 <div class="detail">
+                    <p class="refunded" v-if="!subscription.active">Refunded</p>
                     <img :src="subscription.course.photo" alt="">
                     <h3>{{ subscription.course.name }}</h3>
                     <p>{{ subscription.course.description }}</p>
@@ -99,9 +100,11 @@ export default {
             this.subscriptions = await this.$firestore.fetchAllSubscribedCourses(this.$auth.accounts[0].toUpperCase())
             this.fetching = false
         },
+
         getCreatedCourses: async function () {
             this.createdCourses = await this.$firestore.fetchAllWhere('courses', 'address', '==', `${this.$auth.accounts[0].toUpperCase()}`)
         },
+
         getUser: async function () {
             if (this.$auth.accounts.length == 0) return
             const user = await this.$firestore.fetch("users", this.$auth.accounts[0].toUpperCase())
@@ -262,12 +265,22 @@ export default {
 .detail p {
     font-size: 16px;
     margin-top: 10px;
-    opacity: 0.8;
+    opacity: #EEE;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+}
+
+.refunded {
+    margin-bottom: 20px;
+    padding: 3px 10px;
+    background: red;
+    color: #ffffff;
+    border-radius: 10px;
+    width: fit-content;
+    font-weight: 600;
 }
 
 @media screen and (max-width: 700px) {
