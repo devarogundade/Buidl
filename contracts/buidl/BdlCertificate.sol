@@ -5,7 +5,7 @@ import "./../base/ERC4973.sol";
 
 contract BdlCertificate is ERC4973 {
     address deployer;
-    uint256 certificateID = 1;
+    uint certificateID = 1;
 
     mapping(uint256 => string) private certificateURIs;
 
@@ -25,7 +25,8 @@ contract BdlCertificate is ERC4973 {
         _mint(learner, certificateID, uri);
         certificateURIs[certificateID] = uri;
 
-        emit Attest(learner, certificateID, uri);
+        emit Attest(learner, certificateID);
+        emit Issued(certificateID, learner, uri);
         certificateID++;
     }
 
@@ -33,4 +34,6 @@ contract BdlCertificate is ERC4973 {
         require(msg.sender == deployer, "!authorized");
         _;
     }
+
+    event Issued(uint id, address owner, string uri);
 }

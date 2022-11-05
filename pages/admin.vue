@@ -57,7 +57,7 @@ export default {
             })
 
             console.log(trx);
-        }
+        },
     }
 }
 </script>

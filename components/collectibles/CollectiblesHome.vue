@@ -13,22 +13,29 @@
             <div class="balances">
                 <div class="wallet">
                     <div>
-                        <img src="/images/bnb_coin.png" alt="">
-                        <p>{{ Number($utils.fromWei(balance)).toFixed(4) }} <b>tBNB</b></p>
+                        <img src="/images/bnb_coin.png" alt="" />
+                        <p>
+                            {{ Number($utils.fromWei(balance)).toFixed(4) }} <b>tBNB</b>
+                        </p>
                     </div>
                 </div>
                 <div class="wallet">
                     <div>
-                        <img src="/favicon.ico" alt="">
-                        <p v-if="token">{{ Number($utils.fromWei(token.balance))}} <b>{{ token.symbol }}</b></p>
+                        <img src="/favicon.ico" alt="" />
+                        <p v-if="token">
+                            {{ Number($utils.fromWei(token.balance)) }}
+                            <b>{{ token.symbol }}</b>
+                        </p>
                         <p v-else>0.00 <b>BDL</b></p>
                     </div>
                 </div>
 
                 <div class="wallet">
                     <div>
-                        <img src="/favicon.ico" alt="">
-                        <p v-if="staked">{{ Number($utils.fromWei(staked)) }} <b>sBDL</b></p>
+                        <img src="/favicon.ico" alt="" />
+                        <p v-if="staked">
+                            {{ Number($utils.fromWei(staked)) }} <b>sBDL</b>
+                        </p>
                         <p v-else>0.00 <b>sBDL</b></p>
                     </div>
                     <div>UnStake</div>
@@ -37,6 +44,15 @@
         </div>
 
         <div class="items" v-show="tab == 2">
+            <div class="explain" v-show="certificates.length == 0 && !fetching2">
+                <h3>What's Certificate?</h3>
+                <p>
+                    <b>Buidl Monkey NFT</b> serves as a coupon(discount) on premium
+                    contents, each nft has a weight property which ranges from 0 ~ 50,
+                    this weight property is the percentage of the nft discount.
+                </p>
+            </div>
+
             <div class="item" v-for="(certificate, index) in certificates" :key="index">
                 <div class="image">
                     <embed src="/documents/certificate.pdf" alt="" class="embed" />
@@ -55,15 +71,13 @@
         </div>
 
         <div class="items" v-show="tab == 3">
-            <div class="explain" v-show="(nfts.length == 0) && !fetching3">
+            <div class="explain" v-show="nfts.length == 0 && !fetching3">
                 <h3>What's Buidl NFT?</h3>
                 <p>
-                    <b>Buidl Monkey NFT</b> serves as a coupon(discount) on premium contents, each nft has a weight property which ranges
-                    from 0 ~ 50, this weight property is the percentage of the nft discount.
+                    <b>Buidl Monkey NFT</b> serves as a coupon(discount) on premium
+                    contents, each nft has a weight property which ranges from 0 ~ 50,
+                    this weight property is the percentage of the nft discount.
                 </p>
-                <div class="action">
-                    Click on the <i class="fa-solid fa-plus"></i> button to create your first course.
-                </div>
             </div>
 
             <div class="item" v-show="nfts.length > 0" v-for="(nft, index) in nfts" :key="index">
@@ -80,12 +94,17 @@
                     </div>
                     <div class="stat">
                         <p>{{ nft.symbol }}</p>
-                        <p class="price">Weight <span>{{ toJson(nft.metadata).attributes[0].value }}%</span></p>
+                        <p class="price">
+                            Weight
+                            <span>{{ toJson(nft.metadata).attributes[0].value }}%</span>
+                        </p>
                     </div>
                 </div>
                 <a target="_blank" :href="`https://testnets.opensea.io/assets/bsc-testnet/${nft.token_address}/${nft.token_id}`">
                     <div class="action">
-                        <div class="stake">Opensea <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                        <div class="stake">
+                            Opensea <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -106,32 +125,37 @@ export default {
             fetching1: true,
             fetching2: true,
             fetching3: true,
-            balance: 0
+            balance: 0,
         };
     },
     created() {
-        this.getNfts()
-        this.getCertificates()
-        this.getNativeBalance()
-        this.getTokenBalances()
-        this.$contracts.initStakingContract(this.$auth.provider)
-        $nuxt.$on('staking-contract', (contract) => {
-            this.getStakedBalance(contract)
-        })
+        this.getNfts();
+        this.getCertificates();
+        this.getNativeBalance();
+        this.getTokenBalances();
+        this.$contracts.initStakingContract(this.$auth.provider);
+        $nuxt.$on("staking-contract", (contract) => {
+            this.getStakedBalance(contract);
+        });
     },
     methods: {
         getNfts: async function () {
-            if (this.$auth.accounts == null) return
+            if (this.$auth.accounts == null) return;
             const nfts = await this.$nft.getUserNfts(this.$auth.accounts[0]);
             if (nfts != null) {
                 this.nfts = nfts;
             }
-            this.fetching3 = false
+            this.fetching3 = false;
         },
 
         getCertificates: async function () {
-            if (this.$auth.accounts == null) return
-            this.certificates = await this.$firestore.fetchAllWhere('certificates', 'address', '==', this.$auth.accounts[0].toUpperCase())
+            if (this.$auth.accounts == null) return;
+            this.certificates = await this.$firestore.fetchAllWhere(
+                "certificates",
+                "address",
+                "==",
+                this.$auth.accounts[0].toUpperCase()
+            );
         },
 
         toJson: function (json) {
@@ -151,28 +175,36 @@ export default {
         },
 
         getNativeBalance: async function () {
-            if (this.$auth.accounts.length == 0) return
-            const response = await this.$token.getNativeBalance(this.$auth.accounts[0])
-            if (!response) return
-            this.balance = response.balance
+            if (this.$auth.accounts.length == 0) return;
+            const response = await this.$token.getNativeBalance(
+                this.$auth.accounts[0]
+            );
+            if (!response) return;
+            this.balance = response.balance;
         },
 
         getTokenBalances: async function () {
-            if (this.$auth.accounts.length == 0) return
-            const response = await this.$token.getTokenBalances(this.$auth.accounts[0])
-            const token = response.filter(_token => _token.token_address.toLowerCase() == process.env.TOKEN_CONTRACT_ADDRESS.toLowerCase())
+            if (this.$auth.accounts.length == 0) return;
+            const response = await this.$token.getTokenBalances(
+                this.$auth.accounts[0]
+            );
+            const token = response.filter(
+                (_token) =>
+                _token.token_address.toLowerCase() ==
+                process.env.TOKEN_CONTRACT_ADDRESS.toLowerCase()
+            );
             if (token.length > 0) {
-                this.token = token[0]
+                this.token = token[0];
             }
-            this.fetching1 = false
+            this.fetching1 = false;
         },
 
         getStakedBalance: async function (contract) {
-            if (this.$auth.accounts.length == 0) return
-            const stake = await contract.stakes(this.$auth.accounts[0])
-            this.staked = stake.amount
-        }
-    }
+            if (this.$auth.accounts.length == 0) return;
+            const stake = await contract.stakes(this.$auth.accounts[0]);
+            this.staked = stake.amount;
+        },
+    },
 };
 </script>
 
@@ -186,20 +218,20 @@ export default {
     border-radius: 30px;
     max-width: 90%;
     width: 400px;
-    background: #23242F;
+    background: #23242f;
     position: absolute;
     left: 60%;
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 24px;
-    color: #FFFFFF;
+    color: #ffffff;
     padding: 30px;
     position: absolute;
 }
 
 .explain h3 {
     font-size: 30px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 .explain p {
@@ -222,7 +254,7 @@ export default {
 .action i {
     padding: 4px;
     border-radius: 50%;
-    background: #FFFFFF;
+    background: #ffffff;
     color: #0177fb;
 }
 
@@ -391,11 +423,11 @@ export default {
     display: flex;
     align-items: center;
     font-weight: 600;
-    color: #23242F !important;
+    color: #23242f !important;
     cursor: pointer;
     user-select: none;
     justify-content: center;
-    background: #FFFFFF;
+    background: #ffffff;
 }
 
 .wallet p {
@@ -426,7 +458,7 @@ li {
 }
 
 li i {
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 li a {

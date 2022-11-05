@@ -71,8 +71,7 @@ module.exports = {
                     courseId: data[0],
                     address: data[1].toUpperCase(),
                     active: data[2],
-                    viewed: [],
-                    certificate: false
+                    viewed: []
                 }
             case 'course-sections':
                 return {
@@ -86,7 +85,7 @@ module.exports = {
                 }
             case 'certificates':
                 return {
-                    id: Number(data[1]),
+                    id: data[1],
                     address: data[0].toUpperCase(),
                     uri: data[2]
                 }
