@@ -86,7 +86,7 @@ module.exports = {
                 }
             case 'certificates':
                 return {
-                    id: data[1],
+                    id: Number(data[1]),
                     address: data[0].toUpperCase(),
                     uri: data[2]
                 }
