@@ -1,35 +1,26 @@
 <template>
-<div class="container">
-    <div class="lds-roller">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
+<div class="lds-roller">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
 </div>
 </template>
 
 <style scoped>
-.container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-}
-
 .lds-roller {
     display: inline-block;
-    position: relative;
     width: 80px;
     height: 80px;
+    position: fixed;
+    top: 50%;
+    z-index: 10;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .lds-roller div {

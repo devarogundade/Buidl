@@ -29,13 +29,6 @@
             </div>
         </router-link>
 
-        <router-link v-show="$route.name.includes('app-courses-course')" :to="`/app/courses/${$route.params.course}/goals`">
-            <div :class="$route.name == 'app-courses-course-goals' ? 'item active' : 'item'">
-                <i class="fa-solid fa-road"></i>
-                <p>Timeline</p>
-            </div>
-        </router-link>
-
         <router-link v-show="$route.name.includes('app-course-builder')" :to=" `/app/course-builder/${$route.params.course}/settings`">
             <div :class="$route.name == 'app-course-builder-course-settings' ? 'item active' : 'item'">
                 <i class="fa-solid fa-gear"></i>
