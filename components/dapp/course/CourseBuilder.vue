@@ -106,8 +106,9 @@ export default {
                 const slice = file.slice(offset, offset + chunkSize)
                 if (slice.size > 0) {
                     const base64 = await this.$ipfs.toBase64(slice)
-                    const encryptedBase64 = this.$encryption.encrypt(base64, this.encryptionKey)
-                    this.currentSlices.push(encryptedBase64)
+                    // const encryptedBase64 = this.$encryption.encrypt(base64, this.encryptionKey)
+                    // this.currentSlices.push(encryptedBase64)
+                    this.currentSlices.push(base64)
                 }
                 chunk++;
             }
