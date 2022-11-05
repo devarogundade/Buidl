@@ -43,7 +43,7 @@ app.post('/webhook', (req, res) => {
                 break
             case 'section-views':
                 collection = 'subscriptions'
-                fireStore.updateArray(collection, object.id, 'viewed', object.sectionId)
+                fireStore.updateViewed(collection, object.id, object.sectionId)
                 shouldWrite = false
                 break
             default:

@@ -16,14 +16,12 @@ module.exports = {
             return false
         }
     },
-    updateArray: async function(collection, document, key, data) {
+    updateViewed: async function(collection, document, data) {
         try {
             const reference = this.db.collection(collection).doc(document)
-
-            let _data = {}
-            data[`${key}`] = FieldValue.arrayUnion(data)
-
-            await reference.update(_data);
+            await reference.update({
+                viewed: FieldValue.arrayUnion(data)
+            });
             return true
         } catch (error) {
             console.log(error);
