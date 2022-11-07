@@ -19,7 +19,7 @@ contract Buidl is AxelarExecutable {
     address private immutable deployer;
 
     /* fee charged on every succesful subscription made */
-    uint256 private subscriptionFee = 10; // percentage rate
+    uint256 private subscriptionFee = 8; // percentage rate
 
     BdlNft private _bdlNft; // nft reward (coupon) contract
     BdlToken private _bdlToken; // erc20(streamable token) contract

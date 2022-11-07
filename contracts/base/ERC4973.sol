@@ -72,7 +72,7 @@ abstract contract ERC4973 is ERC165, IERC4973Metadata, IERC4973 {
         require(!_exists(tokenId), "mint: tokenID exists");
         owners[tokenId] = to;
         tokenURIs[tokenId] = uri;
-        emit Attest(to, tokenId, uri);
+        emit Attest(to, tokenId);
         return tokenId;
     }
 

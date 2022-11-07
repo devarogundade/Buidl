@@ -39,12 +39,12 @@
                     <i class="fa-solid fa-plus"></i>
                 </div>
                 <div class="list">
-                    <div class="item">JavaScript</div>
-                    <div class="item">Kotlin</div>
-                    <div class="item">React</div>
-                    <div class="item">Angular</div>
-                    <div class="item">NodeJs</div>
-                    <div class="item">PHP</div>
+                    <div class="item">Skill 1</div>
+                    <div class="item">Skill 2</div>
+                    <div class="item">Skill 3</div>
+                    <div class="item">Skill 4</div>
+                    <div class="item">Skill 5</div>
+                    <div class="item">Skill 6</div>
                 </div>
                 <p class="see-more">See all <i class="fa-solid fa-chevron-down"></i></p>
             </div>
@@ -56,15 +56,15 @@
                 <div class="list">
                     <div class="item">
                         <div>
-                            <p>Ex: Product Manager</p>
-                            <p>Facebook</p>
+                            <p>Experience 1</p>
+                            <p>Position 1</p>
                         </div>
                         <i class="fa-solid fa-chevron-down"></i>
                     </div>
                     <div class="item">
                         <div>
-                            <p>Ex: Product Manager</p>
-                            <p>Facebook</p>
+                            <p>Experience 2</p>
+                            <p>Position 2</p>
                         </div>
                         <i class="fa-solid fa-chevron-down"></i>
                     </div>
