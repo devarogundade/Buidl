@@ -1,7 +1,7 @@
 # Buidl - SocialFi for Creators and Learners
 ## _A Moralis X Google Cloud Hackathon Project_
 
-Buidl is a Social-Fi and Decentralized Autonomous Organization (DAO) for content creators (e.g instructors, YouTubers, DIY makers, etc) anyone that shares their skills with other people online either for free or at a particular cost.
+Buidl is a Social-Fi and Decentralized Autonomous Organization (DAO) for video content creators (e.g instructors, YouTubers, DIY makers, etc) anyone that shares their skills with other people online either for free or at a particular cost.
 
 Today, there are various existing Web2 solutions for this particular aspect, but we are taking it further leveraging blockchain technology to provide more secured, learning incentives with ownership to the community pattern.
 
@@ -14,21 +14,21 @@ We have heavily used moralis stream and smart contract events, which has helped 
 - # Incentives for learning
     Non-creators (i.e learners) will cover the largest base of the platform, it's a crucial part of the platform encourage and reward learners to retain them to use and enjoy the platform. 
    
-    On each and every content (free/premium) a user purchases on the platform, given that they completed learning from the content a Buidl NFT will be minted for them based on the content price.
+    On each and every content (free/premium) a user purchases on the platform, given that they completed learning from the content a Buidl NFT will be minted for them randomly and based on the content price.
     
-    The Buidl NFT serves as a coupon(discount) on premium contents, each nft has a weight property which ranges from 0 ~ 50, this weight property is the percentage of the nft discount on a course.
+    The Buidl NFT serves as a coupon(discount) on premium contents, each nft has a percentage attribute which ranges from 0 ~ 50, this percenage attribute is the percentage of the nft discount on a course.
     
     The NFT can be traded in exchange for cryptocurrency to other users on marketplaces like Opensea.io
     
 - # Cryptocurrency payment and Guaranteed refund system using Staking protocol
     The Buidl Token(BDL) is the only payment method of the platform, which will be available on DEX and CEX, cryptocurrency has given us the ability to ensure a guaranteed & instant refund policy compared to web2 where it's complex and slow to refund back through the channel the money was charged.
     
-    Whenever content is purchased on the platform, the tokens are staked in the smart contract, and released to the creator after two weeks. Learners can create a  refund and instantly receive back their tokens with a deduction of the sections of the content consumed already.
+    Whenever content is purchased on the platform, the tokens are staked in the smart contract, and released to the creator after two weeks. Learners can create a refund and instantly receive back their tokens with a deduction of the sections of the content consumed already.
 
 - # Account Bound Certificate (ERC4973)
-    Account Bound Certificate that is it cannot be transferred between addresses like normal Erc20 or Erc721. Creators can set quizzes (exams) for each content they create and also mint an Account Bound certificate for subscribers(learners).
+    Account Bound Certificate an ERC4973 token that cannot be transferred between addresses like normal Erc20 or Erc721. Creators can set quizzes (exams) for each content they create to mint an Account Bound certificate for subscribers(learners).
     
-    On-chain certificates generatees the true ownership of the certificate, and can also be verified on the buidl explorer page by looking up for the cerfiticate hash.
+    On-chain certificates generatees the true ownership of the certificate, and can also be verified on the buidl explorer page by looking up for the cerfiticate id.
 
 - # IPFS and On-chain encryption for premium contents
     We are encrypting video chunks to IPFS and storing the keys in the smart contract, this is how we have managed to protect premium contents on the platform, only the content subscribers account can retrieve the key to decrypt the video chunks.
@@ -97,6 +97,9 @@ We have heavily used moralis stream and smart contract events, which has helped 
    https://buidl.netlify.app/#roadmap
 
 ## Tokenomics
+   Total Supply: 10,000,000,000
+   Token Name: Buidl Token
+   Token Symbol: BDL
    https://buidl.netlify.app/#bdl-token
 
 ## Contribution
