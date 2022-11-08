@@ -79,6 +79,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
 - Truffle
 - Axelar (Cross Chain Messaging) [#](https://github.com/devarogundade/Buidl/tree/master/contracts)
 - Google Cloud Firebase [#](https://github.com/devarogundade/Buidl/tree/master/plugins/firestore.js)
+- Android
 
 ## Demo
 
