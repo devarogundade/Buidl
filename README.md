@@ -30,12 +30,12 @@ We have heavily used moralis stream and smart contract events, which has helped 
     
     On-chain certificates generatees the true ownership of the certificate, and can also be verified on the buidl explorer page by looking up for the cerfiticate id.
 
-- # IPFS and On-chain encryption for premium contents
-    We are encrypting video chunks to IPFS and storing the keys in the smart contract, this is how we have managed to protect premium contents on the platform, only the content subscribers account can retrieve the key to decrypt the video chunks.
+- # Protection on premium contents
+    We are encrypting video chunks to IPFS with our own unique file extension that can only be streamed by the buidl video players dapps, this is how we have managed to protect premium contents on the platform, only the content subscribers can the watch the contents.
     
     Protecting videos online is not 100% achievable, as it can still be recorded from the device's screen.
     
-    The Buidl Video Player is a product we have added on your roadmap, which simply authenticates users with their wallet, interacts with our smart contracts to decrypt and play the encryted downloaded video (.bdl video file) on the device.
+    The Buidl Video Player dapp simply authenticates users with their wallet, interacts with our smart contracts to verifies if the user is legitimate to watch the content.
 
 ## Revenue Model
 - We charge a 8% service fee from every earnings from the creators.
