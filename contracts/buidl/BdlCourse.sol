@@ -173,13 +173,14 @@ contract BdlCourse {
         string memory title,
         string memory content,
         string memory src,
+        string memory thumbnail,
         uint duration
     ) public {
         require(courses[id].creator == msg.sender, "!unathorized");
         // increment course secttions
         courses[id].sections++;
         sectionsCount++;
-        emit CourseSection(id, title, content, src, duration, sectionsCount);
+        emit CourseSection(id, title, content, src, thumbnail, duration, sectionsCount);
     }
 
     /* updates a course section */
@@ -188,11 +189,12 @@ contract BdlCourse {
         string memory title,
         string memory content,
         string memory src,
+        string memory thumbnail,
         uint duration,
         uint sectionId
     ) public {
         require(courses[id].creator == msg.sender, "!unathorized");
-        emit CourseSection(id, title, content, src, duration, sectionId);
+        emit CourseSection(id, title, content, src, thumbnail, duration, sectionId);
     }
 
     /* transfer course onwership */
@@ -333,6 +335,7 @@ contract BdlCourse {
         string title,
         string content,
         string src,
+        string thumbnail,
         uint duration,
         uint sectionId
     );
