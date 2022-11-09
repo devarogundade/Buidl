@@ -40,10 +40,14 @@ We have heavily used moralis stream and smart contract events, which has helped 
 ## Revenue Model
 - We charge a 8% service fee from every earnings from the creators.
 
-## Supported Media Types
-  Video contents.
-
 ## Buidl Video Player
+   Protecting videos online might not be 100% achievable but we are making it difficult to bypass them as possible with the buidl video player. This approach is well known in streaming services like netflix.
+   Premium videos bought on the buidl platform cannot be streamed on the web, it's required to have a buidl video player on any of the supported devices.
+   
+   - Android (MVP)
+   - IOS (Not Available)
+   - Android TV (Not Available)
+
 ![1668011087094_1004](https://user-images.githubusercontent.com/81397790/200886388-5a6be449-f64b-4461-ab01-6e2715a4b1c1.PNG)
 
 ## Hackathon Tracks
