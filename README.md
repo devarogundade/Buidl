@@ -43,23 +43,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
 ## Supported Media Types
   Video contents.
 
-## Products
-- # Buidl Token (ERC20)
-
-  Use case: Payment, Refund and Staking.
-  
-- # Buidl Certificate (ERC4973)
-
-  Use case: On-Chain Course Certification.
-     
-- # Buidl NFT (ERC721)
-- Use case: Rewards and Coupon (discount).
-
-![Screenshot 2022-10-31 155800](https://user-images.githubusercontent.com/81397790/199039025-80a5e274-222c-4a10-90f0-0b655973033a.png)
-  
-- # Buidl Video Player
-- Use case: .bdl file extension video player.
-
+## Buidl Video Player
 ![1668011087094_1004](https://user-images.githubusercontent.com/81397790/200886388-5a6be449-f64b-4461-ab01-6e2715a4b1c1.PNG)
 
 ## Hackathon Tracks
