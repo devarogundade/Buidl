@@ -4,10 +4,10 @@ pragma solidity >=0.7.0 <0.9.0;
 import "./../base/ERC4973.sol";
 
 contract BdlCertificate is ERC4973 {
-    address deployer;
-    uint certificateID = 1;
+    address private deployer;
+    uint private certificateID = 1;
 
-    mapping(uint256 => string) private certificateURIs;
+    mapping(uint256 => string) public certificateURIs;
 
     constructor(string memory name, string memory symbol)
         ERC4973(name, symbol)
@@ -15,7 +15,7 @@ contract BdlCertificate is ERC4973 {
         deployer = msg.sender;
     }
 
-    function burn(uint256 certificateId) external override onlyOwner {
+    function burn(uint256 certificateId) external override onlyDeployer {
         _burn(certificateId);
 
         emit Revoke(address(0), certificateId);
@@ -30,7 +30,7 @@ contract BdlCertificate is ERC4973 {
         certificateID++;
     }
 
-    modifier onlyOwner() {
+    modifier onlyDeployer() {
         require(msg.sender == deployer, "!authorized");
         _;
     }

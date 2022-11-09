@@ -34,7 +34,7 @@ export default {
     props: ['state'],
     mounted() {
         $nuxt.$on('connected', (data) => {
-            $nuxt.$emit('success', data.message)
+            // $nuxt.$emit('success', data.message)
             $nuxt.$emit('connected-to-wallet', data.wallet)
             $nuxt.$emit('connected-to-account', data.account)
             $nuxt.$emit('release-connect-wallet')

@@ -15,6 +15,7 @@ const binanceGateway = "0x4D147dCb984e6affEEC47e44293DA442580A3Ec0"
 module.exports = async function(deployer) {
     await deployer.deploy(Base64)
     deployer.link(Base64, Buidl)
+    deployer.link(Base64, BdlNft)
 
     await deployer.deploy(Message)
     deployer.link(Message, Buidl)
@@ -24,8 +25,6 @@ module.exports = async function(deployer) {
     await deployer.deploy(BdlCourse);
     await deployer.deploy(BdlNft, "Buidl Monkeys", "BMON");
     await deployer.deploy(BdlCertificate, "Buidl Certificate", "BCRT")
-
-
 
     await deployer.deploy(Buidl,
         BdlToken.address,

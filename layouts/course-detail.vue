@@ -8,6 +8,8 @@
     <WalletConnect :state="wcState" />
     <SwitchNetwork :state="snState" />
     <Error />
+    <Success />
+    <Failure />
 </div>
 </template>
 

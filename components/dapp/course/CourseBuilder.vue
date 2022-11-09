@@ -55,8 +55,7 @@ export default {
             courseContract: null,
             saving: false,
             currentFile: null,
-            currentSlices: [],
-            encryptionKey: null
+            currentSlices: []
         }
     },
     watch: {
@@ -72,7 +71,6 @@ export default {
         this.$contracts.initCourseContract(this.$auth.provider)
         $nuxt.$on('course-contract', (contract) => {
             this.courseContract = contract
-            this.getCourseEncryptionKey(contract)
         })
     },
     methods: {
@@ -92,7 +90,6 @@ export default {
         },
 
         sliceFile: async function (file) {
-            if (this.encryptionKey == null) return
 
             // clean up array
             this.currentSlices = []
@@ -113,10 +110,6 @@ export default {
                 chunk++;
             }
 
-        },
-
-        getCourseEncryptionKey: async function (contract) {
-            this.encryptionKey = 'password'
         },
 
         saveChanges: async function () {

@@ -11,12 +11,12 @@
             <div class="action mint" v-if="!minting" v-on:click="mintCertificate()">
                 Mint Certificate
             </div>
-            <div class="action mint" v-else>Processing...</div>
+            <div class="action mint" v-else>Minting...</div>
         </div>
     </div>
     <div class="sections">
         <div class="section" v-for="(section, index) in sections" :key="index" :class="activeSection && activeSection == index + 1 ? 'active' : ''">
-            <p class="nomba">{{ index + 1 }}.</p>
+            <p class="number">{{ index + 1 }}.</p>
             <h3 class="title">{{ section.title }}</h3>
             <p class="length">
                 <i class="fa-solid fa-clock"></i>{{ section.duration / 1000 }} seconds
@@ -52,7 +52,6 @@ export default {
             refunding: false,
             minting: false,
             activeSection: 1,
-            encryptionKey: null,
             unlockedSections: [],
         };
     },
@@ -70,7 +69,6 @@ export default {
         $nuxt.$on("course-contract", (contract) => {
             this.courseContract = contract;
             this.getUnlockedSections(contract);
-            this.getCourseEncryptionKey(contract);
         });
     },
     methods: {
@@ -89,14 +87,13 @@ export default {
                 '==',
                 this.courseId
             );
-            console.log(this.sections);
             if (this.sections.length > 0) {
-                this.loadSectionFile(this.sections[0]);
+                this.loadSectionFile(this.sections[0])
             }
         },
 
         refund: async function () {
-            if (this.buidlContract == null || this.$auth.accounts.length == 0) return;
+            if (this.buidlContract == null || this.$auth.accounts.length == 0) return
             this.refunding = true;
 
             try {
@@ -104,28 +101,30 @@ export default {
                     from: this.$auth.accounts[0],
                 });
 
+                $nuxt.$emit('success', {
+                    title: 'Refund successful',
+                    message: 'Your refund was successful'
+                })
+
                 this.$router.push('/app/courses')
             } catch (error) {
-                $nuxt.$emit("error", "You can't refund this course");
+                $nuxt.$emit("error", "You can't refund this course")
             }
 
-            this.refunding = false;
+            this.refunding = false
         },
 
         getUnlockedSections: async function () {
             if (this.$auth.accounts.length == 0) return;
+
             const subscription = await this.$firestore.fetch(
                 "subscriptions",
                 `${this.$auth.accounts[0].toUpperCase()}-${this.courseId.toUpperCase()}`
             );
-            console.log(subscription);
+
             if (subscription != null) {
                 this.unlockedSections = subscription.viewed;
             }
-        },
-
-        getCourseEncryptionKey: async function (contract) {
-            this.encryptionKey = "password";
         },
 
         viewSection: async function (sectionId) {
@@ -140,7 +139,7 @@ export default {
                     }
                 );
 
-                this.getUnlockedSections();
+                this.getUnlockedSections()
             } catch (error) {}
         },
 
@@ -183,6 +182,8 @@ export default {
                 $nuxt.$emit("error", "Failed to upload");
                 return;
             }
+
+            console.log(metadataUrl);
 
             try {
                 const trx = await this.buidlContract.onCourseComplete(
@@ -288,7 +289,7 @@ export default {
     background: #ffdee1;
 }
 
-.section .nomba {
+.section .number {
     font-size: 20px;
 }
 

@@ -16,6 +16,8 @@
     <DappFooter />
     <WalletConnect :state="wcState" />
     <Error />
+    <Success />
+    <Failure />
 </div>
 </template>
 

@@ -2,30 +2,34 @@
 <div class="container">
     <div class="settings">
         <div class="cover">
-            <img :src="course.photo" id="cover" alt="">
+            <img :src="course.photo" id="cover" alt="" />
             <i class="fa-solid fa-pen-to-square">
-                <input type="file" accept="image/*" v-on:change="choosePhoto($event)">
+                <input type="file" accept="image/*" v-on:change="choosePhoto($event)" />
             </i>
         </div>
 
         <div class="form">
             <div class="edit">
                 <p class="label">Course name *</p>
-                <input :class="getInputClassForName()" type="text" v-model="course.name" placeholder="Music producer" maxlength="60">
+                <input :class="getInputClassForName()" type="text" v-model="course.name" placeholder="Music producer" maxlength="60" />
                 <p v-if="errorName" class="error-text">{{ errorName }}</p>
             </div>
 
             <div class="edit">
                 <p class="label">Course description *</p>
-                <input :class="getInputClassForDescription()" v-model="course.description" type="text" placeholder="Compose a love song for an emotional movie">
-                <p class="error-text" v-if="errorDescription">{{ errorDescription }}</p>
+                <input :class="getInputClassForDescription()" v-model="course.description" type="text" placeholder="Compose a love song for an emotional movie" />
+                <p class="error-text" v-if="errorDescription">
+                    {{ errorDescription }}
+                </p>
             </div>
 
             <div class="edit">
                 <p class="label">Category *</p>
                 <select v-on:change="onCategoryChanged($event)">
                     <option disabled hidden>Choose category</option>
-                    <option v-for="(category, index) in categories" :key="index" :value="index">{{ category.name }}</option>
+                    <option v-for="(category, index) in categories" :key="index" :value="index">
+                        {{ category.name }}
+                    </option>
                 </select>
                 <p v-if="errorCategory" class="error-text">{{ errorCategory }}</p>
             </div>
@@ -34,14 +38,16 @@
                 <p class="label">Level *</p>
                 <select v-on:change="onLevelChanged($event)">
                     <option selected disabled hidden>Choose level</option>
-                    <option v-for="(level, index) in levels" :key="index" :value="(index + 1)">{{ level }}</option>
+                    <option v-for="(level, index) in levels" :key="index" :value="index + 1">
+                        {{ level }}
+                    </option>
                 </select>
             </div>
 
             <div class="edit">
                 <p class="label">Preview video *</p>
                 <div class="video">
-                    <input v-on:change="choosePreview($event)" type="file">
+                    <input accept="video/*" v-on:change="choosePreview($event)" type="file" />
                 </div>
             </div>
 
@@ -50,7 +56,7 @@
                 <div class="switch-con">
                     <p>Publish this course?</p>
                     <label class="switch">
-                        <input type="checkbox" v-model="course.publish">
+                        <input type="checkbox" v-model="course.publish" />
                         <span class="slider round"></span>
                     </label>
                 </div>
@@ -61,7 +67,7 @@
                 <div class="switch-con">
                     <p>Want to issue certificate?</p>
                     <label class="switch">
-                        <input type="checkbox" v-model="course.certificate">
+                        <input type="checkbox" v-model="course.certificate" />
                         <span class="slider round"></span>
                     </label>
                 </div>
@@ -69,11 +75,13 @@
 
             <div class="edit">
                 <p class="label">Course price in BDL*</p>
-                <input :class="getInputClassForPrice()" v-model="course.price" type="number" min="0" placeholder="0">
+                <input :class="getInputClassForPrice()" v-model="course.price" type="number" min="0" placeholder="0" />
                 <p class="error-text" v-if="errorPrice">{{ errorPrice }}</p>
             </div>
 
-            <div class="sign_up" v-if="!creating" v-on:click="createCourse()">Save changes</div>
+            <div class="sign_up" v-if="!creating" v-on:click="createCourse()">
+                Save changes
+            </div>
             <div class="sign_up" v-else>Please wait..</div>
         </div>
     </div>
@@ -85,24 +93,20 @@ export default {
     data() {
         return {
             course: {
-                name: '',
-                description: '',
-                photo: '/images/placeholder.png',
-                price: '',
-                level: '',
-                preview: '',
+                name: "",
+                description: "",
+                photo: "/images/placeholder.png",
+                price: "",
+                level: "",
+                preview: "",
                 certificate: false,
-                publish: false
+                publish: false,
             },
             errorName: null,
             errorDescription: null,
             errorPrice: null,
             errorCategory: null,
-            levels: [
-                'Beginner',
-                'Intermediate',
-                'Advanced'
-            ],
+            levels: ["Beginner", "Intermediate", "Advanced"],
             creating: false,
             photoFile: null,
             previewFile: null,
@@ -110,134 +114,164 @@ export default {
             notFound: false,
             selectedCategory: 0,
             categories: [],
-            courseContract: null,
-            encryptionKey: ''
-        }
+            courseContract: null
+        };
     },
     created() {
-        this.getCategories()
-        this.$contracts.initCourseContract(this.$auth.provider)
-        $nuxt.$on('course-contract', (contract) => {
-            this.courseContract = contract
-        })
+        this.getCategories();
+        this.$contracts.initCourseContract(this.$auth.provider);
+        $nuxt.$on("course-contract", (contract) => {
+            this.courseContract = contract;
+        });
     },
     methods: {
         choosePreview: function (event) {
-            const file = event.target.files[0]
-            this.previewFile = file
+            const file = event.target.files[0];
+            this.previewFile = file;
         },
         choosePhoto: function (event) {
-            const file = event.target.files[0]
-            const url = URL.createObjectURL(file)
-            this.photoFile = file
-            document.getElementById('cover').src = url
+            const file = event.target.files[0];
+            const url = URL.createObjectURL(file);
+            this.photoFile = file;
+            document.getElementById("cover").src = url;
         },
         createCourse: async function () {
-            if (this.creating || !this.courseContract) return
-            this.creating = false
+            if (this.creating || !this.courseContract) return;
+            this.creating = false;
 
             if (this.selectedCategory == null) {
-                this.errorCategory = 'Select a category'
-                return
+                this.errorCategory = "Select a category";
+                return;
             } else {
-                this.errorCategory = null
+                this.errorCategory = null;
             }
 
-            if (this.errorName != null ||
+            if (
+                this.errorName != null ||
                 this.errorDescription != null ||
                 this.errorPrice != null
             ) {
-                return
+                return;
             }
 
-            if (this.course.name == '' ||
-                this.course.description == '' ||
-                this.course.price == ''
+            if (
+                this.course.name == "" ||
+                this.course.description == "" ||
+                this.course.price == ""
             ) {
-                return
+                return;
             }
 
-            this.creating = true
+            if (this.photoFile == null) {
+                $nuxt.$emit("failure", {
+                    title: "You must attach a thumbnail",
+                    message: "Required field",
+                });
+                return;
+            }
+
+            if (this.previewFile == null) {
+                $nuxt.$emit("failure", {
+                    title: "You must attach a preview video",
+                    message: "Required field",
+                });
+                return;
+            }
+
+            this.creating = true;
 
             if (this.photoFile != null) {
-                const base64 = await this.$ipfs.toBase64(this.photoFile)
-                const url = await this.$ipfs.upload(`courses/photos/${this.courseId}`, base64)
+                const base64 = await this.$ipfs.toBase64(this.photoFile);
+                const url = await this.$ipfs.upload(
+                    `courses/photos/${this.courseId}`,
+                    base64
+                );
 
                 if (url != null) {
-                    this.course.photo = url
+                    this.course.photo = url;
                 }
             }
 
             if (this.previewFile != null) {
-                const base64 = await this.$ipfs.toBase64(this.previewFile)
-                const url = await this.$ipfs.upload(`courses/previews/${this.courseId}`, base64)
+                const base64 = await this.$ipfs.toBase64(this.previewFile);
+                const url = await this.$ipfs.upload(
+                    `courses/previews/${this.courseId}`,
+                    base64
+                );
 
                 if (url != null) {
-                    this.course.preview = url
+                    this.course.preview = url;
                 }
             }
 
             try {
                 const id = Math.floor(Math.random() * 999999999999) + 1;
                 const trx = await this.courseContract.createCourse(
-                    id, this.categories[this.selectedCategory].id, this.$utils.toWei(this.course.price), this.encryptionKey,
-                    this.course.name, this.course.description, this.course.photo, this.course.preview, this.course.certificate,
+                    id,
+                    this.categories[this.selectedCategory].id,
+                    this.$utils.toWei(this.course.price),
+                    this.course.name,
+                    this.course.description,
+                    this.course.photo,
+                    this.course.preview,
+                    this.course.certificate,
                     this.course.publish, {
-                        from: this.$auth.accounts[0]
-                    })
-                this.$router.push('/app/courses')
+                        from: this.$auth.accounts[0],
+                    }
+                );
+                this.$router.push("/app/courses");
             } catch (error) {
                 console.log(error);
             }
 
-            this.creating = false
+            this.creating = false;
         },
         getCategories: async function () {
-            this.categories = await this.$firestore.fetchAll('categories')
+            this.categories = await this.$firestore.fetchAll("categories");
         },
         onCategoryChanged(event) {
-            this.selectedCategory = event.target.value
+            this.selectedCategory = event.target.value;
         },
         onLevelChanged(event) {
-            this.selectedLevel = event.target.value
+            this.selectedLevel = event.target.value;
         },
         getInputClassForName() {
-            if (this.course.name == '') {
-                this.errorName = null
-                return ''
+            if (this.course.name == "") {
+                this.errorName = null;
+                return "";
             }
             if (this.course.name.length < 4) {
-                this.errorName = 'Name is too short'
-                return 'error filled'
+                this.errorName = "Name is too short";
+                return "error filled";
             } else {
-                this.errorName = null
-                return 'filled'
+                this.errorName = null;
+                return "filled";
             }
         },
         getInputClassForDescription() {
-            if (this.course.description == '') {
-                this.errorDescription = null
-                return ''
+            if (this.course.description == "") {
+                this.errorDescription = null;
+                return "";
             }
             if (this.course.description.length < 10) {
-                this.errorDescription = 'Description is too short'
-                return 'error filled'
+                this.errorDescription = "Description is too short";
+                return "error filled";
             } else {
-                this.errorDescription = null
-                return 'filled'
+                this.errorDescription = null;
+                return "filled";
             }
         },
         getInputClassForPrice() {
-            if (this.course.price == '') {
-                this.errorPrice = 'Minimum of 0 BDL'
-                return ''
+            if (this.course.price == "") {
+                this.errorPrice = "Minimum of 0 BDL";
+                return "";
             } else {
-                this.errorPrice = null
-                return 'filled'
+                this.errorPrice = null;
+                return "filled";
             }
         },
-    }
-}
+    },
+};
 </script>
 
 <style scoped>
@@ -267,7 +301,7 @@ export default {
     width: 60px;
     height: 60px;
     background: #3451f3;
-    color: #FFFFFF;
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -322,11 +356,11 @@ select {
     line-height: 22px;
     letter-spacing: 0.02em;
     outline: none;
-    color: #F9F6ED;
+    color: #f9f6ed;
 }
 
 option {
-    color: #3D392A;
+    color: #3d392a;
 }
 
 .form .filled {
@@ -334,7 +368,7 @@ option {
 }
 
 .form .error {
-    border: 2px solid #C74F4F;
+    border: 2px solid #c74f4f;
 }
 
 .form .error-text {
@@ -342,7 +376,7 @@ option {
     font-size: 14px;
     line-height: 17px;
     letter-spacing: 0.02em;
-    color: #C74F4F;
+    color: #c74f4f;
     margin-top: 10px;
 }
 
@@ -359,7 +393,7 @@ option {
     margin-top: 60px;
     font-weight: 500;
     font-size: 20px;
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 .switch-con {
@@ -370,7 +404,7 @@ option {
 }
 
 .switch-con p {
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 20px;
     font-weight: 600;
 }
@@ -396,8 +430,8 @@ option {
     right: 0;
     bottom: 0;
     background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
 }
 
 .slider:before {
@@ -408,8 +442,8 @@ option {
     left: 4px;
     bottom: 4px;
     background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
 }
 
 .switch :checked+.slider {

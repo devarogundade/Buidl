@@ -16,12 +16,11 @@ contract BdlCourse {
     /* 2 weeks */
     uint private refundableDuration = 10000;
 
-    /* encryptions keys to premium contents */
-    mapping(uint => string) private encryptionKeys;
-
+    // keeps tracks of ids
     uint private categoryCount = 0;
     uint private sectionsCount = 0;
 
+    // platform fee
     uint private salesFee = 8; // eight percent
 
     address private deployer;
@@ -62,7 +61,7 @@ contract BdlCourse {
     // == creator related functions == //
 
     // testing purpose
-    function mintCategories() public onlyOwner {
+    function mintCategories() public onlyDeployer {
         createCategory("Web Developent", "web-development.webp");
         createCategory("Gaming", "gaming.webp");
         createCategory("Cooking", "cooking.webp");
@@ -77,7 +76,7 @@ contract BdlCourse {
 
     function createCategory(string memory name, string memory image)
         public
-        onlyOwner
+        onlyDeployer
     {
         categoryCount++;
         emit Category(categoryCount, name, image);
@@ -88,7 +87,6 @@ contract BdlCourse {
         uint id,
         uint category,
         uint256 price,
-        string memory key,
         /* course metadata */
         string memory name,
         string memory description,
@@ -109,9 +107,6 @@ contract BdlCourse {
             courses[id].sections,
             certificate
         );
-
-        // creates course encryption key
-        encryptionKeys[id] = key;
 
         // assign course to creator
         createdCourses[msg.sender].push(id);
@@ -181,6 +176,7 @@ contract BdlCourse {
         uint duration
     ) public {
         require(courses[id].creator == msg.sender, "!unathorized");
+        // increment course secttions
         courses[id].sections++;
         sectionsCount++;
         emit CourseSection(id, title, content, src, duration, sectionsCount);
@@ -212,27 +208,6 @@ contract BdlCourse {
         createdCourses[receiver].push(id);
 
         emit CourseTransfer(id, creator, receiver);
-    }
-
-    /* get encryption key as subscriber */
-    function getEncryptionKeyAsSubscriber(uint id)
-        public
-        view
-        returns (string memory)
-    {
-        // verifies user has a active subscription to course
-        getSubscriptionIndex(id, msg.sender);
-        return encryptionKeys[id];
-    }
-
-    /* get encryption key as creator */
-    function getEncryptionKeyAsCreator(uint id)
-        public
-        view
-        returns (string memory)
-    {
-        require(courses[id].creator == msg.sender, "!unathorized");
-        return encryptionKeys[id];
     }
 
     /* view section */
@@ -364,7 +339,7 @@ contract BdlCourse {
     event SectionViewed(uint id, uint sectionId, address subscriber);
 
     // == modifiers == //
-    modifier onlyOwner() {
+    modifier onlyDeployer() {
         require(msg.sender == deployer, "!authorized");
         _;
     }

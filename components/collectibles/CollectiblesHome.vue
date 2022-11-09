@@ -55,14 +55,14 @@
 
             <div class="item" v-for="(certificate, index) in certificates" :key="index">
                 <div class="image">
-                    <embed src="/documents/certificate.pdf" alt="" class="embed" />
+                    <embed :src="certificate.image" alt="" class="embed" />
                 </div>
                 <div class="certificate">
                     <ul>
                         <li>
                             <i class="fa-solid fa-hashtag"></i>
                             <a href="" target="_blank">
-                                <p>0x94884730909482...</p>
+                                <p>{{ certificate.name }}</p>
                             </a>
                         </li>
                     </ul>
@@ -150,12 +150,17 @@ export default {
 
         getCertificates: async function () {
             if (this.$auth.accounts == null) return;
-            this.certificates = await this.$firestore.fetchAllWhere(
+            const certificates = await this.$firestore.fetchAllWhere(
                 "certificates",
                 "address",
                 "==",
                 this.$auth.accounts[0].toUpperCase()
             );
+            for (let index = 0; index < certificates.length; index++) {
+                const certificate = certificates[index];
+                const metadata = await this.$axios.get(certificate.uri)
+                this.certificates.push(metadata.data)
+            }
         },
 
         toJson: function (json) {

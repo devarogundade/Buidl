@@ -18,6 +18,8 @@
     <SwitchNetwork :state="snState" />
     <DrawBoard :state="dbState" />
     <Error />
+    <Success />
+    <Failure />
 </div>
 </template>
 

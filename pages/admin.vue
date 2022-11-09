@@ -52,7 +52,7 @@ export default {
         testAxelar: async function () {
             if (this.polygonContract == null) return
 
-            const trx = await this.polygonContract.subscribe(8648337449, {
+            const trx = await this.polygonContract.subscribe(728380969832, {
                 from: this.$auth.accounts[0]
             })
 

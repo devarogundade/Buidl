@@ -11,12 +11,14 @@ import {Models} from "./../base/Models.sol";
 import {Base64} from "./../base/Base64.sol";
 import {Message} from "./../axelar/Message.sol";
 
-import {AxelarExecutable} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/executables/AxelarExecutable.sol";
+import { AxelarExecutable } from '@axelar-network/axelar-gmp-sdk-solidity/contracts/executables/AxelarExecutable.sol';
+import { IAxelarGateway } from '@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol';
+import { IAxelarGasService } from '@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGasService.sol';
 
 contract Buidl is AxelarExecutable {
-    uint testCount = 0;
+    uint public testCount = 0;
 
-    address private immutable deployer;
+    address private deployer;
 
     /* fee charged on every succesful subscription made */
     uint256 private subscriptionFee = 8; // percentage rate
@@ -40,6 +42,8 @@ contract Buidl is AxelarExecutable {
     mapping(address => Models.User) public users;
     mapping(address => Models.Revenue) public revenues;
 
+    IAxelarGasService public immutable gasReceiver;
+
     // contructor
     constructor(
         address bdlToken,
@@ -47,7 +51,8 @@ contract Buidl is AxelarExecutable {
         address bdlCertificate,
         address bdlCourse,
         address staking,
-        address gateway_
+        address gateway_,
+        address gasReceiver_
     ) AxelarExecutable(gateway_) {
         deployer = msg.sender;
 
@@ -56,6 +61,8 @@ contract Buidl is AxelarExecutable {
         _bdlCertificate = BdlCertificate(bdlCertificate);
         _bdlCourse = BdlCourse(bdlCourse);
         _staking = Staking(staking);
+
+        gasReceiver = IAxelarGasService(gasReceiver_);
     }
 
     /* creates user metadata */
@@ -95,12 +102,12 @@ contract Buidl is AxelarExecutable {
 
     /* subscribe to a course */
     /* params course id */
-    function subscribe(
-        uint id,
-        uint nftId,
-        uint256 discount
-    ) public {
-        _subscribe(id, nftId, discount, msg.sender);
+    function subscribe(uint id, uint256 nftId) public {
+        uint offPercentage = 0;
+        if (nftId != 0) {
+            // offPercentage = _bdlNft.tokenPercentages[nftId];
+        }
+        _subscribe(id, nftId, offPercentage, msg.sender);
     }
 
     /* subscribe to a course */
@@ -140,39 +147,18 @@ contract Buidl is AxelarExecutable {
             msg.sender
         );
 
+        // checks if contents will award subscriber
+        // a certificate for completing their study
         if (isCertificate) {
             /* issue certificate to subscriber */
             _bdlCertificate.issue(msg.sender, certificateUri);
         }
 
-        /* generate a random nft based on price as reward to subscriber */
-        string memory nftUri = generateNftMetadata(coursePrice);
-
-        /* mint the nft */
-        _bdlNft.mint(msg.sender, nftUri);
-    }
-
-    function generateNftMetadata(uint coursePrice)
-        private
-        pure
-        returns (string memory)
-    {
-        string memory metadata = string(
-            abi.encodePacked(
-                '{"name": "Mr Monkey',
-                '", "image": "https://buidl.netlify.app/images/nft2.jpg", "description": "This is NFT is a monkey NFT for Buidl coupon", "attributes":',
-                '[{"display_type":"boost_number","trait_type":"Percentage","value":"4"}]',
-                "}"
-            )
-        );
-
-        return
-            string(
-                abi.encodePacked(
-                    "data:application/json;base64,",
-                    Base64.base64(bytes(metadata))
-                )
-            );
+        /*
+         mint the coupon reward nft for
+         user for completion
+        */
+        _bdlNft.mint(msg.sender, coursePrice);
     }
 
     // ========== CORE IMPLEMENTIONS
@@ -181,8 +167,8 @@ contract Buidl is AxelarExecutable {
     /* params course id */
     function _subscribe(
         uint id,
-        uint nftId,
-        uint256 discount,
+        uint256 nftId,
+        uint offPercentage,
         address subscriber
     ) private {
         (uint256 price, address creator) = _bdlCourse.subscribe(id, subscriber);
@@ -193,20 +179,24 @@ contract Buidl is AxelarExecutable {
 
         /* increase creator's unclaimed revenue */
         revenues[creator].unclaimed += price;
-
         uint256 priceCharge = price;
+
         if (nftId > 0) {
             // coupon detected
-            require(_bdlNft.ownerOf(nftId) == msg.sender, "!authorized");
-            priceCharge = price - discount;
+            // verifies the sender id the true owner
+            require(_bdlNft.ownerOf(nftId) == subscriber, "!authorized");
+
+            priceCharge = (price * (offPercentage / 100));
+
+            // burn the nft
             _bdlNft.burn(nftId);
         }
 
-        _bdlToken.approve(msg.sender, address(this), priceCharge);
-        _bdlToken.transferFrom(msg.sender, address(this), priceCharge);
+        _bdlToken.approve(subscriber, address(this), priceCharge);
+        _bdlToken.transferFrom(subscriber, address(this), priceCharge);
     }
 
-    // ========== AXELAR
+    // ========== AXELAR MESSAGE RECEIVER ============== //
 
     /* Axelar message reciever function */
     function _execute(
@@ -218,17 +208,20 @@ contract Buidl is AxelarExecutable {
 
         testCount++;
 
-        (Message.Title messageTitle, bytes memory _payload) = Message
-            .unPackMessage(payload);
+        (uint topic, bytes memory _payload) = Message.unPackMessage(payload);
 
         /* message is a subscribe call */
-        if (messageTitle == Message.Title.SUBSCRIBE) {
-            (uint courseId, address subscriber) = abi.decode(
+        if (topic == Message.SUBSCRIBE) {
+            (uint courseId, uint256 nftId, address subscriber) = abi.decode(
                 _payload,
-                (uint, address)
+                (uint, uint256, address)
             );
 
-            _subscribe(courseId, 0, 0, subscriber);
+            uint offPercentage = 0;
+            if (nftId != 0) {
+                // offPercentage = _bdlNft.tokenPercentages[nftId];
+            }
+            _subscribe(courseId, nftId, offPercentage, subscriber);
         }
     }
 
