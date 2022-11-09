@@ -10,6 +10,7 @@ const Message = artifacts.require("Message")
 
 /* AXELAR */
 const binanceGateway = "0x4D147dCb984e6affEEC47e44293DA442580A3Ec0"
+const binanceGasReceiver = "0xbE406F0189A0B4cf3A05C286473D23791Dd44Cc6"
 
 /* binance smart chain testnet */
 module.exports = async function(deployer) {
@@ -32,6 +33,7 @@ module.exports = async function(deployer) {
         BdlCertificate.address,
         BdlCourse.address,
         Staking.address,
-        binanceGateway
+        binanceGateway,
+        binanceGasReceiver
     );
 };
