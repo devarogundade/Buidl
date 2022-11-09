@@ -17,6 +17,8 @@ import {IAxelarGasService} from "@axelar-network/axelar-gmp-sdk-solidity/contrac
 
 import {StringToAddress, AddressToString} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/StringAddressUtils.sol";
 
+import "@openzeppelin/contracts/utils/Strings.sol";
+
 contract Buidl is AxelarExecutable {
     uint public testCount = 0;
     using StringToAddress for string;
@@ -49,6 +51,9 @@ contract Buidl is AxelarExecutable {
     // ecosystem users
     mapping(address => Models.User) public users;
     mapping(address => Models.Revenue) public revenues;
+
+    // keep track of certificate ID
+    uint256 private certificateID;
 
     IAxelarGasService public immutable gasReceiver;
 
@@ -143,7 +148,14 @@ contract Buidl is AxelarExecutable {
         // a certificate for completing their study
         if (isCertificate) {
             /* issue certificate to subscriber */
-            _bdlCertificate.issue(msg.sender, certificateUri);
+            certificateID++;
+
+            _bdlCertificate.mint(
+                address(this),
+                msg.sender,
+                certificateID,
+                certificateUri
+            );
         }
 
         /*
@@ -160,46 +172,41 @@ contract Buidl is AxelarExecutable {
         string calldata sourceAddress,
         bytes calldata payload
     ) internal override {
-        bool isPolygon = compareStrings(sourceChain, "Polygon");
-        bool isFantom = compareStrings(sourceChain, "Fantom");
+        // bool isPolygon = compareStrings(sourceChain, "Polygon");
+        // bool isFantom = compareStrings(sourceChain, "Fantom");
 
-        if (isPolygon) {
-            require(
-                sourceAddress.toAddress() == polygonAddress,
-                "!unathorized"
-            );
-        } else if (isFantom) {
-            require(sourceAddress.toAddress() == fantomAddress, "!unathorized");
-        } else {
-            require(1 == 2, "Unkwomn source chain");
-        }
+        // if (isPolygon) {
+        //     require(
+        //         sourceAddress.toAddress() == polygonAddress,
+        //         "!unathorized"
+        //     );
+        // } else if (isFantom) {
+        //     require(sourceAddress.toAddress() == fantomAddress, "!unathorized");
+        // } else {
+        //     require(1 == 2, "Unkwomn source chain");
+        // }
 
         testCount++;
 
-        (uint topic, bytes memory _payload) = Message.unPackMessage(payload);
+        // reveal payload as message
+        (uint topic, uint id, address sender, string memory extra) = Message
+            .unPackMessage(payload);
 
         /* message is a subscribe call */
         if (topic == Message.SUBSCRIBE) {
-            (uint courseId, uint256 nftId, address subscriber) = abi.decode(
-                _payload,
-                (uint, uint256, address)
-            );
-
             uint offPercentage = 0;
+            // uint256 nftId = stringToUint(extra);
+            uint256 nftId = 0;
+
             if (nftId != 0) {
                 // offPercentage = _bdlNft.tokenPercentages[nftId];
             }
-            _subscribe(courseId, nftId, offPercentage, subscriber);
+            _subscribe(id, nftId, offPercentage, sender);
         }
 
         /* message is an unsubscribe call */
         if (topic == Message.UN_SUBSCRIBE) {
-            (uint courseId, address subscriber) = abi.decode(
-                _payload,
-                (uint, address)
-            );
-
-            _unSubscribe(courseId, subscriber);
+            _unSubscribe(id, sender);
         }
     }
 
@@ -272,6 +279,18 @@ contract Buidl is AxelarExecutable {
         return (keccak256(abi.encodePacked((a))) ==
             keccak256(abi.encodePacked((b))));
     }
+
+    // function stringToUint(string s) private  returns (uint) {
+    //     bytes memory b = bytes(s);
+    //     uint result = 0;
+    //     for (uint i = 0; i < b.length; i++) {
+    //         // c = b[i] was not needed
+    //         if (b[i] >= 48 && b[i] <= 57) {
+    //             result = result * 10 + (uint(b[i]) - 48); // bytes and int are not compatible with the operator -.
+    //         }
+    //     }
+    //     return result; // this was missing
+    // }
 
     // ========= Administration ========== //
 

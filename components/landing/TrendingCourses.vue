@@ -64,7 +64,8 @@ export default {
     updated() {
         const perView = this.$utils.slidesPerView()
 
-        new Swiper(".trendSwiper", {
+      try {
+          new Swiper(".trendSwiper", {
             slidesPerView: perView,
             spaceBetween: 30,
             pagination: {
@@ -72,6 +73,9 @@ export default {
                 clickable: true,
             },
         });
+      } catch (error) {
+
+      }
     }
 }
 </script>

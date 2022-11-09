@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.7.0 <0.9.0;
 
+import "@openzeppelin/contracts/utils/Strings.sol";
+
 library Message {
     /* all messaging topics */
     // ==== //
@@ -23,21 +25,28 @@ library Message {
     uint constant CREATE_CATEGORY = 11;
 
     /* create a new message */
-    function packMessage(uint _topic, bytes memory _data)
-        public
-        pure
-        returns (bytes memory)
-    {
-        return abi.encodePacked(_topic, _data);
+    function packMessage(
+        uint _topic,
+        uint _id,
+        address _sender,
+        string memory extra
+    ) public pure returns (bytes memory) {
+        return abi.encodePacked(_topic, _id, _sender, extra);
     }
 
     /* reveal a message */
     function unPackMessage(bytes memory _data)
         public
         pure
-        returns (uint, bytes memory)
+        returns (
+            uint _topic,
+            uint _id,
+            address _sender,
+            string memory extra
+        )
     {
-        (uint topic, bytes memory data) = abi.decode(_data, (uint, bytes));
-        return (topic, data);
+        (uint _topic, uint _id, address _sender, string memory extra) = abi
+            .decode(_data, (uint, uint, address, string));
+        return (_topic, _id, _sender, extra);
     }
 }

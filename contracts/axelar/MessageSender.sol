@@ -6,6 +6,7 @@ import {IAxelarGateway} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/
 import {IAxelarGasService} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGasService.sol";
 
 import {Message} from "./Message.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 // message receiver @Buidl.sol
 
@@ -31,8 +32,7 @@ contract MessageSender is AxelarExecutable {
 
     /* @param id == the course id on bsc testnet */
     function subscribe(uint id, uint256 nftId) public payable {
-        bytes memory message = abi.encode(id, nftId, msg.sender);
-        bytes memory payload = Message.packMessage(Message.SUBSCRIBE, message);
+        bytes memory payload = Message.packMessage(Message.SUBSCRIBE, id, msg.sender, Strings.toString(nftId));
 
         if (msg.value > 0) {
             gasReceiver.payNativeGasForContractCall{value: msg.value}(
@@ -49,8 +49,7 @@ contract MessageSender is AxelarExecutable {
 
     /* @param id == the course id on bsc testnet */
     function unSubscribe(uint id) public payable {
-        bytes memory message = abi.encode(id, msg.sender);
-        bytes memory payload = Message.packMessage(Message.UN_SUBSCRIBE, message);
+        bytes memory payload = Message.packMessage(Message.UN_SUBSCRIBE, id, msg.sender, "");
 
         if (msg.value > 0) {
             gasReceiver.payNativeGasForContractCall{value: msg.value}(
