@@ -19,6 +19,7 @@
     <Error />
     <Success />
     <Failure />
+    <AxelarScan />
 </div>
 </template>
 

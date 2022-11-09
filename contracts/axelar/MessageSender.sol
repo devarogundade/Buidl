@@ -46,4 +46,22 @@ contract MessageSender is AxelarExecutable {
 
         gateway.callContract(destinationChain, destinationAddress, payload);
     }
+
+    /* @param id == the course id on bsc testnet */
+    function unSubscribe(uint id) public payable {
+        bytes memory message = abi.encode(id, msg.sender);
+        bytes memory payload = Message.packMessage(Message.UN_SUBSCRIBE, message);
+
+        if (msg.value > 0) {
+            gasReceiver.payNativeGasForContractCall{value: msg.value}(
+                address(this),
+                destinationChain,
+                destinationAddress,
+                payload,
+                msg.sender
+            );
+        }
+
+        gateway.callContract(destinationChain, destinationAddress, payload);
+    }
 }

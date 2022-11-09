@@ -1,6 +1,7 @@
+import Vue from "vue"
 import {
     AxelarGMPRecoveryAPI,
-    Environment,
+    Environment
 } from "@axelar-network/axelarjs-sdk";
 
 const sdk = new AxelarGMPRecoveryAPI({
@@ -9,7 +10,7 @@ const sdk = new AxelarGMPRecoveryAPI({
 
 export default ({}, inject) => {
     inject('axelar', Vue.observable({
-        track: async function(txHash) {
+        scan: async function(txHash) {
             const txStatus = await sdk.queryTransactionStatus(txHash);
             return txStatus
         }

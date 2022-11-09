@@ -82,21 +82,21 @@
 
             <div class="item" v-show="nfts.length > 0" v-for="(nft, index) in nfts" :key="index">
                 <div class="image">
-                    <img :src="toJson(nft.metadata).image" alt="" />
+                    <img src="/images/nft2.jpg" alt="" />
                 </div>
                 <div class="creator">
                     <div class="profile">
                         <img src="/favicon.ico" alt="" />
                         <div class="name">
-                            <p>{{ toJson(nft.metadata).name }}</p>
+                            <p>{{ nft.name }}</p>
                             <p>ID: {{ nft.token_id }}</p>
                         </div>
                     </div>
                     <div class="stat">
                         <p>{{ nft.symbol }}</p>
                         <p class="price">
-                            Weight
-                            <span>{{ toJson(nft.metadata).attributes[0].value }}%</span>
+                            Discount <span>{{ 4 }}%</span>
+                            <!--- To do from smart contract NFT discount mechanism -->
                         </p>
                     </div>
                 </div>
@@ -140,7 +140,7 @@ export default {
     },
     methods: {
         getNfts: async function () {
-            if (this.$auth.accounts == null) return;
+            if (this.$auth.accounts.length == 0) return;
             const nfts = await this.$nft.getUserNfts(this.$auth.accounts[0]);
             if (nfts != null) {
                 this.nfts = nfts;
@@ -149,7 +149,7 @@ export default {
         },
 
         getCertificates: async function () {
-            if (this.$auth.accounts == null) return;
+            if (this.$auth.accounts.length == 0) return;
             const certificates = await this.$firestore.fetchAllWhere(
                 "certificates",
                 "address",

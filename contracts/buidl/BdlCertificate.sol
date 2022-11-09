@@ -21,12 +21,12 @@ contract BdlCertificate is ERC4973 {
         emit Revoke(address(0), certificateId);
     }
 
-    function issue(address learner, string calldata uri) external {
+    function issue(address subscriber, string calldata uri) external {
         _mint(learner, certificateID, uri);
         certificateURIs[certificateID] = uri;
 
-        emit Attest(learner, certificateID);
-        emit Issued(certificateID, learner, uri);
+        emit Attest(subscriber, certificateID);
+        emit Issued(certificateID, subscriber, uri);
         certificateID++;
     }
 
@@ -35,5 +35,5 @@ contract BdlCertificate is ERC4973 {
         _;
     }
 
-    event Issued(uint id, address owner, string uri);
+    event Issued(uint id, address subscriber, string uri);
 }

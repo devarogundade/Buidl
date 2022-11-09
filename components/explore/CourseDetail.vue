@@ -237,7 +237,7 @@ export default {
                     discount = this.$utils.toWei(this.calcDiscount(this.selectedNft).toString())
                 }
 
-                const trx = await this.buidlContract.subscribe(this.courseId, nftId, discount, {
+                const trx = await this.buidlContract.subscribe(this.courseId, nftId, {
                     from: this.$auth.accounts[0]
                 })
             } catch (error) {

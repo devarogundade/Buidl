@@ -51,6 +51,7 @@ export default {
         '@/plugins/utils.js',
         '@/plugins/auth.js',
         '@/plugins/firestore.js',
+        '@/plugins/axelar.js',
         '@/plugins/contracts.js',
         '@/plugins/moralis-apis/ipfs.js',
         '@/plugins/moralis-apis/nft.js',

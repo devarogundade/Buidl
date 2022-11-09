@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="sections">
-        <div class="section" v-for="(section, index) in sections" :key="index" :class="activeSection && activeSection == index + 1 ? 'active' : ''">
+        <div class="section" v-for="(section, index) in sections" :key="index">
             <p class="number">{{ index + 1 }}.</p>
             <h3 class="title">{{ section.title }}</h3>
             <p class="length">
@@ -24,13 +24,27 @@
             <p class="lock unlock" v-if="!unlockedSections.includes(section.sectionId)" v-on:click="viewSection(section.sectionId)">
                 <i class="fa-solid fa-unlock"></i> Unlock
             </p>
-            <p class="lock play" v-else><i class="fa-solid fa-play"></i> Play</p>
+            <p class="lock play" v-else><i class="fa-solid fa-play"></i> Unlocked</p>
         </div>
     </div>
 
-    <div class="screen">
-        <video src="" class="player" controls></video>
+    <div class="screen" v-if="course">
+        <div class="tag">Preview</div>
+        <video :src="course.preview" :poster="course.photo" class="player" controls></video>
     </div>
+
+    <div class="premium">
+        <p>This is a premium content. You have to use a Buidl Player Application to watch this course.</p>
+
+        <div class="download">
+            <a href="/players/buidl.apk">
+                <p>Download for Android</p>
+            </a>
+            <p>Download for IPhone <span>Soon</span></p>
+            <p>Download for TV <span>Soon</span></p>
+        </div>
+    </div>
+
 </div>
 </template>
 
@@ -51,7 +65,6 @@ export default {
             courseContract: null,
             refunding: false,
             minting: false,
-            activeSection: 1,
             unlockedSections: [],
         };
     },
@@ -337,7 +350,7 @@ export default {
     position: relative;
 }
 
-.video video {
+.screen video {
     width: 100%;
     height: 540px;
     object-fit: cover;
@@ -392,6 +405,44 @@ export default {
 .player {
     height: 600px;
     width: 100%;
+}
+
+.premium {
+    width: 100%;
+    padding: 40px;
+    border-radius: 30px;
+    border-radius: 1px #fff solid;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+}
+
+.premium>p {
+    font-size: 20px;
+    text-align: center;
+    color: #fff;
+}
+
+.download {
+    background: #2c2d3a;
+    border-radius: 20px;
+}
+
+.download p {
+    padding: 16px 20px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+}
+
+.download span {
+    background: #007aff;
+    color: #fff;
+    font-size: 14px;
+    padding: 3px 8px;
+    border-radius: 6px;
 }
 
 @media screen and (max-width: 800px) {

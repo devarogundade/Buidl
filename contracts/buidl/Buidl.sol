@@ -11,14 +11,22 @@ import {Models} from "./../base/Models.sol";
 import {Base64} from "./../base/Base64.sol";
 import {Message} from "./../axelar/Message.sol";
 
-import { AxelarExecutable } from '@axelar-network/axelar-gmp-sdk-solidity/contracts/executables/AxelarExecutable.sol';
-import { IAxelarGateway } from '@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol';
-import { IAxelarGasService } from '@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGasService.sol';
+import {AxelarExecutable} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/executables/AxelarExecutable.sol";
+import {IAxelarGateway} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol";
+import {IAxelarGasService} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGasService.sol";
+
+import {StringToAddress, AddressToString} from "@axelar-network/axelar-gmp-sdk-solidity/contracts/StringAddressUtils.sol";
 
 contract Buidl is AxelarExecutable {
     uint public testCount = 0;
+    using StringToAddress for string;
+    using AddressToString for address;
 
     address private deployer;
+
+    /* source chains */
+    address private polygonAddress;
+    address private fantomAddress;
 
     /* fee charged on every succesful subscription made */
     uint256 private subscriptionFee = 8; // percentage rate
@@ -64,6 +72,8 @@ contract Buidl is AxelarExecutable {
 
         gasReceiver = IAxelarGasService(gasReceiver_);
     }
+
+    //  ========= Direct Contract Calls from Binance Network =========== //
 
     /* creates user metadata */
     function setAccount(string memory name, string memory photo) public {
@@ -113,25 +123,7 @@ contract Buidl is AxelarExecutable {
     /* subscribe to a course */
     /* params course id */
     function unSubscribe(uint id) public {
-        (
-            uint256 payableAmount,
-            uint256 earnings,
-            address creator,
-            uint256 price,
-            uint256 _platformEarnings
-        ) = _bdlCourse.unSubscribe(id, msg.sender);
-
-        // refund the user from the contract
-        _bdlToken.transfer(msg.sender, payableAmount);
-
-        // deduct creator's unclaimed revenue
-        revenues[creator].unclaimed -= price;
-
-        // credit creator earnings from the refunded course
-        revenues[creator].claimable += earnings;
-
-        // credit platform from the refunded course
-        platformEarnings += _platformEarnings;
+        _unSubscribe(id, msg.sender);
     }
 
     /* deployer to cashout earnings */
@@ -161,7 +153,57 @@ contract Buidl is AxelarExecutable {
         _bdlNft.mint(msg.sender, coursePrice);
     }
 
-    // ========== CORE IMPLEMENTIONS
+    // ========== Indirect Contract Calls by AXELAR ============== //
+
+    function _execute(
+        string calldata sourceChain,
+        string calldata sourceAddress,
+        bytes calldata payload
+    ) internal override {
+        bool isPolygon = compareStrings(sourceChain, "Polygon");
+        bool isFantom = compareStrings(sourceChain, "Fantom");
+
+        if (isPolygon) {
+            require(
+                sourceAddress.toAddress() == polygonAddress,
+                "!unathorized"
+            );
+        } else if (isFantom) {
+            require(sourceAddress.toAddress() == fantomAddress, "!unathorized");
+        } else {
+            require(1 == 2, "Unkwomn source chain");
+        }
+
+        testCount++;
+
+        (uint topic, bytes memory _payload) = Message.unPackMessage(payload);
+
+        /* message is a subscribe call */
+        if (topic == Message.SUBSCRIBE) {
+            (uint courseId, uint256 nftId, address subscriber) = abi.decode(
+                _payload,
+                (uint, uint256, address)
+            );
+
+            uint offPercentage = 0;
+            if (nftId != 0) {
+                // offPercentage = _bdlNft.tokenPercentages[nftId];
+            }
+            _subscribe(courseId, nftId, offPercentage, subscriber);
+        }
+
+        /* message is an unsubscribe call */
+        if (topic == Message.UN_SUBSCRIBE) {
+            (uint courseId, address subscriber) = abi.decode(
+                _payload,
+                (uint, address)
+            );
+
+            _unSubscribe(courseId, subscriber);
+        }
+    }
+
+    // ========== CORE IMPLEMENTIONS =========== //
 
     /* subscribe to a course */
     /* params course id */
@@ -196,34 +238,52 @@ contract Buidl is AxelarExecutable {
         _bdlToken.transferFrom(subscriber, address(this), priceCharge);
     }
 
-    // ========== AXELAR MESSAGE RECEIVER ============== //
+    /* subscribe to a course */
+    /* params course id  and subscriber address */
+    function _unSubscribe(uint id, address subscriber) private {
+        (
+            uint256 payableAmount,
+            uint256 earnings,
+            address creator,
+            uint256 price,
+            uint256 _platformEarnings
+        ) = _bdlCourse.unSubscribe(id, subscriber);
 
-    /* Axelar message reciever function */
-    function _execute(
-        string calldata, /* sourceChain */
-        string calldata, /* sourceAddress */
-        bytes calldata payload
-    ) internal override {
-        //  require(sourceAddress.toAddress() == _sourceAddress, '!unathorized');
+        // refund the user from the contract
+        _bdlToken.transfer(subscriber, payableAmount);
 
-        testCount++;
+        // deduct creator's unclaimed revenue
+        revenues[creator].unclaimed -= price;
 
-        (uint topic, bytes memory _payload) = Message.unPackMessage(payload);
+        // credit creator earnings from the refunded course
+        revenues[creator].claimable += earnings;
 
-        /* message is a subscribe call */
-        if (topic == Message.SUBSCRIBE) {
-            (uint courseId, uint256 nftId, address subscriber) = abi.decode(
-                _payload,
-                (uint, uint256, address)
-            );
-
-            uint offPercentage = 0;
-            if (nftId != 0) {
-                // offPercentage = _bdlNft.tokenPercentages[nftId];
-            }
-            _subscribe(courseId, nftId, offPercentage, subscriber);
-        }
+        // credit platform from the refunded course
+        platformEarnings += _platformEarnings;
     }
+
+    // ======== Helpers ======= //
+
+    function compareStrings(string memory a, string memory b)
+        public
+        view
+        returns (bool)
+    {
+        return (keccak256(abi.encodePacked((a))) ==
+            keccak256(abi.encodePacked((b))));
+    }
+
+    // ========= Administration ========== //
+
+    function changeSourceAddresses(address polygon, address fantom)
+        public
+        onlyDeployer
+    {
+        polygonAddress = polygon;
+        fantomAddress = fantom;
+    }
+
+    // ========= Modifiers ========== //
 
     modifier onlyVerified() {
         /* only account that has staked atleast 2000 BDL token */
