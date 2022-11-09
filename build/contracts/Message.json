@@ -33,7 +33,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -67,7 +68,8 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_topic\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_id\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_sender\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"extra\",\"type\":\"string\"}],\"name\":\"packMessage\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"_data\",\"type\":\"bytes\"}],\"name\":\"unPackMessage\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"_topic\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_id\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_sender\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"extra\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/axelar/Message.sol\":\"Message\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1500},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/utils/Strings.sol\":{\"keccak256\":\"0xaf159a8b1923ad2a26d516089bceca9bdeaeacd04be50983ea00ba63070f08a3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6f2cf1c531122bc7ca96b8c8db6a60deae60441e5223065e792553d4849b5638\",\"dweb:/ipfs/QmPBdJmBBABMDCfyDjCbdxgiqRavgiSL88SYPGibgbPas9\"]},\"project:/contracts/axelar/Message.sol\":{\"keccak256\":\"0xc6f0e6a4e3442c92accf194351c80cbef736fef128a2348bc0cc2386cd289b20\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://592c3207a842223294c22bbc031d0ab583f0e8b382794d5285cae0b09720ffd9\",\"dweb:/ipfs/QmcANBzbGSVpqy5qtBffE3W5tpRxJzfYsjMjZEg9muuvPK\"]}},\"version\":1}",
@@ -5324,8 +5326,8 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x611f17afA6e844aE655B617646862AD4fD40E050",
-      "transactionHash": "0x838a0f086eed4a411ddb678a7ef24807d2733d937139885592741268ed5f5d2b"
+      "address": "0xC00040D1845A6567b2DFa3465B8D2e378D277b06",
+      "transactionHash": "0xfacf3c0bb0a0c1219e28e8fca9f5dd3e6327a94d85927293fc814280b064096e"
     },
     "80001": {
       "events": {},
@@ -5335,7 +5337,8 @@
     }
   },
   "schemaVersion": "3.4.10",
-  "updatedAt": "2022-11-09T23:08:29.997Z",
+  "updatedAt": "2022-11-09T23:14:56.832Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},
