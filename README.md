@@ -60,7 +60,7 @@ We have heavily used moralis stream and smart contract events, which has helped 
 - # Buidl Video Player
 - Use case: .bdl file extension video player.
 
-![Group 133 (2)](https://user-images.githubusercontent.com/81397790/199038576-06daf10b-f865-44c6-84c2-b64c8a160c0f.png)
+![1668011087094_100](https://user-images.githubusercontent.com/81397790/200885878-1037a611-827a-4f2e-b4e2-23aec4a36113.PNG)
 
 ## Hackathon Tracks
 - Binance Smart Chain => Social & Entertainment
